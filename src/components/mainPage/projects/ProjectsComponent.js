@@ -1,14 +1,14 @@
 import React from 'react'
-import portfolio1 from '../img/portfolio-1.png'
-import portfolio2 from '../img/portfolio-2.png'
-import portfolio3 from '../img/portfolio-3.png'
-import portfolio4 from '../img/portfolio-4.png'
-import portfolio5 from '../img/portfolio-5.png'
-import portfolio6 from '../img/portfolio-6.png'
-import portfolio7 from '../img/portfolio-7.png'
-import portfolio8 from '../img/portfolio-8.png'
+import portfolio1 from '../../../img/portfolio-1.png'
+import portfolio2 from '../../../img/portfolio-2.png'
+import portfolio3 from '../../../img/portfolio-3.png'
+import portfolio4 from '../../../img/portfolio-4.png'
+import portfolio5 from '../../../img/portfolio-5.png'
+import portfolio6 from '../../../img/portfolio-6.png'
+import portfolio7 from '../../../img/portfolio-7.png'
+import portfolio8 from '../../../img/portfolio-8.png'
 
-class PortfolioComponent extends React.Component {
+class ProjectsComponent extends React.Component {
 
     render() {
         return (
@@ -132,4 +132,4 @@ class PortfolioComponent extends React.Component {
         );
     }
 }
-export default PortfolioComponent;
+export default ProjectsComponent;

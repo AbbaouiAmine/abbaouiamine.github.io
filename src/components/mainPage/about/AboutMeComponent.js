@@ -1,5 +1,5 @@
 import React from 'react';
-import profilImg from'../img/template-homepage.jpg';
+import profilImg from'../../../img/template-homepage.jpg';
 ;
 class AboutMeComponent extends React.Component {
 

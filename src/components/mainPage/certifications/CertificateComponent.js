@@ -1,12 +1,12 @@
 import React from 'react'
-import person1 from '../img/person-1.png'
-import person2 from '../img/person-2.png'
-import person3 from '../img/person-3.png'
-import person4 from '../img/person-4.png'
-import person1Full from '../img/person-1-full.png'
-import person2Full from '../img/person-2-full.png'
-import person3Full from '../img/person-3-full.png'
-import person4Full from '../img/person-4-full.png'
+import person1 from '../../../img/person-1.png'
+import person2 from '../../../img/person-2.png'
+import person3 from '../../../img/person-3.png'
+import person4 from '../../../img/person-4.png'
+import person1Full from '../../../img/person-1-full.png'
+import person2Full from '../../../img/person-2-full.png'
+import person3Full from '../../../img/person-3-full.png'
+import person4Full from '../../../img/person-4-full.png'
 
 class CertificateComponent extends React.Component {
 
