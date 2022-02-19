@@ -38,7 +38,7 @@ class HomeComponent extends React.Component {
 
     componentDidMount() {
         const script = document.createElement("script");
-        script.src = "/portfolioReact/js/index.js";
+        script.src = "/js/index.js";
         script.async = true;
       
         document.body.appendChild(script);
