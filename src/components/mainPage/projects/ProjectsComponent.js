@@ -63,11 +63,11 @@ class ProjectsComponent extends React.Component {
                         </div>
                         <div className="col-sm-4 col-md-3 fadeIn" data-wow-delay="1.5s">
                             <div className="box container_projects myImg"
-                                title="https://www.youtube.com/embed/rbcVXQLG-d0?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
+                                title="https://www.youtube.com/embed/T4OP0vfMBvs">
                                 <span>
                                     <img src={portfolio5} alt="" className="img-responsive image_projects" />
                                     <div className="overlay_projects">
-                                        <span className="icon_projects" title="Afcam.ma">
+                                        <span className="icon_projects" title="Merise le guide complet">
                                             <i className="fa fa-eye"></i>
                                         </span>
                                     </div>

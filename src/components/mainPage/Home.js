@@ -35,6 +35,14 @@ class HomeComponent extends React.Component {
             </div>
         );
     }
+
+    componentDidMount() {
+        const script = document.createElement("script");
+        script.src = "/portfolioReact/js/index.js";
+        script.async = true;
+      
+        document.body.appendChild(script);
+      }
 }
 
 export default HomeComponent;

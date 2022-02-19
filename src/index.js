@@ -12,10 +12,7 @@ import JavaComponent from './components/javaCourse/JavaComponent';
 ReactDOM.render(
   <Router history={history}>
     <Route path="/" >
-      <Route exact path="/">
-        <Redirect to="/home" />
-      </Route>
-      <Route path="/home" component={HomeComponent} />
+      <Route path="/portfolioReact" component={HomeComponent} />
       <Route path="/react" component={ReactIndexComponent} />
       <Route path="/hibernate" component={HibernateComponent} />
       <Route path="/java" component={JavaComponent} />
