@@ -9,7 +9,8 @@ for (var i = 0; i < imgs.length; i++) {
 
   imgs[i].onclick = function () {
     modal.style.display = "block";
-    modalImg.src = this.title;
+    console.log("my src"+this.src);
+    modalImg.src = this.getAttribute("src");;
   }
 
 }
