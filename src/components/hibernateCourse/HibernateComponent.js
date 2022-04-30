@@ -23,7 +23,6 @@ class HibernateComponent extends React.Component{
 
     render()
     {
-        require("../../css/styleCourse.css");
         return (
             <div>
                 <HeaderComponent/>

@@ -7,6 +7,8 @@ import portfolio5 from '../../../img/portfolio-5.png'
 import portfolio6 from '../../../img/portfolio-6.png'
 import portfolio7 from '../../../img/portfolio-7.png'
 import portfolio8 from '../../../img/portfolio-8.png'
+import emsilogo from '../../../img/emsilogo.png'
+import cartevisite from '../../../img/cartevisite.png'
 
 class ProjectsComponent extends React.Component {
 
@@ -26,8 +28,8 @@ class ProjectsComponent extends React.Component {
                     <div className="row no-space">
                         <div className="col-sm-4 col-md-3 wow  fadeIn proj_cont" data-wow-delay="1s">
                             <div className="box container_projects myImg"
-                                title="https://www.youtube.com/embed/MMcLG38PGpg?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
-                                <img src={portfolio1} alt="" className="img-responsive image_projects" />
+                                src="https://www.youtube.com/embed/MMcLG38PGpg?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
+                                <img src={portfolio1} alt="A" className="img-responsive image_projects" />
                                 <div className="overlay_projects">
                                     <span className="icon_projects" title="AutoConsultation">
                                         <i className="fa fa-eye"></i>
@@ -37,11 +39,11 @@ class ProjectsComponent extends React.Component {
                         </div>
                         <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="0.5s">
                             <div className="box container_projects myImg"
-                                title="https://www.youtube.com/embed/1GwCBL1BT-c?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
+                                src="https://www.youtube.com/embed/1GwCBL1BT-c?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
                                 <span>
                                     <img src={portfolio7} alt="" className="img-responsive image_projects" />
                                     <div className="overlay_projects">
-                                        <span className="icon_projects" title="AutoConsultation">
+                                        <span className="icon_projects" title="MarocDocs">
                                             <i className="fa fa-eye"></i>
                                         </span>
                                     </div>
@@ -50,11 +52,11 @@ class ProjectsComponent extends React.Component {
                         </div>
                         <div className="col-sm-4 col-md-3 wow  fadeIn" data-wow-delay="2s">
                             <div className="box container_projects myImg"
-                                title="https://www.youtube.com/embed/TTJSpGh9HS0?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
+                                src="https://www.youtube.com/embed/TTJSpGh9HS0?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
                                 <span>
                                     <img src={portfolio3} alt="" className="img-responsive image_projects" />
                                     <div className="overlay_projects">
-                                        <span className="icon_projects" title="AutoConsultation">
+                                        <span className="icon_projects" title="DoctoGest">
                                             <i className="fa fa-eye"></i>
                                         </span>
                                     </div>
@@ -63,7 +65,7 @@ class ProjectsComponent extends React.Component {
                         </div>
                         <div className="col-sm-4 col-md-3 fadeIn" data-wow-delay="1.5s">
                             <div className="box container_projects myImg"
-                                title="https://www.youtube.com/embed/T4OP0vfMBvs">
+                                src="https://www.youtube.com/embed/T4OP0vfMBvs">
                                 <span>
                                     <img src={portfolio5} alt="" className="img-responsive image_projects" />
                                     <div className="overlay_projects">
@@ -76,11 +78,11 @@ class ProjectsComponent extends React.Component {
                         </div>
                         <div className="col-sm-4 col-md-3 wow fadeIn proj_cont" data-wow-delay="2.5s">
                             <div className="box container_projects myImg"
-                                title="img/emsilogo.png">
+                                src={emsilogo}>
                                 <span>
                                     <img src={portfolio4} alt="" className="img-responsive image_projects" />
                                     <div className="overlay_projects">
-                                        <span className="icon_projects" title="Afcam.ma">
+                                        <span className="icon_projects" title="EMSIPreneur">
                                             <i className="fa fa-eye"></i>
                                         </span>
                                     </div>
@@ -89,11 +91,11 @@ class ProjectsComponent extends React.Component {
                         </div>
                         <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="1.4s">
                             <div className="box container_projects myImg"
-                                title="img/cartevisite.png">
+                                src={cartevisite}>
                                 <span>
                                     <img src={portfolio6} alt="" className="img-responsive image_projects" />
                                     <div className="overlay_projects">
-                                        <span className="icon_projects" title="Afcam.ma">
+                                        <span className="icon_projects" title="Koutoubia Viaggi">
                                             <i className="fa fa-eye"></i>
                                         </span>
                                     </div>
@@ -102,11 +104,11 @@ class ProjectsComponent extends React.Component {
                         </div>
                         <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="0.8s">
                             <div className="box container_projects myImg"
-                                title="https://www.youtube.com/embed/AoWIRsiXsjg?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
+                                src="https://www.youtube.com/embed/AoWIRsiXsjg?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
                                 <span>
                                     <img src={portfolio2} alt="" className="img-responsive image_projects" />
                                     <div className="overlay_projects">
-                                        <span className="icon_projects" title="Afcam.ma">
+                                        <span className="icon_projects" title="MarocDocs">
                                             <i className="fa fa-eye"></i>
                                         </span>
                                     </div>
@@ -115,7 +117,7 @@ class ProjectsComponent extends React.Component {
                         </div>
                         <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="2.9s">
                             <div className="box container_projects myImg"
-                                title="https://www.youtube.com/embed/fXSdZC25LOU?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
+                                src="https://www.youtube.com/embed/fXSdZC25LOU?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
                                 <span>
                                     <img src={portfolio8} alt="" className="img-responsive image_projects" />
                                     <div className="overlay_projects">

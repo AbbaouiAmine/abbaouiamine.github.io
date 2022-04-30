@@ -6,7 +6,6 @@ import Menu from './MenuComponent.js'
 class ReactIndexComponent extends React.Component {
 
     render() {
-        require("../../css/styleCourse.css");
         return (
             <div>
                 <HeaderComponent/>
