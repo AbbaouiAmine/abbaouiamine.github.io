@@ -5,7 +5,7 @@ class AboutMeComponent extends React.Component {
 
     render() {
         return (
-            <section id="about" className="section">
+            <section id="about" className="section section-withe">
                 <div className="container clearfix">
                     <div className="row margin-bottom">
                         <div className="col-md-8 margin-bottom wow bounceInDown">

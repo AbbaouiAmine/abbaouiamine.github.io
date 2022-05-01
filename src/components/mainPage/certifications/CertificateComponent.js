@@ -12,7 +12,7 @@ class CertificateComponent extends React.Component {
 
   render() {
     return (
-      <section id="team" className="section">
+      <section id="team" className="section section-withe">
         <div className="container">
           <div className="row">
             <div className="col-md-12">

@@ -13,7 +13,7 @@ class TechnosComponent extends React.Component {
 
   render() {
     return (
-      <section id="techno" className="section">
+      <section id="techno" className="section section-withe">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
