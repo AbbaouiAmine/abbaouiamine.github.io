@@ -6,7 +6,7 @@ class TechnoComponent extends React.Component {
     render() {
         return (
             <Link to={this.props.titleHref}>
-           <div className="col-md-3 col-sm-6" data-wow-delay="0.3s">
+           <div className="col-md-3 col-sm-6 wow zoomIn" data-wow-delay="0.3s">
                 <div className="team-member">
                     <div className="image">
                             <img src={this.props.srcImg} alt={this.props.altImg} className="img-responsive" />

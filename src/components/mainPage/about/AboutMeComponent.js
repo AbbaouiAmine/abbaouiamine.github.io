@@ -8,7 +8,7 @@ class AboutMeComponent extends React.Component {
             <section id="about" className="section section-withe">
                 <div className="container clearfix">
                     <div className="row margin-bottom">
-                        <div className="col-md-8 margin-bottom wow bounceInDown">
+                        <div className="col-md-8 margin-bottom  bounceInDown">
                             <h2 className="heading">À propos</h2>
                             <p className="lead">Je suis spécialisé dans la conception des logiciels de gestion. J'ai développé mon activité
                             depuis 2015 autour
@@ -18,7 +18,7 @@ class AboutMeComponent extends React.Component {
                             besoins.
             Nous pouvons nous rencontrer pour discuter de vos projets.</p>
                             <div className="row">
-                                <div className="col-sm-6 wow bounceInLeft " data-wow-delay="0.4s">
+                                <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5>
                                         <i className="fa fa-arrows"></i>Une analyse et conception sur mesure.</h5>
                                     <p>Un travail d’étude mené en amont de nos projets afin de comprendre et analyser les habitudes et les
@@ -26,21 +26,21 @@ class AboutMeComponent extends React.Component {
                                     des
                 utilisateurs.</p>
                                 </div>
-                                <div className="col-sm-6 wow bounceInRight " data-wow-delay="0.4s">
+                                <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5>
                                         <i className="fa fa-image"></i>Une methode de travail professionelle.</h5>
                                     <p>Je dispose des compétences professionnelles adaptées à la gestion des projets informatiques.</p>
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-sm-6 wow bounceInLeft " data-wow-delay="0.4s">
+                                <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5>
                                         <i className="fa fa-life-ring"></i>Des technologies adaptées à l'entreprise.</h5>
                                     <p>Mes connaissances sur les techniques de développement me conduisent à proposer des solutions au service
                                     informatique
                 de l'entreprise.</p>
                                 </div>
-                                <div className="col-sm-6 wow bounceInLeft " data-wow-delay="0.4s">
+                                <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5>
                                         <i className="fa fa-trophy"></i>Un design modern et adaptatif.</h5>
                                     <p>La conception des interfaces soignées et intuitives sur un outil logiciel ou web pour un résultat d’une
@@ -49,7 +49,7 @@ class AboutMeComponent extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-4 margin-bottom wow slideInRight">
+                        <div className="col-md-4 margin-bottom  slideInRight">
                             {/* <p>
                                 <img src="img/template-homepage.jpg" alt="" className="img-responsive" style="border: solid;text-shadow: 2px 2px 4px #000000;">
                             </p> */}

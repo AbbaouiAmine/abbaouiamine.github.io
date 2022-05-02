@@ -28,9 +28,9 @@ class IntroComponent extends React.Component {
           <div className="row">
             <div className="col-md-8 col-md-offset-2 col-sm-12 wow zoomIn">
               <p className="roboto">{this.state.titre}</p>
-              <img src={logoFire} id="logoFire" />
+              <img src={logoFire} id="logoFire" class="wow fadeInDown"/>
               <br/>
-              <img src={logoTitle} id="logoTitle" />
+              <img src={logoTitle} id="logoTitle" class="wow fadeInDown"/>
               
               <p className="roboto">{this.state.profil}</p>
             </div>

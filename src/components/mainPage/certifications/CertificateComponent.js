@@ -18,7 +18,7 @@ class CertificateComponent extends React.Component {
             <div className="col-md-12">
               <h2 className="heading">Certificats</h2>
               <div className="row"></div>
-              <div className="col-md-3 col-sm-6 wow slideInDown" data-wow-delay="0.3s">
+              <div className="col-md-3 col-sm-6" data--delay="0.3s">
                 <div className="team-member">
                   <div className="image">
                     <span>
@@ -37,7 +37,7 @@ class CertificateComponent extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-3 col-sm-6 wow slideInUp" data-wow-delay="0.3s">
+              <div className="col-md-3 col-sm-6   zoomIn" data--delay="0.3s">
                 <div className="team-member">
                   <div className="image">
                     <span>
@@ -55,7 +55,7 @@ class CertificateComponent extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-3 col-sm-6 wow slideInDown" data-wow-delay="0.3s">
+              <div className="col-md-3 col-sm-6   zoomIn" data--delay="0.3s">
                 <div className="team-member">
                   <div className="image">
                     <span>
@@ -74,7 +74,7 @@ class CertificateComponent extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-3 col-sm-6 wow slideInUp" data-wow-delay="0.3s">
+              <div className="col-md-3 col-sm-6" data--delay="0.3s">
                 <div className="team-member">
                   <div className="image">
                     <span>
