@@ -39,6 +39,9 @@ class NavBarComponent extends React.Component
                       <li>
                         <a href="#portfolio">Projets</a>
                       </li>
+                      {/* <li>
+                        <a href="#youtube">Youtube</a>
+                      </li> */}
                       <li>
                         <a href="#team">Certificats</a>
                       </li>

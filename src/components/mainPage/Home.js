@@ -10,6 +10,7 @@ import FooterComponent from "./footer/FooterComponent";
 import TechnosComponent from "./technos/TechnosComponent";
 import ProjectModalComponent from "./modals/ProjectModalComponent";
 import ModalCertificateComponent from "./modals/ModalCertificateComponent";
+import YoutubeComponent from "./youtube/YoutubeComponent"
 
   
 
@@ -28,6 +29,7 @@ class HomeComponent extends React.Component {
             <ServicesComponent/>
             <TechnosComponent/>
             <ProjectsComponent/>
+            {/* <YoutubeComponent/> */}
             <CertificateComponent/>
             <ContactComponent/>
             <FooterComponent/>

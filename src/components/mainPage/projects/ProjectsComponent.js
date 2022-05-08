@@ -26,7 +26,7 @@ class ProjectsComponent extends React.Component {
                 </div>
                 <div className="container-fluid">
                     <div className="row no-space">
-                        <div className="col-sm-4 col-md-3 wow  fadeIn proj_cont" data-wow-delay="1s">
+                        <div className="col-sm-4 col-md-3 wow  fadeIn proj_cont" data-wow-delay="0.5s">
                             <div className="box container_projects myImg"
                                 src="https://www.youtube.com/embed/MMcLG38PGpg?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
                                 <img src={portfolio1} alt="A" className="img-responsive image_projects" />
@@ -37,7 +37,7 @@ class ProjectsComponent extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="0.5s">
+                        <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="0.6s">
                             <div className="box container_projects myImg"
                                 src="https://www.youtube.com/embed/1GwCBL1BT-c?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
                                 <span>
@@ -50,7 +50,7 @@ class ProjectsComponent extends React.Component {
                                 </span>
                             </div>
                         </div>
-                        <div className="col-sm-4 col-md-3 wow  fadeIn" data-wow-delay="2s">
+                        <div className="col-sm-4 col-md-3 wow  fadeIn" data-wow-delay="0.7s">
                             <div className="box container_projects myImg"
                                 src="https://www.youtube.com/embed/TTJSpGh9HS0?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
                                 <span>
@@ -63,7 +63,7 @@ class ProjectsComponent extends React.Component {
                                 </span>
                             </div>
                         </div>
-                        <div className="col-sm-4 col-md-3 fadeIn" data-wow-delay="1.5s">
+                        <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="0.8s">
                             <div className="box container_projects myImg"
                                 src="https://www.youtube.com/embed/T4OP0vfMBvs">
                                 <span>
@@ -76,7 +76,7 @@ class ProjectsComponent extends React.Component {
                                 </span>
                             </div>
                         </div>
-                        <div className="col-sm-4 col-md-3 wow fadeIn proj_cont" data-wow-delay="2.5s">
+                        <div className="col-sm-4 col-md-3 wow fadeIn proj_cont" data-wow-delay="0.9s">
                             <div className="box container_projects myImg"
                                 src={emsilogo}>
                                 <span>
@@ -89,7 +89,7 @@ class ProjectsComponent extends React.Component {
                                 </span>
                             </div>
                         </div>
-                        <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="1.4s">
+                        <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="1s">
                             <div className="box container_projects myImg"
                                 src={cartevisite}>
                                 <span>
@@ -102,7 +102,7 @@ class ProjectsComponent extends React.Component {
                                 </span>
                             </div>
                         </div>
-                        <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="0.8s">
+                        <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="1.1s">
                             <div className="box container_projects myImg"
                                 src="https://www.youtube.com/embed/AoWIRsiXsjg?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
                                 <span>
@@ -115,7 +115,7 @@ class ProjectsComponent extends React.Component {
                                 </span>
                             </div>
                         </div>
-                        <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="2.9s">
+                        <div className="col-sm-4 col-md-3 wow fadeIn" data-wow-delay="1.2s">
                             <div className="box container_projects myImg"
                                 src="https://www.youtube.com/embed/fXSdZC25LOU?list=PLJe5vGB_oTiqAXMyq7hCkR40ZzLknioeV">
                                 <span>
