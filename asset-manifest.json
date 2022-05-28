@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.bca0c557.chunk.css",
-    "main.js": "/static/js/main.75462913.chunk.js",
-    "main.js.map": "/static/js/main.75462913.chunk.js.map",
+    "main.css": "/static/css/main.25b9ac24.chunk.css",
+    "main.js": "/static/js/main.8362b281.chunk.js",
+    "main.js.map": "/static/js/main.8362b281.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.06b5035f.js",
     "runtime-main.js.map": "/static/js/runtime-main.06b5035f.js.map",
     "static/js/2.5663c6e5.chunk.js": "/static/js/2.5663c6e5.chunk.js",
     "static/js/2.5663c6e5.chunk.js.map": "/static/js/2.5663c6e5.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.bca0c557.chunk.css.map": "/static/css/main.bca0c557.chunk.css.map",
+    "static/css/main.25b9ac24.chunk.css.map": "/static/css/main.25b9ac24.chunk.css.map",
     "static/js/2.5663c6e5.chunk.js.LICENSE.txt": "/static/js/2.5663c6e5.chunk.js.LICENSE.txt",
     "static/media/cartevisite.55753bea.png": "/static/media/cartevisite.55753bea.png",
     "static/media/compilation.9204e340.png": "/static/media/compilation.9204e340.png",
@@ -46,7 +46,7 @@
   "entrypoints": [
     "static/js/runtime-main.06b5035f.js",
     "static/js/2.5663c6e5.chunk.js",
-    "static/css/main.bca0c557.chunk.css",
-    "static/js/main.75462913.chunk.js"
+    "static/css/main.25b9ac24.chunk.css",
+    "static/js/main.8362b281.chunk.js"
   ]
 }

@@ -1,3 +1,26 @@
+const video = document.querySelector('#introVideo');
+
+const backGround = document.querySelector('#backLoader');
+const backGroundImg = document.querySelector('#backLoaderImg');
+setTimeout(function () {
+  backGround.style.display='none';
+}, 5000);
+
+video.addEventListener('play', (event) => {
+ 
+  
+  setTimeout(function () {
+    backGroundImg.style.display='none';
+    backGround.style.opacity='0';
+  
+}, 1500);
+setTimeout(function () {
+  backGround.style.display='none';
+}, 3000);
+  console.log('The Boolean paused property is now false. Either the ' +
+  'play() method was called or the autoplay attribute was toggled.');
+});
+
 // Get the modal
 var modal = document.getElementById("myModal");
 
