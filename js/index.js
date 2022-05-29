@@ -8,6 +8,9 @@ const bg2 = document.querySelector('#bg2');
 const bg3 = document.querySelector('#bg3');
 setTimeout(function () {
   backGround.style.display='none';
+  bg1.style.display='none';
+  bg2.style.display='none';
+  bg3.style.display='none';
 }, 5000);
 
 video.addEventListener('play', (event) => {
@@ -24,8 +27,8 @@ video.addEventListener('play', (event) => {
 setTimeout(function () {
   backGround.style.display='none';
   bg1.style.display='none';
-    bg2.style.display='none';
-    bg3.style.display='none';
+  bg2.style.display='none';
+  bg3.style.display='none';
 }, 3000);
 });
 
