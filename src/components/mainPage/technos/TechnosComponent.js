@@ -29,6 +29,11 @@ class TechnosComponent extends React.Component {
               <TechnoComponent srcImg={techno6} altImg="" titleHref="/photoshop" title="Photoshop" />
               <TechnoComponent srcImg={techno7} altImg="" titleHref="/uml" title="UML" />
               <TechnoComponent srcImg={techno8} altImg="" titleHref="/linux" title="Linux" />
+              <div className="row"></div>
+              <TechnoComponent srcImg={techno5} altImg="" titleHref="/spring" title="Spring" />
+              <TechnoComponent srcImg={techno6} altImg="" titleHref="/photoshop" title="Photoshop" />
+              <TechnoComponent srcImg={techno7} altImg="" titleHref="/uml" title="UML" />
+              <TechnoComponent srcImg={techno8} altImg="" titleHref="/linux" title="Linux" />
             </div>
           </div>
         </div>

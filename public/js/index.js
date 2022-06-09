@@ -1,3 +1,37 @@
+const video = document.querySelector('#introVideo');
+
+const backGround = document.querySelector('#backLoader');
+const backGroundImg = document.querySelector('#backLoaderImg');
+
+const bg1 = document.querySelector('#bg1');
+const bg2 = document.querySelector('#bg2');
+const bg3 = document.querySelector('#bg3');
+setTimeout(function () {
+  backGround.style.display='none';
+  bg1.style.display='none';
+  bg2.style.display='none';
+  bg3.style.display='none';
+}, 5000);
+
+video.addEventListener('play', (event) => {
+ 
+  
+  setTimeout(function () {
+    backGroundImg.style.display='none';
+    backGround.style.opacity='0';
+    bg1.style.opacity='0';
+    bg2.style.opacity='0';
+    bg3.style.opacity='0';
+  
+}, 1500);
+setTimeout(function () {
+  backGround.style.display='none';
+  bg1.style.display='none';
+  bg2.style.display='none';
+  bg3.style.display='none';
+}, 3000);
+});
+
 // Get the modal
 var modal = document.getElementById("myModal");
 

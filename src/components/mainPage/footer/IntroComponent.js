@@ -19,9 +19,15 @@ class IntroComponent extends React.Component {
     return(
     <div id="intro" className="section intro image-background  active">
       <div className="overlay">
-      <video id="myVideo" autoPlay loop muted>
+      <div class="bg" id="bg1"></div>
+      <div class="bg bg2" id="bg2"></div>
+      <div class="bg bg3" id="bg3"></div>
+       <div id="backLoader">
+        <img id="backLoaderImg" class="animate-flicker" src={logoFire}></img>
+      </div> 
+      <video id="introVideo" autoPlay loop muted>
        <source src={videoBack} type="video/mp4"/>
-    </video>
+      </video>
       </div>
       <div className="content">
         <div className="container clearfix">
