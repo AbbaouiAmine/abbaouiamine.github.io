@@ -1,24 +1,28 @@
 import React from 'react'
 import ServiceComponent from './ServiceComponent';
+import { Translation } from 'react-i18next';
+import i18next from '../../../i18n'
+import { withTranslation } from 'react-i18next'
 
 class ServicesComponent extends React.Component {
+    
+   
     render() {
         return (
             <section id="services" className="section section-gray ">
                 <div className="container clearfix">
                     <div className="row services">
                         <div className="col-md-12">
-                            <h2 className="heading">Services</h2>
+                            <Translation>{t => <h2 className="heading">{t('services')}</h2>}</Translation>
                             <div className="row">
-                                <ServiceComponent title="La création et la conception des sites web" description="La création de site web inclura toutes les fonctions de base et avancées que vous souhaitez." icon="ti-desktop"/>
-                                <ServiceComponent title="Développement d'applications de bureau" description="Afin d'utiliser de la façon la plus efficace possible les ressources à disposition." icon="ti-printer"/>
-                                <ServiceComponent title="Création et conception des applications mobiles." description="Vous permettre de mettre toutes les fonctionnalités des smartphones au service de votre business." icon="ti-search"/>
+                                <ServiceComponent title={i18next.t('servicet1')} description={i18next.t('servicetxt1')} icon="ti-desktop"/>
+                                <ServiceComponent title={i18next.t('servicet2')}  description={i18next.t('servicetxt2')}  icon="ti-printer"/>
+                                <ServiceComponent title={i18next.t('servicet3')}  description={i18next.t('servicetxt3')} icon="ti-search"/>
                             </div>
                             <div className="row">
-                            <ServiceComponent title="Création des cartes de visite." description="Démarquez-vous en créant vos propres cartes de visite avec une conception personnalisée." icon="ti-comments"/>
-                            <ServiceComponent title="Création des logos professionnels" description="Grande sélection de logos. Chaque logo est personnalisé pour votre organisation ou votre société." icon="ti-email"/>
-                            <ServiceComponent title="Création des affiches publicitaires" description="Création graphique d'affiche pour votre communication, adapté à votre message et votre charte
-                                        graphique." icon="ti-layout-sidebar-left"/>
+                            <ServiceComponent title={i18next.t('servicet4')}  description={i18next.t('servicetxt4')} icon="ti-comments"/>
+                            <ServiceComponent title={i18next.t('servicet5')}  description={i18next.t('servicetxt5')} icon="ti-email"/>
+                            <ServiceComponent title={i18next.t('servicet6')}  description={i18next.t('servicetxt6')}  icon="ti-layout-sidebar-left"/>
                             </div>
                         </div>
                     </div>
@@ -28,4 +32,4 @@ class ServicesComponent extends React.Component {
     }
 }
 
-export default ServicesComponent;
+export default withTranslation()(ServicesComponent);

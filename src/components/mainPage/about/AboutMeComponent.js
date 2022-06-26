@@ -1,6 +1,7 @@
 import React from 'react';
 import profilImg from'../../../img/template-homepage.jpg';
-;
+import { Translation } from 'react-i18next';
+
 class AboutMeComponent extends React.Component {
 
     render() {
@@ -9,43 +10,33 @@ class AboutMeComponent extends React.Component {
                 <div className="container clearfix">
                     <div className="row margin-bottom">
                         <div className="col-md-8 margin-bottom  bounceInDown">
-                            <h2 className="heading">À propos</h2>
-                            <p className="lead">Je suis spécialisé dans la conception des logiciels de gestion. J'ai développé mon activité
-                            depuis 2015 autour
-                            des différentes prestations de services informatiques dédiées aux entreprises. Je suis à votre écoute pour
-                            vous
-                            conseiller et vous orienter au mieux vers des solutions logicielles adaptées à votre profession et à vos
-                            besoins.
-            Nous pouvons nous rencontrer pour discuter de vos projets.</p>
+                            <Translation>{t => <h2 className="heading">{t('about')}</h2>}</Translation>
+            <Translation>{t => <p className="lead">{t('abouttext')}</p>}</Translation>
                             <div className="row">
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5>
-                                        <i className="fa fa-arrows"></i>Une analyse et conception sur mesure.</h5>
-                                    <p>Un travail d’étude mené en amont de nos projets afin de comprendre et analyser les habitudes et les
-                                    besoins
-                                    des
-                utilisateurs.</p>
+                                        <i className="fa fa-arrows"></i>
+                                        <Translation>{t => <span>{t('aboutt1')}</span>}</Translation>
+                                        </h5>
+                                        
+                                        <Translation>{t => <p>{t('abouttxt1')}</p>}</Translation>
                                 </div>
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5>
-                                        <i className="fa fa-image"></i>Une methode de travail professionelle.</h5>
-                                    <p>Je dispose des compétences professionnelles adaptées à la gestion des projets informatiques.</p>
+                                        <i className="fa fa-image"></i><Translation>{t => <span>{t('aboutt2')}</span>}</Translation></h5>
+                                        <Translation>{t => <p>{t('abouttxt2')}</p>}</Translation>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5>
-                                        <i className="fa fa-life-ring"></i>Des technologies adaptées à l'entreprise.</h5>
-                                    <p>Mes connaissances sur les techniques de développement me conduisent à proposer des solutions au service
-                                    informatique
-                de l'entreprise.</p>
+                                        <i className="fa fa-life-ring"></i><Translation>{t => <span>{t('aboutt3')}</span>}</Translation></h5>
+                                        <Translation>{t => <p>{t('abouttxt3')}</p>}</Translation>
                                 </div>
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5>
-                                        <i className="fa fa-trophy"></i>Un design modern et adaptatif.</h5>
-                                    <p>La conception des interfaces soignées et intuitives sur un outil logiciel ou web pour un résultat d’une
-                                    grande
-                simplicité d’utilisation (UI/UX).</p>
+                                        <i className="fa fa-trophy"></i><Translation>{t => <span>{t('aboutt4')}</span>}</Translation></h5>
+                                        <Translation>{t => <p>{t('abouttxt4')}</p>}</Translation>
                                 </div>
                             </div>
                         </div>
@@ -55,8 +46,8 @@ class AboutMeComponent extends React.Component {
                             </p> */}
                             <div className="card">
                                 <img src={profilImg} alt="John" style={{width:'100%'}} />
-                                <h1 className="name">Amine ABBAOUI</h1>
-                                <p className="title">Développeur & Graphic Designer</p>
+                                <Translation>{t => <h1 className="name">{t('aboutname')}</h1>}</Translation>
+                                <Translation>{t => <p className="title">{t('aboutprofil')}</p>}</Translation>
                                 <div style={{margin: '11px 0',fontSize: '29px'}}>
                                     <a href="#contact" ><i className="fa fa-heart-o"></i></a>
                                 </div>

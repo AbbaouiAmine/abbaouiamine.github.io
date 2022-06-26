@@ -1,6 +1,7 @@
 
 import React from 'react';
 import logo from '../../../img/logo.png'
+import { Translation } from 'react-i18next';
 
 class NavBarComponent extends React.Component
 {
@@ -24,29 +25,33 @@ class NavBarComponent extends React.Component
                   </div>
                   <div id="navigation" className="collapse navbar-collapse">
                     <ul className="nav navbar-nav navbar-right">
-                      <li className="active">
-                        <a href="#intro">Accueil</a>
+                      <li className="active"> 
+
+                        <Translation>{t => <a href="#intro">{t('home')}</a>}</Translation>
+                      </li>
+                      <li>  
+                        <Translation>{t => <a href="#about">{t('about')}</a>}</Translation>
                       </li>
                       <li>
-                        <a href="#about">À propos </a>
+                        <Translation>{t => <a href="#services">{t('services')}</a>}</Translation>
+                        
                       </li>
                       <li>
-                        <a href="#services">Services</a>
+                        <Translation>{t => <a href="#techno">{t('technos')}</a>}</Translation>
+                        
                       </li>
-                      <li>
-                        <a href="#techno">Technologies</a>
-                      </li>
-                      <li>
-                        <a href="#portfolio">Projets</a>
+                      <li> 
+                        <Translation>{t => <a href="#portfolio">{t('projects')}</a>}</Translation>
+                        
                       </li>
                       {/* <li>
                         <a href="#youtube">Youtube</a>
                       </li> */}
                       <li>
-                        <a href="#team">Certificats</a>
+                        <Translation>{t => <a href="#team">{t('certificats')}</a>}</Translation>
                       </li>
-                      <li>
-                        <a href="#contact">Contact</a>
+                      <li>  
+                        <Translation>{t => <a href="#contact">{t('contact')}</a>}</Translation>
                       </li>
                     </ul>
                   </div>

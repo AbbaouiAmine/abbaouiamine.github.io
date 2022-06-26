@@ -2,9 +2,16 @@ import React from 'react';
 import videoBack from '../../../img/video.mp4'
 import logoFire from '../../../img/logoFire.png'
 import logoTitle from '../../../img/logoTitle.png'
+import english from '../../../img/english.png'
+import frensh from '../../../img/france.png'
+import arabic from '../../../img/arabic.png'
+import { Translation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 
 class IntroComponent extends React.Component {
+
 
   constructor() {
     super();
@@ -12,9 +19,92 @@ class IntroComponent extends React.Component {
       titre: "BIENVENUE SUR MA MAISON NUMÉRIQUE",
       nom :"ABBAOUI",
       prenom:"Amine",
-      profil:"Ingénieur logiciel"
+      profil:"Ingénieur logiciel",
+      selectlang:'',
+      selectlangicon:'select-lang-en',
+      lang:'English'
     };
+
+    this.hadleSelectLang = this.hadleSelectLang.bind(this);
+    this.handleLang = this.handleLang.bind(this);
+
+    
   }
+
+  handleClickfr(e) {
+              i18next.changeLanguage('fr', (err, t) => {
+               if (err) return console.log('something went wrong loading', err);
+                        t('key'); // -> same as i18next.t
+                        });
+  }
+
+  handleClickeng(e) {
+    i18next.changeLanguage('en', (err, t) => {
+     if (err) return console.log('something went wrong loading', err);
+              t('key'); // -> same as i18next.t
+              });
+}
+
+handleLang(lang)
+{
+  console.log(lang);
+  this.setState({
+    selectlang:''
+  });
+  if(lang=='en')
+  {
+    this.setState({
+      lang:'English',
+      selectlangicon:'select-lang-en'
+    });
+
+    i18next.changeLanguage('en', (err, t) => {
+      if (err) return console.log('something went wrong loading', err);
+               t('key'); // -> same as i18next.t
+               });
+  }
+  else if(lang=='fr')
+  {
+    this.setState({
+      lang:'Français',
+      selectlangicon:'select-lang-fr'
+    });
+
+    i18next.changeLanguage('fr', (err, t) => {
+      if (err) return console.log('something went wrong loading', err);
+               t('key'); // -> same as i18next.t
+               });
+  }
+  else if('ar')
+  {
+    this.setState({
+      lang:'العربية',
+      selectlangicon:'select-lang-ar'
+    });
+
+    i18next.changeLanguage('ar', (err, t) => {
+      if (err) return console.log('something went wrong loading', err);
+               t('key'); // -> same as i18next.t
+               });
+  }
+}
+
+hadleSelectLang(e)
+{
+  if(this.state.selectlang!='menu-show')
+  {
+    this.setState({
+      selectlang:'menu-show'
+    });
+  }
+  else{
+    this.setState({
+      selectlang:''
+    });
+  }
+  
+}
+  
   render() {
     return(
     <div id="intro" className="section intro image-background  active">
@@ -29,16 +119,50 @@ class IntroComponent extends React.Component {
        <source src={videoBack} type="video/mp4"/>
       </video>
       </div>
+      <div>
+      <div class="lang-menu">
+                <div onClick={this.hadleSelectLang} className={this.state.selectlangicon+" "+'selected-lang'}>
+                    <span class='selectword'>{this.state.lang}</span>
+                </div>
+                <ul className={this.state.selectlang}>
+                    <li onClick={() => this.handleLang('en')}>
+                        <a class="en">English</a>
+                    </li>
+                    <li onClick={() => this.handleLang('fr')}>
+                        <a  class="fr">Français</a>
+                    </li>
+                    <li onClick={() => this.handleLang('ar')}>
+                        <a  class="ar">العربية</a>
+                    </li>
+                </ul>
+                
+    </div>
+      </div>
       <div className="content">
         <div className="container clearfix">
           <div className="row">
             <div className="col-md-8 col-md-offset-2 col-sm-12 wow zoomIn">
-              <p className="roboto">{this.state.titre}</p>
+            <div className="language-select">
+        
+    </div>
+    
+             
+              <Translation>
+      {
+        t => <p className="roboto">{t('title')} </p>
+      }
+    </Translation>
+    
               <img src={logoFire} id="logoFire" class="wow fadeInDown"/>
               <br/>
               <img src={logoTitle} id="logoTitle" class="wow fadeInDown"/>
               
-              <p className="roboto">{this.state.profil}</p>
+             
+              <Translation>{t => <p className="roboto">{t('profil')} </p>}</Translation>
+              <p className="roboto">  
+     
+
+    </p>
             </div>
           </div>
         </div>
@@ -49,5 +173,7 @@ class IntroComponent extends React.Component {
     </div>);
   }
 }
+
+
 
 export default IntroComponent;

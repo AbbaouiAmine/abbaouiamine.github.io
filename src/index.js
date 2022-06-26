@@ -8,6 +8,7 @@ import styleDefault from "./css/style.default.css";
 import themify from "./css/themify-icons.css"
 import HibernateComponent from './components/hibernateCourse/HibernateComponent';
 import JavaComponent from './components/javaCourse/JavaComponent';
+import "./i18n";
 
 ReactDOM.render(
   <Router history={history}>

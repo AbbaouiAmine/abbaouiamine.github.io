@@ -9,6 +9,7 @@ import portfolio7 from '../../../img/portfolio-7.png'
 import portfolio8 from '../../../img/portfolio-8.png'
 import emsilogo from '../../../img/emsilogo.png'
 import cartevisite from '../../../img/cartevisite.png'
+import { Translation } from 'react-i18next';
 
 class ProjectsComponent extends React.Component {
 
@@ -18,9 +19,9 @@ class ProjectsComponent extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <h2 className="heading">Projets</h2>
-                            <p className="text-center">Trois domaines d'activité : Les applications web, les applications desktop et les
-            applications mobile.</p>
+                        <Translation>{t => <h2 className="heading">{t('projects')}</h2>}</Translation>
+                        
+                        <Translation>{t => <p className="text-center">{t('projectstitle')}</p>}</Translation>
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,7 @@
 import React from 'react'
+import { Translation } from 'react-i18next';
+import i18next from '../../../i18n'
+import { withTranslation } from 'react-i18next'
 
 class FooterComponent extends React.Component{
 
@@ -9,8 +12,8 @@ class FooterComponent extends React.Component{
     <div className="container" id="footercopy">
       <div className="row copyright">
         <div className="col-md-4">
-          <p className="roboto"><i className="fa fa-phone-square"></i> Tel : +212630897665</p>
-          <p className="roboto"><i className="fa fa-envelope-o"></i> Email : abbaouiamine@outlook.com</p>
+          <p className="roboto"><i className="fa fa-phone-square"></i> {i18next.t('tel')} : +212630897665</p>
+          <p className="roboto"><i className="fa fa-envelope-o"></i> {i18next.t('email')} : contact@amineabbaoui.com</p>
         </div>
         <div className="col-md-5">
           <p className="roboto"><a className="link_roboto" href="https://github.com/AbbaouiAmine">
@@ -19,12 +22,12 @@ class FooterComponent extends React.Component{
               Git : github.com/AbbaouiAmine
             </a>
           </p>
-          <p className="roboto"><a className="link_roboto" href="https://pragma-code.blogspot.com/"><i className="fa fa-list-alt"></i> Blog :
+          <p className="roboto"><a className="link_roboto" href="https://pragma-code.blogspot.com/"><i className="fa fa-list-alt"></i> {i18next.t('blog')} :
             pragma-code.blogspot.com</a></p>
         </div>
         <div className="col-md-3">
-          <p className="credit roboto"><i className="fa fa-briefcase"></i> Développeur informatique</p>
-          <p className="roboto"><i className="fa fa-copyright"></i> 2020 ABBAOUI Amine</p>
+          <p className="credit roboto"><i className="fa fa-briefcase"></i> {i18next.t('profil')}</p>
+          <p className="roboto"><i className="fa fa-copyright"></i> {i18next.t('copyright')}</p>
         </div>
       </div>
     </div>
@@ -33,4 +36,4 @@ class FooterComponent extends React.Component{
     }
 }
 
-export default FooterComponent;
+export default withTranslation()(FooterComponent);

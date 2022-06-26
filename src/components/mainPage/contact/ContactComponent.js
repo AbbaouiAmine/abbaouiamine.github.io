@@ -1,4 +1,8 @@
 import React from 'react'
+import { Translation } from 'react-i18next';  
+import { withTranslation } from 'react-i18next'
+import i18next from '../../../i18n'
+
 class ContactComponent extends React.Component
 {
 render(){
@@ -7,7 +11,7 @@ render(){
     <div className="container clearfix">
       <div className="row">
         <div className="col-md-12">
-          <h2 className="heading">Contact</h2>
+          <Translation>{t => <h2 className="heading">{t('contact')}</h2>}</Translation>
           <div className="row" id="conactcenter">
             <div className="col-md-6">
               <form id="contact-form" method="post" action="https://formspree.io/f/abbaouiamine.r@gmail.com"
@@ -16,40 +20,38 @@ render(){
                   <div className="row">
                     <div className="col-sm-6  ">
                       <div className="form-group">
-                        <label htmlFor="name">Nom *</label>
-                        <input type="text" name="name" id="name" placeholder="Entrez votre nom de famille"
+                        <label htmlFor="name">{i18next.t('name')} *</label>
+                        <input type="text" name="name" id="name" placeholder={i18next.t('nameph')}
                           required="required" className="form-control"/>
                       </div>
                     </div>
                     <div className="col-sm-6">
                       <div className="form-group">
-                        <label htmlFor="surname">Prénom *</label>
-                        <input type="text" name="surname" id="surname" placeholder="Entrez votre prénom"
+                        <label htmlFor="surname">{i18next.t('firstname')}*</label>
+                        <input type="text" name="surname" id="surname" placeholder={i18next.t('firstnameph')}
                           required="required" className="form-control"/>
                       </div>
                     </div>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="email">Email *</label>
-                    <input type="email" name="email" id="email" placeholder="Entrer votre Email" required="required"
+                    <label htmlFor="email">{i18next.t('email')} *</label>
+                    <input type="email" name="email" id="email" placeholder={i18next.t('emailph')} required="required"
                       className="form-control"/>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="message">Message pour moi *</label>
-                    <textarea rows="4" name="message" id="message" placeholder="Entrez votre message"
+                    <label htmlFor="message">{i18next.t('message')} *</label>
+                    <textarea rows="4" name="message" id="message" placeholder={i18next.t('messageph')}
                       required="required" className="form-control"></textarea>
                   </div>
                   <div className="text-center">
-                    <input type="submit" value="Envoyer le message" className="btn btn-primary btn-block"/>
+                    <input type="submit" value={i18next.t('send')} className="btn btn-primary btn-block"/>
                   </div>
                 </div>
               </form>
             </div>
             <div className="col-md-6 wow fadeIn">
-              <p>Pour me contacter, rien de plus simple! Remplissez tout simplement le formulaire et je vous contacterai
-                le
-                plus rapidement possible. </p>
-              <p>Vous pouvez aussi me contacter sur le réseau de votre choix: facebook ou LinkedIn .</p>
+              <p>{i18next.t('messagetxt1')}</p>
+              <p>{i18next.t('messagetxt2')}</p>
               <p className="social">
                 <a href="https://www.facebook.com/abbaouiamine" title="" className="facebook">
                   <i className="fa fa-facebook"></i>
@@ -68,4 +70,4 @@ render(){
 }
 }
 
-export default ContactComponent;
+export default withTranslation()(ContactComponent);

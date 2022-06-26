@@ -8,6 +8,10 @@ import person2Full from '../../../img/person-2-full.png'
 import person3Full from '../../../img/person-3-full.png'
 import person4Full from '../../../img/person-4-full.png'
 
+import { Translation } from 'react-i18next';
+import i18next from '../../../i18n'
+import { withTranslation } from 'react-i18next'
+
 class CertificateComponent extends React.Component {
 
   render() {
@@ -16,7 +20,7 @@ class CertificateComponent extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h2 className="heading">Certificats</h2>
+              <Translation>{t => <h2 className="heading">{t('certificats')}</h2>}</Translation>
               <div className="row"></div>
               <div className="col-md-3 col-sm-6" data--delay="0.3s">
                 <div className="team-member">
@@ -26,14 +30,14 @@ class CertificateComponent extends React.Component {
                     </span>
                   </div>
                   <h3>
-                    <a href="https://drive.google.com/file/d/10nyWaI989rxGP-pSKvwXIyph3aJgTuzG/view">Database Administration Fundamentals</a>
+                    <a href="https://drive.google.com/file/d/10nyWaI989rxGP-pSKvwXIyph3aJgTuzG/view">{i18next.t('certificatt1')}</a>
                   </h3>
 
                   <p className="role">Microsoft Technology Associate</p>
                   <div className="ligne">
                   </div>
                   <div className="text">
-                    <p>Ce certificat prouve que son propriétaire a rempli avec succès les exigences.</p>
+                    <p>{i18next.t('certificattxt1')}</p>
                   </div>
                 </div>
               </div>
@@ -45,32 +49,31 @@ class CertificateComponent extends React.Component {
                     </span>
                   </div>
                   <h3>
-                    <a href="https://drive.google.com/file/d/1SDeNkYimf_2frA5pG2Jpcc0uhANeLvdm/view">Développeur <br /> PHP <br /> certifié</a>
+                    <a href="https://drive.google.com/file/d/1SDeNkYimf_2frA5pG2Jpcc0uhANeLvdm/view">{i18next.t('certificatt2')}</a>
                   </h3>
                   <p className="role">W3SCHOOLS</p>
                   <div className="ligne">
                   </div>
                   <div className="text">
-                    <p>Cela certifie que le propriétaire de ce document a suivi les cours nécessaires avec une connaissance fondamentale du développement web.</p>
+                    <p>{i18next.t('certificattxt1')}</p>
                   </div>
                 </div>
               </div>
               <div className="col-md-3 col-sm-6   zoomIn" data--delay="0.3s">
-                <div className="team-member">
+                <div className="team-member"> 
                   <div className="image">
                     <span>
                       <img src={person3} path={person3Full} alt="" className="img-responsive myImg-cert" />
                     </span>
                   </div>
                   <h3>
-                    <a href="https://drive.google.com/file/d/1jrmQL0NvGcrlWe20Hl3z6qChXrFSp7Rc/view">Mobile App Design in
-                  Photoshop From Scratch</a>
+                    <a href="https://drive.google.com/file/d/1jrmQL0NvGcrlWe20Hl3z6qChXrFSp7Rc/view">{i18next.t('certificatt3')}</a>
                   </h3>
                   <p className="role">udemy</p>
                   <div className="ligne">
                   </div>
                   <div className="text">
-                    <p>Learn Complete UI/UX design by Photoshop from Scratch and Design Uber app from Scratch.</p>
+                    <p>{i18next.t('certificattxt1')}</p>
                   </div>
                 </div>
               </div>
@@ -82,14 +85,14 @@ class CertificateComponent extends React.Component {
                     </span>
                   </div>
                   <h3>
-                    <a href="https://drive.google.com/file/d/1byWukZHf3--FkBdujgLQnIZx3gTEqmEO/view">Gestion de projet Parcours Classique
+                    <a href="https://drive.google.com/file/d/1byWukZHf3--FkBdujgLQnIZx3gTEqmEO/view">{i18next.t('certificatt4')}
                 </a>
                   </h3>
                   <p className="role">Centralelille</p>
                   <div className="ligne">
                   </div>
                   <div className="text">
-                    <p>Le titulaire de cette attestation est capable de concevoir et piloter un projet, d’animer une réunion ... </p>
+                    <p>{i18next.t('certificatt4')} </p>
                   </div>
                 </div>
               </div>
@@ -102,4 +105,4 @@ class CertificateComponent extends React.Component {
 
 }
 
-export default CertificateComponent;
+export default withTranslation()(CertificateComponent);

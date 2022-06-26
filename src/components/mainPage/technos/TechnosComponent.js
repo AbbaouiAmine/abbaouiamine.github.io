@@ -8,6 +8,7 @@ import techno6 from '../../../img/techno-6.png'
 import techno7 from '../../../img/techno-7.png'
 import techno8 from '../../../img/techno-8.png'
 import TechnoComponent from './TechnoComponent'
+import { Translation } from 'react-i18next';
 
 class TechnosComponent extends React.Component {
 
@@ -17,18 +18,13 @@ class TechnosComponent extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h2 className="heading">Technologies</h2>
-              <p className="text-center">Une collection de technologies permettant de répondre aux besoins de votre système d'information.</p>
+              <Translation>{t => <h2 className="heading">{t('technos')}</h2>}</Translation>
+              <Translation>{t => <p className="text-center">{t('technotitle')}</p>}</Translation>
               <div className="row"></div>
               <TechnoComponent srcImg={techno1} altImg="Java" titleHref="/java" title="Java Standard Edition" />
               <TechnoComponent srcImg={techno2} altImg="Angular" titleHref="/angular" title="Framework Angular" />
               <TechnoComponent srcImg={techno3} altImg="" titleHref={window.origin+'/react'} title="React Js" />
               <TechnoComponent srcImg={techno4} altImg="" titleHref="android" title="Andoird" />
-              <div className="row"></div>
-              <TechnoComponent srcImg={techno5} altImg="" titleHref="/spring" title="Spring" />
-              <TechnoComponent srcImg={techno6} altImg="" titleHref="/photoshop" title="Photoshop" />
-              <TechnoComponent srcImg={techno7} altImg="" titleHref="/uml" title="UML" />
-              <TechnoComponent srcImg={techno8} altImg="" titleHref="/linux" title="Linux" />
               <div className="row"></div>
               <TechnoComponent srcImg={techno5} altImg="" titleHref="/spring" title="Spring" />
               <TechnoComponent srcImg={techno6} altImg="" titleHref="/photoshop" title="Photoshop" />
