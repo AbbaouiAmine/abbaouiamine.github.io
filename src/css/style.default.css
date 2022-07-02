@@ -1770,15 +1770,15 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
 }
 
 .select-lang-en:before{
-
+  margin-right: 5%;
   background-image: url(../img/english.png);
 }
 .select-lang-fr:before{
-
+  margin-right: 5%;
   background-image: url(../img/france.png);
 }
 .select-lang-ar:before{
-
+  margin-right: 5%;
   background-image: url(../img/arabic.png);
 }
 
@@ -1852,3 +1852,31 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
   margin-right: 7% !important;
 }
 
+.dirltr{
+  direction: ltr;
+}
+
+@font-face {
+  font-family: "arabicFont";
+  src: url("./fonts/DroidKufi-Regular.ttf");
+  }
+
+
+
+.arabicfont {
+  font-family: arabicFont !important;
+  letter-spacing: 0em;
+}
+
+
+.reverse_i{
+  transform: rotate(-180deg);
+}
+
+.reverse_ul{
+  transform: rotate(180deg);
+}
+
+
+  
+  

@@ -18,12 +18,12 @@ class TechnosComponent extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <Translation>{t => <h2 className="heading">{t('technos')}</h2>}</Translation>
-              <Translation>{t => <p className="text-center">{t('technotitle')}</p>}</Translation>
+              <Translation>{t => <h2 className={this.props.lang === 'ar'? 'arabicfont heading':'heading'}>{t('technos')}</h2>}</Translation>
+              <Translation>{t => <p className={this.props.lang === 'ar'? 'arabicfont text-center':'text-center'}>{t('technotitle')}</p>}</Translation>
               <div className="row"></div>
               <TechnoComponent srcImg={techno1} altImg="Java" titleHref="/java" title="Java Standard Edition" />
               <TechnoComponent srcImg={techno2} altImg="Angular" titleHref="/angular" title="Framework Angular" />
-              <TechnoComponent srcImg={techno3} altImg="" titleHref={window.origin+'/react'} title="React Js" />
+              <TechnoComponent srcImg={techno3} altImg="" titleHref={window.origin+'/git'} title="React Js" />
               <TechnoComponent srcImg={techno4} altImg="" titleHref="android" title="Andoird" />
               <div className="row"></div>
               <TechnoComponent srcImg={techno5} altImg="" titleHref="/spring" title="Spring" />

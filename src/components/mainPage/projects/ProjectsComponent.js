@@ -19,9 +19,9 @@ class ProjectsComponent extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                        <Translation>{t => <h2 className="heading">{t('projects')}</h2>}</Translation>
+                        <Translation>{t => <h2 className={this.props.lang === 'ar'? 'arabicfont heading':'heading'}>{t('projects')}</h2>}</Translation>
                         
-                        <Translation>{t => <p className="text-center">{t('projectstitle')}</p>}</Translation>
+                        <Translation>{t => <p  className={this.props.lang === 'ar'? 'arabicfont text-center':'text-center'}>{t('projectstitle')}</p>}</Translation>       
                         </div>
                     </div>
                 </div>

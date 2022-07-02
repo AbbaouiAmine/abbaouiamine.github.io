@@ -31,8 +31,8 @@ const resources = {
 
       "servicet1":"DESIGN AND CREATION OF WEBSITES",
       "servicet2":"DESKTOP APPLICATION DEVELOPMENT",
-      "servicet3":"CRÉATION ET CONCEPTION DES APPLICATIONS MOBILES",
-      "servicet4":"CREATION AND DESIGN OF MOBILE APPLICATIONS",
+      "servicet3":"CREATION AND DESIGN OF MOBILE APPLICATIONS",
+      "servicet4":"CREATION OF BUSINESS CARDS",
       "servicet5":"DESIGN OF PROFESSIONAL LOGOS",
       "servicet6":"CREATION OF ADVERTISING POSTERS",
 
@@ -74,7 +74,7 @@ const resources = {
       "tel":"TEL",
       "git"  :"GIT",
       "blog":"BLOG",
-      "copyright":"2020 ABBAOUI AMINE",
+      "copyright":"2022 ABBAOUI AMINE",
 
     }
   },
@@ -151,7 +151,7 @@ const resources = {
       "tel":"TEL",
       "git"  :"GIT",
       "blog":"BLOG",
-      "copyright":"2020 ABBAOUI AMINE",
+      "copyright":"2022 ABBAOUI AMINE",
 
     }
   },
@@ -224,7 +224,7 @@ const resources = {
       "tel":"هاتف",
       "git"  :"GIT",
       "blog":"المدونة",
-      "copyright":"2020 أمين عباوي",
+      "copyright":"2022 أمين عباوي",
 
     }
   }

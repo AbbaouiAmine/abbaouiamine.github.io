@@ -15,26 +15,43 @@ import YoutubeComponent from "./youtube/YoutubeComponent"
   
 
 class HomeComponent extends React.Component {
+    
+    constructor() {
+        super();
+        this.state = {
+            lang: 'eng'
+        };
+        this.handleUpdtelang = this.handleUpdtelang.bind(this);
+    }
 
+    handleUpdtelang(lang) {
+        this.setState({
+            lang: lang
+        })
+      }
+   
     render() {
+
+ 
+
         require('../../css/style.default.css')
         require('../../css/animate.css')
         require('../../css/themify-icons.css')
         return (
             
             <div className="full">
-            <IntroComponent/>
-            <NavBarComponent/>
-            <AboutMeComponent/>
-            <ServicesComponent/>
-            <TechnosComponent/>
-            <ProjectsComponent/>
+            <IntroComponent lang={this.state.lang} handleUpdtelang={this.handleUpdtelang}/>
+            <NavBarComponent lang={this.state.lang}/>
+            <AboutMeComponent lang={this.state.lang}/>
+            <ServicesComponent lang={this.state.lang}/>
+            <TechnosComponent lang={this.state.lang}/>
+            <ProjectsComponent lang={this.state.lang}/>
             {/* <YoutubeComponent/> */}
-            <CertificateComponent/>
-            <ContactComponent/>
-            <FooterComponent/>
-            <ProjectModalComponent/>
-            <ModalCertificateComponent/>
+            <CertificateComponent lang={this.state.lang}/>
+            <ContactComponent lang={this.state.lang}/>
+            <FooterComponent lang={this.state.lang}/>
+            <ProjectModalComponent lang={this.state.lang}/>
+            <ModalCertificateComponent lang={this.state.lang}/>
             </div>
         );
     }

@@ -4,39 +4,43 @@ import { Translation } from 'react-i18next';
 
 class AboutMeComponent extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <section id="about" className="section section-withe">
                 <div className="container clearfix">
                     <div className="row margin-bottom">
                         <div className="col-md-8 margin-bottom  bounceInDown">
-                            <Translation>{t => <h2 className="heading">{t('about')}</h2>}</Translation>
-            <Translation>{t => <p className="lead">{t('abouttext')}</p>}</Translation>
+                            <Translation>{t => <h2 className={this.props.lang === 'ar'? 'arabicfont heading':'heading'}>{t('about')}</h2>}</Translation>
+            <Translation>{t => <p className={this.props.lang === 'ar'? 'arabicfont lead':'lead'}>{t('abouttext')}</p>}</Translation>
                             <div className="row">
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
-                                    <h5>
+                                    <h5 className={this.props.lang === 'ar'? 'arabicfont':''}>
                                         <i className="fa fa-arrows"></i>
                                         <Translation>{t => <span>{t('aboutt1')}</span>}</Translation>
                                         </h5>
                                         
-                                        <Translation>{t => <p>{t('abouttxt1')}</p>}</Translation>
+                                        <Translation>{t => <p className={this.props.lang === 'ar'? 'arabicfont':''}>{t('abouttxt1')}</p>}</Translation>
                                 </div>
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
-                                    <h5>
+                                    <h5 className={this.props.lang === 'ar'? 'arabicfont':''}>
                                         <i className="fa fa-image"></i><Translation>{t => <span>{t('aboutt2')}</span>}</Translation></h5>
-                                        <Translation>{t => <p>{t('abouttxt2')}</p>}</Translation>
+                                        <Translation>{t => <p className={this.props.lang === 'ar'? 'arabicfont':''}>{t('abouttxt2')}</p>}</Translation>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
-                                    <h5>
+                                    <h5 className={this.props.lang === 'ar'? 'arabicfont':''}>
                                         <i className="fa fa-life-ring"></i><Translation>{t => <span>{t('aboutt3')}</span>}</Translation></h5>
-                                        <Translation>{t => <p>{t('abouttxt3')}</p>}</Translation>
+                                        <Translation>{t => <p className={this.props.lang === 'ar'? 'arabicfont':''}>{t('abouttxt3')}</p>}</Translation>
                                 </div>
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
-                                    <h5>
+                                    <h5 className={this.props.lang === 'ar'? 'arabicfont':''}>
                                         <i className="fa fa-trophy"></i><Translation>{t => <span>{t('aboutt4')}</span>}</Translation></h5>
-                                        <Translation>{t => <p>{t('abouttxt4')}</p>}</Translation>
+                                        <Translation>{t => <p className={this.props.lang === 'ar'? 'arabicfont':''}>{t('abouttxt4')}</p>}</Translation>
                                 </div>
                             </div>
                         </div>
@@ -46,8 +50,8 @@ class AboutMeComponent extends React.Component {
                             </p> */}
                             <div className="card">
                                 <img src={profilImg} alt="John" style={{width:'100%'}} />
-                                <Translation>{t => <h1 className="name">{t('aboutname')}</h1>}</Translation>
-                                <Translation>{t => <p className="title">{t('aboutprofil')}</p>}</Translation>
+                                <Translation>{t => <h1 className={this.props.lang === 'ar'? 'arabicfont name':'name'}  >{t('aboutname')}</h1>}</Translation>
+                                <Translation>{t => <p className={this.props.lang === 'ar'? 'arabicfont title':'title'} >{t('aboutprofil')}</p>}</Translation>
                                 <div style={{margin: '11px 0',fontSize: '29px'}}>
                                     <a href="#contact" ><i className="fa fa-heart-o"></i></a>
                                 </div>

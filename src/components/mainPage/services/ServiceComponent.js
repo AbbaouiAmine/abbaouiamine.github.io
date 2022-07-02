@@ -1,6 +1,9 @@
 import React from 'react'
 class ServiceComponent extends React.Component {
   
+    constructor(props) {
+        super(props);
+    }
     render() {
         return (
             <div className="col-sm-4  zoomIn" data--delay="0.0">
@@ -8,8 +11,8 @@ class ServiceComponent extends React.Component {
                                         <div className="icon">
                                             <i className={this.props.icon}></i>
                                         </div>
-                                        <h4 className="heading">{this.props.title}</h4>
-                                        <p>{this.props.description}</p>
+                                        <h4 className={this.props.lang === 'ar'? 'arabicfont heading':'heading'}>{this.props.title}</h4>
+                                        <p className={this.props.lang === 'ar'? 'arabicfont':''}>{this.props.description}</p>
                                     </div>
                                 </div>
         );

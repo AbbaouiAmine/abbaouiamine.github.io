@@ -13,16 +13,16 @@ class ServicesComponent extends React.Component {
                 <div className="container clearfix">
                     <div className="row services">
                         <div className="col-md-12">
-                            <Translation>{t => <h2 className="heading">{t('services')}</h2>}</Translation>
+                            <Translation>{t => <h2 className={this.props.lang === 'ar'? 'arabicfont heading':'heading'}>{t('services')}</h2>}</Translation>
                             <div className="row">
-                                <ServiceComponent title={i18next.t('servicet1')} description={i18next.t('servicetxt1')} icon="ti-desktop"/>
-                                <ServiceComponent title={i18next.t('servicet2')}  description={i18next.t('servicetxt2')}  icon="ti-printer"/>
-                                <ServiceComponent title={i18next.t('servicet3')}  description={i18next.t('servicetxt3')} icon="ti-search"/>
+                                <ServiceComponent lang={this.props.lang} title={i18next.t('servicet1')} description={i18next.t('servicetxt1')} icon="ti-desktop"/>
+                                <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet2')}  description={i18next.t('servicetxt2')}  icon="ti-printer"/>
+                                <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet3')}  description={i18next.t('servicetxt3')} icon="ti-search"/>
                             </div>
                             <div className="row">
-                            <ServiceComponent title={i18next.t('servicet4')}  description={i18next.t('servicetxt4')} icon="ti-comments"/>
-                            <ServiceComponent title={i18next.t('servicet5')}  description={i18next.t('servicetxt5')} icon="ti-email"/>
-                            <ServiceComponent title={i18next.t('servicet6')}  description={i18next.t('servicetxt6')}  icon="ti-layout-sidebar-left"/>
+                            <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet4')}  description={i18next.t('servicetxt4')} icon="ti-comments"/>
+                            <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet5')}  description={i18next.t('servicetxt5')} icon="ti-email"/>
+                            <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet6')}  description={i18next.t('servicetxt6')}  icon="ti-layout-sidebar-left"/>
                             </div>
                         </div>
                     </div>

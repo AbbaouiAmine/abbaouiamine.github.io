@@ -20,7 +20,7 @@ class CertificateComponent extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <Translation>{t => <h2 className="heading">{t('certificats')}</h2>}</Translation>
+              <Translation>{t => <h2 className={this.props.lang === 'ar'? 'arabicfont heading':'heading'}>{t('certificats')}</h2>}</Translation>
               <div className="row"></div>
               <div className="col-md-3 col-sm-6" data--delay="0.3s">
                 <div className="team-member">
@@ -29,7 +29,7 @@ class CertificateComponent extends React.Component {
                       <img src={person1} path={person1Full} alt="" className="img-responsive myImg-cert" />
                     </span>
                   </div>
-                  <h3>
+                  <h3 className={this.props.lang === 'ar'? 'arabicfont':''}>
                     <a href="https://drive.google.com/file/d/10nyWaI989rxGP-pSKvwXIyph3aJgTuzG/view">{i18next.t('certificatt1')}</a>
                   </h3>
 
@@ -37,7 +37,7 @@ class CertificateComponent extends React.Component {
                   <div className="ligne">
                   </div>
                   <div className="text">
-                    <p>{i18next.t('certificattxt1')}</p>
+                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt1')}</p>
                   </div>
                 </div>
               </div>
@@ -48,14 +48,14 @@ class CertificateComponent extends React.Component {
                       <img src={person2} path={person2Full} alt="" className="img-responsive myImg-cert" />
                     </span>
                   </div>
-                  <h3>
+                  <h3 className={this.props.lang === 'ar'? 'arabicfont':''}>
                     <a href="https://drive.google.com/file/d/1SDeNkYimf_2frA5pG2Jpcc0uhANeLvdm/view">{i18next.t('certificatt2')}</a>
                   </h3>
                   <p className="role">W3SCHOOLS</p>
                   <div className="ligne">
                   </div>
                   <div className="text">
-                    <p>{i18next.t('certificattxt1')}</p>
+                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt1')}</p>
                   </div>
                 </div>
               </div>
@@ -66,14 +66,14 @@ class CertificateComponent extends React.Component {
                       <img src={person3} path={person3Full} alt="" className="img-responsive myImg-cert" />
                     </span>
                   </div>
-                  <h3>
+                  <h3 className={this.props.lang === 'ar'? 'arabicfont':''}>
                     <a href="https://drive.google.com/file/d/1jrmQL0NvGcrlWe20Hl3z6qChXrFSp7Rc/view">{i18next.t('certificatt3')}</a>
                   </h3>
                   <p className="role">udemy</p>
                   <div className="ligne">
                   </div>
                   <div className="text">
-                    <p>{i18next.t('certificattxt1')}</p>
+                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt1')}</p>
                   </div>
                 </div>
               </div>
@@ -84,7 +84,7 @@ class CertificateComponent extends React.Component {
                       <img src={person4} path={person4Full} alt="" className="img-responsive myImg-cert" />
                     </span>
                   </div>
-                  <h3>
+                  <h3 className={this.props.lang === 'ar'? 'arabicfont':''}>
                     <a href="https://drive.google.com/file/d/1byWukZHf3--FkBdujgLQnIZx3gTEqmEO/view">{i18next.t('certificatt4')}
                 </a>
                   </h3>
@@ -92,7 +92,7 @@ class CertificateComponent extends React.Component {
                   <div className="ligne">
                   </div>
                   <div className="text">
-                    <p>{i18next.t('certificatt4')} </p>
+                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificatt4')} </p>
                   </div>
                 </div>
               </div>

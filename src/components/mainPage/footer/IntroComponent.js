@@ -2,6 +2,7 @@ import React from 'react';
 import videoBack from '../../../img/video.mp4'
 import logoFire from '../../../img/logoFire.png'
 import logoTitle from '../../../img/logoTitle.png'
+import logoTitleArabic from '../../../img/logoTitleArabic.png'
 import english from '../../../img/english.png'
 import frensh from '../../../img/france.png'
 import arabic from '../../../img/arabic.png'
@@ -13,8 +14,8 @@ import i18next from 'i18next';
 class IntroComponent extends React.Component {
 
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props)
     this.state = {
       titre: "BIENVENUE SUR MA MAISON NUMÉRIQUE",
       nom :"ABBAOUI",
@@ -47,12 +48,14 @@ class IntroComponent extends React.Component {
 
 handleLang(lang)
 {
-  console.log(lang);
   this.setState({
     selectlang:''
   });
+
+
   if(lang=='en')
   {
+    document.dir = 'ltr';
     this.setState({
       lang:'English',
       selectlangicon:'select-lang-en'
@@ -62,9 +65,12 @@ handleLang(lang)
       if (err) return console.log('something went wrong loading', err);
                t('key'); // -> same as i18next.t
                });
+
+               this.props.handleUpdtelang('en');
   }
   else if(lang=='fr')
   {
+    document.dir = 'ltr';
     this.setState({
       lang:'Français',
       selectlangicon:'select-lang-fr'
@@ -74,9 +80,11 @@ handleLang(lang)
       if (err) return console.log('something went wrong loading', err);
                t('key'); // -> same as i18next.t
                });
+               this.props.handleUpdtelang('fr');     
   }
   else if('ar')
   {
+    document.dir = 'rtl';
     this.setState({
       lang:'العربية',
       selectlangicon:'select-lang-ar'
@@ -86,6 +94,7 @@ handleLang(lang)
       if (err) return console.log('something went wrong loading', err);
                t('key'); // -> same as i18next.t
                });
+               this.props.handleUpdtelang('ar');
   }
 }
 
@@ -120,9 +129,9 @@ hadleSelectLang(e)
       </video>
       </div>
       <div>
-      <div class="lang-menu">
+      <div class="lang-menu dirltr">
                 <div onClick={this.hadleSelectLang} className={this.state.selectlangicon+" "+'selected-lang'}>
-                    <span class='selectword'>{this.state.lang}</span>
+                    <span class='selectword'  className={document.dir === 'ltr' || !document.dir?'':'arabicfont'}>{this.state.lang}</span>
                 </div>
                 <ul className={this.state.selectlang}>
                     <li onClick={() => this.handleLang('en')}>
@@ -132,7 +141,7 @@ hadleSelectLang(e)
                         <a  class="fr">Français</a>
                     </li>
                     <li onClick={() => this.handleLang('ar')}>
-                        <a  class="ar">العربية</a>
+                        <a  className="arabicfont ar">العربية</a>
                     </li>
                 </ul>
                 
@@ -149,16 +158,16 @@ hadleSelectLang(e)
              
               <Translation>
       {
-        t => <p className="roboto">{t('title')} </p>
+        t => <p className={document.dir === 'ltr' || !document.dir?'roboto':'arabicfont'}>{t('title')} </p>
       }
     </Translation>
     
               <img src={logoFire} id="logoFire" class="wow fadeInDown"/>
               <br/>
-              <img src={logoTitle} id="logoTitle" class="wow fadeInDown"/>
+              <img src={this.props.lang === 'ar'?logoTitleArabic:logoTitle} id="logoTitle" class="wow fadeInDown"/>
               
              
-              <Translation>{t => <p className="roboto">{t('profil')} </p>}</Translation>
+              <Translation>{t => <p className={document.dir === 'ltr' || !document.dir?'roboto':'arabicfont'}>{t('profil')} </p>}</Translation>
               <p className="roboto">  
      
 
