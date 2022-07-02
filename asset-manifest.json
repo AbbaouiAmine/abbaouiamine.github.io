@@ -1,21 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.bcfa377e.chunk.css",
-    "main.js": "/static/js/main.e0d767e0.chunk.js",
-    "main.js.map": "/static/js/main.e0d767e0.chunk.js.map",
+    "main.css": "/static/css/main.366c91f3.chunk.css",
+    "main.js": "/static/js/main.4771bd08.chunk.js",
+    "main.js.map": "/static/js/main.4771bd08.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.06b5035f.js",
     "runtime-main.js.map": "/static/js/runtime-main.06b5035f.js.map",
     "static/js/2.7207110f.chunk.js": "/static/js/2.7207110f.chunk.js",
     "static/js/2.7207110f.chunk.js.map": "/static/js/2.7207110f.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.bcfa377e.chunk.css.map": "/static/css/main.bcfa377e.chunk.css.map",
+    "static/css/main.366c91f3.chunk.css.map": "/static/css/main.366c91f3.chunk.css.map",
     "static/js/2.7207110f.chunk.js.LICENSE.txt": "/static/js/2.7207110f.chunk.js.LICENSE.txt",
-    "static/media/style.default.css": "/static/media/english.3eda1b26.png",
+    "static/media/style.default.css": "/static/media/DroidKufi-Regular.475efa44.ttf",
     "static/media/cartevisite.55753bea.png": "/static/media/cartevisite.55753bea.png",
     "static/media/compilation.9204e340.png": "/static/media/compilation.9204e340.png",
     "static/media/emsilogo.d2d14191.png": "/static/media/emsilogo.d2d14191.png",
     "static/media/logoFire.27787e78.png": "/static/media/logoFire.27787e78.png",
     "static/media/logoTitle.e6b62c42.png": "/static/media/logoTitle.e6b62c42.png",
+    "static/media/logoTitleArabic.2c9f5787.png": "/static/media/logoTitleArabic.2c9f5787.png",
     "static/media/person-1-full.cbe5b9c7.png": "/static/media/person-1-full.cbe5b9c7.png",
     "static/media/person-1.f0b2cfd2.png": "/static/media/person-1.f0b2cfd2.png",
     "static/media/person-2-full.53ee3800.png": "/static/media/person-2-full.53ee3800.png",
@@ -34,8 +35,7 @@
     "static/media/portfolio-8.5accc663.png": "/static/media/portfolio-8.5accc663.png",
     "static/media/techno-1.89a8c1ef.png": "/static/media/techno-1.89a8c1ef.png",
     "static/media/techno-2.cc85ae7d.png": "/static/media/techno-2.cc85ae7d.png",
-    "static/media/techno-3.4d5dd9b5.png": "/static/media/techno-3.4d5dd9b5.png",
-    "static/media/techno-4.6bceec4a.png": "/static/media/techno-4.6bceec4a.png",
+    "static/media/techno-4.a0e7f595.png": "/static/media/techno-4.a0e7f595.png",
     "static/media/techno-5.511032e3.png": "/static/media/techno-5.511032e3.png",
     "static/media/techno-6.700026f2.png": "/static/media/techno-6.700026f2.png",
     "static/media/techno-7.28c78300.png": "/static/media/techno-7.28c78300.png",
@@ -47,7 +47,7 @@
   "entrypoints": [
     "static/js/runtime-main.06b5035f.js",
     "static/js/2.7207110f.chunk.js",
-    "static/css/main.bcfa377e.chunk.css",
-    "static/js/main.e0d767e0.chunk.js"
+    "static/css/main.366c91f3.chunk.css",
+    "static/js/main.4771bd08.chunk.js"
   ]
 }
