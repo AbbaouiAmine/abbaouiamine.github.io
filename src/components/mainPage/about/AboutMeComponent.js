@@ -20,26 +20,26 @@ class AboutMeComponent extends React.Component {
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5 className={this.props.lang === 'ar'? 'arabicfont':''}>
                                         <i className="fa fa-arrows"></i>
-                                        <Translation>{t => <span>{t('aboutt1')}</span>}</Translation>
+                                        <Translation>{t => <span className='title-ar-adp'>{t('aboutt1')}</span>}</Translation>
                                         </h5>
                                         
                                         <Translation>{t => <p className={this.props.lang === 'ar'? 'arabicfont':''}>{t('abouttxt1')}</p>}</Translation>
                                 </div>
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5 className={this.props.lang === 'ar'? 'arabicfont':''}>
-                                        <i className="fa fa-image"></i><Translation>{t => <span>{t('aboutt2')}</span>}</Translation></h5>
+                                        <i className="fa fa-image"></i><Translation>{t => <span className='title-ar-adp'>{t('aboutt2')}</span>}</Translation></h5>
                                         <Translation>{t => <p className={this.props.lang === 'ar'? 'arabicfont':''}>{t('abouttxt2')}</p>}</Translation>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5 className={this.props.lang === 'ar'? 'arabicfont':''}>
-                                        <i className="fa fa-life-ring"></i><Translation>{t => <span>{t('aboutt3')}</span>}</Translation></h5>
+                                        <i className="fa fa-life-ring"></i><Translation>{t => <span className='title-ar-adp'>{t('aboutt3')}</span>}</Translation></h5>
                                         <Translation>{t => <p className={this.props.lang === 'ar'? 'arabicfont':''}>{t('abouttxt3')}</p>}</Translation>
                                 </div>
                                 <div className="col-sm-6  bounceInLeft " data--delay="0.4s">
                                     <h5 className={this.props.lang === 'ar'? 'arabicfont':''}>
-                                        <i className="fa fa-trophy"></i><Translation>{t => <span>{t('aboutt4')}</span>}</Translation></h5>
+                                        <i className="fa fa-trophy"></i><Translation>{t => <span className='title-ar-adp'>{t('aboutt4')}</span>}</Translation></h5>
                                         <Translation>{t => <p className={this.props.lang === 'ar'? 'arabicfont':''}>{t('abouttxt4')}</p>}</Translation>
                                 </div>
                             </div>

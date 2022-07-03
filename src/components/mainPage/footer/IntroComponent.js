@@ -3,6 +3,7 @@ import videoBack from '../../../img/video.mp4'
 import logoFire from '../../../img/logoFire.png'
 import logoTitle from '../../../img/logoTitle.png'
 import logoTitleArabic from '../../../img/logoTitleArabic.png'
+import imagebackground from '../../../img/background.png'
 import english from '../../../img/english.png'
 import frensh from '../../../img/france.png'
 import arabic from '../../../img/arabic.png'
@@ -12,8 +13,6 @@ import i18next from 'i18next';
 
 
 class IntroComponent extends React.Component {
-
-
   constructor(props) {
     super(props)
     this.state = {
@@ -127,6 +126,7 @@ hadleSelectLang(e)
       <video id="introVideo" autoPlay loop muted>
        <source src={videoBack} type="video/mp4"/>
       </video>
+      <img className="background-img" src={imagebackground}/>
       </div>
       <div>
       <div class="lang-menu dirltr">

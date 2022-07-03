@@ -1782,6 +1782,7 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
   background-image: url(../img/arabic.png);
 }
 
+
 .lang-menu ul {
   z-index: 9999999;
   margin: 0;
@@ -1877,6 +1878,31 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
   transform: rotate(180deg);
 }
 
+.background-img {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -101;
+  transform: translateX(-50%) translateY(-50%);
+  background-size: cover;
+}
+
+
+.title-ar-adp {
+  margin-right: 1%;
+  margin-left: 0.5%;
+}
 
   
   

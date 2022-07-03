@@ -31,14 +31,10 @@ class HomeComponent extends React.Component {
       }
    
     render() {
-
- 
-
         require('../../css/style.default.css')
         require('../../css/animate.css')
         require('../../css/themify-icons.css')
-        return (
-            
+        return (     
             <div className="full">
             <IntroComponent lang={this.state.lang} handleUpdtelang={this.handleUpdtelang}/>
             <NavBarComponent lang={this.state.lang}/>
