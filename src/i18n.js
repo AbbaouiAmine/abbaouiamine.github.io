@@ -7,6 +7,7 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
+      "typing1": '[ "Hi, I am Software engineer.", "I am freelancer.", " I am designer.", "I am software Craftsman." ]',
       "title": "WELCOME TO MY DIGITAL HOME",
       "profil":"SOFTWARE ENGINEER",
       "home" :"HOME",
@@ -80,6 +81,7 @@ const resources = {
   },
   fr: {
     translation: {
+      "typing1": '[ "Salut, Je suis un ingénieur logiciel.", "I am Creative.", "I Love Design.", "I Love to Develop." ]',
       "title": "BIENVENUE SUR MA MAISON NUMÉRIQUE",
       "profil":"INGÉNIEUR LOGICIEL",
 
@@ -157,6 +159,7 @@ const resources = {
   },
   ar: {
     translation: {
+      "typing1": '[ "Salut, Je suis un ingénieur logiciel.", "I am Creative.", "I Love Design.", "I Love to Develop." ]',
       "title": "أهلاً بكم في منزلي الرقمي",
       "profil":"مهندس برمجيات",
       "home" :"الرئيسية",

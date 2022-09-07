@@ -167,11 +167,17 @@ hadleSelectLang(e)
               <img src={this.props.lang === 'ar'?logoTitleArabic:logoTitle} id="logoTitle" class="wow fadeInDown"/>
               
              
-              <Translation>{t => <p className={document.dir === 'ltr' || !document.dir?'roboto':'arabicfont'}>{t('profil')} </p>}</Translation>
+             
+           
+                {/* <Translation>{t =>  <p  class="typewrite roboto" data-period="2000" data-type={t('typing1')}>
+                  <span class="wrap"></span>
+                </p>}</Translation> */}
+              
+              <Translation>{t => <p className={document.dir === 'ltr' || !document.dir?'roboto typewriter':'arabicfont typewriter'}>{t('profil')} </p>}</Translation>
               <p className="roboto">  
      
 
-    </p>
+             </p>
             </div>
           </div>
         </div>
