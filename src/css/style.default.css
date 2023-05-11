@@ -2030,6 +2030,7 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
   line-height: 20px;
   font-size: 13px;
   padding: 6px 10px 1px 10px;
+  letter-spacing:1px;
 }
 
 .button-4:hover {
