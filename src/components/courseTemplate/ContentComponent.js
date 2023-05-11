@@ -3,6 +3,8 @@ import ParagraphComponent from "./ParagraphComponent";
 
 class ContentComponent extends React.Component {
 
+    
+
     titleStyle = {
         "color": "#797979",
         "fontSize": "28px",

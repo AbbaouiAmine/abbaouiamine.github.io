@@ -49,7 +49,7 @@ const resources = {
       "projectstitle":"Three areas of activity: Web applications, desktop applications and mobile applications.",
 
       "certificatt1":"DATABASE ADMINISTRATION FUNDAMENTALS",
-      "certificatt2":"CERTIFIED PHP DEVELOPER",
+      "certificatt2":"CERTIFIED JAVA DEVELOPER",
       "certificatt3":"DESIGN A MOBILE APPLICATION IN PHOTOSHOP FROM SCRATCH",
       "certificatt4":"PROJECT MANAGEMENT CLASSIC PATH",
 
@@ -127,7 +127,7 @@ const resources = {
       "projectstitle":"Trois domaines d'activité : Les applications web, les applications desktop et les applications mobile.",
 
       "certificatt1":"DATABASE ADMINISTRATION FUNDAMENTALS",
-      "certificatt2":"DÉVELOPPEUR   PHP CERTIFIÉ",
+      "certificatt2":"DÉVELOPPEUR   JAVA CERTIFIÉ",
       "certificatt3":"CONCEPTION D'UNE APPLICATION MOBILE DANS PHOTOSHOP À PARTIR DE ZÉRO",
       "certificatt4":"GESTION DE PROJET PARCOURS CLASSIQUE",
 
@@ -201,7 +201,7 @@ const resources = {
       "projectstitle":"ثلاثة مجالات للنشاط: تطبيقات الويب وتطبيقات سطح المكتب وتطبيقات الجوال.",
 
       "certificatt1":"أساسيات إدارة قواعد البيانات",
-      "certificatt2":"مطور PHP معتمد",
+      "certificatt2":"مطور JAVA معتمد",
       "certificatt3":"تصميم تطبيقات الهاتف المحمول في PHOTOSHOP من الصفر",
       "certificatt4":"إدارة المشاريع الدورة الكلاسيكية",
 
