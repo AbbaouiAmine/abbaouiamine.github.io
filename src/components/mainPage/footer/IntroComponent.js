@@ -130,7 +130,7 @@ hadleSelectLang(e)
       </div>
       <div>
       <div class="lang-menu dirltr">
-                <div onClick={this.hadleSelectLang} className={this.state.selectlangicon+" "+'selected-lang'}>
+                <div onClick={this.hadleSelectLang} className={this.state.selectlangicon+" "+'selected-lang button-4'}>
                     <span class='selectword'  className={document.dir === 'ltr' || !document.dir?'':'arabicfont'}>{this.state.lang}</span>
                 </div>
                 <ul className={this.state.selectlang}>

@@ -1855,6 +1855,9 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
   display: block !important;
   margin-right: 7% !important;
 }
+.menu-show li a:hover{
+  color: #000;
+}
 
 .dirltr{
   direction: ltr;
@@ -2014,3 +2017,25 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
   padding: 6px 18px;
   border-color: #f2ba14;
 }  
+
+
+.button-4 {
+  appearance: none;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 20px;
+  font-size: 13px;
+  padding: 6px 10px 1px 10px;
+}
+
+.button-4:hover {
+  background-color: #ffb400;
+  text-decoration: none;
+  color: #000;
+  transition-duration: 0.1s;
+}
+
