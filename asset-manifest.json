@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.4136a7f2.chunk.css",
+    "main.css": "/static/css/main.98852f86.chunk.css",
     "main.js": "/static/js/main.7acd82e6.chunk.js",
     "main.js.map": "/static/js/main.7acd82e6.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.06b5035f.js",
@@ -8,7 +8,7 @@
     "static/js/2.1dddcba0.chunk.js": "/static/js/2.1dddcba0.chunk.js",
     "static/js/2.1dddcba0.chunk.js.map": "/static/js/2.1dddcba0.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.4136a7f2.chunk.css.map": "/static/css/main.4136a7f2.chunk.css.map",
+    "static/css/main.98852f86.chunk.css.map": "/static/css/main.98852f86.chunk.css.map",
     "static/js/2.1dddcba0.chunk.js.LICENSE.txt": "/static/js/2.1dddcba0.chunk.js.LICENSE.txt",
     "static/media/style.default.css": "/static/media/DroidKufi-Regular.475efa44.ttf",
     "static/media/background.88ba85ce.png": "/static/media/background.88ba85ce.png",
@@ -56,7 +56,7 @@
   "entrypoints": [
     "static/js/runtime-main.06b5035f.js",
     "static/js/2.1dddcba0.chunk.js",
-    "static/css/main.4136a7f2.chunk.css",
+    "static/css/main.98852f86.chunk.css",
     "static/js/main.7acd82e6.chunk.js"
   ]
 }
