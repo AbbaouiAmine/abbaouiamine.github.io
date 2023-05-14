@@ -260,28 +260,17 @@ span_cert.onclick = function() {
 modal_cert.style.display = "none";
 }
 
-// Get the modal
-var modalBc = document.getElementById("myModalBc");
 
-// Get the button that opens the modal
-var btnBc = document.getElementById("myBtnBc");
+// Get the button
+let mybutton = document.getElementById("topBtn");
 
-// Get the <span> element that closes the modal
-var spanBc = document.getElementsByClassName("close-bc")[0];
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
 
-// When the user clicks the button, open the modal 
-btnBc.onclick = function() {
-  modalBc.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-spanBc.onclick = function() {
-  modalBc.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modalBc) {
-    modalBc.style.display = "none";
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
   }
 }

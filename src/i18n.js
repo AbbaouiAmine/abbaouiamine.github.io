@@ -16,7 +16,7 @@ const resources = {
       "technos":"TECHNOLOGIES",
       "projects":"PROJECTS",
       "certificats":"CERTIFICATES",
-      "googleplay":"Google Play",
+      "googleplay":"Google Store",
       "contact":"CONTACT",
       "abouttext":"I specialize in the design of management software. I have developed my activity since 2015 around the various IT services dedicated to companies. I am at your disposal to advise you and guide you as best as possible towards software solutions adapted to your profession and your needs. We can meet to discuss your projects.",  
       "aboutt1":"A customized analysis and design.",
@@ -62,7 +62,7 @@ const resources = {
       "app1":"LINUX COMMANDS CHEAT SHEET",
       "app2":"Git in practice",
       "app3":"Nature Wallpaper",
-      "app4":"Merise - le guide complet",
+      "app4":"Merise - the complete guide",
       "apptxt1":"The Linux Commands is a mobile app that provides a searchable Linux commands .",
       "apptxt2":"Git commands and documentation.",
       "apptxt3":"Discover the beauty of nature with this stunning collection of nature wallpapers.",
@@ -84,7 +84,7 @@ const resources = {
       "tel":"TEL",
       "git"  :"GIT",
       "blog":"BLOG",
-      "copyright":"2022 ABBAOUI AMINE",
+      "copyright":"2023 ABBAOUI AMINE",
 
     }
   },
@@ -100,7 +100,7 @@ const resources = {
       "technos":"TECHNOLOGIES",
       "projects":"PROJETS",
       "certificats":"CERTIFICATS",
-      "googleplay":"Google Play",
+      "googleplay":"Google Store",
       "contact":"CONTACT",
 
       "abouttext":"Je suis spécialisé dans la conception des logiciels de gestion. J'ai développé mon activité depuis 2015 autour des différentes prestations de services informatiques dédiées aux entreprises. Je suis à votre écoute pour vous conseiller et vous orienter au mieux vers des solutions logicielles adaptées à votre profession et à vos besoins. Nous pouvons nous rencontrer pour discuter de vos projets.",
@@ -146,9 +146,9 @@ const resources = {
       "certificattxt3":"Apprenez la conception complète UI/UX par Photoshop from Scratch et concevez l'application Uber from Scratch.",
       "certificattxt4":"Le titulaire de cette attestation est capable de concevoir et piloter un projet, d’animer une réunion ...",
 
-      "app1":"LINUX COMMANDS CHEAT SHEET",
-      "app2":"Git in practice",
-      "app3":"Nature Wallpaper",
+      "app1":"AIDE-MÉMOIRE DES COMMANDES LINUX",
+      "app2":"Git en pratique",
+      "app3":"Fond d'écran nature",
       "app4":"Merise - le guide complet",
       "apptxt1":"The Linux Commands is a mobile app that provides a searchable Linux commands .",
       "apptxt2":"Git commands and documentation.",
@@ -171,7 +171,7 @@ const resources = {
       "tel":"TEL",
       "git"  :"GIT",
       "blog":"BLOG",
-      "copyright":"2022 ABBAOUI AMINE",
+      "copyright":"2023 ABBAOUI AMINE",
 
     }
   },
@@ -186,7 +186,7 @@ const resources = {
       "technos":"تقنيات",
       "projects":"مشاريع",
       "certificats":"شهادات",
-      "googleplay":"Google Play",
+      "googleplay":"متجر جوجل",
       "contact":"اتصال",
       "abouttext":"مهندس برمجيات متخصص في تصميم وإنشاء التطبيقات البرمجية. لقد طورت نشاطي منذ عام 2015 حول خدمات تكنولوجيا المعلومات المختلفة المخصصة للشركات. أنا تحت تصرفك لتقديم المشورة لك وإرشادك قدر الإمكان نحو حلول برمجية تتكيف مع مهنتك واحتياجاتك. يمكننا أن نجتمع لمناقشة مشاريعك.",
       "aboutt1":"تحليل وتصميم حسب الطلب.",
@@ -229,14 +229,14 @@ const resources = {
       "certificattxt3":"تعلم تصميم UI / UX الكامل بواسطة Photoshop من تطبيق Scratch and Design Uber من سكراتش.",
       "certificattxt4":"يستطيع حامل هذه الشهادة تصميم مشروع وإدارته وقيادة اجتماع ...",
 
-      "app1":"LINUX COMMANDS CHEAT SHEET",
-      "app2":"Git in practice",
-      "app3":"Nature Wallpaper",
-      "app4":"Merise - le guide complet",
-      "apptxt1":"The Linux Commands is a mobile app that provides a searchable Linux commands .",
-      "apptxt2":"Git commands and documentation.",
-      "apptxt3":"Discover the beauty of nature with this stunning collection of nature wallpapers.",
-      "apptxt4":"Une présentation des différents modèles de la méthode MERISE.",
+      "app1":"قائمة مراجعة أوامر لينوكس",
+      "app2":"Git في الممارسة",
+      "app3":"خلفيات الطبيعة",
+      "app4":"Merise - الدليل الكامل",
+      "apptxt1":"أوامر لينكس هو تطبيق جوال يوفر أوامر لينكس قابلة للبحث.",
+      "apptxt2":"أوامر وتوثيق git.",
+      "apptxt3":"اكتشف جمال الطبيعة مع هذه المجموعة المذهلة من خلفيات الطبيعة.",
+      "apptxt4":"عرض تقديمي للنماذج المختلفة لطريقة MERISE.",
       "firstname":"الاسم",
       "name":"اللقب",
       "email":"البريد",
@@ -254,7 +254,7 @@ const resources = {
       "tel":"الهاتف",
       "git"  :"GIT",
       "blog":"المدونة",
-      "copyright":"2022 أمين عباوي",
+      "copyright":"2023 أمين عباوي",
 
     }
   }

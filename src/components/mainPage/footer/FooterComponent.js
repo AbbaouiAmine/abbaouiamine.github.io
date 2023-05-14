@@ -12,7 +12,7 @@ class FooterComponent extends React.Component{
     <div className="container" id="footercopy">
       <div className="row copyright">
         <div className="col-md-4">
-          <p><i className="fa fa-phone-square"></i> <span className={this.props.lang === 'ar'? 'arabicfont':'roboto'}>{i18next.t('tel')}</span> : +212630897665</p>
+          <p><i className="fa fa-phone-square"></i> <span className={this.props.lang === 'ar'? 'arabicfont':'roboto'}>{i18next.t('tel')}</span> : +32470710834</p>
           <p className="roboto"><i className="fa fa-envelope-o"></i> <span className={this.props.lang === 'ar'? 'arabicfont':'roboto'}>{i18next.t('email')}</span> : contact@amineabbaoui.com</p>
         </div>
         <div className="col-md-5">

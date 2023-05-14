@@ -50,6 +50,9 @@ class HomeComponent extends React.Component {
             <FooterComponent lang={this.state.lang}/>
             <ProjectModalComponent lang={this.state.lang}/>
             <ModalCertificateComponent lang={this.state.lang}/>
+            <a href="#intro" class="icon faa-float animated scroll-to"  id="topBtn" title="Go to top">
+            <i className="fa fa-angle-double-up"></i>
+            </a>
             </div>
         );
     }
