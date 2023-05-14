@@ -2039,4 +2039,7 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
   color: #000;
   transition-duration: 0.1s;
 }
+.sticky-wrapper{
+  height: 52px !important;
+}
 
