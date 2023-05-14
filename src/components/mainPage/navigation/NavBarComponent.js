@@ -50,6 +50,10 @@ class NavBarComponent extends React.Component
                         <Translation>{t => <a href="#portfolio">{t('projects')}</a>}</Translation>
                         
                       </li>
+                      <li className={this.props.lang === 'ar'?'reverse_ul':''}> 
+                        <Translation>{t => <a href="#googleplay">{t('googleplay')}</a>}</Translation>
+                        
+                      </li>
                       {/* <li>
                         <a href="#youtube">Youtube</a>
                       </li> */}

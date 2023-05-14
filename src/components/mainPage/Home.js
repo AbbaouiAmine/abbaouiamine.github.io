@@ -11,6 +11,7 @@ import TechnosComponent from "./technos/TechnosComponent";
 import ProjectModalComponent from "./modals/ProjectModalComponent";
 import ModalCertificateComponent from "./modals/ModalCertificateComponent";
 import YoutubeComponent from "./youtube/YoutubeComponent"
+import GoogleStoreComponent from './googlestore/GoogleStoreComponent';
 
   
 
@@ -43,6 +44,7 @@ class HomeComponent extends React.Component {
             <TechnosComponent lang={this.state.lang}/>
             <ProjectsComponent lang={this.state.lang}/>
             {/* <YoutubeComponent/> */}
+             <GoogleStoreComponent lang={this.state.lang}/>
             <CertificateComponent lang={this.state.lang}/>
             <ContactComponent lang={this.state.lang}/>
             <FooterComponent lang={this.state.lang}/>

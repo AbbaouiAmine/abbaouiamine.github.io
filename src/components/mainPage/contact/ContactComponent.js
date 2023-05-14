@@ -9,7 +9,7 @@ class ContactComponent extends React.Component {
 
   render() {
     return (
-      <section id="contact" className=" section section-gray">
+      <section id="contact" className=" section section-withe">
         <div className="container clearfix">
           <div className="row">
             <div className="col-md-12">
