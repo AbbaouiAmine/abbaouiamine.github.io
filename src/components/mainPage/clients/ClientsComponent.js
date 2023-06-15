@@ -19,8 +19,8 @@ class ClientsComponent extends React.Component {
           <div className="row">
             <div className="col-md-12">
               <div className="row"></div>
-              <ClientComponent srcImg={client0} altImg="Java" titleHref="#" title="" />
-              <ClientComponent srcImg={client1} altImg="Angular" titleHref="#" title="" />
+              <ClientComponent srcImg={client0} altImg="" titleHref="#" title="" />
+              <ClientComponent srcImg={client1} altImg="" titleHref="#" title="" />
               <ClientComponent srcImg={client2} altImg="" titleHref="#" title="" />
               <ClientComponent srcImg={client3} altImg="" titleHref="#" title="" />
               <div className="row"></div>
