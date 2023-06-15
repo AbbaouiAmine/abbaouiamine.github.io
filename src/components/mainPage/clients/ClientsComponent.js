@@ -19,15 +19,15 @@ class ClientsComponent extends React.Component {
           <div className="row">
             <div className="col-md-12">
               <div className="row"></div>
-              <ClientComponent srcImg={client0} altImg="Java" titleHref="/java" title="Java Standard Edition" />
-              <ClientComponent srcImg={client1} altImg="Angular" titleHref="/angular" title="Framework Angular" />
-              <ClientComponent srcImg={client2} altImg="" titleHref={window.origin+'/git'} title="React Js" />
-              <ClientComponent srcImg={client3} altImg="" titleHref="android" title="Andoird" />
+              <ClientComponent srcImg={client0} altImg="Java" titleHref="#" title="" />
+              <ClientComponent srcImg={client1} altImg="Angular" titleHref="#" title="" />
+              <ClientComponent srcImg={client2} altImg="" titleHref="#" title="" />
+              <ClientComponent srcImg={client3} altImg="" titleHref="#" title="" />
               <div className="row"></div>
-              <ClientComponent srcImg={client4} altImg="" titleHref="/spring" title="Spring" />
-              <ClientComponent srcImg={client5} altImg="" titleHref="/photoshop" title="Photoshop" />
-              <ClientComponent srcImg={client6} altImg="" titleHref="/uml" title="UML" />
-              <ClientComponent srcImg={client7} altImg="" titleHref="/linux" title="Linux" />
+              <ClientComponent srcImg={client4} altImg="" titleHref="#" title="" />
+              <ClientComponent srcImg={client5} altImg="" titleHref="#" title="" />
+              <ClientComponent srcImg={client6} altImg="" titleHref="#" title="" />
+              <ClientComponent srcImg={client7} altImg="" titleHref="#" title="" />
             </div>
           </div>
         </div>
