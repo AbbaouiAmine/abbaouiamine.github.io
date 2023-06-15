@@ -692,6 +692,7 @@ STYLE SWITCHER FOR DEMO
 }
 .navbar-default .navbar-nav > li > a {
   color: #555555;
+  letter-spacing: 0.05em;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
@@ -2062,4 +2063,13 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
 
 #topBtn:hover {
   background-color: #333333;
+}
+
+#clients{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.a-logo-clients:hover{
+opacity: 1 !important;
 }

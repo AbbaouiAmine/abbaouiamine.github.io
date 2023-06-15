@@ -12,6 +12,7 @@ import ProjectModalComponent from "./modals/ProjectModalComponent";
 import ModalCertificateComponent from "./modals/ModalCertificateComponent";
 import YoutubeComponent from "./youtube/YoutubeComponent"
 import GoogleStoreComponent from './googlestore/GoogleStoreComponent';
+import ClientsComponent from './clients/ClientsComponent'
 
   
 
@@ -46,6 +47,7 @@ class HomeComponent extends React.Component {
             {/* <YoutubeComponent/> */}
              <GoogleStoreComponent lang={this.state.lang}/>
             <CertificateComponent lang={this.state.lang}/>
+            <ClientsComponent lang={this.state.lang}/>
             <ContactComponent lang={this.state.lang}/>
             <FooterComponent lang={this.state.lang}/>
             <ProjectModalComponent lang={this.state.lang}/>
