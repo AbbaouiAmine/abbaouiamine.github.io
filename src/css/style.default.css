@@ -2073,3 +2073,7 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
 .a-logo-clients:hover{
 opacity: 1 !important;
 }
+
+.app-icon>h3 {
+  font-size: 15px;
+}
