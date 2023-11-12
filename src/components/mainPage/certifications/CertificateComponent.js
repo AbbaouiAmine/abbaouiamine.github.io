@@ -51,11 +51,11 @@ class CertificateComponent extends React.Component {
                   <h3 className={this.props.lang === 'ar'? 'arabicfont':''}>
                     <a href="https://drive.google.com/file/d/1SDeNkYimf_2frA5pG2Jpcc0uhANeLvdm/view">{i18next.t('certificatt2')}</a>
                   </h3>
-                  <p className="role">W3SCHOOLS</p>
+                  <p className="role">Oracle university</p>
                   <div className="ligne">
                   </div>
                   <div className="text">
-                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt1')}</p>
+                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt2')}</p>
                   </div>
                 </div>
               </div>
@@ -73,7 +73,7 @@ class CertificateComponent extends React.Component {
                   <div className="ligne">
                   </div>
                   <div className="text">
-                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt1')}</p>
+                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt3')}</p>
                   </div>
                 </div>
               </div>

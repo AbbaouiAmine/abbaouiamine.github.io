@@ -29,7 +29,7 @@ const resources = {
       "abouttxt4":"The design of neat and intuitive interfaces on a software or web tool for a result of a great simplicity of use (UI/UX).",
 
       "aboutname":"AMINE ABBAOUI",
-      "aboutprofil":"Developer & Graphic Designer",
+      "aboutprofil":"Software Engineer",
 
       "servicet1":"DESIGN AND CREATION OF WEBSITES",
       "servicet2":"DESKTOP APPLICATION DEVELOPMENT",
@@ -50,12 +50,12 @@ const resources = {
       "projectstitle":"Three areas of activity: Web applications, desktop applications and mobile applications.",
 
       "certificatt1":"DATABASE ADMINISTRATION FUNDAMENTALS",
-      "certificatt2":"CERTIFIED JAVA DEVELOPER",
+      "certificatt2":"JAVA SE Oracle Certified Associate",
       "certificatt3":"DESIGN A MOBILE APPLICATION IN PHOTOSHOP FROM SCRATCH",
       "certificatt4":"PROJECT MANAGEMENT CLASSIC PATH",
 
       "certificattxt1":"This certificate proves that the owner has successfully completed the requirements.",
-      "certificattxt2":"This certifies that the owner of this document has taken the necessary courses with a fundamental knowledge of web development.",
+      "certificattxt2":"This certifies that the above named is recognized by Oracle Corporation as Oracle certified",
       "certificattxt3":"Learn Complete UI/UX design by Photoshop from Scratch and Design Uber app from Scratch.",
       "certificattxt4":"The holder of this certificate is able to design and manage a project, lead a meeting ...",
 
@@ -124,7 +124,7 @@ const resources = {
       "abouttxt4":"La conception des interfaces soignées et intuitives sur un outil logiciel ou web pour un résultat d’une grande simplicité d’utilisation (UI/UX).",
 
       "aboutname":"AMINE ABBAOUI",
-      "aboutprofil":"Développeur et Concepteur graphique",
+      "aboutprofil":"Ingénieur logiciel",
 
       "servicet1":"LA CRÉATION ET LA CONCEPTION DES SITES WEB",
       "servicet2":"DÉVELOPPEMENT D'APPLICATIONS DE BUREAU",
@@ -145,12 +145,12 @@ const resources = {
       "projectstitle":"Trois domaines d'activité : Les applications web, les applications desktop et les applications mobile.",
 
       "certificatt1":"DATABASE ADMINISTRATION FUNDAMENTALS",
-      "certificatt2":"DÉVELOPPEUR   JAVA CERTIFIÉ",
+      "certificatt2":"JAVA SE Associé certifié Oracle",
       "certificatt3":"CONCEPTION D'UNE APPLICATION MOBILE DANS PHOTOSHOP À PARTIR DE ZÉRO",
       "certificatt4":"GESTION DE PROJET PARCOURS CLASSIQUE",
 
       "certificattxt1":"Ce certificat prouve que son propriétaire a rempli avec succès les exigences.",
-      "certificattxt2":"Cela certifie que le propriétaire de ce document a suivi les cours nécessaires avec une connaissance fondamentale du développement web.",
+      "certificattxt2":"Ceci certifie que le nommé ci-dessus est reconnu par Oracle Corporation comme certifié",
       "certificattxt3":"Apprenez la conception complète UI/UX par Photoshop from Scratch et concevez l'application Uber from Scratch.",
       "certificattxt4":"Le titulaire de cette attestation est capable de concevoir et piloter un projet, d’animer une réunion ...",
 
@@ -216,7 +216,7 @@ const resources = {
       "abouttxt4":"تصميم واجهات أنيقة وبديهية على برنامج و أدوات عصرية للحصول على سهولة كبيرة في الاستخدام (UI / UX).", 
 
       "aboutname":" أمين عباوي",
-      "aboutprofil":"مبرمج ومصمم جرافيك",
+      "aboutprofil":"مهندس برمجيات",
 
       "servicet1":"إنشاء وتصميم المواقع الإلكترونية",
       "servicet2":"تطوير تطبيقات سطح المكتب",
@@ -241,7 +241,7 @@ const resources = {
       "certificatt4":"إدارة المشاريع الدورة الكلاسيكية",
 
       "certificattxt1":"  تثبت هذه الشهادة أن مالكها قد استوفى المتطلبات بنجاح.",
-      "certificattxt2":"  يشهد على أن مالك هذا المستند قد أخذ الدورات اللازمة مع معرفة أساسية لتطوير الويب.",
+      "certificattxt2":"وهذا يشهد أن الاسم المذكور أعلاه معترف به من قبل شركة Oracle باعتباره معتمدًا من Oracle",
       "certificattxt3":"تعلم تصميم UI / UX الكامل بواسطة Photoshop من تطبيق Scratch and Design Uber من سكراتش.",
       "certificattxt4":"يستطيع حامل هذه الشهادة تصميم مشروع وإدارته وقيادة اجتماع ...",
 
