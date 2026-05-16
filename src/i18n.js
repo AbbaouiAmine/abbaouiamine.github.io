@@ -12,6 +12,7 @@ const resources = {
       "profil":"SOFTWARE ENGINEER",
       "introTagline": "Building clean, scalable and impactful digital experiences.",
       "introCta": "VIEW MY WORK",
+      "introScrollDown": "SCROLL DOWN",
       "home" :"HOME",
       "about":"ABOUT",
       "services":"SERVICES",
@@ -105,6 +106,7 @@ const resources = {
       "profil":"INGÉNIEUR LOGICIEL",
       "introTagline": "Concevoir des expériences numériques propres, évolutives et impactantes.",
       "introCta": "VOIR MES RÉALISATIONS",
+      "introScrollDown": "DÉFILER",
 
       "home" :"ACCUEIL",
       "about":"À PROPOS",
@@ -202,6 +204,7 @@ const resources = {
       "profil":"مهندس برمجيات",
       "introTagline": "بناء تجارب رقمية نظيفة وقابلة للتوسع ومؤثرة.",
       "introCta": "اطلع على أعمالي",
+      "introScrollDown": "مرر للأسفل",
       "home" :"الرئيسية",
       "about":"عني",
       "services":"خدمات",

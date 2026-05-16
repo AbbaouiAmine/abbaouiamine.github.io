@@ -290,8 +290,27 @@ class IntroComponent extends React.Component {
           </div>
         </div>
       </div>
-      <a href="#about" className="icon faa-float animated scroll-to">
-        <i className="fa fa-angle-double-down"></i>
+      <a
+        href="#about"
+        className="intro-scroll-down scroll-to"
+        onClick={e => this.handleNavClick(e, '#about')}
+      >
+        <span className="intro-scroll-icon icon faa-float animated">
+          <i className="fa fa-angle-double-down" />
+        </span>
+        <Translation>
+          {t => (
+            <span
+              className={
+                document.dir === 'ltr' || !document.dir
+                  ? 'intro-scroll-label'
+                  : 'intro-scroll-label arabicfont'
+              }
+            >
+              {t('introScrollDown')}
+            </span>
+          )}
+        </Translation>
       </a>
     </div>);
   }
