@@ -19,7 +19,7 @@ class HomeComponent extends React.Component {
     constructor() {
         super();
         this.state = {
-            lang: 'eng'
+            lang: 'en'
         };
         this.handleUpdtelang = this.handleUpdtelang.bind(this);
     }

@@ -6,29 +6,31 @@ const backGroundImg = document.querySelector('#backLoaderImg');
 const bg1 = document.querySelector('#bg1');
 const bg2 = document.querySelector('#bg2');
 const bg3 = document.querySelector('#bg3');
-setTimeout(function () {
-  backGround.style.display='none';
-  bg1.style.display='none';
-  bg2.style.display='none';
-  bg3.style.display='none';
-}, 5000);
 
+function hideIntroLoader() {
+  if (backGround) backGround.style.display = 'none';
+  if (bg1) bg1.style.display = 'none';
+  if (bg2) bg2.style.display = 'none';
+  if (bg3) bg3.style.display = 'none';
+  window.dispatchEvent(new CustomEvent('introLoaderDone'));
+}
+
+setTimeout(hideIntroLoader, 5000);
+
+if (video) {
 video.addEventListener('play', (event) => {
  
   
   setTimeout(function () {
-    backGroundImg.style.display='none';
-    backGround.style.opacity='0';
-    bg1.style.opacity='0';
-    bg2.style.opacity='0';
-    bg3.style.opacity='0';
+    if (backGroundImg) backGroundImg.style.display='none';
+    if (backGround) backGround.style.opacity='0';
+    if (bg1) bg1.style.opacity='0';
+    if (bg2) bg2.style.opacity='0';
+    if (bg3) bg3.style.opacity='0';
   
 }, 1500);
 setTimeout(function () {
-  backGround.style.display='none';
-  bg1.style.display='none';
-  bg2.style.display='none';
-  bg3.style.display='none';
+  hideIntroLoader();
 
   var TxtType = function(el, toRotate, period) {
         this.toRotate = toRotate;
@@ -88,6 +90,7 @@ setTimeout(function () {
     };
 }, 3000);
 });
+}
 
 var TxtType = function(el, toRotate, period) {
         this.toRotate = toRotate;

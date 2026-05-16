@@ -10,6 +10,7 @@ const resources = {
       "typing1": '[ "Hi, I am Software engineer.", "I am freelancer.", " I am designer.", "I am software Craftsman." ]',
       "title": "WELCOME TO MY DIGITAL HOME",
       "profil":"SOFTWARE ENGINEER",
+      "introTagline": "Building clean, scalable and impactful digital experiences.",
       "home" :"HOME",
       "about":"ABOUT",
       "services":"SERVICES",
@@ -101,6 +102,7 @@ const resources = {
       "typing1": '[ "Salut, Je suis un ingénieur logiciel.", "I am Creative.", "I Love Design.", "I Love to Develop." ]',
       "title": "BIENVENUE SUR MA MAISON NUMÉRIQUE",
       "profil":"INGÉNIEUR LOGICIEL",
+      "introTagline": "Concevoir des expériences numériques propres, évolutives et impactantes.",
 
       "home" :"ACCUEIL",
       "about":"À PROPOS",
@@ -196,6 +198,7 @@ const resources = {
       "typing1": '[ "Salut, Je suis un ingénieur logiciel.", "I am Creative.", "I Love Design.", "I Love to Develop." ]',
       "title": "أهلاً بكم في منزلي الرقمي",
       "profil":"مهندس برمجيات",
+      "introTagline": "بناء تجارب رقمية نظيفة وقابلة للتوسع ومؤثرة.",
       "home" :"الرئيسية",
       "about":"عني",
       "services":"خدمات",
