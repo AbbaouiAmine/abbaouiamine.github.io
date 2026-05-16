@@ -13,7 +13,7 @@ class FooterComponent extends React.Component{
       <div className="row copyright">
         <div className="col-md-4">
           <p><i className="fa fa-phone-square"></i> <span className={this.props.lang === 'ar'? 'arabicfont':'roboto'}>{i18next.t('tel')}</span> : +32470710834</p>
-          <p className="roboto"><i className="fa fa-envelope-o"></i> <span className={this.props.lang === 'ar'? 'arabicfont':'roboto'}>{i18next.t('email')}</span> : contact@amineabbaoui.com</p>
+          <p className="roboto"><i className="fa fa-envelope-o"></i> <span className={this.props.lang === 'ar'? 'arabicfont':'roboto'}>{i18next.t('email')}</span> : contact@amineabbaoui.tech</p>
         </div>
         <div className="col-md-5">
           <p className="roboto"><a className="link_roboto" href="https://github.com/AbbaouiAmine">
@@ -21,12 +21,12 @@ class FooterComponent extends React.Component{
                Git : github.com/AbbaouiAmine
             </a>
           </p>
-          <p className="roboto"><a className="link_roboto" href="https://pragma-code.blogspot.com/"><i className="fa fa-list-alt"></i> <span className={this.props.lang === 'ar'? 'arabicfont':'roboto'}>{i18next.t('blog')} :</span>
-            pragma-code.blogspot.com</a></p>
+          <p className="roboto"><a className="link_roboto" href="https://www.pragmacode.tech/"><i className="fa fa-list-alt"></i> <span className={this.props.lang === 'ar'? 'arabicfont':'roboto'}>{i18next.t('blog')} :</span>
+            PRAGMACODE.TECH</a></p>
         </div>
         <div className="col-md-3">
           <p className="credit roboto"><i className="fa fa-briefcase"></i> <span className={this.props.lang === 'ar'? 'arabicfont':'roboto'}>{i18next.t('profil')}</span></p>
-          <p className="roboto"><i className="fa fa-copyright"></i> <span className={this.props.lang === 'ar'? 'arabicfont':'roboto'}>{i18next.t('copyright')}</span></p>
+          <p className="roboto"><i className="fa fa-copyright"></i> <span className={this.props.lang === 'ar'? 'arabicfont':'roboto'}>{new Date().getFullYear()} {i18next.t('copyright')}</span></p>
         </div>
       </div>
     </div>

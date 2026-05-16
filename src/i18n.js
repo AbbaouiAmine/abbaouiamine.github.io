@@ -95,7 +95,7 @@ const resources = {
       "tel":"TEL",
       "git"  :"GIT",
       "blog":"BLOG",
-      "copyright":"2023 ABBAOUI AMINE",
+      "copyright":"ABBAOUI AMINE",
 
     }
   },
@@ -193,7 +193,7 @@ const resources = {
       "tel":"TEL",
       "git"  :"GIT",
       "blog":"BLOG",
-      "copyright":"2023 ABBAOUI AMINE",
+      "copyright":"ABBAOUI AMINE",
 
     }
   },
@@ -287,7 +287,7 @@ const resources = {
       "tel":"الهاتف",
       "git"  :"GIT",
       "blog":"المدونة",
-      "copyright":"2023 أمين عباوي",
+      "copyright":"أمين عباوي",
 
     }
   }
