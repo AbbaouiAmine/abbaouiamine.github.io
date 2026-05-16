@@ -7,6 +7,8 @@ import person1Full from '../../../img/person-1-full.png'
 import person2Full from '../../../img/person-2-full.png'
 import person3Full from '../../../img/person-3-full.png'
 import person4Full from '../../../img/person-4-full.png'
+import copilotCertThumb from '../../../img/copilot-cert-thumb.png'
+import copilotCertFull from '../../../img/copilot-cert-full.png'
 
 import { Translation } from 'react-i18next';
 import i18next from '../../../i18n'
@@ -15,6 +17,7 @@ import { withTranslation } from 'react-i18next'
 class CertificateComponent extends React.Component {
 
   render() {
+    const textClass = this.props.lang === 'ar' ? 'arabicfont' : '';
     return (
       <section id="team" className="section section-gray">
         <div className="container">
@@ -92,7 +95,27 @@ class CertificateComponent extends React.Component {
                   <div className="ligne">
                   </div>
                   <div className="text">
-                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificatt4')} </p>
+                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt4')}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-3 col-sm-6 zoomIn" data--delay="0.3s">
+                <div className="team-member">
+                  <div className="image">
+                    <span>
+                      <img
+                        src={copilotCertThumb}
+                        path={copilotCertFull}
+                        alt="GitHub Copilot certificate"
+                        className="img-responsive myImg-cert"
+                      />
+                    </span>
+                  </div>
+                  <h3 className={textClass}>{i18next.t('certificatt5')}</h3>
+                  <p className="role">Microsoft</p>
+                  <div className="ligne" />
+                  <div className="text">
+                    <p className={textClass}>{i18next.t('certificattxt5')}</p>
                   </div>
                 </div>
               </div>

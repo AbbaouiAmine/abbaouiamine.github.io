@@ -56,11 +56,13 @@ const resources = {
       "certificatt2":"JAVA SE Oracle Certified Associate",
       "certificatt3":"DESIGN A MOBILE APPLICATION IN PHOTOSHOP FROM SCRATCH",
       "certificatt4":"PROJECT MANAGEMENT CLASSIC PATH",
+      "certificatt5":"GitHub Copilot",
 
       "certificattxt1":"This certificate proves that the owner has successfully completed the requirements.",
       "certificattxt2":"This certifies that the above named is recognized by Oracle Corporation as Oracle certified",
       "certificattxt3":"Learn Complete UI/UX design by Photoshop from Scratch and Design Uber app from Scratch.",
       "certificattxt4":"The holder of this certificate is able to design and manage a project, lead a meeting ...",
+      "certificattxt5":"Master GitHub Copilot responsibly to boost productivity with effective prompting, architecture awareness, and secure configuration.",
 
       "app1":"LINUX COMMANDS CHEAT SHEET",
       "app2":"Git in practice",
@@ -154,11 +156,13 @@ const resources = {
       "certificatt2":"JAVA SE Associé certifié Oracle",
       "certificatt3":"CONCEPTION D'UNE APPLICATION MOBILE DANS PHOTOSHOP À PARTIR DE ZÉRO",
       "certificatt4":"GESTION DE PROJET PARCOURS CLASSIQUE",
+      "certificatt5":"GitHub Copilot",
 
       "certificattxt1":"Ce certificat prouve que son propriétaire a rempli avec succès les exigences.",
       "certificattxt2":"Ceci certifie que le nommé ci-dessus est reconnu par Oracle Corporation comme certifié",
       "certificattxt3":"Apprenez la conception complète UI/UX par Photoshop from Scratch et concevez l'application Uber from Scratch.",
       "certificattxt4":"Le titulaire de cette attestation est capable de concevoir et piloter un projet, d’animer une réunion ...",
+      "certificattxt5":"Maîtriser GitHub Copilot de manière responsable pour gagner en productivité grâce au prompting, à la connaissance de l'architecture et à une configuration sécurisée.",
 
       "app1":"AIDE-MÉMOIRE DES COMMANDES LINUX",
       "app2":"Git en pratique",
@@ -248,11 +252,13 @@ const resources = {
       "certificatt2":"مطور JAVA معتمد",
       "certificatt3":"تصميم تطبيقات الهاتف المحمول في PHOTOSHOP من الصفر",
       "certificatt4":"إدارة المشاريع الدورة الكلاسيكية",
+      "certificatt5":"GitHub Copilot",
 
       "certificattxt1":"  تثبت هذه الشهادة أن مالكها قد استوفى المتطلبات بنجاح.",
       "certificattxt2":"وهذا يشهد أن الاسم المذكور أعلاه معترف به من قبل شركة Oracle باعتباره معتمدًا من Oracle",
       "certificattxt3":"تعلم تصميم UI / UX الكامل بواسطة Photoshop من تطبيق Scratch and Design Uber من سكراتش.",
       "certificattxt4":"يستطيع حامل هذه الشهادة تصميم مشروع وإدارته وقيادة اجتماع ...",
+      "certificattxt5":"إتقان GitHub Copilot بشكل مسؤول لتعزيز الإنتاجية عبر التوجيه الفعّال والوعي بالبنية والإعداد الآمن.",
 
       "app1":"قائمة مراجعة أوامر لينوكس",
       "app2":"Git في الممارسة",
