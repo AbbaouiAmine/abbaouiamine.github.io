@@ -1,8 +1,6 @@
 import React from 'react';
 import videoBack from '../../../img/video.mp4'
 import logoFire from '../../../img/logoFire.png'
-import logoTitle from '../../../img/logoTitle.png'
-import logoTitleArabic from '../../../img/logoTitleArabic.png'
 import imagebackground from '../../../img/background.png'
 import { Translation } from 'react-i18next';
 import i18next from 'i18next';
@@ -233,9 +231,11 @@ class IntroComponent extends React.Component {
       }
     </Translation>
 
-              <img src={logoFire} id="logoFire" class="wow fadeInDown" alt="" />
+              <img src={logoFire} id="logoFire" className="wow fadeInDown" alt="" />
               <br/>
-              <img src={this.state.currentLang === 'ar' ? logoTitleArabic : logoTitle} id="logoTitle" class="wow fadeInDown" alt="" />
+              <h1 id="logoTitle" className="intro-name wow fadeInDown">
+                Amine Abbaoui
+              </h1>
 
                 {/* <Translation>{t =>  <p  class="typewrite roboto" data-period="2000" data-type={t('typing1')}>
                   <span class="wrap"></span>
