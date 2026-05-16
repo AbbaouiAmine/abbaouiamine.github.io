@@ -109,11 +109,12 @@ function utils() {
     });
     /* animated scrolling */
 
-    $('.scroll-to, #navigation a').click(function (event) {
+    $(document).on('click', '.scroll-to, #navigation a', function (event) {
         event.preventDefault();
         var full_url = this.href;
         var parts = full_url.split("#");
         var trgt = parts[1];
+        if (!trgt) return;
 
         $('body').scrollTo($('#' + trgt), 800, {offset: -50});
 
