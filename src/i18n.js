@@ -11,6 +11,7 @@ const resources = {
       "title": "WELCOME TO MY DIGITAL HOME",
       "profil":"SOFTWARE ENGINEER",
       "introTagline": "Building clean, scalable and impactful digital experiences.",
+      "introCta": "VIEW MY WORK",
       "home" :"HOME",
       "about":"ABOUT",
       "services":"SERVICES",
@@ -103,6 +104,7 @@ const resources = {
       "title": "BIENVENUE SUR MA MAISON NUMÉRIQUE",
       "profil":"INGÉNIEUR LOGICIEL",
       "introTagline": "Concevoir des expériences numériques propres, évolutives et impactantes.",
+      "introCta": "VOIR MES RÉALISATIONS",
 
       "home" :"ACCUEIL",
       "about":"À PROPOS",
@@ -199,6 +201,7 @@ const resources = {
       "title": "أهلاً بكم في منزلي الرقمي",
       "profil":"مهندس برمجيات",
       "introTagline": "بناء تجارب رقمية نظيفة وقابلة للتوسع ومؤثرة.",
+      "introCta": "اطلع على أعمالي",
       "home" :"الرئيسية",
       "about":"عني",
       "services":"خدمات",

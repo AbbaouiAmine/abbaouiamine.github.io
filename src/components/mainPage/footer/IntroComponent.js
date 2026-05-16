@@ -270,6 +270,22 @@ class IntroComponent extends React.Component {
                   </p>
                 )}
               </Translation>
+              <div className="intro-cta-wrap">
+                <Translation>
+                  {t => (
+                    <a
+                      href="#googleplay"
+                      className="intro-cta-btn scroll-to"
+                      onClick={e => this.handleNavClick(e, '#googleplay')}
+                    >
+                      <span>{t('introCta')}</span>
+                      <span className="intro-cta-arrow" aria-hidden="true">
+                        →
+                      </span>
+                    </a>
+                  )}
+                </Translation>
+              </div>
             </div>
           </div>
         </div>

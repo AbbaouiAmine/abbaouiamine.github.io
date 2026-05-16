@@ -179,22 +179,100 @@ INTRO
 }
 
 .intro-tagline {
-  max-width: 36rem;
+  display: block;
+  width: 100%;
+  max-width: none;
   margin: 1rem auto 0;
   padding: 0 1rem;
   font-family: 'Open Sans', 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  font-size: clamp(0.72rem, 1.35vw, 1.15rem);
   font-weight: 300;
   line-height: 1.65;
   letter-spacing: 0.01em;
   text-transform: none;
+  text-align: center;
+  white-space: nowrap;
   color: rgba(255, 255, 255, 0.78);
+  box-sizing: border-box;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.intro-tagline::-webkit-scrollbar {
+  display: none;
 }
 
 .intro .arabicfont.intro-tagline {
   font-family: arabicFont, sans-serif;
   letter-spacing: 0;
   line-height: 1.8;
+}
+
+.intro-cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.75rem;
+}
+
+#intro .intro-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.85rem;
+  border: 1.5px solid #f5b000;
+  border-radius: 999px;
+  background: transparent;
+  color: #f5b000 !important;
+  font-family: 'Roboto Mono', 'Inter', monospace, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 1;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+#intro .intro-cta-btn span {
+  color: inherit !important;
+  padding: 0;
+  border: none;
+  background: none;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+
+#intro .intro-cta-btn:hover,
+#intro .intro-cta-btn:focus {
+  color: #ffc233 !important;
+  border-color: #ffc233;
+  background: rgba(245, 176, 0, 0.08);
+  text-decoration: none;
+  box-shadow: 0 0 24px rgba(245, 176, 0, 0.2);
+}
+
+#intro .intro-cta-btn:focus-visible {
+  outline: none;
+}
+
+#intro .intro-cta-arrow {
+  color: inherit;
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: transform 0.25s ease;
+}
+
+#intro .intro-cta-btn:hover .intro-cta-arrow {
+  transform: translateX(4px);
+}
+
+[dir='rtl'] #intro .intro-cta-btn:hover .intro-cta-arrow {
+  transform: translateX(-4px);
 }
 .intro.colour-background {
   background: #241f1f;
