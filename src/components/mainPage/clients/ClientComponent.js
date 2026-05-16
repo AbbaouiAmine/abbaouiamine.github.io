@@ -1,23 +1,16 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React from 'react';
 
 class ClientComponent extends React.Component {
+  render() {
+    const { srcImg, altImg, titleHref } = this.props;
+    const href = titleHref || '#';
 
-    render() {
-        return (
-            <Link to={this.props.titleHref} className="a-logo-clients">
-           <div className="col-md-3 col-sm-6" >
-                <div>
-                    <div className="image">
-                            <img src={this.props.srcImg} alt={this.props.altImg} className="img-responsive" />
-                    
-                    </div>
-                </div>
-            </div>
-            </Link>
-        
-        );
-    }
+    return (
+      <a href={href} className="clients-marquee-item a-logo-clients">
+        <img src={srcImg} alt={altImg || 'Client logo'} className="clients-marquee-logo" />
+      </a>
+    );
+  }
 }
 
 export default ClientComponent;
