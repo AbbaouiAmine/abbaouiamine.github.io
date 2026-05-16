@@ -2311,6 +2311,34 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
   background-image: url(../img/arabic.png);
 }
 
+@media (max-width: 991px) {
+  #intro .intro-nav-bar {
+    display: none;
+  }
+
+  #intro .intro-top-bar {
+    justify-content: flex-end;
+  }
+
+  #intro .lang-switcher-wrap {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 991px) {
+  #intro .intro-nav-bar {
+    display: none;
+  }
+
+  #intro .intro-top-bar {
+    justify-content: flex-end;
+  }
+
+  #intro .lang-switcher-wrap {
+    margin-left: auto;
+  }
+}
+
 @media (max-width: 768px) {
   .lang-switcher .lang-label {
     display: none;
@@ -2335,26 +2363,13 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
 
 @media (max-width: 420px) {
   #intro .intro-top-bar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.65rem;
+    justify-content: flex-end;
     padding-top: 1rem;
-  }
-
-  #intro .intro-nav-bar {
-    width: 100%;
-    margin-left: clamp(1rem, 5vw, 2rem);
-  }
-
-  .intro-nav-track {
-    width: 100%;
-    justify-content: flex-start;
   }
 
   #intro .lang-switcher-wrap {
     display: flex;
     justify-content: flex-end;
-    align-self: flex-end;
     margin-left: auto;
     width: auto;
   }
