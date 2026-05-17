@@ -232,10 +232,6 @@ class IntroComponent extends React.Component {
     </Translation>
 
               <img src={logoFire} id="logoFire" className="wow fadeInDown" alt="" />
-              <br/>
-              <h1 id="logoTitle" className="intro-name wow fadeInDown">
-                Amine Abbaoui
-              </h1>
 
                 {/* <Translation>{t =>  <p  class="typewrite roboto" data-period="2000" data-type={t('typing1')}>
                   <span class="wrap"></span>
