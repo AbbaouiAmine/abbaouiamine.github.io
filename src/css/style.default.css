@@ -430,8 +430,10 @@ SERVICES
 */
 .box-services {
   padding: 40px 20px 20px;
-  border-bottom: 1px solid #d4d4d4;
   background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 24px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
 }
 .box-services .icon {
   text-align: center;
@@ -1164,6 +1166,51 @@ a:focus {
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
+
+/* Navbar — disable global blue focus ring / link color */
+.header .navbar a:focus,
+.header .navbar a:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:focus-visible {
+  color: #3c3c3c;
+  text-decoration: none;
+  outline: none;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus,
+.navbar-default .navbar-nav > li > a:focus-visible {
+  color: #241f1f;
+  background-color: transparent;
+  text-decoration: none;
+  outline: none;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a:focus-visible {
+  color: #333;
+  background-color: #f2ba14;
+  text-decoration: none;
+  outline: none;
+}
+
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:focus-visible {
+  outline: none;
+}
+
+.navbar-default .navbar-toggle::-moz-focus-inner {
+  border: 0;
+}
+
 .img-rounded {
   border-radius: 0;
 }
