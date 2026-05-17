@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "80474836dc4e3996f745152f226bf393",
+    "revision": "bef2aca5ba6d2f62c89c86ddfd9a5261",
     "url": "/index.html"
   },
   {
-    "revision": "fdec26052cc8d20d65cc",
-    "url": "/static/css/main.84c58e83.chunk.css"
+    "revision": "6fd864ab62295f85107c",
+    "url": "/static/css/main.4394fb9f.chunk.css"
   },
   {
-    "revision": "541fbc2ada6b304fd94d",
-    "url": "/static/js/2.8249cbe4.chunk.js"
+    "revision": "c9fa78b79bdfb1548782",
+    "url": "/static/js/2.2f44d55d.chunk.js"
   },
   {
-    "revision": "fdec26052cc8d20d65cc",
-    "url": "/static/js/main.df33f039.chunk.js"
+    "revision": "6fd864ab62295f85107c",
+    "url": "/static/js/main.61bb6458.chunk.js"
   },
   {
     "revision": "42ac5946195a7306e2a5",
@@ -30,6 +30,14 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "5b36c4d0d4c6c14b02d2e215c4151bcd",
     "url": "/static/media/compilation.5b36c4d0.png"
+  },
+  {
+    "revision": "31929ef6dca005d0e6392cea83f53d1f",
+    "url": "/static/media/copilot-cert-full.31929ef6.png"
+  },
+  {
+    "revision": "c989fa41f890238478ee1113b86b9cf2",
+    "url": "/static/media/copilot-cert-thumb.c989fa41.png"
   },
   {
     "revision": "ab5ff7a2365eda0a8f4309204c99e866",
