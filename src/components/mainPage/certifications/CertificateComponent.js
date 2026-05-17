@@ -1,131 +1,199 @@
-import React from 'react'
-import person1 from '../../../img/person-1.png'
-import person2 from '../../../img/person-2.png'
-import person3 from '../../../img/person-3.png'
-import person4 from '../../../img/person-4.png'
-import person1Full from '../../../img/person-1-full.png'
-import person2Full from '../../../img/person-2-full.png'
-import person3Full from '../../../img/person-3-full.png'
-import person4Full from '../../../img/person-4-full.png'
-import copilotCertThumb from '../../../img/copilot-cert-thumb.png'
-import copilotCertFull from '../../../img/copilot-cert-full.png'
+import React from 'react';
+import person1 from '../../../img/person-1.png';
+import person2 from '../../../img/person-2.png';
+import person3 from '../../../img/person-3.png';
+import person4 from '../../../img/person-4.png';
+import person1Full from '../../../img/person-1-full.png';
+import person2Full from '../../../img/person-2-full.png';
+import person3Full from '../../../img/person-3-full.png';
+import person4Full from '../../../img/person-4-full.png';
+import copilotCertThumb from '../../../img/copilot-cert-thumb.png';
+import copilotCertFull from '../../../img/copilot-cert-full.png';
 
 import { Translation } from 'react-i18next';
-import i18next from '../../../i18n'
-import { withTranslation } from 'react-i18next'
+import i18next from '../../../i18n';
+import { withTranslation } from 'react-i18next';
+
+const CERTIFICATES = [
+  {
+    id: 'cert1',
+    thumb: person1,
+    full: person1Full,
+    titleKey: 'certificatt1',
+    textKey: 'certificattxt1',
+    role: 'Microsoft Technology Associate',
+    href: 'https://drive.google.com/file/d/10nyWaI989rxGP-pSKvwXIyph3aJgTuzG/view',
+  },
+  {
+    id: 'cert2',
+    thumb: person2,
+    full: person2Full,
+    titleKey: 'certificatt2',
+    textKey: 'certificattxt2',
+    role: 'Oracle university',
+    href: 'https://drive.google.com/file/d/1SDeNkYimf_2frA5pG2Jpcc0uhANeLvdm/view',
+  },
+  {
+    id: 'cert3',
+    thumb: person3,
+    full: person3Full,
+    titleKey: 'certificatt3',
+    textKey: 'certificattxt3',
+    role: 'udemy',
+    href: 'https://drive.google.com/file/d/1jrmQL0NvGcrlWe20Hl3z6qChXrFSp7Rc/view',
+  },
+  {
+    id: 'cert4',
+    thumb: person4,
+    full: person4Full,
+    titleKey: 'certificatt4',
+    textKey: 'certificattxt4',
+    role: 'Centralelille',
+    href: 'https://drive.google.com/file/d/1byWukZHf3--FkBdujgLQnIZx3gTEqmEO/view',
+  },
+  {
+    id: 'cert5',
+    thumb: copilotCertThumb,
+    full: copilotCertFull,
+    titleKey: 'certificatt5',
+    textKey: 'certificattxt5',
+    role: 'Microsoft',
+    href: null,
+    alt: 'GitHub Copilot certificate',
+  },
+];
 
 class CertificateComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.sliderRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.centerCertsRow();
+    window.addEventListener('resize', this.centerCertsRow);
+    window.addEventListener('load', this.centerCertsRow, { once: true });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.centerCertsRow);
+    window.removeEventListener('load', this.centerCertsRow);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.lang !== this.props.lang) {
+      this.centerCertsRow();
+    }
+  }
+
+  centerCertsRow = () => {
+    const slider = this.sliderRef.current;
+    if (!slider) return;
+
+    const apply = () => {
+      const overflow = slider.scrollWidth - slider.clientWidth;
+      slider.scrollLeft = overflow > 0 ? overflow / 2 : 0;
+    };
+
+    requestAnimationFrame(apply);
+    setTimeout(apply, 450);
+  };
+
+  scrollCerts = direction => {
+    const slider = this.sliderRef.current;
+    if (!slider) return;
+
+    const slide = slider.querySelector('.certs-slide');
+    const gap = 24;
+    const step = slide ? slide.offsetWidth + gap : 320;
+
+    slider.scrollBy({ left: direction * step, behavior: 'smooth' });
+  };
 
   render() {
-    const textClass = this.props.lang === 'ar' ? 'arabicfont' : '';
-    return (
-      <section id="team" className="section section-gray">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Translation>{t => <h2 className={this.props.lang === 'ar'? 'arabicfont heading':'heading'}>{t('certificats')}</h2>}</Translation>
-              <div className="row"></div>
-              <div className="col-md-3 col-sm-6" data--delay="0.3s">
-                <div className="team-member">
-                  <div className="image">
-                    <span>
-                      <img src={person1} path={person1Full} alt="" className="img-responsive myImg-cert" />
-                    </span>
-                  </div>
-                  <h3 className={this.props.lang === 'ar'? 'arabicfont':''}>
-                    <a href="https://drive.google.com/file/d/10nyWaI989rxGP-pSKvwXIyph3aJgTuzG/view">{i18next.t('certificatt1')}</a>
-                  </h3>
+    const isAr = this.props.lang === 'ar';
+    const textClass = isAr ? 'arabicfont' : '';
 
-                  <p className="role">Microsoft Technology Associate</p>
-                  <div className="ligne">
+    return (
+      <section id="team" className="section section-gray certs-section">
+        <div className="container">
+          <Translation>
+            {t => (
+              <h2 className={isAr ? 'arabicfont heading' : 'heading'}>{t('certificats')}</h2>
+            )}
+          </Translation>
+        </div>
+
+        <div className="certs-slider-wrap">
+          <button
+            type="button"
+            className="certs-nav-btn certs-nav-btn--prev"
+            onClick={() => this.scrollCerts(-1)}
+            aria-label="Previous certificates"
+          >
+            <span className="certs-nav-btn__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 6L9 12L15 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </button>
+
+          <div
+            className="certs-slider"
+            ref={this.sliderRef}
+            role="region"
+            aria-label="Certificates"
+          >
+            <div className="certs-track">
+              {CERTIFICATES.map(cert => (
+                <article key={cert.id} className="certs-slide wow fadeIn">
+                  <div className="team-member">
+                    <div className="image">
+                      <span>
+                        <img
+                          src={cert.thumb}
+                          path={cert.full}
+                          alt={cert.alt || ''}
+                          className="img-responsive myImg-cert"
+                        />
+                      </span>
+                    </div>
+                    <h3 className={textClass}>
+                      {cert.href ? (
+                        <a href={cert.href} target="_blank" rel="noopener noreferrer">
+                          {i18next.t(cert.titleKey)}
+                        </a>
+                      ) : (
+                        i18next.t(cert.titleKey)
+                      )}
+                    </h3>
+                    <p className="role">{cert.role}</p>
+                    <div className="ligne" />
+                    <div className="text">
+                      <p className={textClass}>{i18next.t(cert.textKey)}</p>
+                    </div>
                   </div>
-                  <div className="text">
-                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt1')}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-3 col-sm-6   zoomIn" data--delay="0.3s">
-                <div className="team-member">
-                  <div className="image">
-                    <span>
-                      <img src={person2} path={person2Full} alt="" className="img-responsive myImg-cert" />
-                    </span>
-                  </div>
-                  <h3 className={this.props.lang === 'ar'? 'arabicfont':''}>
-                    <a href="https://drive.google.com/file/d/1SDeNkYimf_2frA5pG2Jpcc0uhANeLvdm/view">{i18next.t('certificatt2')}</a>
-                  </h3>
-                  <p className="role">Oracle university</p>
-                  <div className="ligne">
-                  </div>
-                  <div className="text">
-                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt2')}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-3 col-sm-6   zoomIn" data--delay="0.3s">
-                <div className="team-member"> 
-                  <div className="image">
-                    <span>
-                      <img src={person3} path={person3Full} alt="" className="img-responsive myImg-cert" />
-                    </span>
-                  </div>
-                  <h3 className={this.props.lang === 'ar'? 'arabicfont':''}>
-                    <a href="https://drive.google.com/file/d/1jrmQL0NvGcrlWe20Hl3z6qChXrFSp7Rc/view">{i18next.t('certificatt3')}</a>
-                  </h3>
-                  <p className="role">udemy</p>
-                  <div className="ligne">
-                  </div>
-                  <div className="text">
-                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt3')}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-3 col-sm-6" data--delay="0.3s">
-                <div className="team-member">
-                  <div className="image">
-                    <span>
-                      <img src={person4} path={person4Full} alt="" className="img-responsive myImg-cert" />
-                    </span>
-                  </div>
-                  <h3 className={this.props.lang === 'ar'? 'arabicfont':''}>
-                    <a href="https://drive.google.com/file/d/1byWukZHf3--FkBdujgLQnIZx3gTEqmEO/view">{i18next.t('certificatt4')}
-                </a>
-                  </h3>
-                  <p className="role">Centralelille</p>
-                  <div className="ligne">
-                  </div>
-                  <div className="text">
-                    <p className={this.props.lang === 'ar'? 'arabicfont':''}>{i18next.t('certificattxt4')}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-3 col-sm-6 zoomIn" data--delay="0.3s">
-                <div className="team-member">
-                  <div className="image">
-                    <span>
-                      <img
-                        src={copilotCertThumb}
-                        path={copilotCertFull}
-                        alt="GitHub Copilot certificate"
-                        className="img-responsive myImg-cert"
-                      />
-                    </span>
-                  </div>
-                  <h3 className={textClass}>{i18next.t('certificatt5')}</h3>
-                  <p className="role">Microsoft</p>
-                  <div className="ligne" />
-                  <div className="text">
-                    <p className={textClass}>{i18next.t('certificattxt5')}</p>
-                  </div>
-                </div>
-              </div>
+                </article>
+              ))}
             </div>
           </div>
+
+          <button
+            type="button"
+            className="certs-nav-btn certs-nav-btn--next"
+            onClick={() => this.scrollCerts(1)}
+            aria-label="Next certificates"
+          >
+            <span className="certs-nav-btn__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </button>
         </div>
       </section>
     );
   }
-
 }
 
 export default withTranslation()(CertificateComponent);
