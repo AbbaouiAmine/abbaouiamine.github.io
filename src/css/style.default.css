@@ -2499,17 +2499,84 @@ background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC6
   }
 }
 
-@media (max-width: 991px) {
-  #intro .intro-nav-bar {
-    display: none;
+/* Medium screens — smaller intro hero content */
+@media (min-width: 768px) and (max-width: 1199px) {
+  #intro h1.intro-name,
+  #logoTitle.intro-name,
+  .intro .intro-name {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    line-height: 1.08;
+    margin: 2% auto 5%;
   }
 
-  #intro .intro-top-bar {
-    justify-content: flex-end;
+  .intro .intro-name.arabicfont {
+    font-size: clamp(1.85rem, 4.5vw, 3rem);
   }
 
-  #intro .lang-switcher-wrap {
-    margin-left: auto;
+  #logoFire {
+    width: 8%;
+    margin-top: 4%;
+  }
+
+  .intro .content > p.roboto,
+  .intro .content > p.arabicfont {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.35rem;
+  }
+
+  .intro-profil-wrap {
+    gap: 0.65rem;
+    margin-top: 0.25rem;
+  }
+
+  .intro-profil-line {
+    width: clamp(1.25rem, 5vw, 2.5rem);
+  }
+
+  .intro-profil {
+    font-size: 0.95rem;
+    letter-spacing: 0.14em;
+  }
+
+  .intro-tagline {
+    margin-top: 2.25rem;
+    font-size: clamp(0.65rem, 1.05vw, 0.9rem);
+    line-height: 1.55;
+  }
+
+  .intro .arabicfont.intro-tagline {
+    font-size: clamp(0.7rem, 1.1vw, 0.95rem);
+    line-height: 1.65;
+  }
+
+  .intro-cta-wrap {
+    margin-top: 1.75rem;
+  }
+
+  #intro .intro-cta-btn {
+    padding: 0.8rem 1.85rem;
+    font-size: 1.1rem;
+    gap: 0.6rem;
+    letter-spacing: 0.12em;
+  }
+
+  #intro .intro-scroll-down {
+    bottom: 28px;
+    gap: 1.75rem;
+  }
+
+  #intro .intro-scroll-label {
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+  }
+
+  #intro .intro-scroll-label.arabicfont {
+    font-size: 0.9rem;
+  }
+
+  #intro .intro-scroll-icon {
+    font-size: 1.35rem;
   }
 }
 
