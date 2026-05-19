@@ -20,9 +20,9 @@ class ServicesComponent extends React.Component {
                                 <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet3')}  description={i18next.t('servicetxt3')} icon="ti-search"/>
                             </div>
                             <div className="row">
-                            <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet4')}  description={i18next.t('servicetxt4')} icon="ti-comments"/>
-                            <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet5')}  description={i18next.t('servicetxt5')} icon="ti-email"/>
-                            <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet6')}  description={i18next.t('servicetxt6')}  icon="ti-layout-sidebar-left"/>
+                            <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet4')}  description={i18next.t('servicetxt4')} icon="ti-server"/>
+                            <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet5')}  description={i18next.t('servicetxt5')} icon="ti-settings"/>
+                            <ServiceComponent lang={this.props.lang}  title={i18next.t('servicet6')}  description={i18next.t('servicetxt6')}  icon="ti-reload"/>
                             </div>
                         </div>
                     </div>
