@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.770d6647.chunk.css",
+    "main.css": "/static/css/main.20bf3b1f.chunk.css",
     "main.js": "/static/js/main.c85a8f6c.chunk.js",
     "main.js.map": "/static/js/main.c85a8f6c.chunk.js.map",
     "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
@@ -8,9 +8,9 @@
     "static/js/2.2f44d55d.chunk.js": "/static/js/2.2f44d55d.chunk.js",
     "static/js/2.2f44d55d.chunk.js.map": "/static/js/2.2f44d55d.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.37d8f25aa437aba8c63f034fa8969ddf.js": "/precache-manifest.37d8f25aa437aba8c63f034fa8969ddf.js",
+    "precache-manifest.4ef406193762a40eee7e684b827673e7.js": "/precache-manifest.4ef406193762a40eee7e684b827673e7.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.770d6647.chunk.css.map": "/static/css/main.770d6647.chunk.css.map",
+    "static/css/main.20bf3b1f.chunk.css.map": "/static/css/main.20bf3b1f.chunk.css.map",
     "static/media/style.default.css": "/static/media/DroidKufi-Regular.a9b030e2.ttf",
     "static/media/background.png": "/static/media/background.4c1d629b.png",
     "static/media/compilation.png": "/static/media/compilation.5b36c4d0.png",
