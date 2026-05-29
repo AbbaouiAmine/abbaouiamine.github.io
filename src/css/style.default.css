@@ -1921,9 +1921,31 @@ color: #fff;
   color: #f2ba14 !important;
 }
 
-.techno_title
-{
-font-size: 20px;
+.techno_title {
+  font-size: 20px;
+}
+
+#techno a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#techno a:focus,
+#techno a:focus-visible {
+  outline: none;
+}
+
+#techno .team-member {
+  padding: 1.5rem 1rem;
+  margin-bottom: 30px;
+  background: #f7f7f8;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 24px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+}
+
+#techno .team-member .image {
+  margin-bottom: 0;
 }
 
 
