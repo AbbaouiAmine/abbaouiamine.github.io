@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GCP PCA — Mock 11 (Data)</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.5}
+.bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar a{color:#1a73e8;text-decoration:none;font-weight:700;font-size:.88rem}
+.bar button{font:inherit;border:1px solid #cbd5e1;background:#f8fafc;border-radius:7px;padding:5px 10px;cursor:pointer}
+.wrap{max-width:960px;margin:auto;padding:24px 16px 80px}
+.head,.q,.filters{background:#fff;border:1px solid #e2e8f0;border-radius:12px}
+.head{padding:20px;margin-bottom:14px}
+.head h1{margin:0 0 6px;color:#1a73e8;font-size:1.35rem}
+.muted{color:#64748b;font-size:.9rem}
+.filters{padding:14px 16px;margin-bottom:14px;display:grid;gap:10px}
+.filters .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.filters label{font-size:.8rem;font-weight:700;color:#475569;min-width:70px}
+.filters select{font:inherit;border:1px solid #cbd5e1;border-radius:8px;padding:6px 10px;min-width:220px;background:#fff}
+#resultCount{font-size:.85rem;color:#1a73e8;font-weight:700}
+.q{padding:16px 18px;margin-bottom:12px}
+.q.hidden{display:none}
+.meta-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
+.num{font-size:.76rem;font-weight:800;color:#1a73e8}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.02em}
+.badge.d{background:#e8f0fe;color:#1a73e8}
+.badge.m{background:#f3e8ff;color:#7c3aed}
+.badge.s{background:#ecfdf5;color:#047857}
+.badge.type{background:#64748b;color:#fff;text-transform:uppercase}
+.badge.type.multi{background:#b45309}
+.sec-title{font-size:.78rem;color:#64748b}
+.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line}
+.opts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.opts li{position:relative;padding:8px 10px 8px 40px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:.92rem}
+.opts li:before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e2e8f0;font-size:.72rem;font-weight:800}
+.show .correct{background:#e6f4ea;border-color:#34a853}
+.show .correct:before{background:#34a853;color:#fff}
+.ans{display:none;margin-top:10px;padding:9px 12px;border-left:4px solid #34a853;background:#f0fdf4}
+.show .ans{display:block}
+.ans b{color:#137333}
+.ref{margin-top:5px;font-size:.8rem}
+.ref a{color:#1a73e8;word-break:break-all}
+.grid-mocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px}
+.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}
+.card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
+.card .n{width:32px;height:32px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800}
+</style>
+</head><body>
+<nav class="bar">
+  <a href="../index.html">← Menu principal</a>
+  <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Site original ↗</a>
+  <button type="button" onclick="all(true)">Afficher les réponses</button>
+  <button type="button" onclick="all(false)">Masquer les réponses</button>
+</nav>
+<main class="wrap">
+<header class="head">
+  <h1>GCP PCA — Mock 11 (Data)</h1>
+  <div class="muted">60 questions · labels D/M/S · <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Source</a></div>
+</header>
+
+<div class="filters">
+  <div class="row">
+    <label for="filterDomain">Domaine</label>
+    <select id="filterDomain"><option value="">Tous les domaines</option><option value="D1">D1 — Designing and Planning a Cloud Solution Architecture</option><option value="D2">D2 — Managing and Provisioning a Solution Infrastructure</option><option value="D3">D3 — Designing for Security and Compliance</option><option value="D4">D4 — Analyzing and Optimizing Technical and Business Processes</option><option value="D5">D5 — Managing Implementation</option><option value="D6">D6 — Ensuring Solution and Operations Reliability</option></select>
+    <label for="filterModule">Module</label>
+    <select id="filterModule"><option value="">Tous les modules</option><option value="D1/M1" data-domain="D1">D1/M1 — Design for Business Outcomes</option><option value="D1/M2" data-domain="D1">D1/M2 — Design Robust Cloud Infrastructures</option><option value="D1/M3" data-domain="D1">D1/M3 — Design Network, Storage, and Compute</option><option value="D1/M4" data-domain="D1">D1/M4 — Plan Cloud Migrations</option><option value="D1/M5" data-domain="D1">D1/M5 — Evolve and Adapt Solutions</option><option value="D2/M1" data-domain="D2">D2/M1 — Configure and Secure Networks</option><option value="D2/M2" data-domain="D2">D2/M2 — Configure Storage Resources</option><option value="D2/M3" data-domain="D2">D2/M3 — Configure Compute Resources</option><option value="D3/M1" data-domain="D3">D3/M1 — Architecting Secure Google Cloud Solutions</option><option value="D3/M2" data-domain="D3">D3/M2 — Designing for Compliance</option><option value="D4/M1" data-domain="D4">D4/M1 — Optimizing Technical Processes and Development Lifecycle</option><option value="D4/M2" data-domain="D4">D4/M2 — Aligning Business Processes with Cloud Strategy</option><option value="D4/M3" data-domain="D4">D4/M3 — Ensuring Production Reliability</option><option value="D5/M1" data-domain="D5">D5/M1 — Guiding Development and Operations Teams</option><option value="D5/M2" data-domain="D5">D5/M2 — Interacting with Google Cloud Programmatically</option><option value="D6/M1" data-domain="D6">D6/M1 — Monitoring, Logging, and Alerting for Reliability</option><option value="D6/M2" data-domain="D6">D6/M2 — Managing Deployments and Ensuring Quality</option><option value="D6/M3" data-domain="D6">D6/M3 — Troubleshooting and Incident Response</option></select>
+    <button type="button" onclick="resetFilters()">Réinitialiser</button>
+    <span id="resultCount"></span>
+  </div>
+</div>
+
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 1 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your BigQuery table has 10TB of data with queries frequently filtering by date. Most queries scan the entire table. What optimization reduces query costs by 90%?</div>
+  <ul class="opts"><li data-l="A">Use larger machine types.</li><li data-l="B">Add more columns to the table.</li><li data-l="C">Increase slot reservation.</li><li class="correct" data-l="D">Partition the table by date and ensure queries include partition filter.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Partitioning by frequently filtered columns (date) enables partition pruning. Queries with partition filters scan only relevant partitions, dramatically reducing bytes scanned and cost.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/partitioned-tables" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 2 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">You&#x27;re choosing between Dataflow and Dataproc for data processing. Which TWO scenarios favor Dataflow?</div>
+  <ul class="opts"><li data-l="A">Lift-and-shift of on-prem Hadoop workloads.</li><li data-l="B">Running existing Spark/Hadoop jobs without modification.</li><li class="correct" data-l="C">Streaming data processing with exactly-once semantics.</li><li class="correct" data-l="D">Unified batch and streaming programming model.</li><li data-l="E">Using Presto for interactive queries.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, D</b><div>Dataflow excels at streaming with exactly-once semantics and provides unified batch/streaming via Apache Beam. Dataproc is better for existing Spark/Hadoop workloads.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/concepts/streaming-pipelines" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 3 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your BigQuery queries frequently filter on customer_id and date. The table is partitioned by date. What additional optimization improves query performance?</div>
+  <ul class="opts"><li data-l="A">Duplicate data across regions.</li><li data-l="B">Remove the date partition.</li><li class="correct" data-l="C">Cluster the table by customer_id for efficient data organization within partitions.</li><li data-l="D">Create a separate index table.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Clustering organizes data within partitions based on specified columns, enabling BigQuery to skip irrelevant data blocks when filtering on clustered columns.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/clustered-tables" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 4 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">You need to ingest real-time events from IoT sensors at 100,000 events per second. What&#x27;s the recommended ingestion service?</div>
+  <ul class="opts"><li data-l="A">Direct BigQuery streaming inserts only.</li><li class="correct" data-l="B">Cloud Pub/Sub as the buffer with subscribers processing events.</li><li data-l="C">Cloud SQL as event buffer.</li><li data-l="D">Cloud Storage file uploads.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Pub/Sub handles high-throughput real-time ingestion with guaranteed delivery, buffering events for downstream processing by various subscribers.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 5 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing data governance with Dataplex. Which TWO capabilities does it provide?</div>
+  <ul class="opts"><li data-l="A">Direct data transformation.</li><li data-l="B">Only works with BigQuery.</li><li data-l="C">Replacing all existing databases.</li><li class="correct" data-l="D">Data quality validation and profiling.</li><li class="correct" data-l="E">Data discovery and cataloging across GCP data sources.</li></ul>
+  <div class="ans"><b>Bonne réponse : D, E</b><div>Dataplex provides a unified data fabric for discovery, cataloging, and governance. Data quality rules enable automated validation across data sources.</div><div class="ref"><a href="https://cloud.google.com/dataplex/docs/introduction" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 6 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">Your streaming Dataflow pipeline processes Pub/Sub messages but some messages are processed twice. What feature ensures exactly-once processing?</div>
+  <ul class="opts"><li data-l="A">Disable checkpointing.</li><li data-l="B">Use at-least-once mode.</li><li data-l="C">Exactly-once isn&#x27;t possible.</li><li class="correct" data-l="D">Enable exactly-once mode in Dataflow and use unique message IDs for deduplication.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Dataflow&#x27;s exactly-once mode with message deduplication based on unique IDs prevents duplicate processing in streaming pipelines.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/concepts/exactly-once" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 7 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re designing a data warehouse on BigQuery for a retail company. Analysts need to analyze sales by region, product, and time. What schema design is recommended?</div>
+  <ul class="opts"><li class="correct" data-l="A">Star schema with denormalized fact table and dimension tables.</li><li data-l="B">Fully normalized 3NF schema.</li><li data-l="C">Single table with all data.</li><li data-l="D">Multiple unrelated tables.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Star schema optimizes for analytical queries with denormalized fact tables for performance. Dimension tables provide context for slicing and dicing data.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/best-practices-performance-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 8 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">You&#x27;re comparing real-time and batch processing for analytics. Which TWO characteristics define real-time processing requirements?</div>
+  <ul class="opts"><li data-l="A">No time constraints.</li><li class="correct" data-l="B">Immediate action needed based on incoming events.</li><li data-l="C">Processing can wait hours or days.</li><li data-l="D">Historical data analysis only.</li><li class="correct" data-l="E">Low latency requirements (seconds to minutes).</li></ul>
+  <div class="ans"><b>Bonne réponse : B, E</b><div>Real-time processing is characterized by low latency needs and immediate action requirements. Batch processing suits less time-sensitive workloads.</div><div class="ref"><a href="https://cloud.google.com/architecture/designing-streaming-pipelines" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 9 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your Dataflow streaming job experiences high latency during traffic spikes. What configuration helps?</div>
+  <ul class="opts"><li data-l="A">Use batch mode instead.</li><li data-l="B">Reduce worker count.</li><li class="correct" data-l="C">Enable autoscaling with appropriate max workers for peak load.</li><li data-l="D">Disable autoscaling.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Autoscaling allows Dataflow to add workers during traffic spikes, maintaining low latency. Max workers setting caps resource usage.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/horizontal-autoscaling" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 10 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You need to join a 1TB BigQuery table with a 10KB reference table. How should you structure the join for optimal performance?</div>
+  <ul class="opts"><li data-l="A">Partition both tables identically.</li><li class="correct" data-l="B">Use broadcast join by placing the small table first in the JOIN clause.</li><li data-l="C">Shuffle both tables.</li><li data-l="D">Join order doesn&#x27;t matter.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>BigQuery can broadcast small tables to all workers, avoiding expensive shuffles. Placing the small table first hints the optimizer to use broadcast join.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/best-practices-performance-compute#optimize_join_patterns" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S4">
+  <div class="meta-line">
+    <span class="num">Question 11 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S4 · Optimizing Data Transfer and Latency and Planning for Data Growth</span>
+    
+  </div>
+  <div class="qt">Your Pub/Sub subscription has a growing message backlog. Subscribers can&#x27;t keep up with publishers. What should you check first?</div>
+  <ul class="opts"><li class="correct" data-l="A">Scale up subscriber instances and check for processing bottlenecks.</li><li data-l="B">Reduce message retention.</li><li data-l="C">Delete the subscription.</li><li data-l="D">Increase publishing rate.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Growing backlogs indicate subscribers are under-provisioned or have processing bottlenecks. Scaling subscribers and optimizing processing resolves the issue.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/subscriber" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 12 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M2/S3 · Configuring Cloud Storage, Filestore, and Persistent Disks</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing a data lake on Cloud Storage. Which TWO practices improve query performance?</div>
+  <ul class="opts"><li class="correct" data-l="A">Partition data by commonly filtered fields (date, region).</li><li data-l="B">Store all data as CSV.</li><li data-l="C">Random file naming.</li><li data-l="D">Use single large files.</li><li class="correct" data-l="E">Use columnar formats (Parquet, ORC) for analytical queries.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, E</b><div>Columnar formats enable efficient column projection. Partitioning by filter fields allows query engines to skip irrelevant data partitions.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 13 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">Your BigQuery scheduled query needs to process only new data since the last run. What feature enables incremental processing?</div>
+  <ul class="opts"><li data-l="A">Delete old data after each run.</li><li data-l="B">Parameters aren&#x27;t supported.</li><li data-l="C">Process entire table every run.</li><li class="correct" data-l="D">Use @run_time and @run_date parameters to filter data since last execution.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>BigQuery scheduled queries provide run_time and run_date parameters for incremental processing, allowing filtering to only new data since last execution.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/scheduling-queries#available_parameters" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 14 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You need to transform semi-structured JSON data in BigQuery. Some fields are nested multiple levels deep. What approach works?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use JSON functions (JSON_EXTRACT, JSON_VALUE) or UNNEST for repeated fields.</li><li data-l="B">Flatten all JSON manually before loading.</li><li data-l="C">Use only STRING operations.</li><li data-l="D">JSON cannot be queried.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>BigQuery&#x27;s JSON functions extract data from JSON columns. UNNEST handles repeated/nested fields, enabling querying of complex JSON structures.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/json_functions" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 15 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">You&#x27;re building a streaming analytics dashboard. Which TWO components are essential?</div>
+  <ul class="opts"><li data-l="A">Batch processing only.</li><li class="correct" data-l="B">Pub/Sub for real-time event ingestion.</li><li data-l="C">Daily file uploads.</li><li data-l="D">Manual data entry.</li><li class="correct" data-l="E">Dataflow or BigQuery streaming for processing.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, E</b><div>Streaming dashboards require real-time ingestion (Pub/Sub) and processing (Dataflow/BigQuery streaming) to display current data.</div><div class="ref"><a href="https://cloud.google.com/architecture/designing-streaming-pipelines" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 16 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">Your Dataproc cluster runs Spark jobs that take 30 minutes. The cluster is idle 22 hours per day. What reduces costs?</div>
+  <ul class="opts"><li data-l="A">Use persistent clusters for all workloads.</li><li data-l="B">Keep cluster running 24/7.</li><li class="correct" data-l="C">Use ephemeral clusters that are created for each job and deleted after completion.</li><li data-l="D">Upgrade to larger machines.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Ephemeral clusters exist only during job execution, eliminating idle costs. Dataproc&#x27;s fast startup makes this practical for batch jobs.</div><div class="ref"><a href="https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/ephemeral-clusters" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 17 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S1 · Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery</span>
+    
+  </div>
+  <div class="qt">You need to capture changed data from Cloud SQL to BigQuery for near real-time analytics. What approach is recommended?</div>
+  <ul class="opts"><li data-l="A">Manual queries to compare data.</li><li data-l="B">Full table export daily.</li><li data-l="C">Direct connection from BigQuery to Cloud SQL.</li><li class="correct" data-l="D">Use Datastream for change data capture (CDC) to BigQuery.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Datastream provides serverless CDC, capturing changes from source databases and replicating to BigQuery in near real-time.</div><div class="ref"><a href="https://cloud.google.com/datastream/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 18 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing data lineage tracking. Which TWO benefits does this provide?</div>
+  <ul class="opts"><li data-l="A">Eliminate all data errors.</li><li class="correct" data-l="B">Understand data origins and transformations for debugging.</li><li data-l="C">Increase processing speed.</li><li class="correct" data-l="D">Trace impact of schema changes across downstream systems.</li><li data-l="E">Reduce storage costs.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, D</b><div>Data lineage tracks data flow from source through transformations to destination, enabling debugging and impact analysis for changes.</div><div class="ref"><a href="https://cloud.google.com/data-catalog/docs/concepts/about-data-lineage" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 19 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your BigQuery queries use SELECT * frequently, scanning unnecessary columns. What change improves performance and reduces cost?</div>
+  <ul class="opts"><li data-l="A">Add more columns to tables.</li><li data-l="B">Always use SELECT *.</li><li class="correct" data-l="C">Select only required columns explicitly.</li><li data-l="D">Column selection doesn&#x27;t affect cost.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>BigQuery charges per bytes scanned. Selecting only needed columns reduces data scanned, improving performance and reducing costs.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/best-practices-costs#avoid_select_" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 20 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You need to orchestrate a complex data pipeline with dependencies (ETL, ML training, reporting). What service provides this?</div>
+  <ul class="opts"><li data-l="A">Single Cloud Function.</li><li data-l="B">Manual execution of each step.</li><li class="correct" data-l="C">Cloud Composer (managed Airflow) for workflow orchestration.</li><li data-l="D">Cloud Scheduler for simple cron jobs only.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Cloud Composer (Airflow) manages complex workflows with dependencies, retries, and monitoring, orchestrating multi-step data pipelines.</div><div class="ref"><a href="https://cloud.google.com/composer/docs/concepts/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 21 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your Pub/Sub topic receives messages from multiple publishers with different schemas. How do you validate message schemas?</div>
+  <ul class="opts"><li data-l="A">Validate only on subscriber side.</li><li data-l="B">Schemas cannot be enforced.</li><li class="correct" data-l="C">Attach a Pub/Sub schema to the topic for validation on publish.</li><li data-l="D">Accept all messages regardless of format.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Pub/Sub schemas enable server-side validation on publish, rejecting messages that don&#x27;t conform to the defined schema.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/schemas" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 22 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re using BigQuery BI Engine for dashboard acceleration. Which TWO scenarios benefit most?</div>
+  <ul class="opts"><li class="correct" data-l="A">Queries requiring sub-second response times.</li><li data-l="B">One-time ad-hoc queries.</li><li data-l="C">Data transformation jobs.</li><li class="correct" data-l="D">Repeated queries on the same datasets (dashboard refresh).</li><li data-l="E">Export-only workloads.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, D</b><div>BI Engine accelerates repeated queries with in-memory caching, ideal for dashboards requiring fast, repeated access to the same data.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/bi-engine-intro" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 23 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">Your streaming Dataflow pipeline needs to handle late-arriving data (events arriving after their event time window closes). What feature handles this?</div>
+  <ul class="opts"><li class="correct" data-l="A">Configure allowed lateness and late data handling in windowing.</li><li data-l="B">Drop all late data.</li><li data-l="C">Late data cannot be handled.</li><li data-l="D">Use batch processing instead.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Dataflow&#x27;s windowing supports allowed lateness, specifying how long after a window closes to accept late data for inclusion or separate handling.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/concepts/streaming-pipelines#handling_late_data" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 24 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You need to analyze data across BigQuery and Cloud Storage without loading it into BigQuery. What feature enables this?</div>
+  <ul class="opts"><li data-l="A">Separate queries for each storage.</li><li class="correct" data-l="B">External tables (BigLake) for federated queries over Cloud Storage.</li><li data-l="C">Cloud Storage cannot be queried.</li><li data-l="D">Data must be loaded into BigQuery first.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>External tables and BigLake enable querying data in Cloud Storage directly from BigQuery without loading, supporting federated analytics.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/external-data-sources" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 25 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing data quality checks. Which TWO approaches help ensure data quality?</div>
+  <ul class="opts"><li class="correct" data-l="A">Define data quality rules in Dataplex.</li><li class="correct" data-l="B">Validate data at ingestion time with schema validation.</li><li data-l="C">Accept all data without validation.</li><li data-l="D">Ignore data quality entirely.</li><li data-l="E">Check quality only after user complaints.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B</b><div>Dataplex quality rules provide automated validation. Schema validation at ingestion prevents malformed data from entering the pipeline.</div><div class="ref"><a href="https://cloud.google.com/dataplex/docs/data-quality-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 26 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your Dataflow job writes to BigQuery. During traffic spikes, you see quota errors. What should you configure?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use BigQuery Storage Write API with streaming inserts quotas increased.</li><li data-l="B">Use a different destination.</li><li data-l="C">Reduce write frequency.</li><li data-l="D">Quotas cannot be increased.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>BigQuery Storage Write API provides higher throughput than legacy streaming. Quota increases can be requested for higher volume workloads.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/write-api" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 27 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You need to implement point-in-time query capability for historical analysis. What BigQuery feature supports this?</div>
+  <ul class="opts"><li class="correct" data-l="A">Time travel to query data as of a specific timestamp within retention window.</li><li data-l="B">Point-in-time queries aren&#x27;t supported.</li><li data-l="C">Create daily snapshots manually.</li><li data-l="D">Delete old data immediately.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>BigQuery time travel allows querying table data as it existed at any point within the configurable retention window (default 7 days).</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/time-travel" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 28 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">You&#x27;re building a real-time event processing system. Which TWO patterns are common for Pub/Sub subscribers?</div>
+  <ul class="opts"><li data-l="A">Database polling only.</li><li data-l="B">Batch file processing.</li><li data-l="C">Manual message retrieval.</li><li class="correct" data-l="D">Pull subscriptions where applications poll for messages.</li><li class="correct" data-l="E">Push subscriptions that deliver to HTTP endpoints.</li></ul>
+  <div class="ans"><b>Bonne réponse : D, E</b><div>Pub/Sub supports push (HTTP delivery) and pull (application polling) patterns for message consumption, each suitable for different use cases.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/subscriber" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S4">
+  <div class="meta-line">
+    <span class="num">Question 29 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S4 · Optimizing Data Transfer and Latency and Planning for Data Growth</span>
+    
+  </div>
+  <div class="qt">Your BigQuery tables grow by 100GB daily. Storage costs are becoming significant. What optimization helps?</div>
+  <ul class="opts"><li data-l="A">Keep all data forever.</li><li data-l="B">Compress data manually.</li><li data-l="C">Storage costs cannot be reduced.</li><li class="correct" data-l="D">Set table/partition expiration to automatically delete old data.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Table and partition expiration automatically delete data after specified periods, managing storage costs for time-series data.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/managing-tables#table_expiration" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 30 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You need to process events in order within a customer session but can process different customers in parallel. What Pub/Sub feature enables this?</div>
+  <ul class="opts"><li data-l="A">Use only one subscriber for strict ordering.</li><li class="correct" data-l="B">Use ordering keys to maintain order within a key while parallelizing across keys.</li><li data-l="C">Order cannot be guaranteed.</li><li data-l="D">Process all events sequentially.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Ordering keys group messages that must be processed in order. Different ordering keys can be processed in parallel by different subscribers.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/ordering" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 31 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your data pipeline combines data from multiple sources with different formats. What Dataflow feature helps standardize data?</div>
+  <ul class="opts"><li data-l="A">Only accept one format.</li><li data-l="B">Data standardization isn&#x27;t possible.</li><li data-l="C">Skip incompatible sources.</li><li class="correct" data-l="D">Use ParDo transforms with custom parsing logic for each source format.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>ParDo transforms allow custom processing logic to parse and standardize data from different formats into a unified schema.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/concepts/beam-programming-model" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S4">
+  <div class="meta-line">
+    <span class="num">Question 32 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M2/S4 · Optimizing Data Transfer and Latency and Planning for Data Growth</span>
+    
+  </div>
+  <div class="qt">You&#x27;re optimizing BigQuery query costs. Which TWO practices reduce bytes scanned?</div>
+  <ul class="opts"><li data-l="A">Query entire tables without filters.</li><li class="correct" data-l="B">Use clustered tables with filters on clustered columns.</li><li data-l="C">Use SELECT * for all queries.</li><li class="correct" data-l="D">Use partitioned tables with partition filters in queries.</li><li data-l="E">Store data as STRING type.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, D</b><div>Partitioning with pruning and clustering both reduce bytes scanned by limiting data access to relevant portions of tables.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/best-practices-costs" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 33 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your Dataproc Spark job reads from Cloud Storage but performance is slow. What optimization helps?</div>
+  <ul class="opts"><li data-l="A">Storage performance cannot be improved.</li><li data-l="B">Use CSV exclusively.</li><li data-l="C">Read files one at a time.</li><li class="correct" data-l="D">Use Cloud Storage connector with optimized settings and appropriate file formats (Parquet).</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>The Cloud Storage connector optimizes Spark reads. Columnar formats like Parquet enable predicate pushdown and column projection for faster reads.</div><div class="ref"><a href="https://cloud.google.com/dataproc/docs/concepts/connectors/cloud-storage" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 34 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">You need to deduplicate streaming data in Dataflow. Events may arrive multiple times with the same ID. What approach works?</div>
+  <ul class="opts"><li data-l="A">Deduplication isn&#x27;t possible in streaming.</li><li class="correct" data-l="B">Use stateful processing with a dedupe transform based on event ID.</li><li data-l="C">Use batch processing instead.</li><li data-l="D">Accept duplicate data.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Stateful transforms in Dataflow can track seen IDs within windows, dropping duplicates while maintaining exactly-once semantics.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/concepts/streaming-pipelines#deduplication" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 35 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing a Lambda architecture. Which TWO layers does it include?</div>
+  <ul class="opts"><li data-l="A">Only real-time processing.</li><li data-l="B">No processing layers.</li><li class="correct" data-l="C">Batch layer for complete, accurate views.</li><li class="correct" data-l="D">Speed layer for real-time, approximate views.</li><li data-l="E">Only batch processing.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, D</b><div>Lambda architecture combines batch (complete, accurate) and speed (real-time, approximate) layers, serving queries from merged views.</div><div class="ref"><a href="https://cloud.google.com/architecture/stream-analytics/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 36 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your BigQuery materialized view isn&#x27;t being used by queries as expected. What should you check?</div>
+  <ul class="opts"><li data-l="A">Delete and recreate the view.</li><li data-l="B">Views cannot optimize queries.</li><li class="correct" data-l="C">Verify the query can be satisfied by the materialized view (column selection, aggregation compatibility).</li><li data-l="D">Materialized views are always used.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>BigQuery automatically uses materialized views when queries are compatible. Check that columns and aggregations in the query match the view definition.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/materialized-views-intro#automatic_query_rewrite" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 37 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You need to analyze clickstream data to identify user sessions. Events are timestamped but session boundaries aren&#x27;t explicit. What Dataflow windowing helps?</div>
+  <ul class="opts"><li class="correct" data-l="A">Session windows that group events based on gaps in activity.</li><li data-l="B">Fixed windows only.</li><li data-l="C">No windowing possible.</li><li data-l="D">Process events individually.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Session windows dynamically group events without gaps exceeding a timeout threshold, naturally identifying user sessions from event streams.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/concepts/streaming-pipelines#session_windows" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 38 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M2/S1 · Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery</span>
+    
+  </div>
+  <div class="qt">You&#x27;re building a data catalog. Which TWO features does Data Catalog provide?</div>
+  <ul class="opts"><li data-l="A">Data transformation.</li><li class="correct" data-l="B">Automatic metadata discovery from BigQuery, Cloud Storage, and Pub/Sub.</li><li class="correct" data-l="C">Custom tags and annotations for business context.</li><li data-l="D">Replacing BigQuery.</li><li data-l="E">Data storage services.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C</b><div>Data Catalog discovers and catalogs metadata automatically. Custom tags add business context like data owner, classification, and quality scores.</div><div class="ref"><a href="https://cloud.google.com/data-catalog/docs/concepts/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 39 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your BigQuery table has 1 million rows but only 100 rows change daily. Full table updates are inefficient. What feature helps?</div>
+  <ul class="opts"><li data-l="A">Replace entire table daily.</li><li data-l="B">Updates aren&#x27;t possible.</li><li data-l="C">Delete and recreate table.</li><li class="correct" data-l="D">Use MERGE statements for upsert operations on changed rows only.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>MERGE performs upserts, updating existing rows and inserting new ones based on matching conditions, efficiently handling incremental changes.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#merge_statement" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 40 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You need to process Pub/Sub messages with exactly-once delivery to Cloud Storage. What integration helps?</div>
+  <ul class="opts"><li data-l="A">Write custom code for every message.</li><li data-l="B">Exactly-once to Storage isn&#x27;t possible.</li><li class="correct" data-l="C">Configure Pub/Sub subscription with Cloud Storage as a destination.</li><li data-l="D">Use polling only.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Pub/Sub supports Cloud Storage as a native subscription destination, automatically writing messages to Storage with exactly-once semantics.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/cloudstorage" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 41 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your Dataflow pipeline processes events with timestamps. Some events arrive with future timestamps (clock skew). How do you handle this?</div>
+  <ul class="opts"><li data-l="A">Ignore event timestamps.</li><li data-l="B">Clock skew cannot be handled.</li><li data-l="C">Drop all future-timestamped events.</li><li class="correct" data-l="D">Set an appropriate watermark delay and configure late data handling.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Watermark delay and late data configuration allow the pipeline to handle clock skew by waiting for delayed events before closing windows.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/concepts/streaming-pipelines#watermarks" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 42 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re comparing BigQuery slots pricing models. Which TWO scenarios favor on-demand pricing?</div>
+  <ul class="opts"><li class="correct" data-l="A">Development and testing environments.</li><li data-l="B">24/7 heavy query usage.</li><li class="correct" data-l="C">Unpredictable, variable query workloads.</li><li data-l="D">When costs must be absolutely predictable.</li><li data-l="E">Consistent high-volume production workloads.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, C</b><div>On-demand pricing suits variable workloads and dev/test where usage is unpredictable. Edition slots are better for consistent production workloads.</div><div class="ref"><a href="https://cloud.google.com/bigquery/pricing" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 43 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your data lake has petabytes of data. Users need to find relevant datasets. What helps with data discovery?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use Dataplex for data management and Data Catalog for searchable metadata.</li><li data-l="B">Remember all table names.</li><li data-l="C">Browse Cloud Storage manually.</li><li data-l="D">Data discovery isn&#x27;t needed.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Dataplex manages data across lakes and Data Catalog provides searchable metadata, enabling users to discover relevant datasets.</div><div class="ref"><a href="https://cloud.google.com/dataplex/docs/introduction" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 44 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You need to aggregate streaming data over the last 1 hour, updating results every 5 minutes. What windowing strategy works?</div>
+  <ul class="opts"><li data-l="A">Tumbling windows.</li><li data-l="B">Fixed 1-hour windows only.</li><li data-l="C">No windowing possible.</li><li class="correct" data-l="D">Sliding windows with 1-hour duration and 5-minute period.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Sliding windows with specified duration and period overlap, providing updated aggregations every period over the full window duration.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/concepts/streaming-pipelines#sliding_time_windows" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 45 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing slowly changing dimensions (SCD) in BigQuery. Which TWO approaches are common?</div>
+  <ul class="opts"><li data-l="A">Never update dimension data.</li><li class="correct" data-l="B">Type 2: Maintain history with effective dates.</li><li class="correct" data-l="C">Type 1: Overwrite with current values.</li><li data-l="D">Delete all history immediately.</li><li data-l="E">Store dimensions in Pub/Sub.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C</b><div>SCD Type 1 overwrites old values. Type 2 maintains historical records with effective dates for tracking changes over time.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/best-practices-performance-patterns" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 46 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your BigQuery dataset should only be accessible during business hours for cost control. What approach helps?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use IAM Conditions with time-based access restrictions.</li><li data-l="B">Time-based access isn&#x27;t possible.</li><li data-l="C">Manually revoke access daily.</li><li data-l="D">Delete data at night.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>IAM Conditions support time-based restrictions, allowing access only during specified hours without data deletion or manual intervention.</div><div class="ref"><a href="https://cloud.google.com/iam/docs/conditions-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 47 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You need to transform data with SQL before loading into BigQuery. What service enables SQL-based ETL?</div>
+  <ul class="opts"><li data-l="A">SQL transformations aren&#x27;t supported.</li><li data-l="B">Use spreadsheets for transformation.</li><li data-l="C">Write custom Python only.</li><li class="correct" data-l="D">Dataform for SQL-based data transformation workflows.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Dataform provides SQL-based ETL with version control, testing, and scheduling for BigQuery data transformation workflows.</div><div class="ref"><a href="https://cloud.google.com/dataform/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 48 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re building a data pipeline with error handling. Which TWO patterns are recommended?</div>
+  <ul class="opts"><li class="correct" data-l="A">Dead letter queues for messages that fail processing.</li><li data-l="B">Delete failed messages silently.</li><li data-l="C">Stop entire pipeline on first error.</li><li data-l="D">Ignore all errors.</li><li class="correct" data-l="E">Retry logic with exponential backoff.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, E</b><div>Dead letter queues capture failed messages for investigation. Retry with backoff handles transient errors gracefully.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/dead-letter-topics" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 49 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">Your Dataflow batch job reads 10TB from Cloud Storage. The job runs out of memory. What optimization helps?</div>
+  <ul class="opts"><li data-l="A">Use smaller machines.</li><li data-l="B">Reduce data size only.</li><li data-l="C">Memory cannot be configured.</li><li class="correct" data-l="D">Increase worker memory or use fusion breaks to reduce per-worker data.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Increasing worker memory handles larger datasets. Fusion breaks prevent the optimizer from combining too many transforms, reducing memory pressure.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/guides/deploying-a-pipeline#preventing-fusion" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 50 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">You need to join streaming data with a slowly updating reference table. What pattern is recommended?</div>
+  <ul class="opts"><li data-l="A">Reference data cannot be joined.</li><li data-l="B">Join two streaming sources only.</li><li class="correct" data-l="C">Side input pattern with periodic refresh of reference data.</li><li data-l="D">Batch process after streaming completes.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Side inputs allow streaming pipelines to access reference data that updates periodically, enabling enrichment without full streaming joins.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/guides/common-patterns#side-inputs" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 51 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your BigQuery users want self-service analytics. Which feature enables governed self-service?</div>
+  <ul class="opts"><li class="correct" data-l="A">Authorized views and row/column level security for controlled access.</li><li data-l="B">Give all users table owner access.</li><li data-l="C">Disable all security.</li><li data-l="D">Self-service isn&#x27;t possible.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Authorized views and row/column level security enable self-service while maintaining governance over sensitive data access.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/authorized-views" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 52 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing data encryption for analytics. Which TWO encryption options does BigQuery provide?</div>
+  <ul class="opts"><li data-l="A">Encryption in transit only.</li><li class="correct" data-l="B">Customer-managed encryption keys (CMEK).</li><li data-l="C">Client-side encryption only.</li><li class="correct" data-l="D">Default Google-managed encryption at rest.</li><li data-l="E">No encryption available.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, D</b><div>BigQuery encrypts all data at rest by default. CMEK provides customer-managed keys for additional control over encryption.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/customer-managed-encryption" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S4">
+  <div class="meta-line">
+    <span class="num">Question 53 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S4 · Optimizing Data Transfer and Latency and Planning for Data Growth</span>
+    
+  </div>
+  <div class="qt">Your Pub/Sub messages contain sensitive data. How do you ensure messages are encrypted in transit?</div>
+  <ul class="opts"><li data-l="A">Transit encryption isn&#x27;t supported.</li><li data-l="B">Use VPN for all traffic.</li><li class="correct" data-l="C">Pub/Sub encrypts all data in transit by default using TLS.</li><li data-l="D">Configure encryption manually.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Pub/Sub uses TLS encryption for all data in transit by default. No additional configuration is required for transport encryption.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/encryption" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S4">
+  <div class="meta-line">
+    <span class="num">Question 54 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S4 · Optimizing Data Transfer and Latency and Planning for Data Growth</span>
+    
+  </div>
+  <div class="qt">You need to analyze semi-structured log data. The schema varies between log entries. What BigQuery data type helps?</div>
+  <ul class="opts"><li data-l="A">Semi-structured data cannot be stored.</li><li data-l="B">Create columns for every possible field.</li><li data-l="C">Store as STRING and parse manually.</li><li class="correct" data-l="D">Use JSON data type for flexible schema storage and querying.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>BigQuery&#x27;s native JSON type stores semi-structured data efficiently and allows SQL functions to query nested, variable-schema data.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/json-data" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 55 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re building a streaming aggregation pipeline. Which TWO metrics should you monitor?</div>
+  <ul class="opts"><li class="correct" data-l="A">Backlog size (unprocessed elements).</li><li class="correct" data-l="B">System lag (time behind real-time).</li><li data-l="C">Number of meeting hours.</li><li data-l="D">Color of the dashboard.</li><li data-l="E">Developer commit frequency.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B</b><div>System lag and backlog size indicate pipeline health. High lag or growing backlog suggests the pipeline can&#x27;t keep up with input rate.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/guides/monitoring-and-troubleshooting" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 56 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your BigQuery queries frequently timeout. The queries are complex with multiple CTEs and subqueries. What helps?</div>
+  <ul class="opts"><li class="correct" data-l="A">Break into smaller queries using temp tables or scheduled queries for intermediate results.</li><li data-l="B">Run longer timeout settings.</li><li data-l="C">Complex queries cannot be optimized.</li><li data-l="D">Use one single query always.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Breaking complex queries into stages with materialized intermediate results reduces query complexity and prevents timeouts.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/best-practices-performance-patterns" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 57 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S1 · Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery</span>
+    
+  </div>
+  <div class="qt">You need to replicate data from on-premises databases to BigQuery continuously. What managed service helps?</div>
+  <ul class="opts"><li data-l="A">Direct database connections only.</li><li data-l="B">Build custom replication.</li><li class="correct" data-l="C">Datastream for serverless change data capture and replication.</li><li data-l="D">Manual periodic exports.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Datastream provides serverless CDC from on-premises databases to GCP destinations including BigQuery, Cloud Storage, and Cloud SQL.</div><div class="ref"><a href="https://cloud.google.com/datastream/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 58 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing data contracts between teams. Which TWO elements are essential?</div>
+  <ul class="opts"><li class="correct" data-l="A">SLAs for data freshness and quality.</li><li data-l="B">Informal email agreements.</li><li data-l="C">No documentation needed.</li><li class="correct" data-l="D">Schema definitions with versioning.</li><li data-l="E">Teams work independently.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, D</b><div>Data contracts require clear schema definitions and SLAs for quality/freshness to ensure reliable data exchange between producer and consumer teams.</div><div class="ref"><a href="https://cloud.google.com/dataplex/docs/data-quality-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 59 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S2 · Cost Optimization</span>
+    
+  </div>
+  <div class="qt">Your Spark job on Dataproc spills to disk frequently, slowing execution. What optimization helps?</div>
+  <ul class="opts"><li data-l="A">Reduce memory further.</li><li data-l="B">Disk spill is optimal.</li><li data-l="C">Use smaller datasets only.</li><li class="correct" data-l="D">Increase executor memory or optimize partitioning to reduce shuffle size.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Disk spill indicates insufficient memory for operations. Increasing executor memory or reducing shuffle size through better partitioning addresses this.</div><div class="ref"><a href="https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/cluster-properties" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 60 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S1 · Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery</span>
+    
+  </div>
+  <div class="qt">You need to implement data access auditing for compliance. What BigQuery feature provides this?</div>
+  <ul class="opts"><li data-l="A">Third-party tools required.</li><li class="correct" data-l="B">BigQuery audit logs in Cloud Logging for all data access events.</li><li data-l="C">Manual logging only.</li><li data-l="D">Access cannot be audited.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>BigQuery automatically logs data access events to Cloud Audit Logs, providing comprehensive audit trails for compliance requirements.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/audit-logs" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+</main>
+<script>
+function all(v){document.querySelectorAll('.q').forEach(q=>q.classList.toggle('show',v))}
+function applyFilters(){
+  const d=document.getElementById('filterDomain').value;
+  const m=document.getElementById('filterModule').value;
+  let n=0;
+  document.querySelectorAll('.q').forEach(q=>{
+    const okD=!d||q.dataset.domain===d;
+    const okM=!m||q.dataset.module===m;
+    const show=okD&&okM;
+    q.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  const el=document.getElementById('resultCount');
+  if(el) el.textContent=n+' question'+(n>1?'s':'');
+}
+function syncModules(){
+  const d=document.getElementById('filterDomain').value;
+  const sel=document.getElementById('filterModule');
+  const cur=sel.value;
+  [...sel.options].forEach((o,i)=>{
+    if(i===0){o.hidden=false;return;}
+    o.hidden=!!(d&&o.dataset.domain!==d);
+  });
+  if(cur && sel.selectedOptions[0] && sel.selectedOptions[0].hidden) sel.value='';
+  applyFilters();
+}
+function resetFilters(){
+  document.getElementById('filterDomain').value='';
+  document.getElementById('filterModule').value='';
+  syncModules();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.q').forEach(q=>q.addEventListener('click',e=>{
+    if(e.target.closest('a,select,button,label'))return;
+    q.classList.toggle('show');
+  }));
+  const fd=document.getElementById('filterDomain');
+  const fm=document.getElementById('filterModule');
+  if(fd) fd.addEventListener('change',syncModules);
+  if(fm) fm.addEventListener('change',applyFilters);
+  applyFilters();
+});
+</script>
+</body></html>

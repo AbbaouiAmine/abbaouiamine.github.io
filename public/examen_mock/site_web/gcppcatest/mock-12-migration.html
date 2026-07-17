@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GCP PCA — Mock 12 (Migration)</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.5}
+.bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar a{color:#1a73e8;text-decoration:none;font-weight:700;font-size:.88rem}
+.bar button{font:inherit;border:1px solid #cbd5e1;background:#f8fafc;border-radius:7px;padding:5px 10px;cursor:pointer}
+.wrap{max-width:960px;margin:auto;padding:24px 16px 80px}
+.head,.q,.filters{background:#fff;border:1px solid #e2e8f0;border-radius:12px}
+.head{padding:20px;margin-bottom:14px}
+.head h1{margin:0 0 6px;color:#1a73e8;font-size:1.35rem}
+.muted{color:#64748b;font-size:.9rem}
+.filters{padding:14px 16px;margin-bottom:14px;display:grid;gap:10px}
+.filters .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.filters label{font-size:.8rem;font-weight:700;color:#475569;min-width:70px}
+.filters select{font:inherit;border:1px solid #cbd5e1;border-radius:8px;padding:6px 10px;min-width:220px;background:#fff}
+#resultCount{font-size:.85rem;color:#1a73e8;font-weight:700}
+.q{padding:16px 18px;margin-bottom:12px}
+.q.hidden{display:none}
+.meta-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
+.num{font-size:.76rem;font-weight:800;color:#1a73e8}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.02em}
+.badge.d{background:#e8f0fe;color:#1a73e8}
+.badge.m{background:#f3e8ff;color:#7c3aed}
+.badge.s{background:#ecfdf5;color:#047857}
+.badge.type{background:#64748b;color:#fff;text-transform:uppercase}
+.badge.type.multi{background:#b45309}
+.sec-title{font-size:.78rem;color:#64748b}
+.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line}
+.opts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.opts li{position:relative;padding:8px 10px 8px 40px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:.92rem}
+.opts li:before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e2e8f0;font-size:.72rem;font-weight:800}
+.show .correct{background:#e6f4ea;border-color:#34a853}
+.show .correct:before{background:#34a853;color:#fff}
+.ans{display:none;margin-top:10px;padding:9px 12px;border-left:4px solid #34a853;background:#f0fdf4}
+.show .ans{display:block}
+.ans b{color:#137333}
+.ref{margin-top:5px;font-size:.8rem}
+.ref a{color:#1a73e8;word-break:break-all}
+.grid-mocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px}
+.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}
+.card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
+.card .n{width:32px;height:32px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800}
+</style>
+</head><body>
+<nav class="bar">
+  <a href="../index.html">← Menu principal</a>
+  <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Site original ↗</a>
+  <button type="button" onclick="all(true)">Afficher les réponses</button>
+  <button type="button" onclick="all(false)">Masquer les réponses</button>
+</nav>
+<main class="wrap">
+<header class="head">
+  <h1>GCP PCA — Mock 12 (Migration)</h1>
+  <div class="muted">60 questions · labels D/M/S · <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Source</a></div>
+</header>
+
+<div class="filters">
+  <div class="row">
+    <label for="filterDomain">Domaine</label>
+    <select id="filterDomain"><option value="">Tous les domaines</option><option value="D1">D1 — Designing and Planning a Cloud Solution Architecture</option><option value="D2">D2 — Managing and Provisioning a Solution Infrastructure</option><option value="D3">D3 — Designing for Security and Compliance</option><option value="D4">D4 — Analyzing and Optimizing Technical and Business Processes</option><option value="D5">D5 — Managing Implementation</option><option value="D6">D6 — Ensuring Solution and Operations Reliability</option></select>
+    <label for="filterModule">Module</label>
+    <select id="filterModule"><option value="">Tous les modules</option><option value="D1/M1" data-domain="D1">D1/M1 — Design for Business Outcomes</option><option value="D1/M2" data-domain="D1">D1/M2 — Design Robust Cloud Infrastructures</option><option value="D1/M3" data-domain="D1">D1/M3 — Design Network, Storage, and Compute</option><option value="D1/M4" data-domain="D1">D1/M4 — Plan Cloud Migrations</option><option value="D1/M5" data-domain="D1">D1/M5 — Evolve and Adapt Solutions</option><option value="D2/M1" data-domain="D2">D2/M1 — Configure and Secure Networks</option><option value="D2/M2" data-domain="D2">D2/M2 — Configure Storage Resources</option><option value="D2/M3" data-domain="D2">D2/M3 — Configure Compute Resources</option><option value="D3/M1" data-domain="D3">D3/M1 — Architecting Secure Google Cloud Solutions</option><option value="D3/M2" data-domain="D3">D3/M2 — Designing for Compliance</option><option value="D4/M1" data-domain="D4">D4/M1 — Optimizing Technical Processes and Development Lifecycle</option><option value="D4/M2" data-domain="D4">D4/M2 — Aligning Business Processes with Cloud Strategy</option><option value="D4/M3" data-domain="D4">D4/M3 — Ensuring Production Reliability</option><option value="D5/M1" data-domain="D5">D5/M1 — Guiding Development and Operations Teams</option><option value="D5/M2" data-domain="D5">D5/M2 — Interacting with Google Cloud Programmatically</option><option value="D6/M1" data-domain="D6">D6/M1 — Monitoring, Logging, and Alerting for Reliability</option><option value="D6/M2" data-domain="D6">D6/M2 — Managing Deployments and Ensuring Quality</option><option value="D6/M3" data-domain="D6">D6/M3 — Troubleshooting and Incident Response</option></select>
+    <button type="button" onclick="resetFilters()">Réinitialiser</button>
+    <span id="resultCount"></span>
+  </div>
+</div>
+
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 1 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">Your company is planning to migrate 500 VMs from on-premises to GCP. The CTO wants minimal changes to applications during migration. Which migration approach should you recommend?</div>
+  <ul class="opts"><li data-l="A">Rebuild every application from scratch.</li><li data-l="B">Stay on-premises.</li><li data-l="C">Re-architect all applications to Cloud Run.</li><li class="correct" data-l="D">Lift and shift using Migrate to Virtual Machines for VM migration.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Lift and shift with Migrate to Virtual Machines (M4CE) moves VMs with minimal changes, meeting the requirement for minimal application modifications.</div><div class="ref"><a href="https://cloud.google.com/migrate/virtual-machines/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S2">
+  <div class="meta-line">
+    <span class="num">Question 2 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M4/S2 · Planning a Migration</span>
+    
+  </div>
+  <div class="qt">You&#x27;re planning a database migration to Cloud SQL. Which TWO factors should you evaluate during the assessment phase?</div>
+  <ul class="opts"><li data-l="A">The color of the server rack.</li><li data-l="B">Office location of database administrators.</li><li class="correct" data-l="C">Current workload patterns and peak usage times.</li><li class="correct" data-l="D">Source database version and feature compatibility.</li><li data-l="E">Day of the week for migration.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, D</b><div>Version and feature compatibility determine if migration is possible. Workload patterns help plan for downtime windows and capacity requirements.</div><div class="ref"><a href="https://cloud.google.com/database-migration/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 3 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">You need to migrate a monolithic application with tight dependencies between components. What&#x27;s the recommended first step?</div>
+  <ul class="opts"><li class="correct" data-l="A">Lift and shift the entire application first, then modernize incrementally.</li><li data-l="B">Immediately break into microservices.</li><li data-l="C">Re-write in a different language.</li><li data-l="D">Cancel the migration.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Lift and shift first reduces risk and establishes a baseline in cloud. Incremental modernization allows decomposition over time without disrupting operations.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-getting-started" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 4 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your organization has 100TB of data to transfer to Cloud Storage. Network bandwidth is limited to 100 Mbps. What&#x27;s the most practical transfer method?</div>
+  <ul class="opts"><li data-l="A">Don&#x27;t migrate the data.</li><li data-l="B">Email the data.</li><li class="correct" data-l="C">Use Transfer Appliance for physical data transfer.</li><li data-l="D">Transfer over the network directly.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>At 100 Mbps, 100TB would take over 90 days to transfer. Transfer Appliance provides physical shipping of large datasets when network transfer is impractical.</div><div class="ref"><a href="https://cloud.google.com/transfer-appliance/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S3">
+  <div class="meta-line">
+    <span class="num">Question 5 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M4/S3 · Migrating Systems and Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating from AWS to GCP. Which TWO services help with cross-cloud migration?</div>
+  <ul class="opts"><li data-l="A">Direct AWS to GCP data link.</li><li data-l="B">Automatic application conversion.</li><li data-l="C">AWS native migration tools only.</li><li class="correct" data-l="D">Migrate to Virtual Machines for EC2 to Compute Engine.</li><li class="correct" data-l="E">Storage Transfer Service for S3 to Cloud Storage.</li></ul>
+  <div class="ans"><b>Bonne réponse : D, E</b><div>Storage Transfer Service handles S3 to Cloud Storage data migration. Migrate to Virtual Machines supports EC2 to Compute Engine VM migration.</div><div class="ref"><a href="https://cloud.google.com/storage-transfer/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 6 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">Your legacy application requires Windows Server 2008 R2. GCP doesn&#x27;t support direct migration of this OS version as a supported platform. What should you do?</div>
+  <ul class="opts"><li class="correct" data-l="A">Migrate with Bring Your Own License (BYOL) and run on Sole Tenant Nodes.</li><li data-l="B">Use Linux only.</li><li data-l="C">Upgrade OS before migration.</li><li data-l="D">The migration is impossible.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>BYOL with Sole Tenant Nodes allows running legacy Windows versions with your existing licenses, providing dedicated hardware for license compliance.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/nodes/sole-tenant-nodes" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S2">
+  <div class="meta-line">
+    <span class="num">Question 7 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M4/S2 · Planning a Migration</span>
+    
+  </div>
+  <div class="qt">You&#x27;re performing a database migration with zero downtime requirement. The source database is actively receiving writes. What approach enables this?</div>
+  <ul class="opts"><li data-l="A">Zero downtime isn&#x27;t possible.</li><li class="correct" data-l="B">Use continuous replication with Database Migration Service (DMS), then cutover during low traffic.</li><li data-l="C">Stop the source database during migration.</li><li data-l="D">Run parallel databases indefinitely.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>DMS provides continuous replication, keeping target synchronized with source. Cutover can happen during low traffic with minimal downtime.</div><div class="ref"><a href="https://cloud.google.com/database-migration/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S5">
+  <div class="meta-line">
+    <span class="num">Question 8 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S5</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S5 · Buy vs Build and Design Decision Trade-offs</span>
+    
+  </div>
+  <div class="qt">You&#x27;re creating a migration plan. Which TWO deliverables are essential for the assess phase?</div>
+  <ul class="opts"><li class="correct" data-l="A">TCO analysis comparing on-premises and cloud costs.</li><li data-l="B">Final architecture diagrams only.</li><li class="correct" data-l="C">Inventory of applications and infrastructure dependencies.</li><li data-l="D">Production traffic running on GCP.</li><li data-l="E">Completed migration of all workloads.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, C</b><div>The assess phase delivers infrastructure inventory and TCO analysis to understand what&#x27;s being migrated and build the business case.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-assessing-and-discovering-your-workloads" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 9 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your application has a hard dependency on a specific IP address that cannot be changed. How do you handle this during migration?</div>
+  <ul class="opts"><li data-l="A">Keep the application on-premises.</li><li class="correct" data-l="B">Reserve a static external IP in GCP and reconfigure the application or use Cloud NAT with fixed IPs.</li><li data-l="C">Use random IPs.</li><li data-l="D">IP addresses cannot be preserved.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Static IP reservation ensures consistent addressing. For outbound traffic, Cloud NAT with static IPs can provide fixed egress addresses.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 10 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">You need to migrate an on-premises Hadoop cluster to GCP. The cluster runs batch jobs daily. What&#x27;s the recommended target service?</div>
+  <ul class="opts"><li class="correct" data-l="A">Dataproc for managed Hadoop/Spark with ephemeral clusters for batch jobs.</li><li data-l="B">Compute Engine VMs with manual Hadoop installation.</li><li data-l="C">Cloud Run.</li><li data-l="D">Cloud Functions.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Dataproc provides managed Hadoop/Spark. Ephemeral clusters can spin up for batch jobs and terminate after, optimizing costs.</div><div class="ref"><a href="https://cloud.google.com/dataproc/docs/concepts/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 11 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M2/S2 · Working with Cloud Emulators for Local Development</span>
+    
+  </div>
+  <div class="qt">Your Oracle database migration to Cloud SQL for PostgreSQL requires schema conversion. What tool helps with schema translation?</div>
+  <ul class="opts"><li data-l="A">Manual rewriting only.</li><li class="correct" data-l="B">Database Migration Service with schema conversion capabilities.</li><li data-l="C">Schema migration isn&#x27;t supported.</li><li data-l="D">Keep Oracle in cloud.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>DMS includes schema conversion features to help translate Oracle schemas to PostgreSQL-compatible syntax during heterogeneous migrations.</div><div class="ref"><a href="https://cloud.google.com/database-migration/docs/oracle-to-postgresql/migration-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S2">
+  <div class="meta-line">
+    <span class="num">Question 12 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M4/S2 · Planning a Migration</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing a hybrid connectivity solution during migration. Which TWO options provide private connectivity?</div>
+  <ul class="opts"><li class="correct" data-l="A">Cloud Interconnect for dedicated high-bandwidth links.</li><li data-l="B">Social media sharing.</li><li class="correct" data-l="C">Cloud VPN for encrypted IPsec tunnels over internet.</li><li data-l="D">Public internet without encryption.</li><li data-l="E">Sneakernet data transfer.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, C</b><div>Cloud Interconnect provides dedicated private connectivity. Cloud VPN creates encrypted tunnels over public internet for secure private access.</div><div class="ref"><a href="https://cloud.google.com/network-connectivity/docs/interconnect" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 13 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your migration project has strict compliance requirements. Data must never leave the EU region. What should you configure?</div>
+  <ul class="opts"><li data-l="A">Trust users will select EU regions.</li><li class="correct" data-l="B">Use organization policies to restrict resource locations to EU regions.</li><li data-l="C">Store data globally for performance.</li><li data-l="D">No location controls exist.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Organization policies with location constraints ensure all resources are created only in approved regions, enforcing data residency requirements.</div><div class="ref"><a href="https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 14 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S1 · Integration with On-premises and Multicloud Environments</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating containers from an on-premises Kubernetes cluster to GKE. What migration approach minimizes application changes?</div>
+  <ul class="opts"><li data-l="A">Use VMs instead.</li><li data-l="B">Kubernetes workloads cannot migrate.</li><li data-l="C">Rebuild all containers from scratch.</li><li class="correct" data-l="D">Use kubectl to export/import Kubernetes manifests, adjusting GKE-specific configurations.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Kubernetes manifests are portable. Exporting existing configurations and adjusting for GKE specifics enables migration with minimal application changes.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/migrate-workloads" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M5" data-label="D1/M5/S4">
+  <div class="meta-line">
+    <span class="num">Question 15 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M5</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M5/S4 · Legacy Evolution Strategies</span>
+    
+  </div>
+  <div class="qt">You&#x27;re using the Strangler Fig pattern for migration. Which TWO characteristics define this approach?</div>
+  <ul class="opts"><li data-l="A">Must complete in one day.</li><li data-l="B">Big bang migration of everything at once.</li><li class="correct" data-l="C">Route traffic gradually from old to new system.</li><li data-l="D">No rollback possible.</li><li class="correct" data-l="E">Incrementally replace legacy components with new implementations.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, E</b><div>Strangler Fig incrementally replaces legacy components, routing traffic gradually to new implementations while maintaining the ability to rollback.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-building-your-foundation" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 16 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">Your SQL Server needs to migrate to Cloud SQL. The database uses SQL Server-specific features like CLR assemblies. What should you evaluate?</div>
+  <ul class="opts"><li data-l="A">All features are automatically supported.</li><li data-l="B">CLR works identically.</li><li class="correct" data-l="C">Feature compatibility between source and Cloud SQL for SQL Server; some CLR features may not be supported.</li><li data-l="D">Skip compatibility checking.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Managed services have some feature restrictions. CLR assemblies and certain advanced features may require evaluation and potential workarounds.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/sqlserver/features" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 17 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
+    
+  </div>
+  <div class="qt">You need to keep applications running during VM migration. What Migrate to Virtual Machines feature enables this?</div>
+  <ul class="opts"><li data-l="A">Source VMs must be stopped during migration.</li><li data-l="B">Applications always go down.</li><li class="correct" data-l="C">Streaming migration that replicates data while source VM continues running.</li><li data-l="D">Snapshot only approach.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Streaming migration in M4CE continuously replicates changes while source remains running, minimizing downtime during cutover.</div><div class="ref"><a href="https://cloud.google.com/migrate/virtual-machines/docs/migration-phases" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 18 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">You&#x27;re conducting a migration readiness assessment. Which TWO areas require evaluation?</div>
+  <ul class="opts"><li data-l="A">Parking lot capacity.</li><li data-l="B">Office furniture requirements.</li><li data-l="C">Cafeteria menu.</li><li class="correct" data-l="D">Application dependencies and integrations.</li><li class="correct" data-l="E">Staff training needs for GCP.</li></ul>
+  <div class="ans"><b>Bonne réponse : D, E</b><div>Application dependencies affect migration sequencing. Staff training ensures teams can operate in the new environment effectively.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-assessing-and-discovering-your-workloads" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S1">
+  <div class="meta-line">
+    <span class="num">Question 19 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M4/S1 · Integration with Existing Systems</span>
+    
+  </div>
+  <div class="qt">Your migration includes applications with Windows licensing. How should you handle licensing in GCP?</div>
+  <ul class="opts"><li data-l="A">All licenses transfer automatically.</li><li data-l="B">Windows licensing isn&#x27;t supported.</li><li data-l="C">Licensing doesn&#x27;t apply in cloud.</li><li class="correct" data-l="D">Use license-included VMs or BYOL with Sole Tenant Nodes depending on existing agreements.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>GCP offers license-included Windows VMs or BYOL options. Sole Tenant Nodes support BYOL for customers with existing license agreements.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/instances/windows/ms-licensing" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S3">
+  <div class="meta-line">
+    <span class="num">Question 20 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M4/S3 · Migrating Systems and Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating a three-tier application (web, app, database). What&#x27;s the recommended migration sequence?</div>
+  <ul class="opts"><li data-l="A">Migrate all tiers simultaneously.</li><li data-l="B">Random order.</li><li data-l="C">Migrate web tier first.</li><li class="correct" data-l="D">Migrate database first, then application tier, then web tier.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Database first establishes data layer. Application tier migration follows with database connectivity. Web tier last minimizes user impact.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-building-your-foundation" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 21 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M2/S2 · Working with Cloud Emulators for Local Development</span>
+    
+  </div>
+  <div class="qt">Your on-premises VMware environment needs to migrate to GCP. What service enables VMware workload migration?</div>
+  <ul class="opts"><li data-l="A">Manual VM export only.</li><li class="correct" data-l="B">Migrate to Virtual Machines (formerly Migrate for Compute Engine) with VMware source.</li><li data-l="C">VMware workloads cannot migrate.</li><li data-l="D">Google Cloud VMware Engine only.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Migrate to Virtual Machines supports VMware sources, enabling migration of VMware workloads to Compute Engine.</div><div class="ref"><a href="https://cloud.google.com/migrate/virtual-machines/docs/migration-phases" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 22 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D5/M1/S2 · Implementing Testing Frameworks</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing a cutover strategy. Which TWO elements are critical for success?</div>
+  <ul class="opts"><li data-l="A">Single person responsible for everything.</li><li data-l="B">No testing before cutover.</li><li data-l="C">Ignore all potential risks.</li><li class="correct" data-l="D">Communication plan for stakeholders.</li><li class="correct" data-l="E">Rollback plan if issues occur.</li></ul>
+  <div class="ans"><b>Bonne réponse : D, E</b><div>Rollback plans provide safety nets. Stakeholder communication ensures alignment on timing, expectations, and escalation paths.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-deploying-your-workloads" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 23 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S1 · Integration with On-premises and Multicloud Environments</span>
+    
+  </div>
+  <div class="qt">Your application requires specific network configurations including VLANs and subnets. How do you replicate this in GCP?</div>
+  <ul class="opts"><li data-l="A">Network design isn&#x27;t possible.</li><li data-l="B">Use default network only.</li><li class="correct" data-l="C">Design VPC networks with subnets matching required configurations; use Cloud Router for hybrid connectivity.</li><li data-l="D">VLANs work identically in GCP.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>VPC networks and subnets can be designed to match on-premises topology. Cloud Router enables dynamic routing between environments.</div><div class="ref"><a href="https://cloud.google.com/vpc/docs/vpc" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S1">
+  <div class="meta-line">
+    <span class="num">Question 24 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M4/S1 · Integration with Existing Systems</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating from on-premises Active Directory to GCP. What integration option provides centralized identity management?</div>
+  <ul class="opts"><li data-l="A">No AD integration available.</li><li data-l="B">Use separate identity systems.</li><li data-l="C">Rebuild all identities manually.</li><li class="correct" data-l="D">Managed Service for Microsoft Active Directory for cloud-native AD or sync with Cloud Identity.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Managed AD provides cloud-native Active Directory. Cloud Identity can sync with on-premises AD for unified identity management.</div><div class="ref"><a href="https://cloud.google.com/managed-microsoft-ad/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 25 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">You&#x27;re evaluating modernization options after lift and shift. Which TWO approaches improve operational efficiency?</div>
+  <ul class="opts"><li data-l="A">Avoid any changes.</li><li data-l="B">Increase manual intervention.</li><li class="correct" data-l="C">Containerize applications for GKE deployment.</li><li class="correct" data-l="D">Implement Infrastructure as Code with Terraform.</li><li data-l="E">Keep all manual processes.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, D</b><div>Containerization enables portability and orchestration benefits. IaC improves consistency, repeatability, and reduces manual errors.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-optimizing-your-environment" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 26 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">Your MySQL database migration should have a fallback option. What approach provides this safety?</div>
+  <ul class="opts"><li data-l="A">Fallback isn&#x27;t possible.</li><li data-l="B">Hope for the best.</li><li data-l="C">Delete source immediately after migration.</li><li class="correct" data-l="D">Maintain bidirectional replication during migration window; can failback to source if needed.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Bidirectional replication keeps both source and target synchronized, enabling failback to the original system if migration issues occur.</div><div class="ref"><a href="https://cloud.google.com/database-migration/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 27 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M2/S2 · Working with Cloud Emulators for Local Development</span>
+    
+  </div>
+  <div class="qt">You need to migrate applications that use specific hardware security modules (HSMs) for cryptographic operations. What GCP service provides equivalent capabilities?</div>
+  <ul class="opts"><li data-l="A">Keep HSM on-premises.</li><li class="correct" data-l="B">Cloud HSM for hardware-backed key management integrated with Cloud KMS.</li><li data-l="C">Use software encryption only.</li><li data-l="D">HSM functionality isn&#x27;t available.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Cloud HSM provides FIPS 140-2 Level 3 validated hardware security modules, integrated with Cloud KMS for cryptographic key management.</div><div class="ref"><a href="https://cloud.google.com/kms/docs/hsm" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 28 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">You&#x27;re testing migrated applications. Which TWO types of testing are essential?</div>
+  <ul class="opts"><li class="correct" data-l="A">Performance testing to validate response times and throughput.</li><li data-l="B">Test only in production.</li><li data-l="C">User testing without automation.</li><li class="correct" data-l="D">Functional testing to verify application behavior.</li><li data-l="E">Skip all testing to save time.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, D</b><div>Functional testing verifies correct behavior after migration. Performance testing ensures the cloud environment meets SLAs for speed and capacity.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-deploying-your-workloads" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 29 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">Your legacy application requires a specific version of Java that&#x27;s not supported on Compute Engine&#x27;s public images. What should you do?</div>
+  <ul class="opts"><li data-l="A">Only use public images.</li><li class="correct" data-l="B">Create a custom image with the required Java version and use it for deployment.</li><li data-l="C">Change application requirements.</li><li data-l="D">The application cannot run.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Custom images allow installing and configuring specific software versions, enabling legacy applications with particular runtime requirements to run on GCP.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/images/create-custom" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 30 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M2/S2 · Working with Cloud Emulators for Local Development</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating file shares used by Windows applications. What GCP service provides SMB file sharing?</div>
+  <ul class="opts"><li data-l="A">Use local disk only.</li><li data-l="B">Cloud Storage only.</li><li data-l="C">SMB isn&#x27;t supported.</li><li class="correct" data-l="D">Filestore with supported SMB access or Cloud Volumes ONTAP.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Filestore provides managed file shares. For SMB specifically, partner solutions like NetApp Cloud Volumes ONTAP offer native SMB support.</div><div class="ref"><a href="https://cloud.google.com/filestore/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S3">
+  <div class="meta-line">
+    <span class="num">Question 31 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M4/S3 · Migrating Systems and Data</span>
+    
+  </div>
+  <div class="qt">You need to maintain consistent object storage URLs during migration from S3 to Cloud Storage. What approach helps?</div>
+  <ul class="opts"><li data-l="A">URLs cannot be changed.</li><li data-l="B">S3 URLs work in GCP automatically.</li><li class="correct" data-l="C">Update application references to Cloud Storage URLs or implement a reverse proxy during transition.</li><li data-l="D">Keep data in S3.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>URL changes are required when migrating storage. A reverse proxy can route requests during transition while applications are updated.</div><div class="ref"><a href="https://cloud.google.com/storage-transfer/docs/s3-to-cloud-storage" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 32 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">You&#x27;re documenting the migration process. Which TWO artifacts should you create?</div>
+  <ul class="opts"><li class="correct" data-l="A">Runbooks with step-by-step migration procedures.</li><li class="correct" data-l="B">Architecture diagrams showing before and after states.</li><li data-l="C">Verbal instructions only.</li><li data-l="D">No documentation needed.</li><li data-l="E">Delete all documentation after migration.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B</b><div>Runbooks ensure consistent execution and enable knowledge transfer. Architecture diagrams document the transformation and final state.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-building-your-foundation" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M5" data-label="D1/M5/S3">
+  <div class="meta-line">
+    <span class="num">Question 33 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M5</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M5/S3 · Cloud-native Principles</span>
+    
+  </div>
+  <div class="qt">Your on-premises backup solution uses IBM Spectrum Protect (TSM). How should you approach backup after migration?</div>
+  <ul class="opts"><li data-l="A">Use the exact same solution.</li><li data-l="B">No backup needed in cloud.</li><li class="correct" data-l="C">Evaluate GCP-native backup solutions like Cloud Backup or partner solutions.</li><li data-l="D">Keep backing up to on-premises.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Migration is an opportunity to evaluate cloud-native backup solutions that integrate better with GCP services and provide better RTO/RPO.</div><div class="ref"><a href="https://cloud.google.com/backup-disaster-recovery/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 34 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S1 · Integration with On-premises and Multicloud Environments</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating an application that requires low-latency access to on-premises systems during a transition period. What networking should you prioritize?</div>
+  <ul class="opts"><li data-l="A">Public internet access.</li><li class="correct" data-l="B">Dedicated Interconnect for lowest latency private connectivity.</li><li data-l="C">Latency doesn&#x27;t matter.</li><li data-l="D">No network connectivity needed.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Dedicated Interconnect provides the lowest latency and highest bandwidth for hybrid connectivity during migration transitions.</div><div class="ref"><a href="https://cloud.google.com/network-connectivity/docs/interconnect/concepts/dedicated-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S6">
+  <div class="meta-line">
+    <span class="num">Question 35 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S6</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S6 · Compliance and Observability</span>
+    
+  </div>
+  <div class="qt">You&#x27;re conducting a pre-migration security review. Which TWO areas require assessment?</div>
+  <ul class="opts"><li data-l="A">Security can be addressed post-migration.</li><li data-l="B">No security review needed.</li><li data-l="C">Only perimeter security matters.</li><li class="correct" data-l="D">Current security controls and their GCP equivalents.</li><li class="correct" data-l="E">Compliance requirements and how GCP addresses them.</li></ul>
+  <div class="ans"><b>Bonne réponse : D, E</b><div>Security control mapping ensures equivalent protection. Compliance assessment verifies GCP meets regulatory requirements.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-assessing-and-discovering-your-workloads" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 36 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">Your application uses IBM MQ for messaging. What&#x27;s the recommended migration path for messaging?</div>
+  <ul class="opts"><li data-l="A">Delete all messaging.</li><li data-l="B">Messaging isn&#x27;t needed in cloud.</li><li class="correct" data-l="C">Migrate to Pub/Sub or run IBM MQ on Compute Engine during transition.</li><li data-l="D">IBM MQ cannot run on GCP.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Pub/Sub provides cloud-native messaging. IBM MQ can run on Compute Engine for lift-and-shift with later modernization to Pub/Sub.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S3">
+  <div class="meta-line">
+    <span class="num">Question 37 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M4/S3 · Migrating Systems and Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating a data warehouse from Teradata to BigQuery. What tool helps assess the migration effort?</div>
+  <ul class="opts"><li data-l="A">Teradata cannot migrate to BigQuery.</li><li class="correct" data-l="B">BigQuery Migration Service for assessment and SQL translation.</li><li data-l="C">Manual assessment only.</li><li data-l="D">Direct migration without assessment.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>BigQuery Migration Service provides assessment capabilities and SQL translation tools for Teradata and other data warehouse migrations.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/migration-intro" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 38 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re planning disaster recovery for migrated workloads. Which TWO strategies are appropriate?</div>
+  <ul class="opts"><li data-l="A">No DR is needed in cloud.</li><li data-l="B">DR is automatic in cloud.</li><li class="correct" data-l="C">Multi-region deployment for high availability.</li><li class="correct" data-l="D">Regular backups with tested recovery procedures.</li><li data-l="E">Single point of failure is acceptable.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, D</b><div>Multi-region deployment provides regional failure protection. Tested backup/recovery procedures ensure data can be restored when needed.</div><div class="ref"><a href="https://cloud.google.com/architecture/disaster-recovery" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S2">
+  <div class="meta-line">
+    <span class="num">Question 39 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M4/S2 · Planning a Migration</span>
+    
+  </div>
+  <div class="qt">Your migration team needs visibility into progress across multiple workloads. What tool helps track migration status?</div>
+  <ul class="opts"><li data-l="A">No tracking tools exist.</li><li class="correct" data-l="B">Use Migration Center for centralized tracking and assessment.</li><li data-l="C">Spreadsheets only.</li><li data-l="D">Track mentally.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Migration Center provides unified visibility into migration projects, tracking assessment, planning, and execution progress.</div><div class="ref"><a href="https://cloud.google.com/migration-center/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 40 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">Your legacy application stores session state locally. This breaks when deploying across multiple Compute Engine instances. What should you do?</div>
+  <ul class="opts"><li data-l="A">Sessions aren&#x27;t needed.</li><li class="correct" data-l="B">Externalize session state to Memorystore (Redis) or Cloud SQL.</li><li data-l="C">Keep state locally.</li><li data-l="D">Use only one instance.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Externalizing session state to managed services like Memorystore enables horizontal scaling across multiple instances.</div><div class="ref"><a href="https://cloud.google.com/memorystore/docs/redis/redis-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 41 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating an application that uses on-premises SMTP servers for email. What GCP approach handles email sending?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use third-party email services (SendGrid, Mailgun) or relay through Cloud NAT to external SMTP.</li><li data-l="B">Email cannot be sent from GCP.</li><li data-l="C">Run your own mail server.</li><li data-l="D">GCP provides built-in SMTP.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>GCP recommends third-party email services for sending. Cloud NAT enables outbound SMTP to external relays if needed.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/tutorials/sending-mail" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 42 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M3/S5 · Choosing Compute Resources and Platform Products</span>
+    
+  </div>
+  <div class="qt">You&#x27;re deciding between rehosting (lift and shift) and replatforming. Which TWO factors favor replatforming?</div>
+  <ul class="opts"><li data-l="A">Immediate migration timeline.</li><li data-l="B">Application must be unchanged.</li><li class="correct" data-l="C">Current platform is approaching end-of-life.</li><li class="correct" data-l="D">Significant operational improvements are available with managed services.</li><li data-l="E">No resources for changes.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, D</b><div>End-of-life platforms require updates anyway. Managed services provide operational improvements that justify the additional effort of replatforming.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-getting-started" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 43 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">Your storage migration from NetApp needs to preserve ACLs and permissions. What should you verify?</div>
+  <ul class="opts"><li class="correct" data-l="A">Target storage service ACL capabilities and permission mapping requirements.</li><li data-l="B">ACLs aren&#x27;t needed in cloud.</li><li data-l="C">Ignore permission migration.</li><li data-l="D">Permissions transfer automatically.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Storage ACL capabilities vary by service. Permission mapping must be planned to ensure equivalent access control after migration.</div><div class="ref"><a href="https://cloud.google.com/storage/docs/access-control" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M5" data-label="D1/M5/S3">
+  <div class="meta-line">
+    <span class="num">Question 44 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M5</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M5/S3 · Cloud-native Principles</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating CI/CD pipelines to GCP. On-premises uses Jenkins. What&#x27;s a good migration path?</div>
+  <ul class="opts"><li data-l="A">Manual deployments only.</li><li data-l="B">Jenkins cannot run on GCP.</li><li data-l="C">CI/CD isn&#x27;t needed in cloud.</li><li class="correct" data-l="D">Use Cloud Build for cloud-native CI/CD or run Jenkins on GKE during transition.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Cloud Build provides cloud-native CI/CD. Jenkins can run on GKE for gradual transition, maintaining existing pipelines while modernizing.</div><div class="ref"><a href="https://cloud.google.com/build/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S2">
+  <div class="meta-line">
+    <span class="num">Question 45 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M4/S2 · Planning a Migration</span>
+    
+  </div>
+  <div class="qt">You&#x27;re validating network connectivity after migration. Which TWO tests are essential?</div>
+  <ul class="opts"><li data-l="A">Pinging localhost only.</li><li class="correct" data-l="B">Latency testing between components.</li><li data-l="C">Checking LED lights on switches.</li><li class="correct" data-l="D">Throughput testing under load.</li><li data-l="E">Visual inspection of network cables.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, D</b><div>Latency testing validates response times meet requirements. Throughput testing ensures bandwidth needs are met under production loads.</div><div class="ref"><a href="https://cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 46 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">Your application requires GPU processing. On-premises uses NVIDIA Tesla V100s. How do you replicate this capability?</div>
+  <ul class="opts"><li data-l="A">GPUs aren&#x27;t available in GCP.</li><li data-l="B">Use CPU-only instances.</li><li data-l="C">GPUs require special arrangements.</li><li class="correct" data-l="D">Attach NVIDIA GPUs (including V100) to Compute Engine instances.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Compute Engine supports attaching various NVIDIA GPUs including V100, T4, A100, and others to instances.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/gpus" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 47 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S1 · Integration with On-premises and Multicloud Environments</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating applications with tight latency requirements between services. What deployment strategy minimizes latency?</div>
+  <ul class="opts"><li data-l="A">Latency is fixed in cloud.</li><li data-l="B">Spread across multiple regions.</li><li class="correct" data-l="C">Deploy all related services in the same zone.</li><li data-l="D">Use different continents.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Same-zone deployment provides lowest network latency between services. Cross-zone or cross-region adds latency.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/regions-zones" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 48 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">You&#x27;re training the operations team on GCP. Which TWO areas are most important for day-two operations?</div>
+  <ul class="opts"><li data-l="A">Migration procedures only.</li><li class="correct" data-l="B">Monitoring and alerting with Cloud Operations.</li><li class="correct" data-l="C">Incident response and troubleshooting procedures.</li><li data-l="D">Marketing strategies.</li><li data-l="E">Sales training.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C</b><div>Operations teams need monitoring skills for proactive management. Incident response training ensures effective troubleshooting in the new environment.</div><div class="ref"><a href="https://cloud.google.com/monitoring/docs/monitoring-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 49 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M2/S2 · Working with Cloud Emulators for Local Development</span>
+    
+  </div>
+  <div class="qt">Your application uses Oracle RAC for high availability. What&#x27;s the GCP equivalent for database HA?</div>
+  <ul class="opts"><li data-l="A">Single instance databases only.</li><li data-l="B">No HA database options in GCP.</li><li data-l="C">Oracle RAC on Compute Engine only.</li><li class="correct" data-l="D">Cloud SQL with high availability (regional) or Cloud Spanner for truly distributed databases.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Cloud SQL provides regional HA with automatic failover. Cloud Spanner offers distributed, highly available database for global applications.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/mysql/high-availability" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 50 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">You need to migrate scheduled tasks (cron jobs) from on-premises servers. What GCP service handles this?</div>
+  <ul class="opts"><li data-l="A">Manual execution only.</li><li class="correct" data-l="B">Cloud Scheduler for managed cron-like scheduling.</li><li data-l="C">Run cron on Compute Engine only.</li><li data-l="D">Scheduled tasks aren&#x27;t supported.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Cloud Scheduler provides fully managed cron job scheduling, triggering Cloud Functions, Pub/Sub, or HTTP endpoints on schedule.</div><div class="ref"><a href="https://cloud.google.com/scheduler/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 51 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M2/S1 · Mastering Cloud Shell and the Google Cloud SDK</span>
+    
+  </div>
+  <div class="qt">Your migration includes moving from on-premises SAP to GCP. What GCP program supports SAP workloads?</div>
+  <ul class="opts"><li class="correct" data-l="A">SAP on Google Cloud with certified infrastructure and configurations.</li><li data-l="B">SAP isn&#x27;t supported on GCP.</li><li data-l="C">Generic VMs only.</li><li data-l="D">SAP requires special hardware.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Google Cloud is SAP certified, providing validated infrastructure configurations and best practices for running SAP workloads.</div><div class="ref"><a href="https://cloud.google.com/solutions/sap" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 52 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S2 · Cost Optimization</span>
+    
+  </div>
+  <div class="qt">You&#x27;re optimizing costs post-migration. Which TWO recommendations typically reduce costs?</div>
+  <ul class="opts"><li class="correct" data-l="A">Right-size instances based on actual utilization data.</li><li class="correct" data-l="B">Use committed use discounts for stable workloads.</li><li data-l="C">Use largest instances available.</li><li data-l="D">Keep all migrated configurations unchanged.</li><li data-l="E">Ignore cost optimization.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B</b><div>Right-sizing eliminates over-provisioning. CUDs provide discounts for predictable workloads. Post-migration optimization is essential.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-optimizing-your-environment" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 53 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">Your migration includes applications with specific networking requirements (multicast). GCP VPC doesn&#x27;t support multicast natively. What&#x27;s the solution?</div>
+  <ul class="opts"><li data-l="A">Multicast works automatically.</li><li data-l="B">Cannot migrate multicast applications.</li><li class="correct" data-l="C">Refactor application to use unicast or implement overlay networking solutions.</li><li data-l="D">Wait for native support.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>GCP VPC doesn&#x27;t support multicast. Applications need refactoring to unicast or can use third-party overlay solutions that support multicast.</div><div class="ref"><a href="https://cloud.google.com/vpc/docs/vpc#specifications" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 54 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating a legacy application with hardcoded IP addresses. Changing the code is not immediately possible. What temporary solution enables migration?</div>
+  <ul class="opts"><li data-l="A">Use dynamic IPs.</li><li data-l="B">IP changes require code changes.</li><li class="correct" data-l="C">Reserve matching static IPs in GCP VPC and update firewall/routing appropriately.</li><li data-l="D">Migration is impossible.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Static IPs can be reserved in GCP. Network configuration can often accommodate applications expecting specific addresses during transition.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/ip-addresses/reserve-static-internal-ip-address" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 55 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">You&#x27;re decommissioning on-premises infrastructure after migration. Which TWO steps are essential?</div>
+  <ul class="opts"><li data-l="A">Skip parallel running.</li><li class="correct" data-l="B">Maintain parallel operation period before decommissioning.</li><li class="correct" data-l="C">Verify all data and functionality successfully migrated.</li><li data-l="D">No verification needed.</li><li data-l="E">Delete immediately after migration.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C</b><div>Verification ensures nothing was lost. Parallel operation provides safety net during stabilization before decommissioning source infrastructure.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-deploying-your-workloads" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 56 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">Your organization has regulatory requirements to maintain certain data processing activities on-premises. What architecture supports this hybrid requirement?</div>
+  <ul class="opts"><li data-l="A">Completely separate environments.</li><li class="correct" data-l="B">Hybrid architecture with Anthos for consistent operations across on-premises and cloud.</li><li data-l="C">Full cloud migration only.</li><li data-l="D">Ignore regulatory requirements.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Anthos enables consistent Kubernetes-based operations across on-premises and multiple clouds, supporting regulated hybrid architectures.</div><div class="ref"><a href="https://cloud.google.com/anthos/docs/concepts/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 57 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M2/S2 · Working with Cloud Emulators for Local Development</span>
+    
+  </div>
+  <div class="qt">You&#x27;re migrating from Cassandra to a GCP equivalent. What managed service provides similar capabilities?</div>
+  <ul class="opts"><li data-l="A">Cloud SQL for relational.</li><li class="correct" data-l="B">Bigtable for wide-column NoSQL or run Cassandra on Compute Engine.</li><li data-l="C">BigQuery for NoSQL.</li><li data-l="D">No NoSQL options in GCP.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Bigtable provides wide-column NoSQL with Cassandra-like capabilities. Running Cassandra on Compute Engine enables lift-and-shift if API compatibility is required.</div><div class="ref"><a href="https://cloud.google.com/bigtable/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 58 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You&#x27;re establishing a landing zone before migration. Which TWO components are foundational?</div>
+  <ul class="opts"><li class="correct" data-l="A">Network architecture with VPCs and connectivity.</li><li data-l="B">Only billing account.</li><li data-l="C">User data migrated.</li><li class="correct" data-l="D">Organization hierarchy with folders and projects.</li><li data-l="E">Production applications deployed.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, D</b><div>Organization hierarchy provides governance structure. Network architecture enables connectivity. These foundations must exist before workload migration.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-building-your-foundation" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S4">
+  <div class="meta-line">
+    <span class="num">Question 59 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M4/S4 · Testing and Proofs of Concept</span>
+    
+  </div>
+  <div class="qt">Your legacy application has undocumented dependencies discovered during migration testing. What should you do?</div>
+  <ul class="opts"><li data-l="A">Ignore the dependencies.</li><li data-l="B">Hope they work in cloud.</li><li class="correct" data-l="C">Document the dependencies, update migration plan, and retest with dependencies included.</li><li data-l="D">Cancel the migration.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Undocumented dependencies must be documented and included in migration planning. Testing validates all dependencies work correctly after migration.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-assessing-and-discovering-your-workloads" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 60 / 60</span>
+    <span class="badge d">D5</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D5/M1/S3 · Leveraging Migration Tooling</span>
+    
+  </div>
+  <div class="qt">After migration, you want to prevent drift from intended architecture. What practice helps maintain consistency?</div>
+  <ul class="opts"><li data-l="A">No change control.</li><li class="correct" data-l="B">Infrastructure as Code (Terraform) with version control and CI/CD pipelines.</li><li data-l="C">Document and forget.</li><li data-l="D">Manual changes to production.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>IaC ensures infrastructure is version controlled and deployed consistently. CI/CD pipelines automate deployment and prevent manual drift.</div><div class="ref"><a href="https://cloud.google.com/docs/terraform" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+</main>
+<script>
+function all(v){document.querySelectorAll('.q').forEach(q=>q.classList.toggle('show',v))}
+function applyFilters(){
+  const d=document.getElementById('filterDomain').value;
+  const m=document.getElementById('filterModule').value;
+  let n=0;
+  document.querySelectorAll('.q').forEach(q=>{
+    const okD=!d||q.dataset.domain===d;
+    const okM=!m||q.dataset.module===m;
+    const show=okD&&okM;
+    q.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  const el=document.getElementById('resultCount');
+  if(el) el.textContent=n+' question'+(n>1?'s':'');
+}
+function syncModules(){
+  const d=document.getElementById('filterDomain').value;
+  const sel=document.getElementById('filterModule');
+  const cur=sel.value;
+  [...sel.options].forEach((o,i)=>{
+    if(i===0){o.hidden=false;return;}
+    o.hidden=!!(d&&o.dataset.domain!==d);
+  });
+  if(cur && sel.selectedOptions[0] && sel.selectedOptions[0].hidden) sel.value='';
+  applyFilters();
+}
+function resetFilters(){
+  document.getElementById('filterDomain').value='';
+  document.getElementById('filterModule').value='';
+  syncModules();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.q').forEach(q=>q.addEventListener('click',e=>{
+    if(e.target.closest('a,select,button,label'))return;
+    q.classList.toggle('show');
+  }));
+  const fd=document.getElementById('filterDomain');
+  const fm=document.getElementById('filterModule');
+  if(fd) fd.addEventListener('change',syncModules);
+  if(fm) fm.addEventListener('change',applyFilters);
+  applyFilters();
+});
+</script>
+</body></html>

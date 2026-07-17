@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GCP PCA — Portail des Mock Exams</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f1f5f9; color: #0f172a; }
+    main { max-width: 900px; margin: auto; padding: 36px 16px 80px; }
+    h1 { margin: 0 0 6px; color: #1a73e8; }
+    .lead { margin: 0 0 26px; color: #64748b; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+    .card { padding: 20px; border: 1px solid #e2e8f0; border-radius: 14px; background: white; }
+    .card:hover { border-color: #1a73e8; box-shadow: 0 8px 24px -14px #1a73e8; }
+    .card h2 { margin: 0 0 6px; font-size: 1.1rem; }
+    .count { color: #137333; font-weight: 700; }
+    .meta { margin-top: 8px; color: #64748b; font-size: .88rem; }
+    .external { color: #b45309; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .button { display: inline-block; padding: 7px 11px; border-radius: 8px; background: #1a73e8; color: white; font-size: .82rem; font-weight: 700; text-decoration: none; }
+    .button.secondary { background: #eef4ff; color: #1a73e8; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>GCP PCA — Portail des Mock Exams</h1>
+    <p class="lead">Choisissez une banque locale ou ouvrez directement son site d’origine. Chaque question est labellisée Domaine / Module / Section (ex. D1/M3/S1) avec filtres dans les quizzes.</p>
+    <div class="grid">
+      <article class="card">
+        <h2>GCP PCA Test</h2>
+        <div class="count">720 questions · 12 mocks</div>
+        <div class="meta">Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data et Migration.</div>
+        <div class="actions">
+          <a class="button" href="gcppcatest/index.html">Ouvrir les mocks</a>
+          <a class="button secondary" href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Site original</a>
+        </div>
+      </article>
+      <article class="card">
+        <h2>CloudJobs</h2>
+        <div class="count">200 questions</div>
+        <div class="meta">Choix, bonne réponse et explication.</div>
+        <div class="actions">
+          <a class="button" href="cloudjobs/index.html">Ouvrir le quiz</a>
+          <a class="button secondary" href="https://cloudjobs.io/study/quizzes/gcppca" target="_blank" rel="noopener">Site original</a>
+        </div>
+      </article>
+      <article class="card">
+        <h2>Mastery Exam Prep</h2>
+        <div class="count">50 questions</div>
+        <div class="meta">Examen gratuit complet avec explications détaillées.</div>
+        <div class="actions">
+          <a class="button" href="mastery/index.html">Ouvrir le quiz</a>
+          <a class="button secondary" href="https://masteryexamprep.com/exams/gcp/professional-cloud-architect/free-practice-exam/" target="_blank" rel="noopener">Site original</a>
+        </div>
+      </article>
+      <article class="card">
+        <h2>ExamCert</h2>
+        <div class="count external">Application externe</div>
+        <div class="meta">Les questions complètes sont servies par l’application/mobile et ne figurent pas dans la page publique.</div>
+        <div class="actions">
+          <a class="button secondary" href="https://www.examcert.app/exams/gcp-pca/free-practice-test/" target="_blank" rel="noopener">Ouvrir le site</a>
+        </div>
+      </article>
+    </div>
+  </main>
+</body>
+</html>

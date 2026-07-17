@@ -1,0 +1,1931 @@
+{
+  "version": 1,
+  "labelFormat": "D#/M#/S#",
+  "domains": {
+    "D1": {
+      "id": "D1",
+      "number": 1,
+      "title": "Designing and Planning a Cloud Solution Architecture",
+      "titleFr": "Concevoir et planifier une architecture de solution cloud",
+      "modules": [
+        {
+          "id": "M1",
+          "title": "Design for Business Outcomes",
+          "file": "1 - Design for Business Outcomes.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Product Strategy and Success Measurements",
+              "label": "D1/M1/S1",
+              "keywords": [
+                "business outcome",
+                "kpi",
+                "measurements",
+                "okr",
+                "product",
+                "product strategy",
+                "requirements gathering",
+                "stakeholder requirement",
+                "strategy",
+                "success",
+                "success metric"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Cost Optimization",
+              "label": "D1/M1/S2",
+              "keywords": [
+                "bigquery",
+                "billing",
+                "budget alert",
+                "cloud billing",
+                "cloud bills",
+                "committed use",
+                "cost",
+                "cost optimization",
+                "cud",
+                "finops",
+                "optimization",
+                "pricing",
+                "sustained use"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Supporting the Application Design",
+              "label": "D1/M1/S3",
+              "keywords": [
+                "api design",
+                "app engine",
+                "application",
+                "application design",
+                "cloud run",
+                "compute engine",
+                "design",
+                "gke",
+                "iam",
+                "loosely coupled",
+                "microservices",
+                "stateless",
+                "supporting",
+                "twelve-factor",
+                "vpc"
+              ]
+            },
+            {
+              "id": "S4",
+              "title": "Integration with External Systems and Moving Data",
+              "label": "D1/M1/S4",
+              "keywords": [
+                "alloydb",
+                "apigee",
+                "bigquery",
+                "cloud data",
+                "cloud interconnect",
+                "cloud nat",
+                "cloud provider",
+                "cloud sql",
+                "cloud storage",
+                "data",
+                "dataflow",
+                "external",
+                "external system",
+                "integration",
+                "moving",
+                "partner api",
+                "pubsub",
+                "storage transfer",
+                "systems",
+                "transfer appliance",
+                "vpc",
+                "with"
+              ]
+            },
+            {
+              "id": "S5",
+              "title": "Buy vs Build and Design Decision Trade-offs",
+              "label": "D1/M1/S5",
+              "keywords": [
+                "build",
+                "buy vs build",
+                "decision",
+                "decision matrix",
+                "design",
+                "make or buy",
+                "offs",
+                "saas",
+                "third-party",
+                "trade",
+                "trade-off"
+              ]
+            },
+            {
+              "id": "S6",
+              "title": "Compliance and Observability",
+              "label": "D1/M1/S6",
+              "keywords": [
+                "audit log",
+                "cloud audit",
+                "cloud does",
+                "cloud logging",
+                "cloud monitoring",
+                "cloud operations",
+                "cloud trace",
+                "compliance",
+                "hipaa",
+                "iam",
+                "logging requirement",
+                "observability",
+                "pci",
+                "regulatory",
+                "vpc"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2",
+          "title": "Design Robust Cloud Infrastructures",
+          "file": "2 - Design Robust Cloud Infrastructures.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "High Availability and Failover Design",
+              "label": "D1/M2/S1",
+              "keywords": [
+                "availability",
+                "cloud load",
+                "cloud sql",
+                "design",
+                "failover",
+                "health check",
+                "high",
+                "high availability",
+                "mig",
+                "multi-region",
+                "multi-zone",
+                "redundancy",
+                "sla"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Elasticity of Cloud Resources",
+              "label": "D1/M2/S2",
+              "keywords": [
+                "app engine",
+                "autoscale",
+                "autoscaling",
+                "bigquery",
+                "burst traffic",
+                "cloud",
+                "cloud load",
+                "cloud run",
+                "cloud services",
+                "cloud storage",
+                "cloud tasks",
+                "cloud workflows",
+                "dataflow",
+                "elasticity",
+                "filestore",
+                "firestore",
+                "kubernetes",
+                "resources",
+                "scale to zero",
+                "serverless"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Scalability to Meet Growth",
+              "label": "D1/M2/S3",
+              "keywords": [
+                "cloud build",
+                "cloud deploy",
+                "cloud workflows",
+                "gke",
+                "growth",
+                "horizontal scale",
+                "meet",
+                "partition",
+                "scalability",
+                "sharding",
+                "spanner"
+              ]
+            },
+            {
+              "id": "S4",
+              "title": "Performance and Latency",
+              "label": "D1/M2/S4",
+              "keywords": [
+                "cache",
+                "cdn",
+                "cloud cdn",
+                "cloud profiler",
+                "cloud sql",
+                "cloud trace",
+                "edge",
+                "global load balancer",
+                "latency",
+                "performance"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3",
+          "title": "Design Network, Storage, and Compute",
+          "file": "3 - Design Network, Storage, and Compute.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Integration with On-premises and Multicloud Environments",
+              "label": "D1/M3/S1",
+              "keywords": [
+                "cloud interconnect",
+                "cloud operations",
+                "cloud vpn",
+                "distributed cloud",
+                "environments",
+                "gdc",
+                "gke",
+                "hybrid",
+                "integration",
+                "interconnect",
+                "kubernetes",
+                "multicloud",
+                "ncc",
+                "network connectivity center",
+                "on premises",
+                "on-prem",
+                "premises",
+                "with"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Cloud-native Networking",
+              "label": "D1/M3/S2",
+              "keywords": [
+                "cloud",
+                "cloud load",
+                "firewall",
+                "hub-spoke",
+                "load balancer",
+                "native",
+                "networking",
+                "peering",
+                "private google access",
+                "private service connect",
+                "psc",
+                "shared vpc",
+                "vpc",
+                "vpc service controls",
+                "vpc-sc"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Choosing Data Processing Technologies",
+              "label": "D1/M3/S3",
+              "keywords": [
+                "batch",
+                "beam",
+                "bigquery",
+                "choosing",
+                "cloud logging",
+                "cloud storage",
+                "data",
+                "data fusion",
+                "dataflow",
+                "dataprep",
+                "dataproc",
+                "kafka",
+                "processing",
+                "pubsub",
+                "streaming",
+                "technologies"
+              ]
+            },
+            {
+              "id": "S4",
+              "title": "Choosing Appropriate Storage Types",
+              "label": "D1/M3/S4",
+              "keywords": [
+                "alloydb",
+                "appropriate",
+                "bigquery",
+                "bigtable",
+                "choosing",
+                "cloud sql",
+                "cloud storage",
+                "filestore",
+                "firestore",
+                "memorystore",
+                "nosql",
+                "olap",
+                "oltp",
+                "persistent disk",
+                "spanner",
+                "storage",
+                "types"
+              ]
+            },
+            {
+              "id": "S5",
+              "title": "Choosing Compute Resources and Platform Products",
+              "label": "D1/M3/S5",
+              "keywords": [
+                "app engine",
+                "autopilot",
+                "choosing",
+                "cloud run",
+                "cloud sql",
+                "cloud storage",
+                "compute",
+                "compute engine",
+                "gke",
+                "kubernetes",
+                "lift-and-shift",
+                "mig",
+                "platform",
+                "products",
+                "resources",
+                "serverless",
+                "vm"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M4",
+          "title": "Plan Cloud Migrations",
+          "file": "4 - Plan Cloud Migrations.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Integration with Existing Systems",
+              "label": "D1/M4/S1",
+              "keywords": [
+                "api mediation",
+                "cloud identity",
+                "cloud interconnect",
+                "cloud migration",
+                "cloud vpn",
+                "existing",
+                "existing system",
+                "hybrid identity",
+                "integration",
+                "systems",
+                "with",
+                "workload identity federation"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Planning a Migration",
+              "label": "D1/M4/S2",
+              "keywords": [
+                "5r",
+                "assess",
+                "cloud benefits",
+                "cloud goals",
+                "landing zone",
+                "migration",
+                "migration center",
+                "planning",
+                "refactor",
+                "rehost",
+                "replatform",
+                "wave"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Migrating Systems and Data",
+              "label": "D1/M4/S3",
+              "keywords": [
+                "cloud foundation",
+                "cloud migration",
+                "cloud run",
+                "compute engine",
+                "data",
+                "database migration",
+                "dms",
+                "gke",
+                "iam",
+                "migrate to containers",
+                "migrate to virtual machines",
+                "migrating",
+                "systems",
+                "terraform",
+                "transfer appliance"
+              ]
+            },
+            {
+              "id": "S4",
+              "title": "Testing and Proofs of Concept",
+              "label": "D1/M4/S4",
+              "keywords": [
+                "concept",
+                "cutover",
+                "pilot",
+                "poc",
+                "proof of concept",
+                "proofs",
+                "testing",
+                "validation test"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M5",
+          "title": "Evolve and Adapt Solutions",
+          "file": "5 - Evolve and Adapt Solutions.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Stay Updated and Promote Adoption",
+              "label": "D1/M5/S1",
+              "keywords": [
+                "adoption",
+                "cloud adoption",
+                "cloud architecture",
+                "cloud blog",
+                "cloud community",
+                "cloud next",
+                "cloud release",
+                "cloud summits",
+                "cloud tech",
+                "community of practice",
+                "evangeliz",
+                "promote",
+                "stay",
+                "training",
+                "updated"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Adapt Solutions to Evolving Needs",
+              "label": "D1/M5/S2",
+              "keywords": [
+                "adapt",
+                "changing requirements",
+                "cloud solutions",
+                "evolve",
+                "evolving",
+                "modernization after migration",
+                "needs",
+                "solutions"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Cloud-native Principles",
+              "label": "D1/M5/S3",
+              "keywords": [
+                "ci/cd",
+                "cloud",
+                "cloud build",
+                "cloud-native",
+                "devops",
+                "immutable infrastructure",
+                "istio",
+                "microservices",
+                "native",
+                "principles",
+                "service mesh"
+              ]
+            },
+            {
+              "id": "S4",
+              "title": "Legacy Evolution Strategies",
+              "label": "D1/M5/S4",
+              "keywords": [
+                "decompose",
+                "evolution",
+                "legacy",
+                "monolith",
+                "refactor legacy",
+                "strangler",
+                "strategies"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M6",
+          "title": "Exam Questions Review",
+          "file": "6 - Exam Questions Review.md",
+          "isExamPrep": true,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Exam Prep: Design for Business Outcomes",
+              "label": "D1/M6/S1",
+              "keywords": [
+                "business",
+                "cloud architect",
+                "cloud for",
+                "cloud services",
+                "cloud sql",
+                "cloud storage",
+                "cloud using",
+                "compute engine",
+                "design",
+                "exam",
+                "kubernetes",
+                "outcomes",
+                "prep"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Exam Prep: Design Robust Cloud Infrastructures",
+              "label": "D1/M6/S2",
+              "keywords": [
+                "cloud",
+                "cloud architect",
+                "cloud cdn",
+                "cloud console",
+                "cloud database",
+                "cloud infrastructures",
+                "cloud logging",
+                "cloud monitoring",
+                "cloud spanner",
+                "cloud storage",
+                "cloud support",
+                "compute engine",
+                "design",
+                "exam",
+                "infrastructures",
+                "prep",
+                "robust"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Exam Prep: Design Network, Storage, and Compute",
+              "label": "D1/M6/S3",
+              "keywords": [
+                "bigquery",
+                "cloud and",
+                "cloud architect",
+                "cloud compute",
+                "cloud connectivity",
+                "cloud environment",
+                "cloud for",
+                "cloud interconnect",
+                "cloud projects",
+                "cloud run",
+                "cloud service",
+                "cloud services",
+                "cloud sql",
+                "cloud storage",
+                "cloud vpc",
+                "cloud with",
+                "compute",
+                "compute engine",
+                "dataflow",
+                "design",
+                "exam",
+                "filestore",
+                "gke",
+                "network",
+                "prep",
+                "storage",
+                "vpc"
+              ]
+            },
+            {
+              "id": "S4",
+              "title": "Exam Prep: Plan Cloud Migrations",
+              "label": "D1/M6/S4",
+              "keywords": [
+                "cloud",
+                "cloud architect",
+                "cloud interconnect",
+                "cloud migration",
+                "cloud migrations",
+                "cloud over",
+                "cloud sql",
+                "cloud vpn",
+                "cloud while",
+                "compute engine",
+                "exam",
+                "migrations",
+                "plan",
+                "prep"
+              ]
+            },
+            {
+              "id": "S5",
+              "title": "Exam Prep: Evolve and Adapt Solutions",
+              "label": "D1/M6/S5",
+              "keywords": [
+                "adapt",
+                "cloud architect",
+                "cloud capabilities",
+                "cloud center",
+                "cloud investments",
+                "cloud maturity",
+                "cloud several",
+                "cloud sql",
+                "compute engine",
+                "evolve",
+                "exam",
+                "prep",
+                "solutions",
+                "spanner"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "D2": {
+      "id": "D2",
+      "number": 2,
+      "title": "Managing and Provisioning a Solution Infrastructure",
+      "titleFr": "Gérer et provisionner une infrastructure de solution",
+      "modules": [
+        {
+          "id": "M1",
+          "title": "Configure and Secure Networks",
+          "file": "1 - Configure and Secure Networks.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Configuring Cloud VPN and Interconnect",
+              "label": "D2/M1/S1",
+              "keywords": [
+                "bgp",
+                "cloud",
+                "cloud and",
+                "cloud connections",
+                "cloud connectivity",
+                "cloud interconnect",
+                "cloud router",
+                "cloud routers",
+                "cloud services",
+                "cloud vpn",
+                "configuring",
+                "dedicated interconnect",
+                "ha vpn",
+                "interconnect",
+                "partner interconnect",
+                "vpc"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Configuring VPC Peering",
+              "label": "D2/M1/S2",
+              "keywords": [
+                "bigquery",
+                "cidr overlap",
+                "cloud dns",
+                "cloud sql",
+                "cloud storage",
+                "configuring",
+                "gke",
+                "non-transitive",
+                "peering",
+                "vpc",
+                "vpc peering"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Securing Networks with NGFW",
+              "label": "D2/M1/S3",
+              "keywords": [
+                "cloud ip",
+                "cloud ngfw",
+                "cloud vpc",
+                "firewall policy",
+                "hierarchical firewall",
+                "networks",
+                "next-generation firewall",
+                "ngfw",
+                "securing",
+                "vpc",
+                "with"
+              ]
+            },
+            {
+              "id": "S4",
+              "title": "Securing Networks with IAP, Cloud Armor, and Cloud IDS",
+              "label": "D2/M1/S4",
+              "keywords": [
+                "armor",
+                "cloud",
+                "cloud armor",
+                "cloud ids",
+                "cloud managed",
+                "compute engine",
+                "ddos",
+                "gke",
+                "iap",
+                "identity-aware proxy",
+                "networks",
+                "securing",
+                "vpc",
+                "waf",
+                "with"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2",
+          "title": "Configure Storage Resources",
+          "file": "2 - Configure Storage Resources.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery",
+              "label": "D2/M2/S1",
+              "keywords": [
+                "alloydb",
+                "bigquery",
+                "bigtable",
+                "cloud",
+                "cloud sql",
+                "cloud storage",
+                "configuring",
+                "relational",
+                "spanner",
+                "warehouse"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Configuring Firestore, Bigtable, and Memorystore",
+              "label": "D2/M2/S2",
+              "keywords": [
+                "bigtable",
+                "cloud run",
+                "configuring",
+                "document database",
+                "firestore",
+                "iam",
+                "memcached",
+                "memorystore",
+                "redis",
+                "wide-column"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Configuring Cloud Storage, Filestore, and Persistent Disks",
+              "label": "D2/M2/S3",
+              "keywords": [
+                "cloud",
+                "cloud storage",
+                "compute engine",
+                "configuring",
+                "disks",
+                "filestore",
+                "firestore",
+                "iam",
+                "local ssd",
+                "nfs",
+                "object storage",
+                "persistent",
+                "persistent disk",
+                "posix",
+                "storage"
+              ]
+            },
+            {
+              "id": "S4",
+              "title": "Optimizing Data Transfer and Latency and Planning for Data Growth",
+              "label": "D2/M2/S4",
+              "keywords": [
+                "alloydb",
+                "bigquery",
+                "bigtable",
+                "cloud cdn",
+                "cloud sql",
+                "cloud storage",
+                "data",
+                "data locality",
+                "firestore",
+                "growth",
+                "latency",
+                "latency storage",
+                "lifecycle",
+                "optimizing",
+                "planning",
+                "spanner",
+                "storage transfer",
+                "transfer",
+                "transfer appliance"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3",
+          "title": "Configure Compute Resources",
+          "file": "3 - Configure Compute Resources.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Configuring Compute Engine VMs and Managed Instance Groups",
+              "label": "D2/M3/S1",
+              "keywords": [
+                "cloud logging",
+                "cloud monitoring",
+                "cloud pub",
+                "compute",
+                "compute engine",
+                "configuring",
+                "engine",
+                "groups",
+                "instance",
+                "instance template",
+                "managed",
+                "managed instance group",
+                "mig",
+                "preemptible",
+                "spot"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Configuring Cloud Run and App Engine",
+              "label": "D2/M3/S2",
+              "keywords": [
+                "app engine",
+                "cloud",
+                "cloud build",
+                "cloud load",
+                "cloud run",
+                "cloud run functions",
+                "configuring",
+                "engine",
+                "flexible environment",
+                "standard environment",
+                "vpc"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Provisioning GKE Clusters for Container Orchestration",
+              "label": "D2/M3/S3",
+              "keywords": [
+                "autopilot",
+                "clusters",
+                "container",
+                "gke",
+                "kubernetes",
+                "node pool",
+                "orchestration",
+                "provisioning",
+                "vpc",
+                "workload identity"
+              ]
+            },
+            {
+              "id": "S4",
+              "title": "Configuring Networking for Compute",
+              "label": "D2/M3/S4",
+              "keywords": [
+                "alias ip",
+                "app engine",
+                "cloud nat",
+                "cloud run",
+                "compute",
+                "compute engine",
+                "compute networking",
+                "configuring",
+                "external load balancer",
+                "gke",
+                "internal load balancer",
+                "kubernetes",
+                "networking",
+                "vpc"
+              ]
+            },
+            {
+              "id": "S5",
+              "title": "Working with Orchestration and Management Tools",
+              "label": "D2/M3/S5",
+              "keywords": [
+                "cloud composer",
+                "cloud resources",
+                "config connector",
+                "deployment manager",
+                "gke",
+                "kubernetes",
+                "management",
+                "orchestration",
+                "terraform",
+                "tools",
+                "with",
+                "working"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M4",
+          "title": "Exam Questions Review",
+          "file": "4 - Exam Question Review.md",
+          "isExamPrep": true,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Exam Prep: Configure and Secure Networks",
+              "label": "D2/M4/S1",
+              "keywords": [
+                "cloud architect",
+                "cloud armor",
+                "cloud behind",
+                "cloud router",
+                "cloud vpc",
+                "cloud vpn",
+                "compute engine",
+                "configure",
+                "exam",
+                "networks",
+                "prep",
+                "secure",
+                "vpc"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Exam Prep: Configure Storage Resources",
+              "label": "D2/M4/S2",
+              "keywords": [
+                "bigquery",
+                "cloud architect",
+                "cloud cdn",
+                "cloud for",
+                "cloud sql",
+                "cloud storage",
+                "configure",
+                "exam",
+                "prep",
+                "resources",
+                "storage"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Exam Prep: Configure Compute Resources",
+              "label": "D2/M4/S3",
+              "keywords": [
+                "cloud architect",
+                "cloud deployment",
+                "cloud infrastructure",
+                "cloud monitoring",
+                "cloud resources",
+                "cloud run",
+                "cloud sdk",
+                "cloud services",
+                "cloud tool",
+                "compute",
+                "compute engine",
+                "configure",
+                "exam",
+                "gke",
+                "kubernetes",
+                "prep",
+                "resources",
+                "terraform"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "D3": {
+      "id": "D3",
+      "number": 3,
+      "title": "Designing for Security and Compliance",
+      "titleFr": "Concevoir pour la sécurité et la conformité",
+      "modules": [
+        {
+          "id": "M1",
+          "title": "Architecting Secure Google Cloud Solutions",
+          "file": "1-Architecting Secure Google Cloud Solutions.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Designing Identity and Resource Hierarchy",
+              "label": "D3/M1/S1",
+              "keywords": [
+                "cloud identity",
+                "cloud security",
+                "custom role",
+                "designing",
+                "folder",
+                "hierarchy",
+                "iam",
+                "identity",
+                "least privilege",
+                "organization",
+                "project",
+                "resource",
+                "resource hierarchy",
+                "service account"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Data Protection and Secrets Management in Google Cloud",
+              "label": "D3/M1/S2",
+              "keywords": [
+                "cloud",
+                "cloud hsm",
+                "cloud kms",
+                "cloud storage",
+                "cmek",
+                "compute engine",
+                "csek",
+                "customer-managed",
+                "data",
+                "data protection",
+                "dataflow",
+                "encryption",
+                "gke",
+                "google",
+                "kms",
+                "management",
+                "protection",
+                "secret manager",
+                "secrets",
+                "vpc"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Enforcing Security Posture and Designing for Secure Access",
+              "label": "D3/M1/S3",
+              "keywords": [
+                "access",
+                "beyondcorp",
+                "bigquery",
+                "binary authorization",
+                "cloud sql",
+                "designing",
+                "enforcing",
+                "iam",
+                "posture",
+                "scc",
+                "secure",
+                "secure access",
+                "security",
+                "security command center",
+                "vpc service controls"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2",
+          "title": "Designing for Compliance",
+          "file": "2-Designing for Compliance.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Navigating Compliance Frameworks and Shared Responsibility",
+              "label": "D3/M2/S1",
+              "keywords": [
+                "bigquery",
+                "cloud controls",
+                "cloud storage",
+                "compliance",
+                "compliance framework",
+                "fedramp",
+                "frameworks",
+                "iso",
+                "navigating",
+                "responsibility",
+                "shared",
+                "shared responsibility",
+                "soc 2"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Designing for Data Privacy, Residency, and Sovereignty",
+              "label": "D3/M2/S2",
+              "keywords": [
+                "bigquery",
+                "cloud in",
+                "cloud storage",
+                "data",
+                "data residency",
+                "designing",
+                "gdpr",
+                "privacy",
+                "region restriction",
+                "residency",
+                "sovereignty",
+                "vpc"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Designing for Auditability and Logging",
+              "label": "D3/M2/S3",
+              "keywords": [
+                "auditability",
+                "bigquery",
+                "cloud audit",
+                "cloud audit logs",
+                "cloud logging",
+                "cloud storage",
+                "data access logs",
+                "designing",
+                "export logs",
+                "forensic",
+                "iam",
+                "logging",
+                "vpc"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3",
+          "title": "Exam Questions Review",
+          "file": "3 Exam Preparation.md",
+          "isExamPrep": true,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Exam Prep: Architecting Secure Google Cloud Solutions",
+              "label": "D3/M3/S1",
+              "keywords": [
+                "architecting",
+                "cloud",
+                "cloud and",
+                "cloud architect",
+                "cloud key",
+                "cloud kms",
+                "cloud nat",
+                "cloud project",
+                "cloud resources",
+                "cloud solutions",
+                "cloud sql",
+                "cloud storage",
+                "compute engine",
+                "exam",
+                "google",
+                "prep",
+                "secure",
+                "solutions",
+                "vpc"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Exam Prep: Designing for Compliance",
+              "label": "D3/M3/S2",
+              "keywords": [
+                "bigquery",
+                "cloud architect",
+                "cloud are",
+                "cloud is",
+                "cloud storage",
+                "cloud that",
+                "compliance",
+                "designing",
+                "exam",
+                "iam",
+                "prep"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "D4": {
+      "id": "D4",
+      "number": 4,
+      "title": "Analyzing and Optimizing Technical and Business Processes",
+      "titleFr": "Analyser et optimiser les processus techniques et métier",
+      "modules": [
+        {
+          "id": "M1",
+          "title": "Optimizing Technical Processes and Development Lifecycle",
+          "file": "1 Optimizing Technical Processes and Development Lifecycle.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Modernizing the SDLC with CI/CD",
+              "label": "D4/M1/S1",
+              "keywords": [
+                "app engine",
+                "artifact registry",
+                "ci/cd",
+                "cloud build",
+                "cloud ci",
+                "cloud code",
+                "cloud deploy",
+                "cloud run",
+                "compute engine",
+                "devops",
+                "gke",
+                "modernizing",
+                "pipeline",
+                "sdlc",
+                "with"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Troubleshooting and Root Cause Analysis",
+              "label": "D4/M1/S2",
+              "keywords": [
+                "analysis",
+                "cause",
+                "cloud logging",
+                "cloud monitoring",
+                "cloud operations",
+                "cloud profiler",
+                "cloud trace",
+                "debug",
+                "error budget",
+                "rca",
+                "root",
+                "root cause",
+                "troubleshooting"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Testing, Validation, and Service Provisioning",
+              "label": "D4/M1/S3",
+              "keywords": [
+                "canary test",
+                "cloud sql",
+                "gke",
+                "integration test",
+                "provisioning",
+                "service",
+                "terraform",
+                "testing",
+                "validation"
+              ]
+            },
+            {
+              "id": "S4",
+              "title": "Designing for Business Continuity and Disaster Recovery",
+              "label": "D4/M1/S4",
+              "keywords": [
+                "backup",
+                "business",
+                "business continuity",
+                "cloud dns",
+                "cloud dr",
+                "cloud storage",
+                "continuity",
+                "designing",
+                "disaster",
+                "disaster recovery",
+                "dr",
+                "firestore",
+                "gke",
+                "recovery",
+                "rpo",
+                "rto",
+                "spanner"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2",
+          "title": "Aligning Business Processes with Cloud Strategy",
+          "file": "2 Aligning Business Processes with Cloud Strategy.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Managing Stakeholders, Change, and Team Readiness",
+              "label": "D4/M2/S1",
+              "keywords": [
+                "change",
+                "change management",
+                "cloud build",
+                "cloud center",
+                "cloud success",
+                "gke",
+                "kubernetes",
+                "managing",
+                "org change",
+                "readiness",
+                "stakeholder",
+                "stakeholders",
+                "team",
+                "team readiness",
+                "training",
+                "vpc"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Creating Decision-making and Customer Success Frameworks",
+              "label": "D4/M2/S2",
+              "keywords": [
+                "cloud run",
+                "creating",
+                "customer",
+                "customer success",
+                "decision",
+                "decision-making",
+                "framework",
+                "frameworks",
+                "gke",
+                "governance board",
+                "making",
+                "success"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Cost Optimization and Financial Governance",
+              "label": "D4/M2/S3",
+              "keywords": [
+                "bigquery",
+                "billing export",
+                "budget",
+                "cloud finops",
+                "cloud functions",
+                "cloud run",
+                "committed use",
+                "cost",
+                "cost governance",
+                "financial",
+                "finops",
+                "governance",
+                "optimization",
+                "recommender"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3",
+          "title": "Ensuring Production Reliability",
+          "file": "3 Ensuring Production Reliability.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Principles of Site Reliability Engineering (SRE)",
+              "label": "D4/M3/S1",
+              "keywords": [
+                "engineering",
+                "error budget",
+                "principles",
+                "reliability",
+                "site",
+                "site reliability",
+                "sli",
+                "slo",
+                "sre",
+                "toil"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Ensuring Reliability with Chaos Engineering",
+              "label": "D4/M3/S2",
+              "keywords": [
+                "chaos",
+                "chaos engineering",
+                "engineering",
+                "ensuring",
+                "fault injection",
+                "game day",
+                "gke",
+                "reliability",
+                "with"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Validating Security with Penetration Testing",
+              "label": "D4/M3/S3",
+              "keywords": [
+                "app engine",
+                "cloud infrastructure",
+                "cloud pen",
+                "cloud security",
+                "compute engine",
+                "gke",
+                "penetration",
+                "penetration test",
+                "pentest",
+                "security",
+                "security validation",
+                "testing",
+                "validating",
+                "vulnerability scan",
+                "with"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M4",
+          "title": "Exam Questions Review",
+          "file": "4 Exam Preparation.md",
+          "isExamPrep": true,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Exam Prep: Optimizing Technical Processes and Development Lifecycle",
+              "label": "D4/M4/S1",
+              "keywords": [
+                "cloud architect",
+                "cloud build",
+                "cloud run",
+                "development",
+                "exam",
+                "gke",
+                "lifecycle",
+                "optimizing",
+                "prep",
+                "processes",
+                "technical"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Exam Prep: Aligning Business Processes with Cloud Strategy",
+              "label": "D4/M4/S2",
+              "keywords": [
+                "aligning",
+                "bigquery",
+                "business",
+                "cloud",
+                "cloud architect",
+                "cloud bill",
+                "cloud migration",
+                "cloud skills",
+                "cloud spending",
+                "cloud strategy",
+                "exam",
+                "prep",
+                "processes",
+                "strategy",
+                "with"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Exam Prep: Ensuring Production Reliability",
+              "label": "D4/M4/S3",
+              "keywords": [
+                "cloud architect",
+                "ensuring",
+                "exam",
+                "kubernetes",
+                "prep",
+                "production",
+                "reliability"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "D5": {
+      "id": "D5",
+      "number": 5,
+      "title": "Managing Implementation",
+      "titleFr": "Gérer l'implémentation",
+      "modules": [
+        {
+          "id": "M1",
+          "title": "Guiding Development and Operations Teams",
+          "file": "1 Guiding Development and Operations Teams.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Advising on Application Development and APIs",
+              "label": "D5/M1/S1",
+              "keywords": [
+                "advising",
+                "api",
+                "apigee",
+                "apis",
+                "application",
+                "application development",
+                "cloud api",
+                "cloud endpoints",
+                "cloud functions",
+                "cloud logging",
+                "cloud run",
+                "developer",
+                "development",
+                "iam",
+                "sdk advice"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Implementing Testing Frameworks",
+              "label": "D5/M1/S2",
+              "keywords": [
+                "cloud build",
+                "cloud deploy",
+                "cloud pipelines",
+                "cloud run",
+                "cloud storage",
+                "frameworks",
+                "gke",
+                "implementing",
+                "integration test",
+                "test automation",
+                "testing",
+                "testing framework",
+                "unit test"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Leveraging Migration Tooling",
+              "label": "D5/M1/S3",
+              "keywords": [
+                "alloydb",
+                "bigquery",
+                "cloud run",
+                "cloud sql",
+                "cloud storage",
+                "cloud vmware",
+                "compute engine",
+                "database migration service",
+                "gke",
+                "leveraging",
+                "migrate to containers",
+                "migrate to vms",
+                "migration",
+                "migration tooling",
+                "tooling"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2",
+          "title": "Interacting with Google Cloud Programmatically",
+          "file": " 2 Interacting with Google Cloud Programmatically.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Mastering Cloud Shell and the Google Cloud SDK",
+              "label": "D5/M2/S1",
+              "keywords": [
+                "bigquery",
+                "cli",
+                "cloud",
+                "cloud console",
+                "cloud efficiently",
+                "cloud resources",
+                "cloud sdk",
+                "cloud shell",
+                "cloud storage",
+                "gcloud",
+                "google",
+                "mastering",
+                "programmatic",
+                "shell"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Working with Cloud Emulators for Local Development",
+              "label": "D5/M2/S2",
+              "keywords": [
+                "bigtable",
+                "cloud",
+                "cloud service",
+                "development",
+                "emulator",
+                "emulators",
+                "firestore",
+                "firestore emulator",
+                "local",
+                "local development",
+                "pubsub emulator",
+                "spanner",
+                "with",
+                "working"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3",
+          "title": "Exam Questions Review",
+          "file": "3 Exam Preparation.md",
+          "isExamPrep": true,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Exam Prep: Guiding Development and Operations Teams",
+              "label": "D5/M3/S1",
+              "keywords": [
+                "cloud architect",
+                "cloud armor",
+                "cloud build",
+                "cloud endpoints",
+                "cloud service",
+                "cloud sql",
+                "development",
+                "exam",
+                "firestore",
+                "guiding",
+                "operations",
+                "prep",
+                "teams"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Exam Prep: Interacting with Google Cloud Programmatically",
+              "label": "D5/M3/S2",
+              "keywords": [
+                "cloud",
+                "cloud architect",
+                "cloud operations",
+                "cloud programmatically",
+                "cloud sdk",
+                "cloud services",
+                "cloud shell",
+                "cloud storage",
+                "compute engine",
+                "exam",
+                "google",
+                "interacting",
+                "prep",
+                "programmatically",
+                "with"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "D6": {
+      "id": "D6",
+      "number": 6,
+      "title": "Ensuring Solution and Operations Reliability",
+      "titleFr": "Garantir la fiabilité des solutions et des opérations",
+      "modules": [
+        {
+          "id": "M1",
+          "title": "Monitoring, Logging, and Alerting for Reliability",
+          "file": "1 Monitoring, Logging, and Alerting for Reliability.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Introduction to Google Cloud's Operations Suite",
+              "label": "D6/M1/S1",
+              "keywords": [
+                "cloud",
+                "cloud logging",
+                "cloud monitoring",
+                "cloud observability",
+                "cloud operations",
+                "cloud profiler",
+                "cloud trace",
+                "google",
+                "introduction",
+                "observability suite",
+                "operations",
+                "operations suite",
+                "suite"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Configuring Monitoring Dashboards and Alerts",
+              "label": "D6/M1/S2",
+              "keywords": [
+                "alerting",
+                "alerts",
+                "cloud monitoring",
+                "configuring",
+                "dashboard",
+                "dashboards",
+                "metric",
+                "monitoring",
+                "uptime check"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Implementing Centralized Logging with Cloud Logging",
+              "label": "D6/M1/S3",
+              "keywords": [
+                "app engine",
+                "bigquery",
+                "centralized",
+                "centralized logging",
+                "cloud",
+                "cloud logging",
+                "cloud run",
+                "cloud storage",
+                "compute engine",
+                "gke",
+                "implementing",
+                "log sink",
+                "log-based metric",
+                "logging",
+                "with"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2",
+          "title": "Managing Deployments and Ensuring Quality",
+          "file": "2 Managing Deployments and Ensuring Quality.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Implementing Blue/Green and Canary Deployments",
+              "label": "D6/M2/S1",
+              "keywords": [
+                "blue",
+                "blue/green",
+                "canary",
+                "cloud deploy",
+                "cloud implementation",
+                "cloud run",
+                "cloud service",
+                "deployment strategy",
+                "deployments",
+                "gke",
+                "green",
+                "implementing",
+                "rolling update",
+                "traffic splitting"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Quality Control and Continuous Improvement",
+              "label": "D6/M2/S2",
+              "keywords": [
+                "continuous",
+                "continuous improvement",
+                "control",
+                "improvement",
+                "postmortem",
+                "quality",
+                "quality control",
+                "release quality"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3",
+          "title": "Troubleshooting and Incident Response",
+          "file": "3 Troubleshooting and Incident Response.md",
+          "isExamPrep": false,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Developing Incident Response Plans",
+              "label": "D6/M3/S1",
+              "keywords": [
+                "cloud example",
+                "developing",
+                "incident",
+                "incident response",
+                "ir plan",
+                "on-call",
+                "plans",
+                "playbook",
+                "response"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Troubleshooting and Root Cause Analysis (RCA)",
+              "label": "D6/M3/S2",
+              "keywords": [
+                "analysis",
+                "bigquery",
+                "cause",
+                "cloud logging",
+                "cloud monitoring",
+                "cloud trace",
+                "rca",
+                "root",
+                "root cause analysis",
+                "troubleshooting",
+                "troubleshooting production"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Incident Management Best Practices",
+              "label": "D6/M3/S3",
+              "keywords": [
+                "best",
+                "communication",
+                "escalation",
+                "incident",
+                "incident management",
+                "management",
+                "practices",
+                "severity"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M4",
+          "title": "Exam Questions Review",
+          "file": "4 Exam Questions Review.md",
+          "isExamPrep": true,
+          "sections": [
+            {
+              "id": "S1",
+              "title": "Exam Prep: Monitoring, Logging, and Alerting for Reliability",
+              "label": "D6/M4/S1",
+              "keywords": [
+                "alerting",
+                "bigquery",
+                "cloud architect",
+                "cloud profiler",
+                "cloud storage",
+                "cloud trace",
+                "exam",
+                "logging",
+                "monitoring",
+                "prep",
+                "reliability",
+                "spanner"
+              ]
+            },
+            {
+              "id": "S2",
+              "title": "Exam Prep: Managing Deployments and Ensuring Quality",
+              "label": "D6/M4/S2",
+              "keywords": [
+                "cloud architect",
+                "cloud build",
+                "cloud deploy",
+                "cloud service",
+                "deployments",
+                "ensuring",
+                "exam",
+                "kubernetes",
+                "managing",
+                "prep",
+                "quality"
+              ]
+            },
+            {
+              "id": "S3",
+              "title": "Exam Prep: Troubleshooting and Incident Response",
+              "label": "D6/M4/S3",
+              "keywords": [
+                "cloud architect",
+                "cloud is",
+                "exam",
+                "incident",
+                "prep",
+                "response",
+                "troubleshooting"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GCP PCA — Mock 7 (Managing / Ops)</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.5}
+.bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar a{color:#1a73e8;text-decoration:none;font-weight:700;font-size:.88rem}
+.bar button{font:inherit;border:1px solid #cbd5e1;background:#f8fafc;border-radius:7px;padding:5px 10px;cursor:pointer}
+.wrap{max-width:960px;margin:auto;padding:24px 16px 80px}
+.head,.q,.filters{background:#fff;border:1px solid #e2e8f0;border-radius:12px}
+.head{padding:20px;margin-bottom:14px}
+.head h1{margin:0 0 6px;color:#1a73e8;font-size:1.35rem}
+.muted{color:#64748b;font-size:.9rem}
+.filters{padding:14px 16px;margin-bottom:14px;display:grid;gap:10px}
+.filters .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.filters label{font-size:.8rem;font-weight:700;color:#475569;min-width:70px}
+.filters select{font:inherit;border:1px solid #cbd5e1;border-radius:8px;padding:6px 10px;min-width:220px;background:#fff}
+#resultCount{font-size:.85rem;color:#1a73e8;font-weight:700}
+.q{padding:16px 18px;margin-bottom:12px}
+.q.hidden{display:none}
+.meta-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
+.num{font-size:.76rem;font-weight:800;color:#1a73e8}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.02em}
+.badge.d{background:#e8f0fe;color:#1a73e8}
+.badge.m{background:#f3e8ff;color:#7c3aed}
+.badge.s{background:#ecfdf5;color:#047857}
+.badge.type{background:#64748b;color:#fff;text-transform:uppercase}
+.badge.type.multi{background:#b45309}
+.sec-title{font-size:.78rem;color:#64748b}
+.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line}
+.opts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.opts li{position:relative;padding:8px 10px 8px 40px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:.92rem}
+.opts li:before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e2e8f0;font-size:.72rem;font-weight:800}
+.show .correct{background:#e6f4ea;border-color:#34a853}
+.show .correct:before{background:#34a853;color:#fff}
+.ans{display:none;margin-top:10px;padding:9px 12px;border-left:4px solid #34a853;background:#f0fdf4}
+.show .ans{display:block}
+.ans b{color:#137333}
+.ref{margin-top:5px;font-size:.8rem}
+.ref a{color:#1a73e8;word-break:break-all}
+.grid-mocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px}
+.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}
+.card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
+.card .n{width:32px;height:32px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800}
+</style>
+</head><body>
+<nav class="bar">
+  <a href="../index.html">← Menu principal</a>
+  <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Site original ↗</a>
+  <button type="button" onclick="all(true)">Afficher les réponses</button>
+  <button type="button" onclick="all(false)">Masquer les réponses</button>
+</nav>
+<main class="wrap">
+<header class="head">
+  <h1>GCP PCA — Mock 7 (Managing / Ops)</h1>
+  <div class="muted">60 questions · labels D/M/S · <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Source</a></div>
+</header>
+
+<div class="filters">
+  <div class="row">
+    <label for="filterDomain">Domaine</label>
+    <select id="filterDomain"><option value="">Tous les domaines</option><option value="D1">D1 — Designing and Planning a Cloud Solution Architecture</option><option value="D2">D2 — Managing and Provisioning a Solution Infrastructure</option><option value="D3">D3 — Designing for Security and Compliance</option><option value="D4">D4 — Analyzing and Optimizing Technical and Business Processes</option><option value="D5">D5 — Managing Implementation</option><option value="D6">D6 — Ensuring Solution and Operations Reliability</option></select>
+    <label for="filterModule">Module</label>
+    <select id="filterModule"><option value="">Tous les modules</option><option value="D1/M1" data-domain="D1">D1/M1 — Design for Business Outcomes</option><option value="D1/M2" data-domain="D1">D1/M2 — Design Robust Cloud Infrastructures</option><option value="D1/M3" data-domain="D1">D1/M3 — Design Network, Storage, and Compute</option><option value="D1/M4" data-domain="D1">D1/M4 — Plan Cloud Migrations</option><option value="D1/M5" data-domain="D1">D1/M5 — Evolve and Adapt Solutions</option><option value="D2/M1" data-domain="D2">D2/M1 — Configure and Secure Networks</option><option value="D2/M2" data-domain="D2">D2/M2 — Configure Storage Resources</option><option value="D2/M3" data-domain="D2">D2/M3 — Configure Compute Resources</option><option value="D3/M1" data-domain="D3">D3/M1 — Architecting Secure Google Cloud Solutions</option><option value="D3/M2" data-domain="D3">D3/M2 — Designing for Compliance</option><option value="D4/M1" data-domain="D4">D4/M1 — Optimizing Technical Processes and Development Lifecycle</option><option value="D4/M2" data-domain="D4">D4/M2 — Aligning Business Processes with Cloud Strategy</option><option value="D4/M3" data-domain="D4">D4/M3 — Ensuring Production Reliability</option><option value="D5/M1" data-domain="D5">D5/M1 — Guiding Development and Operations Teams</option><option value="D5/M2" data-domain="D5">D5/M2 — Interacting with Google Cloud Programmatically</option><option value="D6/M1" data-domain="D6">D6/M1 — Monitoring, Logging, and Alerting for Reliability</option><option value="D6/M2" data-domain="D6">D6/M2 — Managing Deployments and Ensuring Quality</option><option value="D6/M3" data-domain="D6">D6/M3 — Troubleshooting and Incident Response</option></select>
+    <button type="button" onclick="resetFilters()">Réinitialiser</button>
+    <span id="resultCount"></span>
+  </div>
+</div>
+
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 1 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You need to provision 50 identical web servers across three zones in us-central1 with automatic scaling based on CPU utilization and automatic replacement of failed instances. What resource should you create?</div>
+  <ul class="opts"><li data-l="A">GKE cluster with 50 pods.</li><li data-l="B">50 individual Compute Engine instances with startup scripts.</li><li data-l="C">Unmanaged Instance Group with manual scaling.</li><li class="correct" data-l="D">Managed Instance Group (MIG) with autoscaling and health checks.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Managed Instance Groups provide automatic scaling, auto-healing (replacing failed instances), rolling updates, and load balancing integration. They&#x27;re designed for managing fleets of identical VMs.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/instance-groups" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 2 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S5 · Working with Orchestration and Management Tools</span>
+    
+  </div>
+  <div class="qt">Your team wants to use Infrastructure as Code to manage GCP resources. The solution must support state management, dependency resolution, and work across multiple cloud providers. Which TWO tools meet these requirements?</div>
+  <ul class="opts"><li data-l="A">gcloud CLI scripts.</li><li data-l="B">Deployment Manager.</li><li class="correct" data-l="C">Pulumi with state backend.</li><li class="correct" data-l="D">Terraform with remote state backend in Cloud Storage.</li><li data-l="E">Manual Cloud Console clicks.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, D</b><div>Terraform and Pulumi both support multi-cloud IaC with state management and dependency resolution. Deployment Manager is GCP-only, gcloud scripts lack state management, and manual clicks aren&#x27;t IaC.</div><div class="ref"><a href="https://cloud.google.com/docs/terraform" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 3 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S1 · Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery</span>
+    
+  </div>
+  <div class="qt">You have a Terraform configuration that creates a Cloud SQL instance. After initial deployment, you need to modify the instance&#x27;s machine type without destroying and recreating it. What should you verify?</div>
+  <ul class="opts"><li data-l="A">Always run terraform destroy first.</li><li class="correct" data-l="B">Check if changing machine_type triggers replacement or in-place update in the Terraform provider docs.</li><li data-l="C">Machine type cannot be changed after creation.</li><li data-l="D">Terraform automatically creates a snapshot before any change.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Terraform resource attributes have different update behaviors. For Cloud SQL, machine type changes are in-place updates. Always check provider documentation or run terraform plan to see the impact.</div><div class="ref"><a href="https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M1" data-label="D2/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 4 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M1/S4 · Securing Networks with IAP, Cloud Armor, and Cloud IDS</span>
+    
+  </div>
+  <div class="qt">You need to deploy a GKE cluster with nodes that have specific requirements: n2-standard-4 with 200GB SSD boot disk. How do you specify this configuration?</div>
+  <ul class="opts"><li data-l="A">Modify individual nodes after cluster creation.</li><li data-l="B">Use instance templates separately.</li><li data-l="C">GKE only supports default machine types.</li><li class="correct" data-l="D">Configure the node pool with machine_type = n2-standard-4, disk_size_gb = 200, disk_type = pd-ssd.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>GKE node pools allow customization of machine type, disk size, and disk type. Individual node modification isn&#x27;t supported, and GKE supports all GCE machine types.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/node-pools" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M1" data-label="D2/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 5 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M1/S4 · Securing Networks with IAP, Cloud Armor, and Cloud IDS</span>
+    
+  </div>
+  <div class="qt">Your GKE cluster needs to access Cloud SQL databases without using SQL Proxy. You want to follow security best practices. Which TWO configurations are required?</div>
+  <ul class="opts"><li data-l="A">Use the Compute Engine default service account.</li><li class="correct" data-l="B">Enable Workload Identity on the GKE cluster.</li><li data-l="C">Store database credentials in a Kubernetes Secret.</li><li class="correct" data-l="D">Bind the Kubernetes Service Account to the Google Service Account.</li><li data-l="E">Create a Google Service Account with Cloud SQL Client role.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, D</b><div>Workload Identity is the recommended approach. Enable it on the cluster, create GSA with appropriate roles, and bind KSA to GSA for secure access without credential files.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 6 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You&#x27;re running a batch processing job on a MIG. The job runs for 3 hours daily at 2 AM, then instances are idle. How can you minimize costs while maintaining the MIG configuration?</div>
+  <ul class="opts"><li class="correct" data-l="A">Set autoscaler schedule to scale to 0 instances during idle hours and scale up before the job.</li><li data-l="B">Use Spot VMs for all instances.</li><li data-l="C">Manually stop instances via console.</li><li data-l="D">Delete and recreate the MIG daily.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>MIG autoscaling supports scheduled scaling, allowing cost-effective scaling to 0 during idle periods while maintaining configuration.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/autoscaler/scheduled-scaling" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 7 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S5 · Working with Orchestration and Management Tools</span>
+    
+  </div>
+  <div class="qt">You need to update a GKE application from version 1.0 to 2.0. The update should happen gradually with no more than 25% of pods unavailable at any time. What strategy should you use?</div>
+  <ul class="opts"><li data-l="A">Delete all pods and recreate.</li><li data-l="B">Recreate strategy.</li><li data-l="C">Blue-green deployment with instant switch.</li><li class="correct" data-l="D">RollingUpdate with maxUnavailable: 25%.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Kubernetes Deployment&#x27;s RollingUpdate with maxUnavailable: 25% ensures gradual updates while maintaining 75% availability.</div><div class="ref"><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-update-deployment" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 8 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">Your organization has 100+ projects. You want to enforce that all Compute Engine instances must have specific labels and use only N2 or N2D machine types. Which TWO policies should you implement?</div>
+  <ul class="opts"><li class="correct" data-l="A">Organization Policy limiting allowed machine types.</li><li class="correct" data-l="B">Organization Policy requiring labels on instances.</li><li data-l="C">Custom Cloud Function to check instances after creation.</li><li data-l="D">Manual auditing.</li><li data-l="E">IAM policy denying instance creation.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B</b><div>Organization Policies provide preventive controls at resource creation time, enforcing labeling requirements and restricting allowed machine types.</div><div class="ref"><a href="https://cloud.google.com/resource-manager/docs/organization-policy/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 9 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S3 · Configuring Cloud Storage, Filestore, and Persistent Disks</span>
+    
+  </div>
+  <div class="qt">You&#x27;re deploying a stateful application on GKE that requires persistent storage with high IOPS. Each pod needs its own dedicated disk that persists when pods are rescheduled. What storage approach should you use?</div>
+  <ul class="opts"><li data-l="A">Deployment with single shared PersistentVolumeClaim.</li><li data-l="B">hostPath volumes.</li><li class="correct" data-l="C">StatefulSet with volumeClaimTemplates using SSD Persistent Disk storage class.</li><li data-l="D">emptyDir volumes.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>StatefulSets with volumeClaimTemplates create dedicated PVCs per pod with persistent storage that follows the pod lifecycle.</div><div class="ref"><a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S4">
+  <div class="meta-line">
+    <span class="num">Question 10 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S4 · Optimizing Data Transfer and Latency and Planning for Data Growth</span>
+    
+  </div>
+  <div class="qt">Your Deployment Manager deployment failed halfway through. Some resources were created, others weren&#x27;t. What should you do to clean up and retry?</div>
+  <ul class="opts"><li data-l="A">Wait for automatic rollback.</li><li data-l="B">Update the deployment to fix errors.</li><li data-l="C">Manually delete each resource via Console.</li><li class="correct" data-l="D">Delete the deployment, which removes all tracked resources, then redeploy.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Deployment Manager tracks all resources. Deleting the deployment removes all created resources, providing clean state for retry.</div><div class="ref"><a href="https://cloud.google.com/deployment-manager/docs/deployments" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 11 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S5 · Working with Orchestration and Management Tools</span>
+    
+  </div>
+  <div class="qt">You&#x27;re managing a large GKE cluster with multiple teams. You want to isolate workloads, limit resources per team, and prevent cross-team network access. Which THREE features should you use?</div>
+  <ul class="opts"><li class="correct" data-l="A">Namespaces for logical isolation.</li><li class="correct" data-l="B">ResourceQuotas to limit compute/memory per namespace.</li><li data-l="C">Single namespace for all teams.</li><li class="correct" data-l="D">NetworkPolicies to restrict pod-to-pod traffic.</li><li data-l="E">RBAC roles granting cluster-admin to all users.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B, D</b><div>Namespaces provide logical separation, ResourceQuotas enforce resource limits, and NetworkPolicies control traffic between namespaces.</div><div class="ref"><a href="https://kubernetes.io/docs/concepts/policy/resource-quotas/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 12 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You need to backup a Compute Engine instance&#x27;s persistent disk before maintenance. What&#x27;s the fastest backup method?</div>
+  <ul class="opts"><li data-l="A">Clone the disk to a new disk.</li><li data-l="B">Export data using gsutil.</li><li class="correct" data-l="C">Create a snapshot of the persistent disk (instant, crash-consistent).</li><li data-l="D">Create a machine image of the entire instance.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Snapshots are incremental, instant (point-in-time), and crash-consistent, making them the fastest backup method for persistent disks.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/disks/create-snapshots" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 13 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S3 · Provisioning GKE Clusters for Container Orchestration</span>
+    
+  </div>
+  <div class="qt">Your GKE pods need to make API calls to external services that whitelist IP addresses. Pod IPs are ephemeral. How can you provide a consistent egress IP?</div>
+  <ul class="opts"><li data-l="A">Configure firewall rules only.</li><li class="correct" data-l="B">Configure Cloud NAT for the GKE cluster&#x27;s subnet.</li><li data-l="C">Use a Global Load Balancer.</li><li data-l="D">Assign static IPs to each pod.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Cloud NAT provides static IP addresses for egress traffic from GKE nodes, allowing all outbound traffic to appear from whitelisted IPs.</div><div class="ref"><a href="https://cloud.google.com/nat/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 14 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S3 · Configuring Cloud Storage, Filestore, and Persistent Disks</span>
+    
+  </div>
+  <div class="qt">Team members are running terraform apply from their laptops and overwriting each other&#x27;s changes. What should you implement?</div>
+  <ul class="opts"><li data-l="A">Use local state files only.</li><li data-l="B">Have only one person run Terraform.</li><li data-l="C">Delete .terraform directory after each apply.</li><li class="correct" data-l="D">Configure remote state backend in Cloud Storage with state locking.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Remote state with locking prevents concurrent modifications by acquiring locks before applying changes.</div><div class="ref"><a href="https://developer.hashicorp.com/terraform/language/settings/backends/gcs" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 15 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You need to patch 200 Compute Engine instances within a 4-hour window. Which TWO VM Manager features should you use?</div>
+  <ul class="opts"><li data-l="A">Startup scripts to patch on next boot.</li><li data-l="B">Manual SSH to each instance.</li><li class="correct" data-l="C">OS Patch Management to define patch policies.</li><li data-l="D">Delete and recreate instances.</li><li class="correct" data-l="E">OS Config Agent (must be installed on VMs).</li></ul>
+  <div class="ans"><b>Bonne réponse : C, E</b><div>VM Manager&#x27;s OS Patch Management with OS Config Agent enables automated patching at scale within maintenance windows.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/os-patch-management" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 16 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M2/S1 · Managing Stakeholders, Change, and Team Readiness</span>
+    
+  </div>
+  <div class="qt">Your GKE HPA is configured to scale at 70% CPU, but pods aren&#x27;t scaling despite 90% CPU usage. What should you check first?</div>
+  <ul class="opts"><li class="correct" data-l="A">Verify that pods have resource requests defined. HPA requires requests to calculate utilization.</li><li data-l="B">Increase the cluster size manually.</li><li data-l="C">Change HPA to scale on memory.</li><li data-l="D">Disable cluster autoscaler.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>HPA calculates utilization as percentage of requested resources. Without resource requests in pod specs, HPA cannot determine utilization.</div><div class="ref"><a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 17 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">Compute Engine instances need to access Cloud Storage buckets without storing credential files. What authentication method should you use?</div>
+  <ul class="opts"><li data-l="A">Make the bucket public.</li><li data-l="B">Use Application Default Credentials with hardcoded keys.</li><li data-l="C">Generate a JSON key and store it in /etc directory.</li><li class="correct" data-l="D">Attach a service account to the instance with Storage Object Viewer role.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Attaching a service account to instances enables automatic authentication without credential files, following security best practices.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 18 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M1/S3 · Implementing Centralized Logging with Cloud Logging</span>
+    
+  </div>
+  <div class="qt">Your GKE cluster is running out of node IP addresses. The subnet has a /24 range (256 IPs). How can you increase capacity without recreating the cluster?</div>
+  <ul class="opts"><li class="correct" data-l="A">Add a secondary IP range to the subnet for pods and enable Alias IPs.</li><li data-l="B">Delete and recreate the cluster with a larger subnet.</li><li data-l="C">Use a different region.</li><li data-l="D">IP addresses cannot be increased.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>GKE supports adding secondary IP ranges to existing subnets for pod IPs, expanding available addresses without cluster recreation.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/alias-ips" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 19 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S5 · Working with Orchestration and Management Tools</span>
+    
+  </div>
+  <div class="qt">You&#x27;re setting up multi-environment infrastructure (dev, staging, prod) using Terraform. You want to use the same code with different configurations. Which TWO approaches are recommended?</div>
+  <ul class="opts"><li data-l="A">Use Deployment Manager instead.</li><li class="correct" data-l="B">Use separate directories with shared modules and environment-specific tfvars.</li><li class="correct" data-l="C">Use Terraform workspaces with environment-specific variable files.</li><li data-l="D">Copy-paste code into three repositories.</li><li data-l="E">Hardcode environment values.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C</b><div>Workspaces or separate directories with shared modules maintain DRY principles while enabling environment-specific configurations.</div><div class="ref"><a href="https://developer.hashicorp.com/terraform/language/values/variables" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 20 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S5 · Working with Orchestration and Management Tools</span>
+    
+  </div>
+  <div class="qt">You&#x27;re deploying a containerized application on GKE that needs GPU access for ML inference. What configuration is required?</div>
+  <ul class="opts"><li data-l="A">GPUs are automatically available to all pods.</li><li data-l="B">GKE doesn&#x27;t support GPUs.</li><li data-l="C">Use TPU instead of GPU.</li><li class="correct" data-l="D">Create a GPU node pool with GPU-enabled machine types and request GPUs in pod specs.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>GKE requires GPU-specific node pools with NVIDIA drivers, and pods must explicitly request GPU resources in their specifications.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/gpus" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M3" data-label="D6/M3/S2">
+  <div class="meta-line">
+    <span class="num">Question 21 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M3/S2 · Troubleshooting and Root Cause Analysis (RCA)</span>
+    
+  </div>
+  <div class="qt">Your Terraform module creates a VPC network. Multiple root modules need to use this network. How do you avoid duplicating module code?</div>
+  <ul class="opts"><li data-l="A">Don&#x27;t use modules.</li><li data-l="B">Create the VPC manually.</li><li class="correct" data-l="C">Store the module in a Git repository and reference it using source = git::https://...</li><li data-l="D">Copy the module code into each root module.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Terraform modules can be sourced from Git repositories, enabling reuse across projects while maintaining a single source of truth.</div><div class="ref"><a href="https://developer.hashicorp.com/terraform/language/modules/sources" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 22 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S5 · Working with Orchestration and Management Tools</span>
+    
+  </div>
+  <div class="qt">You need to deploy a new app version to GKE with zero downtime. The new version requires a database schema migration that takes 30 seconds. How should you sequence the deployment?</div>
+  <ul class="opts"><li data-l="A">Run migration and deployment simultaneously.</li><li data-l="B">Update Deployment first, then run migration.</li><li data-l="C">Take the application offline during migration.</li><li class="correct" data-l="D">Run schema migration as a Kubernetes Job, wait for completion, then update Deployment.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Database migrations must complete before deploying code that depends on the new schema to avoid errors.</div><div class="ref"><a href="https://kubernetes.io/docs/concepts/workloads/controllers/job/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 23 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S5 · Working with Orchestration and Management Tools</span>
+    
+  </div>
+  <div class="qt">Your organization manages infrastructure across 20 GCP projects. You want consistent resource naming, tagging, and prevent creation of expensive resources without approval. Which TWO tools should you implement?</div>
+  <ul class="opts"><li class="correct" data-l="A">Organization Policies to enforce constraints.</li><li data-l="B">Delete non-compliant projects.</li><li data-l="C">Manual approval via email.</li><li class="correct" data-l="D">Policy Controller for Kubernetes-style resource management.</li><li data-l="E">Resource quotas at project level.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, D</b><div>Organization Policies provide preventive controls, and Policy Controller extends Kubernetes-style policy management to GCP resources.</div><div class="ref"><a href="https://cloud.google.com/resource-manager/docs/organization-policy/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M2" data-label="D6/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 24 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M2/S2 · Quality Control and Continuous Improvement</span>
+    
+  </div>
+  <div class="qt">You&#x27;re using a MIG with autoscaling. During scale-down, you want instances to gracefully finish processing requests. What should you configure?</div>
+  <ul class="opts"><li data-l="A">Disable autoscaling during processing.</li><li data-l="B">Instances terminate immediately; graceful shutdown isn&#x27;t possible.</li><li class="correct" data-l="C">Set a shutdown script for graceful termination and configure appropriate cooldown periods.</li><li data-l="D">Manually control all scale-down events.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Shutdown scripts handle graceful termination when instances receive shutdown signals, and cooldown periods prevent scaling thrashing.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/shutdownscript" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M1" data-label="D2/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 25 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M1/S4 · Securing Networks with IAP, Cloud Armor, and Cloud IDS</span>
+    
+  </div>
+  <div class="qt">You have a private GKE cluster. Developers need kubectl access from their laptops without VPN. What&#x27;s the recommended secure method?</div>
+  <ul class="opts"><li data-l="A">Developers cannot access private clusters remotely.</li><li data-l="B">Make the GKE control plane public.</li><li data-l="C">Setup SSH tunnels through bastion hosts.</li><li class="correct" data-l="D">Enable Authorized Networks and add developer IP ranges to the master authorized networks list.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Authorized Networks whitelist specific CIDR ranges for GKE control plane access, maintaining security while enabling remote access.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 26 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M1/S3 · Implementing Centralized Logging with Cloud Logging</span>
+    
+  </div>
+  <div class="qt">Your application uses Cloud SQL with read replicas for read-heavy workloads. How should connection logic be structured?</div>
+  <ul class="opts"><li data-l="A">Randomly choose between primary and replica.</li><li data-l="B">Only connect to read replicas.</li><li class="correct" data-l="C">Direct write queries to primary instance and read queries to read replicas using separate connection strings.</li><li data-l="D">Use a single connection string for both reads and writes.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Read replicas are read-only. Application logic must route writes to primary and reads to replicas for optimal performance.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/postgres/replication" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 27 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M1/S3 · Implementing Centralized Logging with Cloud Logging</span>
+    
+  </div>
+  <div class="qt">You need to deploy a containerized app requiring privileged access to the host. Security team wants to minimize risk. What&#x27;s the least privileged approach on GKE?</div>
+  <ul class="opts"><li data-l="A">Run all containers as root.</li><li data-l="B">Disable Pod Security Standards.</li><li class="correct" data-l="C">Use a dedicated, tainted node pool for privileged workloads with securityContext.privileged only where needed.</li><li data-l="D">Grant all pods privileged access.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Isolating privileged workloads to dedicated, tainted nodes limits blast radius while maintaining security boundaries.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/pod-security-admission" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 28 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S3 · Provisioning GKE Clusters for Container Orchestration</span>
+    
+  </div>
+  <div class="qt">You&#x27;re managing GKE clusters across multiple regions. You want centralized policy enforcement and fleet-wide RBAC. Which TWO Anthos features should you use?</div>
+  <ul class="opts"><li class="correct" data-l="A">Fleet (Anthos Hub) to register clusters.</li><li data-l="B">Manually sync configurations.</li><li class="correct" data-l="C">Config Management for centralized policy.</li><li data-l="D">Use different Kubernetes versions.</li><li data-l="E">Create separate projects per cluster.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, C</b><div>Fleet provides control plane for managing multiple clusters, and Config Management enforces policies across the fleet using GitOps.</div><div class="ref"><a href="https://cloud.google.com/anthos/fleet-management/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 29 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You&#x27;re updating an instance template to change the machine type. How does this affect existing instances created from the template?</div>
+  <ul class="opts"><li class="correct" data-l="A">Existing instances are not affected. New instances use the new template version.</li><li data-l="B">Templates cannot be modified.</li><li data-l="C">You must delete all instances first.</li><li data-l="D">All instances immediately update.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Instance templates are immutable. Existing instances remain unchanged; MIGs can perform rolling updates to new template versions.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/instance-templates" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M2" data-label="D6/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 30 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M2/S1 · Implementing Blue/Green and Canary Deployments</span>
+    
+  </div>
+  <div class="qt">You update a ConfigMap in GKE but pods don&#x27;t reflect the changes. What&#x27;s the reason and solution?</div>
+  <ul class="opts"><li data-l="A">You must delete and recreate the ConfigMap.</li><li data-l="B">GKE doesn&#x27;t support ConfigMap updates.</li><li data-l="C">ConfigMaps never update in running pods.</li><li class="correct" data-l="D">ConfigMaps mounted as volumes update eventually, but env vars don&#x27;t. Restart pods or use volume mounts.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Volume-mounted ConfigMaps sync eventually. Environment variables from ConfigMaps are set at pod creation and never update without restart.</div><div class="ref"><a href="https://kubernetes.io/docs/concepts/configuration/configmap/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 31 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M1/S3 · Implementing Centralized Logging with Cloud Logging</span>
+    
+  </div>
+  <div class="qt">You need to run a one-time migration job that requires 500 VMs for 2 hours. The VMs should be deleted automatically after completion. What&#x27;s the most cost-effective approach?</div>
+  <ul class="opts"><li data-l="A">Use GKE for this batch job.</li><li data-l="B">Use 500 individual instances.</li><li data-l="C">Create a MIG and manually delete it later.</li><li class="correct" data-l="D">Use Cloud Batch with Spot VMs for the job.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Cloud Batch manages batch jobs with automatic resource provisioning and cleanup. Spot VMs reduce costs by 60-91% for short-lived workloads.</div><div class="ref"><a href="https://cloud.google.com/batch/docs/get-started" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 32 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S5 · Working with Orchestration and Management Tools</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing GitOps for GKE cluster configuration. Which TWO components are essential?</div>
+  <ul class="opts"><li class="correct" data-l="A">Git repository as the source of truth for cluster configuration.</li><li data-l="B">Manual kubectl apply for each change.</li><li data-l="C">Storing configurations locally without version control.</li><li data-l="D">Avoiding automation.</li><li class="correct" data-l="E">Config Sync (part of Config Management) to sync Git to cluster.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, E</b><div>GitOps uses Git as the source of truth, and Config Sync automatically syncs repository configurations to Kubernetes clusters.</div><div class="ref"><a href="https://cloud.google.com/anthos-config-management/docs/config-sync-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 33 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S3 · Provisioning GKE Clusters for Container Orchestration</span>
+    
+  </div>
+  <div class="qt">You have a GKE cluster with nodes in multiple zones. You want to ensure pods are distributed across zones for high availability. What should you configure?</div>
+  <ul class="opts"><li data-l="A">Manually schedule pods to specific zones.</li><li data-l="B">Deploy separate clusters per zone.</li><li data-l="C">Use DaemonSets for all workloads.</li><li class="correct" data-l="D">Use Pod Topology Spread Constraints or Pod Anti-Affinity rules.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Pod Topology Spread Constraints ensure pods are evenly distributed across zones/nodes based on defined topology keys.</div><div class="ref"><a href="https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 34 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S1 · Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery</span>
+    
+  </div>
+  <div class="qt">You need to provision a Cloud SQL instance with a specific maintenance window to avoid disruptions during business hours. How do you configure this?</div>
+  <ul class="opts"><li data-l="A">Maintenance windows cannot be customized.</li><li data-l="B">Contact Google Support for each maintenance.</li><li class="correct" data-l="C">Set the maintenance window in instance settings to specify day and hour.</li><li data-l="D">Disable all maintenance.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Cloud SQL allows configuring preferred maintenance windows (day of week and hour) to align with low-traffic periods.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/mysql/instance-settings#maintenance-window-2ndgen" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 35 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D6/M1/S3 · Implementing Centralized Logging with Cloud Logging</span>
+    
+  </div>
+  <div class="qt">You&#x27;re managing secrets for your GKE applications. Which TWO approaches are recommended for secret management?</div>
+  <ul class="opts"><li data-l="A">Hardcode secrets in application code.</li><li class="correct" data-l="B">Use Workload Identity to access Secret Manager without storing credentials.</li><li data-l="C">Commit secrets to Git repository.</li><li class="correct" data-l="D">Use Secret Manager and mount secrets as volumes or env vars.</li><li data-l="E">Store secrets in ConfigMaps.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, D</b><div>Secret Manager provides centralized secret management, and Workload Identity enables secure access without credential files.</div><div class="ref"><a href="https://cloud.google.com/secret-manager/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 36 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You need to run a cron job that executes daily at 3 AM to clean up old data. The job should run serverless and scale to zero when not executing. What should you use?</div>
+  <ul class="opts"><li data-l="A">Manual execution daily.</li><li data-l="B">Compute Engine instance running cron.</li><li data-l="C">GKE CronJob with always-on cluster.</li><li class="correct" data-l="D">Cloud Scheduler to trigger a Cloud Run job or Cloud Function.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Cloud Scheduler triggers serverless executions on a schedule. Cloud Run Jobs or Cloud Functions scale to zero, avoiding costs when not running.</div><div class="ref"><a href="https://cloud.google.com/scheduler/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 37 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S3 · Configuring Cloud Storage, Filestore, and Persistent Disks</span>
+    
+  </div>
+  <div class="qt">Your GKE application uses a PersistentVolume backed by a regional persistent disk. The pod is rescheduled to a different zone in the same region. What happens to the volume?</div>
+  <ul class="opts"><li data-l="A">Regional disks don&#x27;t support multi-zone access.</li><li data-l="B">Manual intervention is required to move the volume.</li><li data-l="C">The volume is lost and data is deleted.</li><li class="correct" data-l="D">Regional persistent disks are accessible from any zone in the region; the volume reattaches automatically.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Regional persistent disks replicate data across two zones in a region and can be attached to pods in either zone automatically.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/disks/regional-persistent-disk" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 38 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S3 · Provisioning GKE Clusters for Container Orchestration</span>
+    
+  </div>
+  <div class="qt">You&#x27;re provisioning a new GCP project for a development team. Which THREE initial configurations improve governance?</div>
+  <ul class="opts"><li data-l="A">Give all users Owner role.</li><li class="correct" data-l="B">Apply appropriate labels (environment=dev, team=engineering).</li><li class="correct" data-l="C">Configure Organization Policies to enforce constraints.</li><li data-l="D">Disable all monitoring.</li><li class="correct" data-l="E">Set up billing budget alerts.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C, E</b><div>Labels enable cost tracking, budget alerts prevent overspending, and Organization Policies enforce compliance. Owner for all violates least privilege.</div><div class="ref"><a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 39 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You need to provision Compute Engine instances that can only be accessed via IAP (Identity-Aware Proxy), not directly from the internet. What network configuration is required?</div>
+  <ul class="opts"><li class="correct" data-l="A">Don&#x27;t assign external IPs to instances and configure firewall rules to allow IAP IP ranges.</li><li data-l="B">Use VPN for all access.</li><li data-l="C">Assign public IPs and allow all traffic.</li><li data-l="D">IAP doesn&#x27;t work with Compute Engine.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>IAP provides secure access without external IPs. Configure firewall rules to allow traffic from IAP&#x27;s IP ranges (35.235.240.0/20).</div><div class="ref"><a href="https://cloud.google.com/iap/docs/using-tcp-forwarding" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 40 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S3 · Configuring Cloud Storage, Filestore, and Persistent Disks</span>
+    
+  </div>
+  <div class="qt">You have a Terraform module that provisions a Cloud Storage bucket. You want to prevent accidental deletion of the bucket even if terraform destroy is run. What should you add to the resource?</div>
+  <ul class="opts"><li data-l="A">Use Cloud Console deletion protection only.</li><li data-l="B">Terraform cannot prevent resource deletion.</li><li class="correct" data-l="C">Add lifecycle { prevent_destroy = true } to the bucket resource.</li><li data-l="D">Manually backup everything before each terraform run.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>The prevent_destroy lifecycle meta-argument causes Terraform to refuse to destroy the resource, providing protection against accidental deletion.</div><div class="ref"><a href="https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle#prevent_destroy" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 41 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S3 · Provisioning GKE Clusters for Container Orchestration</span>
+    
+  </div>
+  <div class="qt">You&#x27;re deploying a highly available application on GKE. Which THREE configurations improve availability?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use a regional GKE cluster with nodes in multiple zones.</li><li data-l="B">Run all pods on a single node.</li><li class="correct" data-l="C">Set pod disruption budgets to ensure minimum available replicas.</li><li class="correct" data-l="D">Configure pod anti-affinity to spread pods across nodes/zones.</li><li data-l="E">Disable health checks.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, C, D</b><div>Regional clusters, pod disruption budgets, and anti-affinity rules all contribute to high availability. Single-node deployment creates a single point of failure.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/concepts/regional-clusters" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 42 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S3 · Configuring Cloud Storage, Filestore, and Persistent Disks</span>
+    
+  </div>
+  <div class="qt">You need to grant a service account permission to read from a specific Cloud Storage bucket. What&#x27;s the most appropriate IAM binding?</div>
+  <ul class="opts"><li class="correct" data-l="A">Grant roles/storage.objectViewer on the specific bucket to the service account.</li><li data-l="B">Grant roles/owner on the project.</li><li data-l="C">Grant roles/storage.admin on all buckets.</li><li data-l="D">Make the bucket public.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Following least privilege, grant the minimum role (storage.objectViewer) on the specific resource (bucket) needed.</div><div class="ref"><a href="https://cloud.google.com/storage/docs/access-control/iam-roles" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 43 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S1 · Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery</span>
+    
+  </div>
+  <div class="qt">You&#x27;re using Config Connector to manage GCP resources as Kubernetes objects. You want to provision a Cloud SQL instance using a Kubernetes manifest. What resource kind do you use?</div>
+  <ul class="opts"><li data-l="A">ConfigMap to store SQL configuration.</li><li data-l="B">Standard Kubernetes Deployment.</li><li class="correct" data-l="C">SQLInstance (Config Connector custom resource definition).</li><li data-l="D">Config Connector doesn&#x27;t support Cloud SQL.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Config Connector provides CRDs for GCP resources. SQLInstance is the CRD for Cloud SQL instances.</div><div class="ref"><a href="https://cloud.google.com/config-connector/docs/reference/resource-docs/sql/sqlinstance" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 44 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S5 · Working with Orchestration and Management Tools</span>
+    
+  </div>
+  <div class="qt">You need to ensure that a specific critical workload always has available resources on your GKE cluster, even during high utilization. What Kubernetes feature should you use?</div>
+  <ul class="opts"><li class="correct" data-l="A">PriorityClasses to assign higher priority to critical pods.</li><li data-l="B">Deploy to a separate namespace.</li><li data-l="C">Don&#x27;t set any resource requests.</li><li data-l="D">Use DaemonSets for critical workloads.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>PriorityClasses allow marking critical pods with higher priority, ensuring they&#x27;re scheduled first and can trigger eviction of lower-priority pods if needed.</div><div class="ref"><a href="https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 45 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D6/M1/S3 · Implementing Centralized Logging with Cloud Logging</span>
+    
+  </div>
+  <div class="qt">You&#x27;re provisioning infrastructure for a compliance-sensitive application. Which TWO practices improve auditability?</div>
+  <ul class="opts"><li data-l="A">Avoid documenting infrastructure changes.</li><li class="correct" data-l="B">Use Infrastructure as Code (Terraform/Deployment Manager) with version control.</li><li class="correct" data-l="C">Enable Cloud Audit Logs for all Admin Activity.</li><li data-l="D">Make all changes via Cloud Console without logging.</li><li data-l="E">Disable all audit logging.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C</b><div>Audit logs capture who made what changes, and IaC with version control provides a complete change history.</div><div class="ref"><a href="https://cloud.google.com/logging/docs/audit" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M1" data-label="D2/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 46 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M1/S3 · Securing Networks with NGFW</span>
+    
+  </div>
+  <div class="qt">You&#x27;re deploying microservices on GKE. Each service needs different scaling behavior (some CPU-based, some memory-based). How do you configure this?</div>
+  <ul class="opts"><li data-l="A">Manual scaling only.</li><li data-l="B">Use one HPA for all services.</li><li data-l="C">All services must use the same scaling metric.</li><li class="correct" data-l="D">Create separate HorizontalPodAutoscalers for each Deployment with appropriate metrics.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Each Deployment can have its own HPA with custom metrics (CPU, memory, custom metrics) tailored to that service&#x27;s behavior.</div><div class="ref"><a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 47 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You need to provision a Compute Engine instance that requires GPU for ML training. The instance should be in us-central1-a. What machine type family should you use?</div>
+  <ul class="opts"><li data-l="A">E2 instances with GPU support.</li><li data-l="B">GPUs cannot be attached to Compute Engine.</li><li data-l="C">All machine types support GPUs.</li><li class="correct" data-l="D">Select an N1 or A2 machine type and attach appropriate GPU (T4, V100, A100).</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>N1, A2, and other specific machine families support GPU attachment. E2 instances don&#x27;t support GPUs.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/gpus" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M3" data-label="D6/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 48 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D6/M3/S3 · Incident Management Best Practices</span>
+    
+  </div>
+  <div class="qt">You&#x27;re managing Kubernetes RBAC for your GKE cluster. Which TWO practices improve security?</div>
+  <ul class="opts"><li data-l="A">Share service account credentials.</li><li data-l="B">Don&#x27;t use RBAC at all.</li><li data-l="C">Grant cluster-admin to all developers.</li><li class="correct" data-l="D">Use RoleBindings for namespace-scoped permissions instead of ClusterRoleBindings.</li><li class="correct" data-l="E">Follow least privilege by granting minimum necessary permissions.</li></ul>
+  <div class="ans"><b>Bonne réponse : D, E</b><div>Least privilege and namespace-scoped RoleBindings limit blast radius. Cluster-admin for all and disabled RBAC violate security best practices.</div><div class="ref"><a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 49 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S1 · Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery</span>
+    
+  </div>
+  <div class="qt">You need to provision a Cloud SQL instance with automatic daily backups. How do you configure this?</div>
+  <ul class="opts"><li data-l="A">Use Cloud Scheduler to manually trigger backups.</li><li data-l="B">Backups are not supported for Cloud SQL.</li><li data-l="C">Export to Cloud Storage manually each day.</li><li class="correct" data-l="D">Enable automated backups in instance settings and specify backup window.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Cloud SQL has built-in automated backup functionality with configurable backup windows and retention periods.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/postgres/backup-recovery/backups" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 50 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You&#x27;re using a Managed Instance Group with a custom application that takes 2 minutes to initialize. Health checks are failing prematurely. What should you configure?</div>
+  <ul class="opts"><li class="correct" data-l="A">Set an appropriate initial delay for health checks (e.g., 120 seconds).</li><li data-l="B">Health checks cannot be configured.</li><li data-l="C">Disable health checks.</li><li data-l="D">Reduce application startup time to 1 second.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Health check initial delay allows instances time to start before health checks begin, preventing premature marking as unhealthy.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/instance-groups/autohealing-instances-in-migs" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 51 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S5 · Working with Orchestration and Management Tools</span>
+    
+  </div>
+  <div class="qt">You need to run a Kubernetes Job that processes a large dataset. The job may take several hours and should automatically retry on failure up to 3 times. How do you configure this?</div>
+  <ul class="opts"><li data-l="A">Jobs cannot retry on failure.</li><li data-l="B">Use CronJob instead.</li><li data-l="C">Manually restart failed jobs.</li><li class="correct" data-l="D">Set backoffLimit: 3 in the Job specification.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>The backoffLimit field specifies the number of retries before considering a Job failed.</div><div class="ref"><a href="https://kubernetes.io/docs/concepts/workloads/controllers/job/#pod-backoff-failure-policy" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 52 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S3 · Provisioning GKE Clusters for Container Orchestration</span>
+    
+  </div>
+  <div class="qt">You&#x27;re provisioning infrastructure for microservices that need service-to-service authentication. Which TWO approaches provide secure authentication?</div>
+  <ul class="opts"><li data-l="A">Hardcode API keys in each service.</li><li class="correct" data-l="B">Implement mutual TLS (mTLS) for service mesh authentication.</li><li data-l="C">Store credentials in public Git repositories.</li><li data-l="D">Allow unauthenticated traffic between all services.</li><li class="correct" data-l="E">Use Workload Identity for GKE services to authenticate as Google Service Accounts.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, E</b><div>Workload Identity and mTLS (via service mesh like Anthos Service Mesh) provide secure, cryptographic authentication. Hardcoded keys and unauthenticated traffic are security risks.</div><div class="ref"><a href="https://cloud.google.com/service-mesh/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M1" data-label="D2/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 53 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M1/S4 · Securing Networks with IAP, Cloud Armor, and Cloud IDS</span>
+    
+  </div>
+  <div class="qt">You&#x27;re deploying a stateless web application on GKE that requires zero downtime during updates. What Deployment strategy ensures this?</div>
+  <ul class="opts"><li data-l="A">Delete all pods before creating new ones.</li><li class="correct" data-l="B">RollingUpdate with maxSurge: 1 and maxUnavailable: 0.</li><li data-l="C">Blue-green with complete outage during switch.</li><li data-l="D">Recreate strategy.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>RollingUpdate with maxUnavailable: 0 ensures at least the desired number of pods are always available during updates, achieving zero downtime.</div><div class="ref"><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 54 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S3 · Configuring Cloud Storage, Filestore, and Persistent Disks</span>
+    
+  </div>
+  <div class="qt">You need to provision Cloud Storage buckets with uniform bucket-level access enforced (no ACLs). How do you ensure this?</div>
+  <ul class="opts"><li data-l="A">Uniform access cannot be enforced.</li><li data-l="B">Manually check each object&#x27;s ACL.</li><li class="correct" data-l="C">Enable uniform bucket-level access in bucket settings or via Terraform.</li><li data-l="D">Bucket-level access doesn&#x27;t exist.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Uniform bucket-level access disables object ACLs and enforces IAM-only permissions at the bucket level.</div><div class="ref"><a href="https://cloud.google.com/storage/docs/uniform-bucket-level-access" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 55 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S3 · Provisioning GKE Clusters for Container Orchestration</span>
+    
+  </div>
+  <div class="qt">You&#x27;re provisioning a GKE cluster for production. Which THREE security configurations should you enable?</div>
+  <ul class="opts"><li class="correct" data-l="A">Enable Shielded GKE Nodes for secure boot.</li><li class="correct" data-l="B">Enable GKE Workload Identity.</li><li class="correct" data-l="C">Enable Binary Authorization to ensure only signed images are deployed.</li><li data-l="D">Disable all network policies.</li><li data-l="E">Grant cluster-admin to all users.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B, C</b><div>Workload Identity, Binary Authorization, and Shielded Nodes are key security features. Disabled network policies and cluster-admin for all violate security principles.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/hardening-your-cluster" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M1" data-label="D2/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 56 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M1/S4 · Securing Networks with IAP, Cloud Armor, and Cloud IDS</span>
+    
+  </div>
+  <div class="qt">You need to run a long-running data processing task on GKE that should continue from the last checkpoint if interrupted. What workload type should you use?</div>
+  <ul class="opts"><li data-l="A">Deployment without any storage.</li><li class="correct" data-l="B">StatefulSet with persistent volumes to store checkpoint data.</li><li data-l="C">Pod without controller.</li><li data-l="D">DaemonSet.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>StatefulSets with persistent volumes maintain state across pod restarts, allowing checkpoint-based recovery.</div><div class="ref"><a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S5">
+  <div class="meta-line">
+    <span class="num">Question 57 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S5</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S5 · Working with Orchestration and Management Tools</span>
+    
+  </div>
+  <div class="qt">You&#x27;re provisioning infrastructure with Terraform. After initial deployment, you want to import an existing GCP resource into your state. What command do you use?</div>
+  <ul class="opts"><li data-l="A">Existing resources cannot be imported.</li><li class="correct" data-l="B">terraform import &lt;resource_type&gt;.&lt;resource_name&gt; &lt;resource_id&gt;.</li><li data-l="C">terraform apply automatically imports all resources.</li><li data-l="D">Delete and recreate the resource.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>The terraform import command adds existing infrastructure to Terraform state without recreating resources.</div><div class="ref"><a href="https://developer.hashicorp.com/terraform/cli/commands/import" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 58 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You need to provision a Load Balancer in GCP that terminates SSL/TLS at the load balancer. Which load balancer types support SSL termination?</div>
+  <ul class="opts"><li data-l="A">Only Network Load Balancer supports SSL.</li><li data-l="B">SSL termination is not supported in GCP.</li><li class="correct" data-l="C">External Application Load Balancer and Internal Application Load Balancer support SSL termination.</li><li data-l="D">Terminate SSL at instances only.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Application Load Balancers (formerly HTTPS/SSL Load Balancers) support SSL/TLS termination with managed or self-managed certificates.</div><div class="ref"><a href="https://cloud.google.com/load-balancing/docs/ssl-certificates" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 59 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S3 · Provisioning GKE Clusters for Container Orchestration</span>
+    
+  </div>
+  <div class="qt">You&#x27;re managing a GKE cluster with sensitive workloads. Which TWO practices enhance runtime security?</div>
+  <ul class="opts"><li data-l="A">Allow all network traffic.</li><li class="correct" data-l="B">Use GKE Sandbox (gVisor) for stronger container isolation.</li><li data-l="C">Disable pod security policies completely.</li><li data-l="D">Run all containers as root.</li><li class="correct" data-l="E">Enable Container-Optimized OS for node security.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, E</b><div>GKE Sandbox provides additional isolation using gVisor, and Container-Optimized OS is hardened for security. Running as root and allowing all traffic increase risk.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/sandbox-pods" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 60 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You need to provision a Compute Engine instance that should automatically start after a system maintenance event or hardware failure. What configuration enables this?</div>
+  <ul class="opts"><li data-l="A">Automatic restart is not supported.</li><li data-l="B">Manually restart after each failure.</li><li data-l="C">Use Managed Instance Groups instead.</li><li class="correct" data-l="D">Set automatic restart = true in instance settings.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>The automatic restart setting (enabled by default) causes instances to automatically restart after failures or maintenance events.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/instances/setting-instance-scheduling-options#autorestart" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+</main>
+<script>
+function all(v){document.querySelectorAll('.q').forEach(q=>q.classList.toggle('show',v))}
+function applyFilters(){
+  const d=document.getElementById('filterDomain').value;
+  const m=document.getElementById('filterModule').value;
+  let n=0;
+  document.querySelectorAll('.q').forEach(q=>{
+    const okD=!d||q.dataset.domain===d;
+    const okM=!m||q.dataset.module===m;
+    const show=okD&&okM;
+    q.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  const el=document.getElementById('resultCount');
+  if(el) el.textContent=n+' question'+(n>1?'s':'');
+}
+function syncModules(){
+  const d=document.getElementById('filterDomain').value;
+  const sel=document.getElementById('filterModule');
+  const cur=sel.value;
+  [...sel.options].forEach((o,i)=>{
+    if(i===0){o.hidden=false;return;}
+    o.hidden=!!(d&&o.dataset.domain!==d);
+  });
+  if(cur && sel.selectedOptions[0] && sel.selectedOptions[0].hidden) sel.value='';
+  applyFilters();
+}
+function resetFilters(){
+  document.getElementById('filterDomain').value='';
+  document.getElementById('filterModule').value='';
+  syncModules();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.q').forEach(q=>q.addEventListener('click',e=>{
+    if(e.target.closest('a,select,button,label'))return;
+    q.classList.toggle('show');
+  }));
+  const fd=document.getElementById('filterDomain');
+  const fm=document.getElementById('filterModule');
+  if(fd) fd.addEventListener('change',syncModules);
+  if(fm) fm.addEventListener('change',applyFilters);
+  applyFilters();
+});
+</script>
+</body></html>
