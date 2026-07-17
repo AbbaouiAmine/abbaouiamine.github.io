@@ -1,408 +1,1018 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GCP PCA — Mock 8 (Analyzing)</title>
-<style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.55}
-.wrap{max-width:900px;margin:0 auto;padding:24px 16px 80px}
-header.hd{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-bottom:20px}
-header.hd h1{margin:0 0 6px;font-size:1.5rem;color:#1a73e8}
-.meta{color:#475569;font-size:.9rem}
-.bar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.bar a{color:#1a73e8;text-decoration:none;font-weight:600;font-size:.85rem}
-.bar button{font:inherit;cursor:pointer;border:1px solid #cbd5e1;background:#f8fafc;border-radius:8px;padding:5px 12px;font-size:.85rem}
-.q{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin-bottom:14px}
-.qnum{font-size:.78rem;font-weight:700;color:#1a73e8;letter-spacing:.03em}
-.qtype{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:#64748b;border-radius:999px;padding:2px 8px;margin-left:8px}
-.qtype.multi{background:#b45309}
-.qtext{font-weight:600;margin:8px 0 12px}
-ul.opts{list-style:none;margin:0;padding:0;display:grid;gap:7px}
-ul.opts li{border:1px solid #e2e8f0;border-radius:9px;padding:8px 12px 8px 40px;position:relative;background:#f8fafc;font-size:.92rem}
-ul.opts li::before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:999px;background:#e2e8f0;color:#334155;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center}
-.reveal ul.opts li.correct{background:#e6f4ea;border-color:#34a853}
-.reveal ul.opts li.correct::before{background:#34a853;color:#fff}
-.ans{margin-top:12px;border-left:4px solid #34a853;background:#f0fdf4;border-radius:0 9px 9px 0;padding:10px 14px;display:none}
-.reveal .ans{display:block}
-.ans .lbl{font-weight:700;color:#137333;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
-.ans a{color:#1a73e8;word-break:break-all}
-</style></head><body>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.5}
+.bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar a{color:#1a73e8;text-decoration:none;font-weight:700;font-size:.88rem}
+.bar button{font:inherit;border:1px solid #cbd5e1;background:#f8fafc;border-radius:7px;padding:5px 10px;cursor:pointer}
+.wrap{max-width:960px;margin:auto;padding:24px 16px 80px}
+.head,.q,.filters{background:#fff;border:1px solid #e2e8f0;border-radius:12px}
+.head{padding:20px;margin-bottom:14px}
+.head h1{margin:0 0 6px;color:#1a73e8;font-size:1.35rem}
+.muted{color:#64748b;font-size:.9rem}
+.filters{padding:14px 16px;margin-bottom:14px;display:grid;gap:10px}
+.filters .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.filters label{font-size:.8rem;font-weight:700;color:#475569;min-width:70px}
+.filters select{font:inherit;border:1px solid #cbd5e1;border-radius:8px;padding:6px 10px;min-width:220px;background:#fff}
+#resultCount{font-size:.85rem;color:#1a73e8;font-weight:700}
+.q{padding:16px 18px;margin-bottom:12px}
+.q.hidden{display:none}
+.meta-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
+.num{font-size:.76rem;font-weight:800;color:#1a73e8}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.02em}
+.badge.d{background:#e8f0fe;color:#1a73e8}
+.badge.m{background:#f3e8ff;color:#7c3aed}
+.badge.s{background:#ecfdf5;color:#047857}
+.badge.type{background:#64748b;color:#fff;text-transform:uppercase}
+.badge.type.multi{background:#b45309}
+.sec-title{font-size:.78rem;color:#64748b}
+.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line}
+.opts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.opts li{position:relative;padding:8px 10px 8px 40px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:.92rem}
+.opts li:before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e2e8f0;font-size:.72rem;font-weight:800}
+.show .correct{background:#e6f4ea;border-color:#34a853}
+.show .correct:before{background:#34a853;color:#fff}
+.ans{display:none;margin-top:10px;padding:9px 12px;border-left:4px solid #34a853;background:#f0fdf4}
+.show .ans{display:block}
+.ans b{color:#137333}
+.ref{margin-top:5px;font-size:.8rem}
+.ref a{color:#1a73e8;word-break:break-all}
+.grid-mocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px}
+.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}
+.card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
+.card .n{width:32px;height:32px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800}
+</style>
+</head><body>
 <nav class="bar">
-<a href="index.html">&larr; Tous les mocks</a>
-<button id="showAll">Afficher toutes les réponses</button>
-<button id="hideAll">Masquer les réponses</button>
-<span style="color:#64748b;font-size:.8rem">Astuce : cliquez une question pour révéler sa réponse</span>
+  <a href="../index.html">← Menu principal</a>
+  <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Site original ↗</a>
+  <button type="button" onclick="all(true)">Afficher les réponses</button>
+  <button type="button" onclick="all(false)">Masquer les réponses</button>
 </nav>
-<div class="wrap">
-<header class="hd">
-<h1>Mock 8 — Analyzing</h1>
-<div class="meta">Google Cloud Professional Cloud Architect · 60 questions · Source&nbsp;: gcppcatest.com</div>
+<main class="wrap">
+<header class="head">
+  <h1>GCP PCA — Mock 8 (Analyzing)</h1>
+  <div class="muted">60 questions · labels D/M/S · <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Source</a></div>
 </header>
-<div class="q" id="q1">
-<div><span class="qnum">Question 1 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your application is experiencing intermittent latency spikes. You need to identify which component (frontend, API, database) is causing the delays. Which Google Cloud tool provides distributed tracing across services?</div>
-<ul class="opts"><li class="correct" data-l="A">Cloud Trace.</li><li data-l="B">Cloud Logging.</li><li data-l="C">Cloud Profiler.</li><li data-l="D">Cloud Monitoring.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Cloud Trace collects latency data from applications and displays it in the Google Cloud console with detailed timing for each component in a request path. It shows distributed traces across microservices. Cloud Logging captures log entries, Cloud Monitoring tracks metrics, and Cloud Profiler analyzes CPU/memory usage patterns.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/trace/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/trace/docs/overview</a></div></div>
-</div><div class="q" id="q2">
-<div><span class="qnum">Question 2 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You need to implement SLIs (Service Level Indicators) for your API service. The SLO states that 99% of requests should respond within 500ms. Which TWO metrics should you track as SLIs?</div>
-<ul class="opts"><li data-l="A">Total number of requests.</li><li class="correct" data-l="B">Request latency at the 99th percentile.</li><li data-l="C">Number of build deployments.</li><li data-l="D">Server CPU utilization.</li><li class="correct" data-l="E">Percentage of requests served within 500ms (success rate).</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, E</span></div>
-<div style="margin-top:6px">SLIs must be measurable indicators that directly relate to user experience and the SLO. Request latency (A) and success rate meeting the latency threshold (C) are proper SLIs for this SLO. Total requests (B) is a volume metric, CPU (D) is a resource metric not directly tied to user experience, and deployments (E) aren&#x27;t service-level indicators.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/blog/products/devops-sre/sre-fundamentals-slis-slas-and-slos" target="_blank" rel="noopener">https://cloud.google.com/blog/products/devops-sre/sre-fundamentals-slis-slas-and-slos</a></div></div>
-</div><div class="q" id="q3">
-<div><span class="qnum">Question 3 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your Cloud Run service is consuming excessive memory and crashing. You need to identify which functions are allocating the most memory. What tool should you use?</div>
-<ul class="opts"><li data-l="A">Cloud Trace for memory tracking.</li><li data-l="B">Cloud Monitoring for memory metrics.</li><li data-l="C">Cloud Logging to read crash logs.</li><li class="correct" data-l="D">Cloud Profiler to analyze memory allocation.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">Cloud Profiler provides continuous profiling of CPU and memory allocation in production applications, showing exactly which functions/methods consume resources. Cloud Trace is for latency, Cloud Logging shows logs but not allocation details, and Cloud Monitoring shows memory usage over time but not per-function allocation.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/profiler/docs/about-profiler" target="_blank" rel="noopener">https://cloud.google.com/profiler/docs/about-profiler</a></div></div>
-</div><div class="q" id="q4">
-<div><span class="qnum">Question 4 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You want to set up alerting when your Cloud SQL database error rate exceeds 1% over a 5-minute window. What should you create?</div>
-<ul class="opts"><li data-l="A">Use BigQuery scheduled queries to analyze logs.</li><li class="correct" data-l="B">Create an alerting policy in Cloud Monitoring with a threshold condition on the error rate metric.</li><li data-l="C">Write a cron job to check errors every 5 minutes.</li><li data-l="D">Configure Cloud SQL to email you on errors.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Cloud Monitoring alerting policies allow you to define conditions (thresholds, rates, absence) on metrics and trigger notifications via channels (email, SMS, PagerDuty, etc.). This is the native solution for metric-based alerting. Cron jobs (B) don&#x27;t integrate well, BigQuery (C) is for analysis not real-time alerting, and Cloud SQL doesn&#x27;t have built-in email alerts (D).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/monitoring/alerts/concepts-indepth" target="_blank" rel="noopener">https://cloud.google.com/monitoring/alerts/concepts-indepth</a></div></div>
-</div><div class="q" id="q5">
-<div><span class="qnum">Question 5 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">Your team wants to implement Site Reliability Engineering (SRE) practices. You need to define error budgets for your service. Which TWO factors determine how error budget is calculated?</div>
-<ul class="opts"><li class="correct" data-l="A">The measurement window (e.g., 30 days).</li><li data-l="B">The cloud provider&#x27;s uptime SLA.</li><li class="correct" data-l="C">The SLO target (e.g., 99.9% availability).</li><li data-l="D">The programming language used.</li><li data-l="E">The number of developers on the team.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
-<div style="margin-top:6px">Error budget = (100% - SLO) × measurement window. For example, a 99.9% SLO over 30 days allows 0.1% × 30 days = 43.2 minutes of downtime. Team size (C), provider SLA (D), and programming language (E) don&#x27;t factor into error budget calculation.</div><div><span class="lbl">Référence</span> <a href="https://sre.google/workbook/implementing-slos/" target="_blank" rel="noopener">https://sre.google/workbook/implementing-slos/</a></div></div>
-</div><div class="q" id="q6">
-<div><span class="qnum">Question 6 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You observe that your BigQuery queries are slower than expected. You run EXPLAIN on a query and notice a stage has &#x27;Bytes spilled to disk&#x27; warning. What optimization should you apply?</div>
-<ul class="opts"><li class="correct" data-l="A">Partition the table by date and cluster by frequently filtered columns. Add WHERE clause to reduce data scanned.</li><li data-l="B">Run the query during off-peak hours.</li><li data-l="C">Increase the query&#x27;s maximum bytes billed limit.</li><li data-l="D">Use a different dataset location.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Spilling to disk indicates the query is processing more data than fits in memory, often due to large shuffles or joins. Partitioning and clustering reduce the amount of data scanned, and WHERE clauses leverage partition pruning. Bytes billed limit (A) is a cost control, not performance optimization. Off-peak hours (C) don&#x27;t address the root cause. Location (D) doesn&#x27;t affect this issue.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/best-practices-performance-compute" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/best-practices-performance-compute</a></div></div>
-</div><div class="q" id="q7">
-<div><span class="qnum">Question 7 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your application logs show many &#x27;Connection refused&#x27; errors to a backend service. You suspect network issues. What diagnostic tool can trace the network path from source to destination within Google Cloud?</div>
-<ul class="opts"><li data-l="A">VPC Flow Logs.</li><li class="correct" data-l="B">Network Intelligence Center - Connectivity Tests.</li><li data-l="C">Cloud Logging filters.</li><li data-l="D">Cloud Trace.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Connectivity Tests in Network Intelligence Center simulate network paths and identify where connections fail (firewall rules, routes, etc.). Cloud Trace is for application latency, VPC Flow Logs show accepted/dropped traffic after the fact, and Cloud Logging shows logs but doesn&#x27;t trace network paths.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview" target="_blank" rel="noopener">https://cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview</a></div></div>
-</div><div class="q" id="q8">
-<div><span class="qnum">Question 8 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You&#x27;re investigating high network egress costs from your Compute Engine instances. Which TWO actions help identify the sources of egress traffic?</div>
-<ul class="opts"><li data-l="A">Use Cloud CDN for all traffic.</li><li data-l="B">Increase the instance machine type.</li><li data-l="C">Disable monitoring to reduce costs.</li><li class="correct" data-l="D">Enable VPC Flow Logs on the subnet.</li><li class="correct" data-l="E">Analyze flow logs in BigQuery to identify destination IPs and bytes transferred.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D, E</span></div>
-<div style="margin-top:6px">VPC Flow Logs (A) capture network flow information including source, destination, bytes, and protocol. Exporting to BigQuery (B) allows SQL analysis to identify high-volume destinations. Increasing machine type (C) doesn&#x27;t address egress, CDN (D) is a solution not diagnosis, and disabling monitoring (E) removes visibility.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vpc/docs/using-flow-logs" target="_blank" rel="noopener">https://cloud.google.com/vpc/docs/using-flow-logs</a></div></div>
-</div><div class="q" id="q9">
-<div><span class="qnum">Question 9 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your GKE application pods are being evicted with &#x27;OutOfMemory&#x27; errors. You need to understand actual memory usage versus resource requests. What should you check?</div>
-<ul class="opts"><li class="correct" data-l="A">Review Cloud Monitoring metrics for container memory usage and compare against resource requests/limits in pod specs.</li><li data-l="B">Check Cloud Logging for memory logs.</li><li data-l="C">Increase cluster size.</li><li data-l="D">Use a different container registry.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Cloud Monitoring provides Kubernetes container metrics including memory usage, requests, and limits. Comparing usage to requests shows if pods are underprovisioned. Logging (B) doesn&#x27;t show metrics. Increasing cluster size (C) doesn&#x27;t fix pod-level memory issues. Registry (D) is irrelevant.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/viewing-metrics" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/how-to/viewing-metrics</a></div></div>
-</div><div class="q" id="q10">
-<div><span class="qnum">Question 10 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to understand why a specific BigQuery query costs $50 to run. What tool provides a breakdown of bytes processed and slot time consumption?</div>
-<ul class="opts"><li data-l="A">Cloud Logging.</li><li class="correct" data-l="B">BigQuery Query Plan and Job Information.</li><li data-l="C">Cloud Billing Reports only.</li><li data-l="D">Cloud Trace.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">BigQuery&#x27;s Query Plan (EXPLAIN) and Job Information show detailed execution statistics including bytes processed (determines cost), slot time, stages, and optimization opportunities. Billing reports (B) show total costs but not per-query breakdown. Logging and Trace don&#x27;t provide BigQuery execution details.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/query-plan-explanation" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/query-plan-explanation</a></div></div>
-</div><div class="q" id="q11">
-<div><span class="qnum">Question 11 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">Your API service needs to maintain 99.95% availability SLO. Currently, it&#x27;s at 99.92%. You notice the error budget is almost exhausted. Which TWO actions align with SRE practices?</div>
-<ul class="opts"><li data-l="A">Reduce the SLO target to make it easier to meet.</li><li data-l="B">Push more features to meet business deadlines regardless of budget.</li><li class="correct" data-l="C">Freeze feature releases and focus on reliability improvements.</li><li data-l="D">Ignore the error budget until next month.</li><li class="correct" data-l="E">Implement better monitoring and alerting to detect issues faster.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C, E</span></div>
-<div style="margin-top:6px">When error budget is exhausted, SRE principles dictate halting feature releases (A) to focus on reliability (fix bugs, improve testing, add redundancy). Improving monitoring (B) helps detect and respond to issues faster. Pushing features (C) violates error budget policy. Ignoring budget (D) defeats its purpose. Reducing SLO (E) should be data-driven, not a shortcut.</div><div><span class="lbl">Référence</span> <a href="https://sre.google/sre-book/embracing-risk/" target="_blank" rel="noopener">https://sre.google/sre-book/embracing-risk/</a></div></div>
-</div><div class="q" id="q12">
-<div><span class="qnum">Question 12 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to debug a production issue in a Node.js application running on Cloud Run. You want to inspect variable values and step through code without redeploying. What tool should you use?</div>
-<ul class="opts"><li class="correct" data-l="A">Cloud Debugger (Snapshot Debugger).</li><li data-l="B">Cloud Trace.</li><li data-l="C">SSH into the Cloud Run instance.</li><li data-l="D">Cloud Profiler.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Cloud Debugger allows you to set snapshots (inspect variables at specific code locations) and logpoints in live production applications without stopping or redeploying. Cloud Profiler is for performance analysis, Cloud Trace is for latency, and you cannot SSH into Cloud Run (it&#x27;s serverless).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/debugger/docs/setup/nodejs" target="_blank" rel="noopener">https://cloud.google.com/debugger/docs/setup/nodejs</a></div></div>
-</div><div class="q" id="q13">
-<div><span class="qnum">Question 13 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your Cloud SQL database is experiencing high CPU utilization during peak hours. You want to identify slow queries to optimize them. What feature should you enable?</div>
-<ul class="opts"><li class="correct" data-l="A">Enable Query Insights to identify slow and resource-intensive queries.</li><li data-l="B">Use Cloud Monitoring for CPU metrics only.</li><li data-l="C">Increase the instance CPU count.</li><li data-l="D">Enable replication.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Query Insights analyzes query performance, showing queries by latency, execution count, and resource consumption. This helps identify optimization opportunities. Increasing CPU (B) is expensive and doesn&#x27;t address inefficient queries. Replication (C) is for availability, not performance diagnosis. CPU metrics (D) show symptoms, not query-level details.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/sql/docs/postgres/using-query-insights" target="_blank" rel="noopener">https://cloud.google.com/sql/docs/postgres/using-query-insights</a></div></div>
-</div><div class="q" id="q14">
-<div><span class="qnum">Question 14 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You&#x27;re setting up observability for a microservices application on GKE. You want to collect logs, metrics, and traces. Which THREE Google Cloud tools form the observability stack?</div>
-<ul class="opts"><li class="correct" data-l="A">Cloud Trace for distributed tracing.</li><li class="correct" data-l="B">Cloud Monitoring for metrics and dashboards.</li><li class="correct" data-l="C">Cloud Logging for logs.</li><li data-l="D">BigQuery for queries only.</li><li data-l="E">Cloud Storage for data storage.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, B, C</span></div>
-<div style="margin-top:6px">The Google Cloud observability stack consists of Cloud Logging (logs), Cloud Monitoring (metrics, alerting, dashboards), and Cloud Trace (distributed tracing). Storage (D) is for data persistence, and BigQuery (E) is for analytics, not core observability.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/architecture/devops/devops-measurement-monitoring-and-observability" target="_blank" rel="noopener">https://cloud.google.com/architecture/devops/devops-measurement-monitoring-and-observability</a></div></div>
-</div><div class="q" id="q15">
-<div><span class="qnum">Question 15 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your application deployment failed, and you need to quickly identify what changed. What Cloud Logging feature allows you to query logs across all resources for the past 30 days?</div>
-<ul class="opts"><li data-l="A">Export logs to BigQuery first.</li><li data-l="B">Cloud Trace error reporting.</li><li data-l="C">Cloud Monitoring dashboards.</li><li class="correct" data-l="D">Logs Explorer with advanced filters (resource, time range, text search).</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">Logs Explorer provides a powerful query interface with filters for resource type, log level, time range, and text/regex search across all logs. Default retention is 30 days. Cloud Trace is for latency, Monitoring dashboards show metrics, and BigQuery export is for long-term analysis, not quick debugging.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/logging/docs/view/logs-explorer-interface" target="_blank" rel="noopener">https://cloud.google.com/logging/docs/view/logs-explorer-interface</a></div></div>
-</div><div class="q" id="q16">
-<div><span class="qnum">Question 16 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to measure the actual user experience (page load time, interaction latency) of your web application. Which Google service captures real user monitoring (RUM) data?</div>
-<ul class="opts"><li data-l="A">Cloud Trace backend-only.</li><li class="correct" data-l="B">Firebase Performance Monitoring or Cloud Monitoring with client-side JavaScript.</li><li data-l="C">Cloud Profiler.</li><li data-l="D">Cloud Logging.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Firebase Performance Monitoring (for mobile/web) and Cloud Monitoring with client-side instrumentation capture real user metrics (RUM) like page load, network latency, and user interactions. Cloud Trace typically traces backend services, not client experience. Logging and Profiler don&#x27;t capture client-side performance.</div><div><span class="lbl">Référence</span> <a href="https://firebase.google.com/docs/perf-mon" target="_blank" rel="noopener">https://firebase.google.com/docs/perf-mon</a></div></div>
-</div><div class="q" id="q17">
-<div><span class="qnum">Question 17 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You notice that a Dataflow job is running slowly. The pipeline has many stages, and you want to identify which stage is the bottleneck. What should you check?</div>
-<ul class="opts"><li data-l="A">Increase worker count without investigation.</li><li data-l="B">Check Cloud Logging for Dataflow logs.</li><li class="correct" data-l="C">View the Dataflow job graph in the Cloud Console to see per-stage processing time and throughput.</li><li data-l="D">Use Cloud Trace.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Dataflow provides a visual job graph showing each stage&#x27;s processing time, throughput, data watermark, and system lag. This identifies bottlenecks. Logging (B) provides details but not visual performance analysis. Trace (C) is for distributed tracing, not pipeline stages. Blindly increasing workers (D) may not address the actual bottleneck.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/dataflow/docs/guides/monitoring-and-troubleshooting" target="_blank" rel="noopener">https://cloud.google.com/dataflow/docs/guides/monitoring-and-troubleshooting</a></div></div>
-</div><div class="q" id="q18">
-<div><span class="qnum">Question 18 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">Your application experiences periodic outages. You want to implement chaos engineering to test resilience. Which TWO practices should you adopt?</div>
-<ul class="opts"><li class="correct" data-l="A">Inject network latency to test timeout handling.</li><li data-l="B">Hope failures never occur.</li><li class="correct" data-l="C">Intentionally terminate random instances to test auto-healing.</li><li data-l="D">Test only in development environments.</li><li data-l="E">Never test failure scenarios in production.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
-<div style="margin-top:6px">Chaos engineering involves deliberately introducing failures (instance termination, network issues, service degradation) in controlled experiments to verify system resilience. Testing in production (carefully) finds real issues. Avoiding production testing (C, D) misses real-world conditions. Hope (E) is not a strategy.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/architecture/modern-application-development#chaos-engineering" target="_blank" rel="noopener">https://cloud.google.com/architecture/modern-application-development#chaos-engineering</a></div></div>
-</div><div class="q" id="q19">
-<div><span class="qnum">Question 19 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You want to track the number of API requests, error rates, and latencies in a single dashboard. What Cloud Monitoring feature allows you to visualize multiple metrics together?</div>
-<ul class="opts"><li data-l="A">Export to spreadsheets.</li><li class="correct" data-l="B">Create a custom dashboard with multiple charts (line charts for requests, heatmaps for latency, etc.).</li><li data-l="C">Use Cloud Trace only.</li><li data-l="D">Use Cloud Logging only.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Cloud Monitoring dashboards allow you to create custom visualizations combining multiple metrics, resources, and chart types. Logging and Trace (B, C) handle different observability aspects. Spreadsheets (D) aren&#x27;t real-time or integrated.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/monitoring/dashboards" target="_blank" rel="noopener">https://cloud.google.com/monitoring/dashboards</a></div></div>
-</div><div class="q" id="q20">
-<div><span class="qnum">Question 20 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your Pub/Sub topic has increasing unacknowledged messages, indicating subscribers can&#x27;t keep up. How do you monitor the subscription backlog?</div>
-<ul class="opts"><li class="correct" data-l="A">Check the &#x27;num_undelivered_messages&#x27; metric in Cloud Monitoring.</li><li data-l="B">Pub/Sub doesn&#x27;t provide backlog metrics.</li><li data-l="C">Use Cloud Trace.</li><li data-l="D">Count messages manually.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Pub/Sub exports metrics to Cloud Monitoring, including &#x27;num_undelivered_messages&#x27; (backlog), &#x27;oldest_unacked_message_age&#x27;, and throughput. These help identify subscriber performance issues. Manual counting (B) doesn&#x27;t scale. Trace (C) is for latency. Pub/Sub does provide metrics (D is false).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/pubsub/docs/monitoring" target="_blank" rel="noopener">https://cloud.google.com/pubsub/docs/monitoring</a></div></div>
-</div><div class="q" id="q21">
-<div><span class="qnum">Question 21 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to aggregate logs from all projects in your organization into a single BigQuery dataset for analysis. What&#x27;s the most efficient approach?</div>
-<ul class="opts"><li class="correct" data-l="A">Create an aggregated log sink at the organization level with BigQuery as the destination.</li><li data-l="B">Export logs to Cloud Storage, then load into BigQuery.</li><li data-l="C">Create sinks in each project individually.</li><li data-l="D">Copy logs manually.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Aggregated log sinks at the organization or folder level automatically collect logs from all child resources (projects) to a central destination. This is more efficient than per-project sinks (B). Direct BigQuery export (A) is simpler than Storage intermediate (C). Manual copying (D) doesn&#x27;t scale.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/logging/docs/export/aggregated_sinks" target="_blank" rel="noopener">https://cloud.google.com/logging/docs/export/aggregated_sinks</a></div></div>
-</div><div class="q" id="q22">
-<div><span class="qnum">Question 22 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">Your application error rate suddenly increases. You need to determine if it&#x27;s caused by a recent deployment. Which TWO factors help with this investigation?</div>
-<ul class="opts"><li data-l="A">Number of developers on the team.</li><li class="correct" data-l="B">Correlation of error rate spike timing with deployment timestamp.</li><li data-l="C">The color of the deployment button.</li><li class="correct" data-l="D">Comparing error logs before and after deployment.</li><li data-l="E">The weather forecast.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, D</span></div>
-<div style="margin-top:6px">Temporal correlation (A) between metrics changes and deployment events is a primary indicator. Comparing logs (B) reveals new error patterns introduced by code changes. Button color (C), team size (D), and weather (E) are irrelevant to technical root cause analysis.</div><div><span class="lbl">Référence</span> <a href="https://sre.google/workbook/postmortem-culture/" target="_blank" rel="noopener">https://sre.google/workbook/postmortem-culture/</a></div></div>
-</div><div class="q" id="q23">
-<div><span class="qnum">Question 23 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You want to receive notifications when your Cloud Storage bucket&#x27;s total size exceeds 1TB. What should you configure?</div>
-<ul class="opts"><li data-l="A">Write a cron job to check bucket size.</li><li data-l="B">Cloud Storage automatically sends emails for large buckets.</li><li class="correct" data-l="C">Create a Cloud Monitoring alert policy on the &#x27;storage.googleapis.com/storage/total_bytes&#x27; metric.</li><li data-l="D">Bucket size monitoring is not possible.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Cloud Storage exports metrics to Cloud Monitoring, including total bytes per bucket. You can create alerting policies on these metrics with threshold conditions. Cron jobs (B) are manual. Automatic emails (C) don&#x27;t exist. Monitoring is possible (D is false).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/monitoring" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/monitoring</a></div></div>
-</div><div class="q" id="q24">
-<div><span class="qnum">Question 24 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your GKE cluster shows pods in &#x27;Pending&#x27; state. You need to determine why they aren&#x27;t scheduling. What Kubernetes diagnostic command helps?</div>
-<ul class="opts"><li data-l="A">Restart the cluster.</li><li data-l="B">kubectl delete pod to force reschedule.</li><li data-l="C">kubectl get nodes to list nodes only.</li><li class="correct" data-l="D">kubectl describe pod &lt;pod-name&gt; to see events and scheduling failures.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">kubectl describe pod shows events including scheduling failures (insufficient resources, taints/tolerations mismatches, node selector failures). Deleting the pod (B) doesn&#x27;t address the root cause. Listing nodes (C) doesn&#x27;t show why scheduling failed. Restarting cluster (D) is excessive and disruptive.</div><div><span class="lbl">Référence</span> <a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/</a></div></div>
-</div><div class="q" id="q25">
-<div><span class="qnum">Question 25 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You want to automatically execute a Cloud Function when a specific error pattern appears in logs (e.g., &#x27;DATABASE CONNECTION FAILED&#x27;). What should you configure?</div>
-<ul class="opts"><li data-l="A">Errors cannot trigger automation.</li><li data-l="B">Manually check logs daily.</li><li data-l="C">Poll Cloud Logging every minute with a cron job.</li><li class="correct" data-l="D">Create a log-based metric with a filter for the error pattern, then create an alert policy that triggers a Cloud Function via Pub/Sub.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">Log-based metrics can count occurrences of specific log patterns. Alert policies can trigger notifications to Pub/Sub, which can trigger Cloud Functions for automated response (e.g., restarting services, paging on-call). Polling (B) has delays. Manual checking (C) isn&#x27;t automated. Automation is possible (D is false).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/logging/docs/logs-based-metrics" target="_blank" rel="noopener">https://cloud.google.com/logging/docs/logs-based-metrics</a></div></div>
-</div><div class="q" id="q26">
-<div><span class="qnum">Question 26 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You&#x27;re implementing golden signals monitoring for your service. Which FOUR metrics constitute the golden signals?</div>
-<ul class="opts"><li class="correct" data-l="A">Errors (error rate).</li><li class="correct" data-l="B">Traffic (request rate).</li><li data-l="C">Number of deployments.</li><li data-l="D">Code complexity.</li><li class="correct" data-l="E">Saturation (resource utilization).</li><li class="correct" data-l="F">Latency (response time).</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, B, E, F</span></div>
-<div style="margin-top:6px">The four golden signals from Google&#x27;s SRE book are: Latency, Traffic, Errors, and Saturation. These provide a comprehensive view of service health. Code complexity (E) and deployment count (F) are development metrics, not runtime service health indicators.</div><div><span class="lbl">Référence</span> <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener">https://sre.google/sre-book/monitoring-distributed-systems/</a></div></div>
-</div><div class="q" id="q27">
-<div><span class="qnum">Question 27 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your Cloud Run service experiences increased cold start latency. You want to measure the time between request arrival and when your code starts executing. What metric should you examine?</div>
-<ul class="opts"><li class="correct" data-l="A">&#x27;request_latencies&#x27; metric, specifically the instance_startup latency component.</li><li data-l="B">Network egress.</li><li data-l="C">Billing metrics.</li><li data-l="D">CPU utilization.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Cloud Run exports latency metrics including instance startup time (cold start impact). This shows container initialization overhead. Billing (B) doesn&#x27;t show latency breakdown. CPU (C) is a resource metric. Network egress (D) doesn&#x27;t measure cold starts.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/monitoring" target="_blank" rel="noopener">https://cloud.google.com/run/docs/monitoring</a></div></div>
-</div><div class="q" id="q28">
-<div><span class="qnum">Question 28 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to debug intermittent 500 errors in your App Engine application. The errors occur rarely and randomly. What Cloud Logging feature helps identify error patterns?</div>
-<ul class="opts"><li data-l="A">Manual log reading.</li><li class="correct" data-l="B">Error Reporting automatically aggregates and categorizes errors, showing frequency and affected users.</li><li data-l="C">Cloud Monitoring dashboards only.</li><li data-l="D">Cloud Trace.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Error Reporting analyzes logs, extracts errors, groups similar errors together, and provides statistics (frequency, first/last seen, affected users). This makes pattern identification easier than manual log review. Trace (C) is for latency. Dashboards (D) show metrics but don&#x27;t aggregate errors automatically.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/error-reporting/docs" target="_blank" rel="noopener">https://cloud.google.com/error-reporting/docs</a></div></div>
-</div><div class="q" id="q29">
-<div><span class="qnum">Question 29 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your team wants to implement progressive rollouts with automated rollback if error rates increase. Which deployment strategy and monitoring combination supports this?</div>
-<ul class="opts"><li class="correct" data-l="A">Canary deployment with Cloud Monitoring alerts on error rate metrics triggering rollback automation.</li><li data-l="B">Blue-green with no monitoring.</li><li data-l="C">All-at-once deployment with manual monitoring.</li><li data-l="D">Deploy and hope for the best.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Canary deployments gradually shift traffic to new versions while monitoring metrics. Automated rollback can be triggered when error rates exceed thresholds. All-at-once (B) has no gradual period. Blue-green without monitoring (C) can&#x27;t detect issues before full switch. Hope (D) is not a strategy.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/architecture/application-deployment-and-testing-strategies" target="_blank" rel="noopener">https://cloud.google.com/architecture/application-deployment-and-testing-strategies</a></div></div>
-</div><div class="q" id="q30">
-<div><span class="qnum">Question 30 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You want to understand the typical latency distribution of your API (not just average). What visualization best represents latency percentiles (p50, p95, p99)?</div>
-<ul class="opts"><li data-l="A">Pie chart.</li><li data-l="B">Bar chart of request counts.</li><li class="correct" data-l="C">Heatmap chart showing latency distribution over time.</li><li data-l="D">Single line showing average only.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Heatmap charts (or percentile line charts) show latency distribution across percentiles, revealing tail latencies that averages mask. Average alone (B) hides outliers. Pie charts (C) are for categorical proportions. Request count bars (D) don&#x27;t show latency.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/blog/products/devops-sre/using-the-four-keys-to-measure-your-devops-performance" target="_blank" rel="noopener">https://cloud.google.com/blog/products/devops-sre/using-the-four-keys-to-measure-your-devops-performance</a></div></div>
-</div><div class="q" id="q31">
-<div><span class="qnum">Question 31 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to analyze the performance of a Java application running on GKE. You want to identify CPU hotspots and optimize code execution time. Which tool provides flame graphs of CPU usage?</div>
-<ul class="opts"><li class="correct" data-l="A">Cloud Profiler with CPU profiling enabled.</li><li data-l="B">kubectl top pods.</li><li data-l="C">Cloud Logging.</li><li data-l="D">Cloud Trace.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Cloud Profiler provides flame graphs showing CPU usage by function, enabling identification of hotspots. Cloud Trace is for latency, Logging for logs, and kubectl top shows aggregate metrics.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/profiler/docs/concepts-profiling" target="_blank" rel="noopener">https://cloud.google.com/profiler/docs/concepts-profiling</a></div></div>
-</div><div class="q" id="q32">
-<div><span class="qnum">Question 32 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You&#x27;re troubleshooting a slow database query in Cloud SQL. Which TWO tools help identify the root cause?</div>
-<ul class="opts"><li class="correct" data-l="A">EXPLAIN ANALYZE on the query to see execution plan.</li><li data-l="B">Increase instance size first.</li><li class="correct" data-l="C">Cloud SQL Query Insights for query-level analysis.</li><li data-l="D">Cloud Logging without query analysis.</li><li data-l="E">Cloud Trace for database queries.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
-<div style="margin-top:6px">Query Insights shows slow queries and their patterns. EXPLAIN ANALYZE reveals execution plans and actual row counts. Increasing size without analysis wastes money.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/sql/docs/postgres/using-query-insights" target="_blank" rel="noopener">https://cloud.google.com/sql/docs/postgres/using-query-insights</a></div></div>
-</div><div class="q" id="q33">
-<div><span class="qnum">Question 33 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your application logs contain PII that must be masked before analysis. What Cloud Logging feature helps with this?</div>
-<ul class="opts"><li data-l="A">Manually review each log entry.</li><li data-l="B">Delete all logs containing PII.</li><li class="correct" data-l="C">Use Cloud Data Loss Prevention (DLP) API to de-identify logs before storage.</li><li data-l="D">Logs cannot be modified.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Cloud DLP can automatically detect and mask/tokenize PII in logs. Deletion loses valuable data, and manual review doesn&#x27;t scale.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/dlp/docs/deidentify-sensitive-data" target="_blank" rel="noopener">https://cloud.google.com/dlp/docs/deidentify-sensitive-data</a></div></div>
-</div><div class="q" id="q34">
-<div><span class="qnum">Question 34 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You want to set up an uptime check that monitors your API endpoint from multiple global locations and alerts if the endpoint is down. What should you configure?</div>
-<ul class="opts"><li data-l="A">Cloud Scheduler calling the API.</li><li data-l="B">Manual checks from different locations.</li><li class="correct" data-l="C">Cloud Monitoring Uptime Checks with multiple regions selected.</li><li data-l="D">Cron job pinging the endpoint.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Cloud Monitoring Uptime Checks probe endpoints from multiple global locations and can trigger alerts on failures. Cron jobs don&#x27;t provide multi-region coverage or integrated alerting.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/monitoring/uptime-checks" target="_blank" rel="noopener">https://cloud.google.com/monitoring/uptime-checks</a></div></div>
-</div><div class="q" id="q35">
-<div><span class="qnum">Question 35 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You&#x27;re establishing SLOs for a critical payment service. Which TWO metrics are appropriate SLIs for this service?</div>
-<ul class="opts"><li data-l="A">Number of developers working on the service.</li><li class="correct" data-l="B">Transaction processing latency at 99th percentile.</li><li class="correct" data-l="C">Successful transaction rate (transactions without errors / total transactions).</li><li data-l="D">Lines of code changed per week.</li><li data-l="E">Server room temperature.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, C</span></div>
-<div style="margin-top:6px">Success rate and latency are user-facing metrics that directly impact experience. Developer count, code changes, and temperature are not service-level indicators.</div><div><span class="lbl">Référence</span> <a href="https://sre.google/sre-book/service-level-objectives/" target="_blank" rel="noopener">https://sre.google/sre-book/service-level-objectives/</a></div></div>
-</div><div class="q" id="q36">
-<div><span class="qnum">Question 36 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your Compute Engine instances are experiencing memory pressure. You need to understand memory allocation patterns over time. What metric should you examine?</div>
-<ul class="opts"><li data-l="A">Disk read IOPS.</li><li class="correct" data-l="B">&#x27;compute.googleapis.com/instance/memory/utilization&#x27; metric in Cloud Monitoring.</li><li data-l="C">Network bytes sent.</li><li data-l="D">CPU utilization only.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Memory utilization metrics show allocation patterns over time. Requires the Ops Agent for detailed memory metrics on Compute Engine.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/monitoring/api/metrics_gcp#gcp-compute" target="_blank" rel="noopener">https://cloud.google.com/monitoring/api/metrics_gcp#gcp-compute</a></div></div>
-</div><div class="q" id="q37">
-<div><span class="qnum">Question 37 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to investigate why your Cloud Function is timing out. The function has a 60-second timeout but completes in varying times. What helps identify the cause?</div>
-<ul class="opts"><li data-l="A">Disable cold starts.</li><li data-l="B">Reduce function memory.</li><li data-l="C">Increase timeout to 540 seconds.</li><li class="correct" data-l="D">Add structured logging with timestamps at each step to identify slow operations.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">Structured logging with timestamps helps identify which operations take time. Increasing timeout masks the problem. Reducing memory may slow execution. Cold starts can&#x27;t be disabled.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/functions/docs/monitoring/logging" target="_blank" rel="noopener">https://cloud.google.com/functions/docs/monitoring/logging</a></div></div>
-</div><div class="q" id="q38">
-<div><span class="qnum">Question 38 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You&#x27;re setting up monitoring for a multi-tier application. Which TWO practices improve incident response?</div>
-<ul class="opts"><li class="correct" data-l="A">Configure alert notification channels to reach on-call engineers.</li><li data-l="B">Alert on every log entry.</li><li class="correct" data-l="C">Create runbooks for common alert scenarios.</li><li data-l="D">Ignore alerts during business hours.</li><li data-l="E">Suppress all non-critical alerts.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
-<div style="margin-top:6px">Runbooks provide response procedures, and notification channels ensure alerts reach responders. Alerting on everything causes fatigue, and suppressing alerts misses issues.</div><div><span class="lbl">Référence</span> <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener">https://sre.google/sre-book/monitoring-distributed-systems/</a></div></div>
-</div><div class="q" id="q39">
-<div><span class="qnum">Question 39 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your GKE pods are experiencing intermittent DNS resolution failures. What diagnostic approach helps identify the issue?</div>
-<ul class="opts"><li class="correct" data-l="A">Check CoreDNS/kube-dns pod logs and metrics for errors or resource exhaustion.</li><li data-l="B">Delete and recreate the cluster.</li><li data-l="C">DNS issues cannot be diagnosed.</li><li data-l="D">Restart all pods.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">DNS issues often stem from CoreDNS/kube-dns problems (resource limits, errors). Checking their pods reveals the root cause.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/kube-dns" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/how-to/kube-dns</a></div></div>
-</div><div class="q" id="q40">
-<div><span class="qnum">Question 40 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You want to track custom application metrics (e.g., items in shopping cart) in Cloud Monitoring. How do you send custom metrics?</div>
-<ul class="opts"><li data-l="A">Store metrics in Cloud Storage.</li><li data-l="B">Custom metrics are not supported.</li><li class="correct" data-l="C">Use the Cloud Monitoring API or OpenTelemetry to write custom metrics.</li><li data-l="D">Only use built-in metrics.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Cloud Monitoring supports custom metrics via API, client libraries, or OpenTelemetry. These can be charted and alerted like built-in metrics.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/monitoring/custom-metrics" target="_blank" rel="noopener">https://cloud.google.com/monitoring/custom-metrics</a></div></div>
-</div><div class="q" id="q41">
-<div><span class="qnum">Question 41 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your service mesh (Anthos Service Mesh) is deployed. You want to analyze service-to-service latency and error rates. What provides this visibility?</div>
-<ul class="opts"><li class="correct" data-l="A">Service Mesh dashboards in Cloud Console showing topology and metrics.</li><li data-l="B">Network packet capture.</li><li data-l="C">Manual tracing of each request.</li><li data-l="D">Cloud Logging only.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Anthos Service Mesh provides automatic topology visualization, latency metrics, and error rates for all service-to-service communication.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/service-mesh/docs/observability/explore-dashboard" target="_blank" rel="noopener">https://cloud.google.com/service-mesh/docs/observability/explore-dashboard</a></div></div>
-</div><div class="q" id="q42">
-<div><span class="qnum">Question 42 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You&#x27;re performing a postmortem after an outage. Which TWO elements should the postmortem include?</div>
-<ul class="opts"><li data-l="A">Delete all related logs.</li><li data-l="B">Blame specific individuals.</li><li class="correct" data-l="C">Timeline of events from detection to resolution.</li><li data-l="D">Hide the incident from leadership.</li><li class="correct" data-l="E">Action items to prevent recurrence.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C, E</span></div>
-<div style="margin-top:6px">Blameless postmortems focus on timeline understanding and actionable improvements. Blaming individuals discourages reporting, hiding incidents prevents learning.</div><div><span class="lbl">Référence</span> <a href="https://sre.google/sre-book/postmortem-culture/" target="_blank" rel="noopener">https://sre.google/sre-book/postmortem-culture/</a></div></div>
-</div><div class="q" id="q43">
-<div><span class="qnum">Question 43 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You notice high disk I/O wait on your Compute Engine instances. How do you identify which processes are causing the I/O?</div>
-<ul class="opts"><li data-l="A">I/O cannot be monitored.</li><li data-l="B">Add more CPU cores.</li><li class="correct" data-l="C">Use iotop or iostat commands on the instance, or enable Cloud Monitoring Ops Agent for disk metrics.</li><li data-l="D">Increase disk size.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">iotop/iostat show per-process I/O. Ops Agent provides detailed disk metrics. Increasing disk size or CPU doesn&#x27;t address the root cause.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/monitoring/agent/ops-agent" target="_blank" rel="noopener">https://cloud.google.com/monitoring/agent/ops-agent</a></div></div>
-</div><div class="q" id="q44">
-<div><span class="qnum">Question 44 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your BigQuery scheduled query failed overnight. How do you find out what went wrong?</div>
-<ul class="opts"><li data-l="A">Wait for the next successful run.</li><li class="correct" data-l="B">Check the scheduled query run history in BigQuery Console or Cloud Logging for error details.</li><li data-l="C">Contact Google Support for every failure.</li><li data-l="D">BigQuery doesn&#x27;t log errors.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">BigQuery logs scheduled query executions including failures, error messages, and stack traces in the Console and Cloud Logging.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/scheduling-queries" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/scheduling-queries</a></div></div>
-</div><div class="q" id="q45">
-<div><span class="qnum">Question 45 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You&#x27;re optimizing a Dataflow pipeline that processes 1TB of data daily. Which TWO approaches can improve performance?</div>
-<ul class="opts"><li data-l="A">Process data sequentially on one worker.</li><li class="correct" data-l="B">Adjust worker machine types and number of workers for parallelization.</li><li data-l="C">Increase shuffle file size.</li><li class="correct" data-l="D">Use efficient data formats (Avro, Parquet) instead of JSON/CSV.</li><li data-l="E">Disable autoscaling.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, D</span></div>
-<div style="margin-top:6px">Right-sizing workers and using efficient formats reduce processing time. Sequential processing is slow, and disabling autoscaling reduces flexibility.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/dataflow/docs/guides/deploying-a-pipeline#parallelization" target="_blank" rel="noopener">https://cloud.google.com/dataflow/docs/guides/deploying-a-pipeline#parallelization</a></div></div>
-</div><div class="q" id="q46">
-<div><span class="qnum">Question 46 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You want to receive alerts only when multiple conditions are met simultaneously (e.g., high CPU AND high memory). What alerting feature enables this?</div>
-<ul class="opts"><li class="correct" data-l="A">Create a multi-condition alerting policy with AND logic.</li><li data-l="B">Multi-condition alerts aren&#x27;t supported.</li><li data-l="C">Use Cloud Functions to check conditions.</li><li data-l="D">Create two separate alerts.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Cloud Monitoring supports multi-condition policies with AND/OR logic, reducing alert noise by requiring multiple conditions.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/monitoring/alerts/concepts-indepth#condition-types" target="_blank" rel="noopener">https://cloud.google.com/monitoring/alerts/concepts-indepth#condition-types</a></div></div>
-</div><div class="q" id="q47">
-<div><span class="qnum">Question 47 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your application uses Cloud Pub/Sub. Messages are being delivered with high latency. What metric helps diagnose this?</div>
-<ul class="opts"><li class="correct" data-l="A">&#x27;subscription/oldest_unacked_message_age&#x27; metric showing message age.</li><li data-l="B">Network latency between regions.</li><li data-l="C">CPU utilization of subscribers.</li><li data-l="D">Pub/Sub doesn&#x27;t provide latency metrics.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">The oldest unacked message age indicates delivery delays. High values suggest subscribers can&#x27;t keep up or messages are stuck.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/pubsub/docs/monitoring" target="_blank" rel="noopener">https://cloud.google.com/pubsub/docs/monitoring</a></div></div>
-</div><div class="q" id="q48">
-<div><span class="qnum">Question 48 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to analyze Cloud Logging data for trends over the past 90 days. Default retention is 30 days. What should you configure?</div>
-<ul class="opts"><li class="correct" data-l="A">Create a log sink to export logs to BigQuery or Cloud Storage for long-term retention.</li><li data-l="B">Manually backup logs weekly.</li><li data-l="C">Accept 30-day limitation.</li><li data-l="D">Increase default retention to 90 days.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Log sinks export logs to BigQuery (for analysis) or Cloud Storage (for archival) for retention beyond 30 days. Default retention cannot be extended beyond limits.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/logging/docs/export" target="_blank" rel="noopener">https://cloud.google.com/logging/docs/export</a></div></div>
-</div><div class="q" id="q49">
-<div><span class="qnum">Question 49 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You&#x27;re implementing observability for serverless functions. Which TWO challenges are specific to serverless observability?</div>
-<ul class="opts"><li data-l="A">Fixed server IP addresses.</li><li class="correct" data-l="B">Cold start latency affecting response times.</li><li class="correct" data-l="C">Ephemeral execution environments making debugging harder.</li><li data-l="D">Manual capacity planning.</li><li data-l="E">Persistent file systems.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, C</span></div>
-<div style="margin-top:6px">Serverless has cold starts impacting latency and ephemeral environments making traditional debugging difficult. IPs aren&#x27;t fixed, filesystems aren&#x27;t persistent, and capacity is automatic.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/functions/docs/monitoring" target="_blank" rel="noopener">https://cloud.google.com/functions/docs/monitoring</a></div></div>
-</div><div class="q" id="q50">
-<div><span class="qnum">Question 50 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your GKE cluster has liveness probes configured, but pods are being restarted frequently. How do you tune probe settings?</div>
-<ul class="opts"><li data-l="A">Liveness probes cannot be configured.</li><li class="correct" data-l="B">Increase initialDelaySeconds and periodSeconds to give applications more time to respond.</li><li data-l="C">Decrease probe intervals to 1 second.</li><li data-l="D">Remove all probes.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Adjusting initialDelaySeconds (time before first check) and periodSeconds (check frequency) prevents premature restarts. Removing probes loses auto-healing.</div><div><span class="lbl">Référence</span> <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/</a></div></div>
-</div><div class="q" id="q51">
-<div><span class="qnum">Question 51 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You want to correlate logs from multiple microservices for a single user request. What practice enables this?</div>
-<ul class="opts"><li class="correct" data-l="A">Include a trace ID or correlation ID in all log entries for the request.</li><li data-l="B">Log everything to one file.</li><li data-l="C">Use the same timestamp for all services.</li><li data-l="D">Don&#x27;t correlate logs.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Trace/correlation IDs propagated across services enable log correlation. Cloud Trace automatically provides this for instrumented applications.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/trace/docs/setup" target="_blank" rel="noopener">https://cloud.google.com/trace/docs/setup</a></div></div>
-</div><div class="q" id="q52">
-<div><span class="qnum">Question 52 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your Load Balancer health checks are failing for some backends even though the service is running. What should you verify?</div>
-<ul class="opts"><li data-l="A">Health checks cannot be configured.</li><li data-l="B">Delete the health check.</li><li data-l="C">Restart the load balancer.</li><li class="correct" data-l="D">Health check endpoint path, port, and protocol match the backend service configuration.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">Health check configuration must match backend service settings (path, port, protocol). Mismatches cause false failures.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/load-balancing/docs/health-check-concepts" target="_blank" rel="noopener">https://cloud.google.com/load-balancing/docs/health-check-concepts</a></div></div>
-</div><div class="q" id="q53">
-<div><span class="qnum">Question 53 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You&#x27;re implementing structured logging for your application. Which TWO benefits does structured logging provide?</div>
-<ul class="opts"><li class="correct" data-l="A">Easier filtering and querying in Cloud Logging.</li><li data-l="B">Logs are automatically encrypted.</li><li data-l="C">Smaller log file sizes always.</li><li class="correct" data-l="D">Automatic parsing of log fields for analysis.</li><li data-l="E">No need for log rotation.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, D</span></div>
-<div style="margin-top:6px">Structured logs (JSON format) enable filtering by fields and automatic parsing for analysis in Cloud Logging and BigQuery.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/logging/docs/structured-logging" target="_blank" rel="noopener">https://cloud.google.com/logging/docs/structured-logging</a></div></div>
-</div><div class="q" id="q54">
-<div><span class="qnum">Question 54 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your API&#x27;s error rate spikes every day at 3 PM. You need to identify if it correlates with traffic patterns. What visualization helps?</div>
-<ul class="opts"><li data-l="A">View metrics separately.</li><li data-l="B">Correlation cannot be visualized.</li><li class="correct" data-l="C">Overlay error rate and request rate metrics on the same dashboard chart with aligned time axes.</li><li data-l="D">Check only error logs.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Overlaying metrics on dashboards reveals correlations between error rates and traffic patterns (e.g., errors spike with traffic).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/monitoring/dashboards" target="_blank" rel="noopener">https://cloud.google.com/monitoring/dashboards</a></div></div>
-</div><div class="q" id="q55">
-<div><span class="qnum">Question 55 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You&#x27;re using Cloud Run and notice inconsistent response times. Some requests take 200ms, others take 5 seconds. What&#x27;s the likely cause?</div>
-<ul class="opts"><li data-l="A">Network congestion in Google&#x27;s network.</li><li data-l="B">Database is too fast.</li><li class="correct" data-l="C">Cold starts when new container instances are spun up to handle requests.</li><li data-l="D">Response times should always be identical.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Cold starts occur when Cloud Run scales up containers. First requests to new instances include container startup time.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/tips/general#cold_starts" target="_blank" rel="noopener">https://cloud.google.com/run/docs/tips/general#cold_starts</a></div></div>
-</div><div class="q" id="q56">
-<div><span class="qnum">Question 56 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You want to compare the performance of two different versions of your application. What A/B testing metric is most relevant?</div>
-<ul class="opts"><li data-l="A">Number of developers on each version.</li><li data-l="B">Lines of code in each version.</li><li class="correct" data-l="C">Response latency and error rate for each version with statistical significance testing.</li><li data-l="D">Server cost per version only.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Performance A/B testing compares user-facing metrics (latency, errors) between versions with sufficient sample size for statistical validity.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/architecture/application-deployment-and-testing-strategies" target="_blank" rel="noopener">https://cloud.google.com/architecture/application-deployment-and-testing-strategies</a></div></div>
-</div><div class="q" id="q57">
-<div><span class="qnum">Question 57 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You&#x27;re creating a monitoring strategy for a new service. Which TWO questions help define appropriate SLOs?</div>
-<ul class="opts"><li data-l="A">What&#x27;s the maximum budget for infrastructure?</li><li class="correct" data-l="B">What&#x27;s the minimum reliability that users will accept?</li><li data-l="C">What programming language is used?</li><li data-l="D">How many engineers work on the service?</li><li class="correct" data-l="E">What does good performance look like to users?</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, E</span></div>
-<div style="margin-top:6px">SLOs should reflect user expectations: what good looks like and minimum acceptable reliability. Budget, team size, and language don&#x27;t define SLOs.</div><div><span class="lbl">Référence</span> <a href="https://sre.google/sre-book/service-level-objectives/" target="_blank" rel="noopener">https://sre.google/sre-book/service-level-objectives/</a></div></div>
-</div><div class="q" id="q58">
-<div><span class="qnum">Question 58 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your Spanner database latency increased after adding a new index. How do you investigate?</div>
-<ul class="opts"><li data-l="A">Remove all indexes.</li><li class="correct" data-l="B">Use Query Insights and execution plans to see if the index is being used efficiently or causing hot spots.</li><li data-l="C">Indexes always improve performance.</li><li data-l="D">Increase Spanner nodes.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Query Insights shows index usage and hot spots. New indexes can cause issues if poorly designed (e.g., monotonic keys causing hot spots).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/spanner/docs/query-execution-plans" target="_blank" rel="noopener">https://cloud.google.com/spanner/docs/query-execution-plans</a></div></div>
-</div><div class="q" id="q59">
-<div><span class="qnum">Question 59 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to detect when a specific log pattern stops appearing (absence of logs). What monitoring feature helps?</div>
-<ul class="opts"><li data-l="A">Only presence can be monitored.</li><li data-l="B">Absence cannot be detected.</li><li data-l="C">Check logs manually every hour.</li><li class="correct" data-l="D">Create an absence-based alerting policy that triggers when expected logs don&#x27;t appear.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">Cloud Monitoring supports absence conditions that alert when expected metrics/logs don&#x27;t appear within a time window.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/monitoring/alerts/concepts-indepth#condition-types" target="_blank" rel="noopener">https://cloud.google.com/monitoring/alerts/concepts-indepth#condition-types</a></div></div>
-</div><div class="q" id="q60">
-<div><span class="qnum">Question 60 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your organization wants to implement SRE practices. What&#x27;s the first step in establishing SLOs?</div>
-<ul class="opts"><li data-l="A">Set error budgets immediately.</li><li data-l="B">Skip SLIs and set SLOs directly.</li><li data-l="C">Hire more engineers.</li><li class="correct" data-l="D">Define SLIs that measure what users care about (availability, latency, correctness).</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">SLOs are built on SLIs. First identify measurable indicators of user experience, then set objectives for those indicators.</div><div><span class="lbl">Référence</span> <a href="https://sre.google/sre-book/implementing-slos/" target="_blank" rel="noopener">https://sre.google/sre-book/implementing-slos/</a></div></div>
+
+<div class="filters">
+  <div class="row">
+    <label for="filterDomain">Domaine</label>
+    <select id="filterDomain"><option value="">Tous les domaines</option><option value="D1">D1 — Designing and Planning a Cloud Solution Architecture</option><option value="D2">D2 — Managing and Provisioning a Solution Infrastructure</option><option value="D3">D3 — Designing for Security and Compliance</option><option value="D4">D4 — Analyzing and Optimizing Technical and Business Processes</option><option value="D5">D5 — Managing Implementation</option><option value="D6">D6 — Ensuring Solution and Operations Reliability</option></select>
+    <label for="filterModule">Module</label>
+    <select id="filterModule"><option value="">Tous les modules</option><option value="D1/M1" data-domain="D1">D1/M1 — Design for Business Outcomes</option><option value="D1/M2" data-domain="D1">D1/M2 — Design Robust Cloud Infrastructures</option><option value="D1/M3" data-domain="D1">D1/M3 — Design Network, Storage, and Compute</option><option value="D1/M4" data-domain="D1">D1/M4 — Plan Cloud Migrations</option><option value="D1/M5" data-domain="D1">D1/M5 — Evolve and Adapt Solutions</option><option value="D2/M1" data-domain="D2">D2/M1 — Configure and Secure Networks</option><option value="D2/M2" data-domain="D2">D2/M2 — Configure Storage Resources</option><option value="D2/M3" data-domain="D2">D2/M3 — Configure Compute Resources</option><option value="D3/M1" data-domain="D3">D3/M1 — Architecting Secure Google Cloud Solutions</option><option value="D3/M2" data-domain="D3">D3/M2 — Designing for Compliance</option><option value="D4/M1" data-domain="D4">D4/M1 — Optimizing Technical Processes and Development Lifecycle</option><option value="D4/M2" data-domain="D4">D4/M2 — Aligning Business Processes with Cloud Strategy</option><option value="D4/M3" data-domain="D4">D4/M3 — Ensuring Production Reliability</option><option value="D5/M1" data-domain="D5">D5/M1 — Guiding Development and Operations Teams</option><option value="D5/M2" data-domain="D5">D5/M2 — Interacting with Google Cloud Programmatically</option><option value="D6/M1" data-domain="D6">D6/M1 — Monitoring, Logging, and Alerting for Reliability</option><option value="D6/M2" data-domain="D6">D6/M2 — Managing Deployments and Ensuring Quality</option><option value="D6/M3" data-domain="D6">D6/M3 — Troubleshooting and Incident Response</option></select>
+    <button type="button" onclick="resetFilters()">Réinitialiser</button>
+    <span id="resultCount"></span>
+  </div>
 </div>
-</div>
+
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 1 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">Your application is experiencing intermittent latency spikes. You need to identify which component (frontend, API, database) is causing the delays. Which Google Cloud tool provides distributed tracing across services?</div>
+  <ul class="opts"><li class="correct" data-l="A">Cloud Trace.</li><li data-l="B">Cloud Logging.</li><li data-l="C">Cloud Profiler.</li><li data-l="D">Cloud Monitoring.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Cloud Trace collects latency data from applications and displays it in the Google Cloud console with detailed timing for each component in a request path. It shows distributed traces across microservices. Cloud Logging captures log entries, Cloud Monitoring tracks metrics, and Cloud Profiler analyzes CPU/memory usage patterns.</div><div class="ref"><a href="https://cloud.google.com/trace/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 2 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M1/S3 · Testing, Validation, and Service Provisioning</span>
+    
+  </div>
+  <div class="qt">You need to implement SLIs (Service Level Indicators) for your API service. The SLO states that 99% of requests should respond within 500ms. Which TWO metrics should you track as SLIs?</div>
+  <ul class="opts"><li data-l="A">Total number of requests.</li><li class="correct" data-l="B">Request latency at the 99th percentile.</li><li data-l="C">Number of build deployments.</li><li data-l="D">Server CPU utilization.</li><li class="correct" data-l="E">Percentage of requests served within 500ms (success rate).</li></ul>
+  <div class="ans"><b>Bonne réponse : B, E</b><div>SLIs must be measurable indicators that directly relate to user experience and the SLO. Request latency (A) and success rate meeting the latency threshold (C) are proper SLIs for this SLO. Total requests (B) is a volume metric, CPU (D) is a resource metric not directly tied to user experience, and deployments (E) aren&#x27;t service-level indicators.</div><div class="ref"><a href="https://cloud.google.com/blog/products/devops-sre/sre-fundamentals-slis-slas-and-slos" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 3 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S3 · Testing, Validation, and Service Provisioning</span>
+    
+  </div>
+  <div class="qt">Your Cloud Run service is consuming excessive memory and crashing. You need to identify which functions are allocating the most memory. What tool should you use?</div>
+  <ul class="opts"><li data-l="A">Cloud Trace for memory tracking.</li><li data-l="B">Cloud Monitoring for memory metrics.</li><li data-l="C">Cloud Logging to read crash logs.</li><li class="correct" data-l="D">Cloud Profiler to analyze memory allocation.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Cloud Profiler provides continuous profiling of CPU and memory allocation in production applications, showing exactly which functions/methods consume resources. Cloud Trace is for latency, Cloud Logging shows logs but not allocation details, and Cloud Monitoring shows memory usage over time but not per-function allocation.</div><div class="ref"><a href="https://cloud.google.com/profiler/docs/about-profiler" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 4 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M2/S3 · Cost Optimization and Financial Governance</span>
+    
+  </div>
+  <div class="qt">You want to set up alerting when your Cloud SQL database error rate exceeds 1% over a 5-minute window. What should you create?</div>
+  <ul class="opts"><li data-l="A">Use BigQuery scheduled queries to analyze logs.</li><li class="correct" data-l="B">Create an alerting policy in Cloud Monitoring with a threshold condition on the error rate metric.</li><li data-l="C">Write a cron job to check errors every 5 minutes.</li><li data-l="D">Configure Cloud SQL to email you on errors.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Cloud Monitoring alerting policies allow you to define conditions (thresholds, rates, absence) on metrics and trigger notifications via channels (email, SMS, PagerDuty, etc.). This is the native solution for metric-based alerting. Cron jobs (B) don&#x27;t integrate well, BigQuery (C) is for analysis not real-time alerting, and Cloud SQL doesn&#x27;t have built-in email alerts (D).</div><div class="ref"><a href="https://cloud.google.com/monitoring/alerts/concepts-indepth" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M3" data-label="D4/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 5 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M3/S1 · Principles of Site Reliability Engineering (SRE)</span>
+    
+  </div>
+  <div class="qt">Your team wants to implement Site Reliability Engineering (SRE) practices. You need to define error budgets for your service. Which TWO factors determine how error budget is calculated?</div>
+  <ul class="opts"><li class="correct" data-l="A">The measurement window (e.g., 30 days).</li><li data-l="B">The cloud provider&#x27;s uptime SLA.</li><li class="correct" data-l="C">The SLO target (e.g., 99.9% availability).</li><li data-l="D">The programming language used.</li><li data-l="E">The number of developers on the team.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, C</b><div>Error budget = (100% - SLO) × measurement window. For example, a 99.9% SLO over 30 days allows 0.1% × 30 days = 43.2 minutes of downtime. Team size (C), provider SLA (D), and programming language (E) don&#x27;t factor into error budget calculation.</div><div class="ref"><a href="https://sre.google/workbook/implementing-slos/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 6 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M2/S3 · Cost Optimization and Financial Governance</span>
+    
+  </div>
+  <div class="qt">You observe that your BigQuery queries are slower than expected. You run EXPLAIN on a query and notice a stage has &#x27;Bytes spilled to disk&#x27; warning. What optimization should you apply?</div>
+  <ul class="opts"><li class="correct" data-l="A">Partition the table by date and cluster by frequently filtered columns. Add WHERE clause to reduce data scanned.</li><li data-l="B">Run the query during off-peak hours.</li><li data-l="C">Increase the query&#x27;s maximum bytes billed limit.</li><li data-l="D">Use a different dataset location.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Spilling to disk indicates the query is processing more data than fits in memory, often due to large shuffles or joins. Partitioning and clustering reduce the amount of data scanned, and WHERE clauses leverage partition pruning. Bytes billed limit (A) is a cost control, not performance optimization. Off-peak hours (C) don&#x27;t address the root cause. Location (D) doesn&#x27;t affect this issue.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/best-practices-performance-compute" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 7 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M1/S1 · Introduction to Google Cloud&#x27;s Operations Suite</span>
+    
+  </div>
+  <div class="qt">Your application logs show many &#x27;Connection refused&#x27; errors to a backend service. You suspect network issues. What diagnostic tool can trace the network path from source to destination within Google Cloud?</div>
+  <ul class="opts"><li data-l="A">VPC Flow Logs.</li><li class="correct" data-l="B">Network Intelligence Center - Connectivity Tests.</li><li data-l="C">Cloud Logging filters.</li><li data-l="D">Cloud Trace.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Connectivity Tests in Network Intelligence Center simulate network paths and identify where connections fail (firewall rules, routes, etc.). Cloud Trace is for application latency, VPC Flow Logs show accepted/dropped traffic after the fact, and Cloud Logging shows logs but doesn&#x27;t trace network paths.</div><div class="ref"><a href="https://cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 8 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">You&#x27;re investigating high network egress costs from your Compute Engine instances. Which TWO actions help identify the sources of egress traffic?</div>
+  <ul class="opts"><li data-l="A">Use Cloud CDN for all traffic.</li><li data-l="B">Increase the instance machine type.</li><li data-l="C">Disable monitoring to reduce costs.</li><li class="correct" data-l="D">Enable VPC Flow Logs on the subnet.</li><li class="correct" data-l="E">Analyze flow logs in BigQuery to identify destination IPs and bytes transferred.</li></ul>
+  <div class="ans"><b>Bonne réponse : D, E</b><div>VPC Flow Logs (A) capture network flow information including source, destination, bytes, and protocol. Exporting to BigQuery (B) allows SQL analysis to identify high-volume destinations. Increasing machine type (C) doesn&#x27;t address egress, CDN (D) is a solution not diagnosis, and disabling monitoring (E) removes visibility.</div><div class="ref"><a href="https://cloud.google.com/vpc/docs/using-flow-logs" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 9 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M2/S1 · Managing Stakeholders, Change, and Team Readiness</span>
+    
+  </div>
+  <div class="qt">Your GKE application pods are being evicted with &#x27;OutOfMemory&#x27; errors. You need to understand actual memory usage versus resource requests. What should you check?</div>
+  <ul class="opts"><li class="correct" data-l="A">Review Cloud Monitoring metrics for container memory usage and compare against resource requests/limits in pod specs.</li><li data-l="B">Check Cloud Logging for memory logs.</li><li data-l="C">Increase cluster size.</li><li data-l="D">Use a different container registry.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Cloud Monitoring provides Kubernetes container metrics including memory usage, requests, and limits. Comparing usage to requests shows if pods are underprovisioned. Logging (B) doesn&#x27;t show metrics. Increasing cluster size (C) doesn&#x27;t fix pod-level memory issues. Registry (D) is irrelevant.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/viewing-metrics" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 10 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M2/S3 · Cost Optimization and Financial Governance</span>
+    
+  </div>
+  <div class="qt">You need to understand why a specific BigQuery query costs $50 to run. What tool provides a breakdown of bytes processed and slot time consumption?</div>
+  <ul class="opts"><li data-l="A">Cloud Logging.</li><li class="correct" data-l="B">BigQuery Query Plan and Job Information.</li><li data-l="C">Cloud Billing Reports only.</li><li data-l="D">Cloud Trace.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>BigQuery&#x27;s Query Plan (EXPLAIN) and Job Information show detailed execution statistics including bytes processed (determines cost), slot time, stages, and optimization opportunities. Billing reports (B) show total costs but not per-query breakdown. Logging and Trace don&#x27;t provide BigQuery execution details.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/query-plan-explanation" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M3" data-label="D4/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 11 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M3/S1 · Principles of Site Reliability Engineering (SRE)</span>
+    
+  </div>
+  <div class="qt">Your API service needs to maintain 99.95% availability SLO. Currently, it&#x27;s at 99.92%. You notice the error budget is almost exhausted. Which TWO actions align with SRE practices?</div>
+  <ul class="opts"><li data-l="A">Reduce the SLO target to make it easier to meet.</li><li data-l="B">Push more features to meet business deadlines regardless of budget.</li><li class="correct" data-l="C">Freeze feature releases and focus on reliability improvements.</li><li data-l="D">Ignore the error budget until next month.</li><li class="correct" data-l="E">Implement better monitoring and alerting to detect issues faster.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, E</b><div>When error budget is exhausted, SRE principles dictate halting feature releases (A) to focus on reliability (fix bugs, improve testing, add redundancy). Improving monitoring (B) helps detect and respond to issues faster. Pushing features (C) violates error budget policy. Ignoring budget (D) defeats its purpose. Reducing SLO (E) should be data-driven, not a shortcut.</div><div class="ref"><a href="https://sre.google/sre-book/embracing-risk/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 12 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">You need to debug a production issue in a Node.js application running on Cloud Run. You want to inspect variable values and step through code without redeploying. What tool should you use?</div>
+  <ul class="opts"><li class="correct" data-l="A">Cloud Debugger (Snapshot Debugger).</li><li data-l="B">Cloud Trace.</li><li data-l="C">SSH into the Cloud Run instance.</li><li data-l="D">Cloud Profiler.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Cloud Debugger allows you to set snapshots (inspect variables at specific code locations) and logpoints in live production applications without stopping or redeploying. Cloud Profiler is for performance analysis, Cloud Trace is for latency, and you cannot SSH into Cloud Run (it&#x27;s serverless).</div><div class="ref"><a href="https://cloud.google.com/debugger/docs/setup/nodejs" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 13 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M2/S3 · Cost Optimization and Financial Governance</span>
+    
+  </div>
+  <div class="qt">Your Cloud SQL database is experiencing high CPU utilization during peak hours. You want to identify slow queries to optimize them. What feature should you enable?</div>
+  <ul class="opts"><li class="correct" data-l="A">Enable Query Insights to identify slow and resource-intensive queries.</li><li data-l="B">Use Cloud Monitoring for CPU metrics only.</li><li data-l="C">Increase the instance CPU count.</li><li data-l="D">Enable replication.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Query Insights analyzes query performance, showing queries by latency, execution count, and resource consumption. This helps identify optimization opportunities. Increasing CPU (B) is expensive and doesn&#x27;t address inefficient queries. Replication (C) is for availability, not performance diagnosis. CPU metrics (D) show symptoms, not query-level details.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/postgres/using-query-insights" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 14 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D6/M1/S1 · Introduction to Google Cloud&#x27;s Operations Suite</span>
+    
+  </div>
+  <div class="qt">You&#x27;re setting up observability for a microservices application on GKE. You want to collect logs, metrics, and traces. Which THREE Google Cloud tools form the observability stack?</div>
+  <ul class="opts"><li class="correct" data-l="A">Cloud Trace for distributed tracing.</li><li class="correct" data-l="B">Cloud Monitoring for metrics and dashboards.</li><li class="correct" data-l="C">Cloud Logging for logs.</li><li data-l="D">BigQuery for queries only.</li><li data-l="E">Cloud Storage for data storage.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B, C</b><div>The Google Cloud observability stack consists of Cloud Logging (logs), Cloud Monitoring (metrics, alerting, dashboards), and Cloud Trace (distributed tracing). Storage (D) is for data persistence, and BigQuery (E) is for analytics, not core observability.</div><div class="ref"><a href="https://cloud.google.com/architecture/devops/devops-measurement-monitoring-and-observability" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 15 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M2/S3 · Cost Optimization and Financial Governance</span>
+    
+  </div>
+  <div class="qt">Your application deployment failed, and you need to quickly identify what changed. What Cloud Logging feature allows you to query logs across all resources for the past 30 days?</div>
+  <ul class="opts"><li data-l="A">Export logs to BigQuery first.</li><li data-l="B">Cloud Trace error reporting.</li><li data-l="C">Cloud Monitoring dashboards.</li><li class="correct" data-l="D">Logs Explorer with advanced filters (resource, time range, text search).</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Logs Explorer provides a powerful query interface with filters for resource type, log level, time range, and text/regex search across all logs. Default retention is 30 days. Cloud Trace is for latency, Monitoring dashboards show metrics, and BigQuery export is for long-term analysis, not quick debugging.</div><div class="ref"><a href="https://cloud.google.com/logging/docs/view/logs-explorer-interface" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 16 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M1/S1 · Introduction to Google Cloud&#x27;s Operations Suite</span>
+    
+  </div>
+  <div class="qt">You need to measure the actual user experience (page load time, interaction latency) of your web application. Which Google service captures real user monitoring (RUM) data?</div>
+  <ul class="opts"><li data-l="A">Cloud Trace backend-only.</li><li class="correct" data-l="B">Firebase Performance Monitoring or Cloud Monitoring with client-side JavaScript.</li><li data-l="C">Cloud Profiler.</li><li data-l="D">Cloud Logging.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Firebase Performance Monitoring (for mobile/web) and Cloud Monitoring with client-side instrumentation capture real user metrics (RUM) like page load, network latency, and user interactions. Cloud Trace typically traces backend services, not client experience. Logging and Profiler don&#x27;t capture client-side performance.</div><div class="ref"><a href="https://firebase.google.com/docs/perf-mon" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 17 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">You notice that a Dataflow job is running slowly. The pipeline has many stages, and you want to identify which stage is the bottleneck. What should you check?</div>
+  <ul class="opts"><li data-l="A">Increase worker count without investigation.</li><li data-l="B">Check Cloud Logging for Dataflow logs.</li><li class="correct" data-l="C">View the Dataflow job graph in the Cloud Console to see per-stage processing time and throughput.</li><li data-l="D">Use Cloud Trace.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Dataflow provides a visual job graph showing each stage&#x27;s processing time, throughput, data watermark, and system lag. This identifies bottlenecks. Logging (B) provides details but not visual performance analysis. Trace (C) is for distributed tracing, not pipeline stages. Blindly increasing workers (D) may not address the actual bottleneck.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/guides/monitoring-and-troubleshooting" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M3" data-label="D4/M3/S2">
+  <div class="meta-line">
+    <span class="num">Question 18 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M3/S2 · Ensuring Reliability with Chaos Engineering</span>
+    
+  </div>
+  <div class="qt">Your application experiences periodic outages. You want to implement chaos engineering to test resilience. Which TWO practices should you adopt?</div>
+  <ul class="opts"><li class="correct" data-l="A">Inject network latency to test timeout handling.</li><li data-l="B">Hope failures never occur.</li><li class="correct" data-l="C">Intentionally terminate random instances to test auto-healing.</li><li data-l="D">Test only in development environments.</li><li data-l="E">Never test failure scenarios in production.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, C</b><div>Chaos engineering involves deliberately introducing failures (instance termination, network issues, service degradation) in controlled experiments to verify system resilience. Testing in production (carefully) finds real issues. Avoiding production testing (C, D) misses real-world conditions. Hope (E) is not a strategy.</div><div class="ref"><a href="https://cloud.google.com/architecture/modern-application-development#chaos-engineering" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 19 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">You want to track the number of API requests, error rates, and latencies in a single dashboard. What Cloud Monitoring feature allows you to visualize multiple metrics together?</div>
+  <ul class="opts"><li data-l="A">Export to spreadsheets.</li><li class="correct" data-l="B">Create a custom dashboard with multiple charts (line charts for requests, heatmaps for latency, etc.).</li><li data-l="C">Use Cloud Trace only.</li><li data-l="D">Use Cloud Logging only.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Cloud Monitoring dashboards allow you to create custom visualizations combining multiple metrics, resources, and chart types. Logging and Trace (B, C) handle different observability aspects. Spreadsheets (D) aren&#x27;t real-time or integrated.</div><div class="ref"><a href="https://cloud.google.com/monitoring/dashboards" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 20 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">Your Pub/Sub topic has increasing unacknowledged messages, indicating subscribers can&#x27;t keep up. How do you monitor the subscription backlog?</div>
+  <ul class="opts"><li class="correct" data-l="A">Check the &#x27;num_undelivered_messages&#x27; metric in Cloud Monitoring.</li><li data-l="B">Pub/Sub doesn&#x27;t provide backlog metrics.</li><li data-l="C">Use Cloud Trace.</li><li data-l="D">Count messages manually.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Pub/Sub exports metrics to Cloud Monitoring, including &#x27;num_undelivered_messages&#x27; (backlog), &#x27;oldest_unacked_message_age&#x27;, and throughput. These help identify subscriber performance issues. Manual counting (B) doesn&#x27;t scale. Trace (C) is for latency. Pub/Sub does provide metrics (D is false).</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/monitoring" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 21 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M2/S3 · Cost Optimization and Financial Governance</span>
+    
+  </div>
+  <div class="qt">You need to aggregate logs from all projects in your organization into a single BigQuery dataset for analysis. What&#x27;s the most efficient approach?</div>
+  <ul class="opts"><li class="correct" data-l="A">Create an aggregated log sink at the organization level with BigQuery as the destination.</li><li data-l="B">Export logs to Cloud Storage, then load into BigQuery.</li><li data-l="C">Create sinks in each project individually.</li><li data-l="D">Copy logs manually.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Aggregated log sinks at the organization or folder level automatically collect logs from all child resources (projects) to a central destination. This is more efficient than per-project sinks (B). Direct BigQuery export (A) is simpler than Storage intermediate (C). Manual copying (D) doesn&#x27;t scale.</div><div class="ref"><a href="https://cloud.google.com/logging/docs/export/aggregated_sinks" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 22 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">Your application error rate suddenly increases. You need to determine if it&#x27;s caused by a recent deployment. Which TWO factors help with this investigation?</div>
+  <ul class="opts"><li data-l="A">Number of developers on the team.</li><li class="correct" data-l="B">Correlation of error rate spike timing with deployment timestamp.</li><li data-l="C">The color of the deployment button.</li><li class="correct" data-l="D">Comparing error logs before and after deployment.</li><li data-l="E">The weather forecast.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, D</b><div>Temporal correlation (A) between metrics changes and deployment events is a primary indicator. Comparing logs (B) reveals new error patterns introduced by code changes. Button color (C), team size (D), and weather (E) are irrelevant to technical root cause analysis.</div><div class="ref"><a href="https://sre.google/workbook/postmortem-culture/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 23 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">You want to receive notifications when your Cloud Storage bucket&#x27;s total size exceeds 1TB. What should you configure?</div>
+  <ul class="opts"><li data-l="A">Write a cron job to check bucket size.</li><li data-l="B">Cloud Storage automatically sends emails for large buckets.</li><li class="correct" data-l="C">Create a Cloud Monitoring alert policy on the &#x27;storage.googleapis.com/storage/total_bytes&#x27; metric.</li><li data-l="D">Bucket size monitoring is not possible.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Cloud Storage exports metrics to Cloud Monitoring, including total bytes per bucket. You can create alerting policies on these metrics with threshold conditions. Cron jobs (B) are manual. Automatic emails (C) don&#x27;t exist. Monitoring is possible (D is false).</div><div class="ref"><a href="https://cloud.google.com/storage/docs/monitoring" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 24 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">Your GKE cluster shows pods in &#x27;Pending&#x27; state. You need to determine why they aren&#x27;t scheduling. What Kubernetes diagnostic command helps?</div>
+  <ul class="opts"><li data-l="A">Restart the cluster.</li><li data-l="B">kubectl delete pod to force reschedule.</li><li data-l="C">kubectl get nodes to list nodes only.</li><li class="correct" data-l="D">kubectl describe pod &lt;pod-name&gt; to see events and scheduling failures.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>kubectl describe pod shows events including scheduling failures (insufficient resources, taints/tolerations mismatches, node selector failures). Deleting the pod (B) doesn&#x27;t address the root cause. Listing nodes (C) doesn&#x27;t show why scheduling failed. Restarting cluster (D) is excessive and disruptive.</div><div class="ref"><a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 25 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">You want to automatically execute a Cloud Function when a specific error pattern appears in logs (e.g., &#x27;DATABASE CONNECTION FAILED&#x27;). What should you configure?</div>
+  <ul class="opts"><li data-l="A">Errors cannot trigger automation.</li><li data-l="B">Manually check logs daily.</li><li data-l="C">Poll Cloud Logging every minute with a cron job.</li><li class="correct" data-l="D">Create a log-based metric with a filter for the error pattern, then create an alert policy that triggers a Cloud Function via Pub/Sub.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Log-based metrics can count occurrences of specific log patterns. Alert policies can trigger notifications to Pub/Sub, which can trigger Cloud Functions for automated response (e.g., restarting services, paging on-call). Polling (B) has delays. Manual checking (C) isn&#x27;t automated. Automation is possible (D is false).</div><div class="ref"><a href="https://cloud.google.com/logging/docs/logs-based-metrics" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 26 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M1/S3 · Testing, Validation, and Service Provisioning</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing golden signals monitoring for your service. Which FOUR metrics constitute the golden signals?</div>
+  <ul class="opts"><li class="correct" data-l="A">Errors (error rate).</li><li class="correct" data-l="B">Traffic (request rate).</li><li data-l="C">Number of deployments.</li><li data-l="D">Code complexity.</li><li class="correct" data-l="E">Saturation (resource utilization).</li><li class="correct" data-l="F">Latency (response time).</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B, E, F</b><div>The four golden signals from Google&#x27;s SRE book are: Latency, Traffic, Errors, and Saturation. These provide a comprehensive view of service health. Code complexity (E) and deployment count (F) are development metrics, not runtime service health indicators.</div><div class="ref"><a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 27 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S3 · Testing, Validation, and Service Provisioning</span>
+    
+  </div>
+  <div class="qt">Your Cloud Run service experiences increased cold start latency. You want to measure the time between request arrival and when your code starts executing. What metric should you examine?</div>
+  <ul class="opts"><li class="correct" data-l="A">&#x27;request_latencies&#x27; metric, specifically the instance_startup latency component.</li><li data-l="B">Network egress.</li><li data-l="C">Billing metrics.</li><li data-l="D">CPU utilization.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Cloud Run exports latency metrics including instance startup time (cold start impact). This shows container initialization overhead. Billing (B) doesn&#x27;t show latency breakdown. CPU (C) is a resource metric. Network egress (D) doesn&#x27;t measure cold starts.</div><div class="ref"><a href="https://cloud.google.com/run/docs/monitoring" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 28 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M1/S3 · Implementing Centralized Logging with Cloud Logging</span>
+    
+  </div>
+  <div class="qt">You need to debug intermittent 500 errors in your App Engine application. The errors occur rarely and randomly. What Cloud Logging feature helps identify error patterns?</div>
+  <ul class="opts"><li data-l="A">Manual log reading.</li><li class="correct" data-l="B">Error Reporting automatically aggregates and categorizes errors, showing frequency and affected users.</li><li data-l="C">Cloud Monitoring dashboards only.</li><li data-l="D">Cloud Trace.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Error Reporting analyzes logs, extracts errors, groups similar errors together, and provides statistics (frequency, first/last seen, affected users). This makes pattern identification easier than manual log review. Trace (C) is for latency. Dashboards (D) show metrics but don&#x27;t aggregate errors automatically.</div><div class="ref"><a href="https://cloud.google.com/error-reporting/docs" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 29 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M2/S1 · Managing Stakeholders, Change, and Team Readiness</span>
+    
+  </div>
+  <div class="qt">Your team wants to implement progressive rollouts with automated rollback if error rates increase. Which deployment strategy and monitoring combination supports this?</div>
+  <ul class="opts"><li class="correct" data-l="A">Canary deployment with Cloud Monitoring alerts on error rate metrics triggering rollback automation.</li><li data-l="B">Blue-green with no monitoring.</li><li data-l="C">All-at-once deployment with manual monitoring.</li><li data-l="D">Deploy and hope for the best.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Canary deployments gradually shift traffic to new versions while monitoring metrics. Automated rollback can be triggered when error rates exceed thresholds. All-at-once (B) has no gradual period. Blue-green without monitoring (C) can&#x27;t detect issues before full switch. Hope (D) is not a strategy.</div><div class="ref"><a href="https://cloud.google.com/architecture/application-deployment-and-testing-strategies" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M2" data-label="D2/M2/S4">
+  <div class="meta-line">
+    <span class="num">Question 30 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M2/S4 · Optimizing Data Transfer and Latency and Planning for Data Growth</span>
+    
+  </div>
+  <div class="qt">You want to understand the typical latency distribution of your API (not just average). What visualization best represents latency percentiles (p50, p95, p99)?</div>
+  <ul class="opts"><li data-l="A">Pie chart.</li><li data-l="B">Bar chart of request counts.</li><li class="correct" data-l="C">Heatmap chart showing latency distribution over time.</li><li data-l="D">Single line showing average only.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Heatmap charts (or percentile line charts) show latency distribution across percentiles, revealing tail latencies that averages mask. Average alone (B) hides outliers. Pie charts (C) are for categorical proportions. Request count bars (D) don&#x27;t show latency.</div><div class="ref"><a href="https://cloud.google.com/blog/products/devops-sre/using-the-four-keys-to-measure-your-devops-performance" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 31 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">You need to analyze the performance of a Java application running on GKE. You want to identify CPU hotspots and optimize code execution time. Which tool provides flame graphs of CPU usage?</div>
+  <ul class="opts"><li class="correct" data-l="A">Cloud Profiler with CPU profiling enabled.</li><li data-l="B">kubectl top pods.</li><li data-l="C">Cloud Logging.</li><li data-l="D">Cloud Trace.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Cloud Profiler provides flame graphs showing CPU usage by function, enabling identification of hotspots. Cloud Trace is for latency, Logging for logs, and kubectl top shows aggregate metrics.</div><div class="ref"><a href="https://cloud.google.com/profiler/docs/concepts-profiling" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 32 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">You&#x27;re troubleshooting a slow database query in Cloud SQL. Which TWO tools help identify the root cause?</div>
+  <ul class="opts"><li class="correct" data-l="A">EXPLAIN ANALYZE on the query to see execution plan.</li><li data-l="B">Increase instance size first.</li><li class="correct" data-l="C">Cloud SQL Query Insights for query-level analysis.</li><li data-l="D">Cloud Logging without query analysis.</li><li data-l="E">Cloud Trace for database queries.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, C</b><div>Query Insights shows slow queries and their patterns. EXPLAIN ANALYZE reveals execution plans and actual row counts. Increasing size without analysis wastes money.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/postgres/using-query-insights" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 33 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M2/S1 · Managing Stakeholders, Change, and Team Readiness</span>
+    
+  </div>
+  <div class="qt">Your application logs contain PII that must be masked before analysis. What Cloud Logging feature helps with this?</div>
+  <ul class="opts"><li data-l="A">Manually review each log entry.</li><li data-l="B">Delete all logs containing PII.</li><li class="correct" data-l="C">Use Cloud Data Loss Prevention (DLP) API to de-identify logs before storage.</li><li data-l="D">Logs cannot be modified.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Cloud DLP can automatically detect and mask/tokenize PII in logs. Deletion loses valuable data, and manual review doesn&#x27;t scale.</div><div class="ref"><a href="https://cloud.google.com/dlp/docs/deidentify-sensitive-data" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 34 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">You want to set up an uptime check that monitors your API endpoint from multiple global locations and alerts if the endpoint is down. What should you configure?</div>
+  <ul class="opts"><li data-l="A">Cloud Scheduler calling the API.</li><li data-l="B">Manual checks from different locations.</li><li class="correct" data-l="C">Cloud Monitoring Uptime Checks with multiple regions selected.</li><li data-l="D">Cron job pinging the endpoint.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Cloud Monitoring Uptime Checks probe endpoints from multiple global locations and can trigger alerts on failures. Cron jobs don&#x27;t provide multi-region coverage or integrated alerting.</div><div class="ref"><a href="https://cloud.google.com/monitoring/uptime-checks" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 35 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M1/S3 · Testing, Validation, and Service Provisioning</span>
+    
+  </div>
+  <div class="qt">You&#x27;re establishing SLOs for a critical payment service. Which TWO metrics are appropriate SLIs for this service?</div>
+  <ul class="opts"><li data-l="A">Number of developers working on the service.</li><li class="correct" data-l="B">Transaction processing latency at 99th percentile.</li><li class="correct" data-l="C">Successful transaction rate (transactions without errors / total transactions).</li><li data-l="D">Lines of code changed per week.</li><li data-l="E">Server room temperature.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C</b><div>Success rate and latency are user-facing metrics that directly impact experience. Developer count, code changes, and temperature are not service-level indicators.</div><div class="ref"><a href="https://sre.google/sre-book/service-level-objectives/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D2" data-module="D2/M3" data-label="D2/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 36 / 60</span>
+    <span class="badge d">D2</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D2/M3/S1 · Configuring Compute Engine VMs and Managed Instance Groups</span>
+    
+  </div>
+  <div class="qt">Your Compute Engine instances are experiencing memory pressure. You need to understand memory allocation patterns over time. What metric should you examine?</div>
+  <ul class="opts"><li data-l="A">Disk read IOPS.</li><li class="correct" data-l="B">&#x27;compute.googleapis.com/instance/memory/utilization&#x27; metric in Cloud Monitoring.</li><li data-l="C">Network bytes sent.</li><li data-l="D">CPU utilization only.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Memory utilization metrics show allocation patterns over time. Requires the Ops Agent for detailed memory metrics on Compute Engine.</div><div class="ref"><a href="https://cloud.google.com/monitoring/api/metrics_gcp#gcp-compute" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 37 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">You need to investigate why your Cloud Function is timing out. The function has a 60-second timeout but completes in varying times. What helps identify the cause?</div>
+  <ul class="opts"><li data-l="A">Disable cold starts.</li><li data-l="B">Reduce function memory.</li><li data-l="C">Increase timeout to 540 seconds.</li><li class="correct" data-l="D">Add structured logging with timestamps at each step to identify slow operations.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Structured logging with timestamps helps identify which operations take time. Increasing timeout masks the problem. Reducing memory may slow execution. Cold starts can&#x27;t be disabled.</div><div class="ref"><a href="https://cloud.google.com/functions/docs/monitoring/logging" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 38 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M1/S4 · Designing for Business Continuity and Disaster Recovery</span>
+    
+  </div>
+  <div class="qt">You&#x27;re setting up monitoring for a multi-tier application. Which TWO practices improve incident response?</div>
+  <ul class="opts"><li class="correct" data-l="A">Configure alert notification channels to reach on-call engineers.</li><li data-l="B">Alert on every log entry.</li><li class="correct" data-l="C">Create runbooks for common alert scenarios.</li><li data-l="D">Ignore alerts during business hours.</li><li data-l="E">Suppress all non-critical alerts.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, C</b><div>Runbooks provide response procedures, and notification channels ensure alerts reach responders. Alerting on everything causes fatigue, and suppressing alerts misses issues.</div><div class="ref"><a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 39 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">Your GKE pods are experiencing intermittent DNS resolution failures. What diagnostic approach helps identify the issue?</div>
+  <ul class="opts"><li class="correct" data-l="A">Check CoreDNS/kube-dns pod logs and metrics for errors or resource exhaustion.</li><li data-l="B">Delete and recreate the cluster.</li><li data-l="C">DNS issues cannot be diagnosed.</li><li data-l="D">Restart all pods.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>DNS issues often stem from CoreDNS/kube-dns problems (resource limits, errors). Checking their pods reveals the root cause.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/kube-dns" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 40 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">You want to track custom application metrics (e.g., items in shopping cart) in Cloud Monitoring. How do you send custom metrics?</div>
+  <ul class="opts"><li data-l="A">Store metrics in Cloud Storage.</li><li data-l="B">Custom metrics are not supported.</li><li class="correct" data-l="C">Use the Cloud Monitoring API or OpenTelemetry to write custom metrics.</li><li data-l="D">Only use built-in metrics.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Cloud Monitoring supports custom metrics via API, client libraries, or OpenTelemetry. These can be charted and alerted like built-in metrics.</div><div class="ref"><a href="https://cloud.google.com/monitoring/custom-metrics" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 41 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S3 · Testing, Validation, and Service Provisioning</span>
+    
+  </div>
+  <div class="qt">Your service mesh (Anthos Service Mesh) is deployed. You want to analyze service-to-service latency and error rates. What provides this visibility?</div>
+  <ul class="opts"><li class="correct" data-l="A">Service Mesh dashboards in Cloud Console showing topology and metrics.</li><li data-l="B">Network packet capture.</li><li data-l="C">Manual tracing of each request.</li><li data-l="D">Cloud Logging only.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Anthos Service Mesh provides automatic topology visualization, latency metrics, and error rates for all service-to-service communication.</div><div class="ref"><a href="https://cloud.google.com/service-mesh/docs/observability/explore-dashboard" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 42 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">You&#x27;re performing a postmortem after an outage. Which TWO elements should the postmortem include?</div>
+  <ul class="opts"><li data-l="A">Delete all related logs.</li><li data-l="B">Blame specific individuals.</li><li class="correct" data-l="C">Timeline of events from detection to resolution.</li><li data-l="D">Hide the incident from leadership.</li><li class="correct" data-l="E">Action items to prevent recurrence.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, E</b><div>Blameless postmortems focus on timeline understanding and actionable improvements. Blaming individuals discourages reporting, hiding incidents prevents learning.</div><div class="ref"><a href="https://sre.google/sre-book/postmortem-culture/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 43 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">You notice high disk I/O wait on your Compute Engine instances. How do you identify which processes are causing the I/O?</div>
+  <ul class="opts"><li data-l="A">I/O cannot be monitored.</li><li data-l="B">Add more CPU cores.</li><li class="correct" data-l="C">Use iotop or iostat commands on the instance, or enable Cloud Monitoring Ops Agent for disk metrics.</li><li data-l="D">Increase disk size.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>iotop/iostat show per-process I/O. Ops Agent provides detailed disk metrics. Increasing disk size or CPU doesn&#x27;t address the root cause.</div><div class="ref"><a href="https://cloud.google.com/monitoring/agent/ops-agent" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 44 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M1/S3 · Implementing Centralized Logging with Cloud Logging</span>
+    
+  </div>
+  <div class="qt">Your BigQuery scheduled query failed overnight. How do you find out what went wrong?</div>
+  <ul class="opts"><li data-l="A">Wait for the next successful run.</li><li class="correct" data-l="B">Check the scheduled query run history in BigQuery Console or Cloud Logging for error details.</li><li data-l="C">Contact Google Support for every failure.</li><li data-l="D">BigQuery doesn&#x27;t log errors.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>BigQuery logs scheduled query executions including failures, error messages, and stack traces in the Console and Cloud Logging.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/scheduling-queries" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 45 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">You&#x27;re optimizing a Dataflow pipeline that processes 1TB of data daily. Which TWO approaches can improve performance?</div>
+  <ul class="opts"><li data-l="A">Process data sequentially on one worker.</li><li class="correct" data-l="B">Adjust worker machine types and number of workers for parallelization.</li><li data-l="C">Increase shuffle file size.</li><li class="correct" data-l="D">Use efficient data formats (Avro, Parquet) instead of JSON/CSV.</li><li data-l="E">Disable autoscaling.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, D</b><div>Right-sizing workers and using efficient formats reduce processing time. Sequential processing is slow, and disabling autoscaling reduces flexibility.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/guides/deploying-a-pipeline#parallelization" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S1">
+  <div class="meta-line">
+    <span class="num">Question 46 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M2/S1 · Managing Stakeholders, Change, and Team Readiness</span>
+    
+  </div>
+  <div class="qt">You want to receive alerts only when multiple conditions are met simultaneously (e.g., high CPU AND high memory). What alerting feature enables this?</div>
+  <ul class="opts"><li class="correct" data-l="A">Create a multi-condition alerting policy with AND logic.</li><li data-l="B">Multi-condition alerts aren&#x27;t supported.</li><li data-l="C">Use Cloud Functions to check conditions.</li><li data-l="D">Create two separate alerts.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Cloud Monitoring supports multi-condition policies with AND/OR logic, reducing alert noise by requiring multiple conditions.</div><div class="ref"><a href="https://cloud.google.com/monitoring/alerts/concepts-indepth#condition-types" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 47 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">Your application uses Cloud Pub/Sub. Messages are being delivered with high latency. What metric helps diagnose this?</div>
+  <ul class="opts"><li class="correct" data-l="A">&#x27;subscription/oldest_unacked_message_age&#x27; metric showing message age.</li><li data-l="B">Network latency between regions.</li><li data-l="C">CPU utilization of subscribers.</li><li data-l="D">Pub/Sub doesn&#x27;t provide latency metrics.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>The oldest unacked message age indicates delivery delays. High values suggest subscribers can&#x27;t keep up or messages are stuck.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/monitoring" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 48 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S4 · Designing for Business Continuity and Disaster Recovery</span>
+    
+  </div>
+  <div class="qt">You need to analyze Cloud Logging data for trends over the past 90 days. Default retention is 30 days. What should you configure?</div>
+  <ul class="opts"><li class="correct" data-l="A">Create a log sink to export logs to BigQuery or Cloud Storage for long-term retention.</li><li data-l="B">Manually backup logs weekly.</li><li data-l="C">Accept 30-day limitation.</li><li data-l="D">Increase default retention to 90 days.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Log sinks export logs to BigQuery (for analysis) or Cloud Storage (for archival) for retention beyond 30 days. Default retention cannot be extended beyond limits.</div><div class="ref"><a href="https://cloud.google.com/logging/docs/export" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 49 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M1/S4 · Designing for Business Continuity and Disaster Recovery</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing observability for serverless functions. Which TWO challenges are specific to serverless observability?</div>
+  <ul class="opts"><li data-l="A">Fixed server IP addresses.</li><li class="correct" data-l="B">Cold start latency affecting response times.</li><li class="correct" data-l="C">Ephemeral execution environments making debugging harder.</li><li data-l="D">Manual capacity planning.</li><li data-l="E">Persistent file systems.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C</b><div>Serverless has cold starts impacting latency and ephemeral environments making traditional debugging difficult. IPs aren&#x27;t fixed, filesystems aren&#x27;t persistent, and capacity is automatic.</div><div class="ref"><a href="https://cloud.google.com/functions/docs/monitoring" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 50 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">Your GKE cluster has liveness probes configured, but pods are being restarted frequently. How do you tune probe settings?</div>
+  <ul class="opts"><li data-l="A">Liveness probes cannot be configured.</li><li class="correct" data-l="B">Increase initialDelaySeconds and periodSeconds to give applications more time to respond.</li><li data-l="C">Decrease probe intervals to 1 second.</li><li data-l="D">Remove all probes.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Adjusting initialDelaySeconds (time before first check) and periodSeconds (check frequency) prevents premature restarts. Removing probes loses auto-healing.</div><div class="ref"><a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 51 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">You want to correlate logs from multiple microservices for a single user request. What practice enables this?</div>
+  <ul class="opts"><li class="correct" data-l="A">Include a trace ID or correlation ID in all log entries for the request.</li><li data-l="B">Log everything to one file.</li><li data-l="C">Use the same timestamp for all services.</li><li data-l="D">Don&#x27;t correlate logs.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Trace/correlation IDs propagated across services enable log correlation. Cloud Trace automatically provides this for instrumented applications.</div><div class="ref"><a href="https://cloud.google.com/trace/docs/setup" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 52 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S3 · Testing, Validation, and Service Provisioning</span>
+    
+  </div>
+  <div class="qt">Your Load Balancer health checks are failing for some backends even though the service is running. What should you verify?</div>
+  <ul class="opts"><li data-l="A">Health checks cannot be configured.</li><li data-l="B">Delete the health check.</li><li data-l="C">Restart the load balancer.</li><li class="correct" data-l="D">Health check endpoint path, port, and protocol match the backend service configuration.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Health check configuration must match backend service settings (path, port, protocol). Mismatches cause false failures.</div><div class="ref"><a href="https://cloud.google.com/load-balancing/docs/health-check-concepts" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 53 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">You&#x27;re implementing structured logging for your application. Which TWO benefits does structured logging provide?</div>
+  <ul class="opts"><li class="correct" data-l="A">Easier filtering and querying in Cloud Logging.</li><li data-l="B">Logs are automatically encrypted.</li><li data-l="C">Smaller log file sizes always.</li><li class="correct" data-l="D">Automatic parsing of log fields for analysis.</li><li data-l="E">No need for log rotation.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, D</b><div>Structured logs (JSON format) enable filtering by fields and automatic parsing for analysis in Cloud Logging and BigQuery.</div><div class="ref"><a href="https://cloud.google.com/logging/docs/structured-logging" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 54 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">Your API&#x27;s error rate spikes every day at 3 PM. You need to identify if it correlates with traffic patterns. What visualization helps?</div>
+  <ul class="opts"><li data-l="A">View metrics separately.</li><li data-l="B">Correlation cannot be visualized.</li><li class="correct" data-l="C">Overlay error rate and request rate metrics on the same dashboard chart with aligned time axes.</li><li data-l="D">Check only error logs.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Overlaying metrics on dashboards reveals correlations between error rates and traffic patterns (e.g., errors spike with traffic).</div><div class="ref"><a href="https://cloud.google.com/monitoring/dashboards" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 55 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">You&#x27;re using Cloud Run and notice inconsistent response times. Some requests take 200ms, others take 5 seconds. What&#x27;s the likely cause?</div>
+  <ul class="opts"><li data-l="A">Network congestion in Google&#x27;s network.</li><li data-l="B">Database is too fast.</li><li class="correct" data-l="C">Cold starts when new container instances are spun up to handle requests.</li><li data-l="D">Response times should always be identical.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Cold starts occur when Cloud Run scales up containers. First requests to new instances include container startup time.</div><div class="ref"><a href="https://cloud.google.com/run/docs/tips/general#cold_starts" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M3" data-label="D4/M3/S3">
+  <div class="meta-line">
+    <span class="num">Question 56 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M3/S3 · Validating Security with Penetration Testing</span>
+    
+  </div>
+  <div class="qt">You want to compare the performance of two different versions of your application. What A/B testing metric is most relevant?</div>
+  <ul class="opts"><li data-l="A">Number of developers on each version.</li><li data-l="B">Lines of code in each version.</li><li class="correct" data-l="C">Response latency and error rate for each version with statistical significance testing.</li><li data-l="D">Server cost per version only.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Performance A/B testing compares user-facing metrics (latency, errors) between versions with sufficient sample size for statistical validity.</div><div class="ref"><a href="https://cloud.google.com/architecture/application-deployment-and-testing-strategies" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M2" data-label="D4/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 57 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D4/M2/S2 · Creating Decision-making and Customer Success Frameworks</span>
+    
+  </div>
+  <div class="qt">You&#x27;re creating a monitoring strategy for a new service. Which TWO questions help define appropriate SLOs?</div>
+  <ul class="opts"><li data-l="A">What&#x27;s the maximum budget for infrastructure?</li><li class="correct" data-l="B">What&#x27;s the minimum reliability that users will accept?</li><li data-l="C">What programming language is used?</li><li data-l="D">How many engineers work on the service?</li><li class="correct" data-l="E">What does good performance look like to users?</li></ul>
+  <div class="ans"><b>Bonne réponse : B, E</b><div>SLOs should reflect user expectations: what good looks like and minimum acceptable reliability. Budget, team size, and language don&#x27;t define SLOs.</div><div class="ref"><a href="https://sre.google/sre-book/service-level-objectives/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 58 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S2 · Troubleshooting and Root Cause Analysis</span>
+    
+  </div>
+  <div class="qt">Your Spanner database latency increased after adding a new index. How do you investigate?</div>
+  <ul class="opts"><li data-l="A">Remove all indexes.</li><li class="correct" data-l="B">Use Query Insights and execution plans to see if the index is being used efficiently or causing hot spots.</li><li data-l="C">Indexes always improve performance.</li><li data-l="D">Increase Spanner nodes.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Query Insights shows index usage and hot spots. New indexes can cause issues if poorly designed (e.g., monotonic keys causing hot spots).</div><div class="ref"><a href="https://cloud.google.com/spanner/docs/query-execution-plans" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D6" data-module="D6/M1" data-label="D6/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 59 / 60</span>
+    <span class="badge d">D6</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D6/M1/S2 · Configuring Monitoring Dashboards and Alerts</span>
+    
+  </div>
+  <div class="qt">You need to detect when a specific log pattern stops appearing (absence of logs). What monitoring feature helps?</div>
+  <ul class="opts"><li data-l="A">Only presence can be monitored.</li><li data-l="B">Absence cannot be detected.</li><li data-l="C">Check logs manually every hour.</li><li class="correct" data-l="D">Create an absence-based alerting policy that triggers when expected logs don&#x27;t appear.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Cloud Monitoring supports absence conditions that alert when expected metrics/logs don&#x27;t appear within a time window.</div><div class="ref"><a href="https://cloud.google.com/monitoring/alerts/concepts-indepth#condition-types" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 60 / 60</span>
+    <span class="badge d">D4</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
+    
+  </div>
+  <div class="qt">Your organization wants to implement SRE practices. What&#x27;s the first step in establishing SLOs?</div>
+  <ul class="opts"><li data-l="A">Set error budgets immediately.</li><li data-l="B">Skip SLIs and set SLOs directly.</li><li data-l="C">Hire more engineers.</li><li class="correct" data-l="D">Define SLIs that measure what users care about (availability, latency, correctness).</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>SLOs are built on SLIs. First identify measurable indicators of user experience, then set objectives for those indicators.</div><div class="ref"><a href="https://sre.google/sre-book/implementing-slos/" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+</main>
 <script>
-function toggleAll(show){document.querySelectorAll('.q').forEach(function(q){q.classList.toggle('reveal',show);});}
-document.addEventListener('DOMContentLoaded',function(){
- document.getElementById('showAll').addEventListener('click',function(){toggleAll(true);});
- document.getElementById('hideAll').addEventListener('click',function(){toggleAll(false);});
- document.querySelectorAll('.q').forEach(function(q){q.addEventListener('click',function(e){if(e.target.closest('a'))return;q.classList.toggle('reveal');});});
+function all(v){document.querySelectorAll('.q').forEach(q=>q.classList.toggle('show',v))}
+function applyFilters(){
+  const d=document.getElementById('filterDomain').value;
+  const m=document.getElementById('filterModule').value;
+  let n=0;
+  document.querySelectorAll('.q').forEach(q=>{
+    const okD=!d||q.dataset.domain===d;
+    const okM=!m||q.dataset.module===m;
+    const show=okD&&okM;
+    q.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  const el=document.getElementById('resultCount');
+  if(el) el.textContent=n+' question'+(n>1?'s':'');
+}
+function syncModules(){
+  const d=document.getElementById('filterDomain').value;
+  const sel=document.getElementById('filterModule');
+  const cur=sel.value;
+  [...sel.options].forEach((o,i)=>{
+    if(i===0){o.hidden=false;return;}
+    o.hidden=!!(d&&o.dataset.domain!==d);
+  });
+  if(cur && sel.selectedOptions[0] && sel.selectedOptions[0].hidden) sel.value='';
+  applyFilters();
+}
+function resetFilters(){
+  document.getElementById('filterDomain').value='';
+  document.getElementById('filterModule').value='';
+  syncModules();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.q').forEach(q=>q.addEventListener('click',e=>{
+    if(e.target.closest('a,select,button,label'))return;
+    q.classList.toggle('show');
+  }));
+  const fd=document.getElementById('filterDomain');
+  const fm=document.getElementById('filterModule');
+  if(fd) fd.addEventListener('change',syncModules);
+  if(fm) fm.addEventListener('change',applyFilters);
+  applyFilters();
 });
 </script>
-<script src="../tts.js"></script></body></html>
+</body></html>

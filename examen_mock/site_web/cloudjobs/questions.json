@@ -14,7 +14,19 @@
   ],
   "explanation": "Before migrating enterprise applications to the cloud, it's essential to verify whether the licenses for those applications are transferable. Some software licenses have restrictions that may prevent their use in cloud environments. Checking license terms and consulting with software vendors ensures compliance and prevents licensing issues during migration.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S1",
+  "classificationConfidence": 0.867,
+  "classificationHits": [
+   "cloud",
+   "google"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Mastering Cloud Shell and the Google Cloud SDK"
  },
  {
   "id": 28473,
@@ -31,7 +43,20 @@
   ],
   "explanation": "Cloud Spanner provides strong consistency, global transaction support, and multi-region configuration, making it ideal for global real-time transaction processing. Cloud Load Balancing helps distribute traffic and reduce latency while maintaining high availability.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M2",
+  "label": "D1/M2/S1",
+  "classificationConfidence": 0.794,
+  "classificationHits": [
+   "design",
+   "high",
+   "multi-region"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Robust Cloud Infrastructures",
+  "sectionTitle": "High Availability and Failover Design"
  },
  {
   "id": 28474,
@@ -48,7 +73,20 @@
   ],
   "explanation": "The Cloud DLP API provides tools for identifying and de-identifying sensitive information like telemetry data. By de-identifying data before storage, the organization minimizes exposure risk while maintaining data usability. This approach balances compliance with operational needs.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_terramearth.pdf",
-  "section": "Case Study"
+  "section": "S4",
+  "sectionContext": "Case Study",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28475,
@@ -65,7 +103,19 @@
   ],
   "explanation": "Deploying the new version in the same application and using App Engine's built-in traffic splitting is the simplest approach. This requires minimal changes and allows gradual migration by directing a small percentage of traffic to the new version while maintaining the majority on the old version.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "app engine",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28476,
@@ -82,7 +132,21 @@
   ],
   "explanation": "App Engine automatically scales both frontend and backend components based on traffic. Cloud Spanner provides a fully managed, relational database that scales horizontally while maintaining strong consistency across regions, making it suitable for the database tier.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.946,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "managed"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28477,
@@ -99,7 +163,20 @@
   ],
   "explanation": "PersistentVolumes in Kubernetes provide abstraction for durable storage, allowing pods to claim storage resources independently. They persist beyond pod lifecycles and can be accessed through PersistentVolumeClaims, ensuring data remains available when pods are recreated.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "persistent",
+   "storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
  },
  {
   "id": 28478,
@@ -116,7 +193,20 @@
   ],
   "explanation": "Increasing the evaluation period allows the autoscaler to make more stable decisions by considering longer-term trends rather than reacting to momentary fluctuations. This prevents rapid cycling of VM instances while maintaining responsiveness to actual demand changes.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "instance",
+   "managed",
+   "managed instance group"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28479,
@@ -133,7 +223,22 @@
   ],
   "explanation": "GKE provides an ideal platform for microservices with automatic scaling and multi-region deployment capabilities. Multi-region clusters ensure high availability to meet the uptime SLA, while autoscaling handles variable and seasonal traffic loads efficiently.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.927,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "compute engine",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28480,
@@ -150,7 +255,21 @@
   ],
   "explanation": "GKE provides robust container orchestration for microservices, while Istio offers advanced traffic management, observability, and security features. Mutual TLS ensures secure communication between services, which is critical for financial transactions. This architecture meets all requirements for scalability, security, and low-latency communication.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "engine",
+   "vpc"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28481,
@@ -167,7 +286,18 @@
   ],
   "explanation": "The 'connection timeout' error typically indicates network connectivity issues. Ensuring proper backend service configuration and adding firewall rules to permit traffic from Google's health check IP ranges (130.211.0.0/22 and 35.191.0.0/16) resolves this issue while maintaining security.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S1",
+  "classificationConfidence": 0.739,
+  "classificationHits": [
+   "google"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Mastering Cloud Shell and the Google Cloud SDK"
  },
  {
   "id": 28482,
@@ -184,7 +314,20 @@
   ],
   "explanation": "A regional GKE cluster spans three zones by default. With four machines per zone (one default pool), the total is 4 machines × 3 zones = 12 instances. This ensures high availability across zones in the region.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.894,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28483,
@@ -201,7 +344,21 @@
   ],
   "explanation": "Google Cloud VPCs are global resources. Creating a subnetwork in another region within the same VPC maintains simplicity while enabling connectivity via internal IPs. This approach follows Google's recommended practice for multi-region deployments within a single project.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "instance"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28484,
@@ -218,7 +375,22 @@
   ],
   "explanation": "VPC Service Controls can isolate sensitive services while allowing controlled access to development tools. Creating specific access levels for developers balances security and productivity by permitting Cloud Build access while restricting sensitive data stores.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_mountkirk_games.pdf",
-  "section": "Case Study"
+  "section": "S4",
+  "sectionContext": "Case Study",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "cloud storage",
+   "data",
+   "vpc",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28485,
@@ -235,7 +407,19 @@
   ],
   "explanation": "Deployments manage replica sets of Pods, while Services provide stable DNS names and load balancing. This combination ensures each microservice maintains the desired number of replicas and can be reliably addressed by other services in the cluster regardless of scaling changes.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S3",
+  "classificationConfidence": 0.868,
+  "classificationHits": [
+   "application",
+   "microservices"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Supporting the Application Design"
  },
  {
   "id": 28486,
@@ -252,7 +436,22 @@
   ],
   "explanation": "Cloud DNS is Google's managed DNS service that provides reliable, low-latency domain name resolution. It's the recommended solution for mapping custom domain names to instance IP addresses while following Google Cloud best practices.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "instance",
+   "managed"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28487,
@@ -269,7 +468,20 @@
   ],
   "explanation": "A static external IP remains constant even if backend servers change. Combined with Cloud DNS, this provides a stable endpoint with minimal maintenance. This approach avoids DNS changes during failures while keeping costs low.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S4",
+  "classificationConfidence": 0.861,
+  "classificationHits": [
+   "cloud",
+   "networks",
+   "with"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Securing Networks with IAP, Cloud Armor, and Cloud IDS"
  },
  {
   "id": 28488,
@@ -286,7 +498,19 @@
   ],
   "explanation": "App Engine's traffic splitting allows instant rollback by setting a previous version as default. This is the fastest method to revert while maintaining all existing configurations and without requiring new deployments.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.812,
+  "classificationHits": [
+   "app engine",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28489,
@@ -303,7 +527,21 @@
   ],
   "explanation": "Cloud CDN caches content at Google's edge locations worldwide, providing low-latency delivery. Integrated with Cloud Storage, it offers optimal performance for video content while minimizing origin server load and global latency.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_helicopter_racing_league.pdf",
-  "section": "Case Study"
+  "section": "S4",
+  "sectionContext": "Case Study",
+  "domain": "D1",
+  "module": "M2",
+  "label": "D1/M2/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cache",
+   "cdn",
+   "edge",
+   "performance"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Robust Cloud Infrastructures",
+  "sectionTitle": "Performance and Latency"
  },
  {
   "id": 28490,
@@ -320,7 +558,21 @@
   ],
   "explanation": "A custom VPC with carefully planned non-overlapping IP ranges prevents connectivity issues. Cloud Interconnect provides high-performance, private connectivity compared to VPN, making it ideal for hybrid environments with strict compatibility requirements.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "environments",
+   "hybrid",
+   "interconnect",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Integration with On-premises and Multicloud Environments"
  },
  {
   "id": 28491,
@@ -337,7 +589,23 @@
   ],
   "explanation": "Disabling health checks stops the restart cycle, allowing troubleshooting. Adding the SSH key to project-wide keys grants access without modifying IAM roles. This combination provides immediate access while maintaining security controls.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "instance",
+   "managed",
+   "managed instance group"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28492,
@@ -354,7 +622,21 @@
   ],
   "explanation": "GKE provides automatic scaling for handling traffic spikes, while Cloud Firestore offers a scalable NoSQL database with built-in security features. This combination meets all requirements for availability, performance, and data protection.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.954,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "instance"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28493,
@@ -371,7 +653,24 @@
   ],
   "explanation": "Dataflow handles stream and batch processing at scale. BigQuery enables ad-hoc analytics on large datasets. Cloud Storage provides cost-effective, compliant archival storage with lifecycle management for long-term retention requirements.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "batch",
+   "bigquery",
+   "data",
+   "dataflow",
+   "dataproc",
+   "kafka",
+   "processing"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Data Processing Technologies"
  },
  {
   "id": 28494,
@@ -388,7 +687,18 @@
   ],
   "explanation": "The General Data Protection Regulation (GDPR) governs PII processing for EU residents. It applies regardless of where the business is located, requiring strict data protection measures and user rights for European customers.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S3",
+  "classificationConfidence": 0.683,
+  "classificationHits": [
+   "application"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Supporting the Application Design"
  },
  {
   "id": 28495,
@@ -405,7 +715,19 @@
   ],
   "explanation": "Network tags allow logical grouping of instances, and firewall rules can target these tags to precisely control traffic flow. This implements least-privilege access between tiers with minimal administrative overhead.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.702,
+  "classificationHits": [
+   "access",
+   "vpc service controls"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 28496,
@@ -422,7 +744,25 @@
   ],
   "explanation": "Customer-Managed Encryption Keys (CMEK) give control over encryption, while IAM provides granular access management. Together they offer strong data protection and access control for compliance scenarios.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "cloud storage",
+   "cmek",
+   "customer-managed",
+   "data",
+   "encryption",
+   "protection",
+   "vpc"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  },
  {
   "id": 28497,
@@ -439,7 +779,19 @@
   ],
   "explanation": "IAP is a core BeyondCorp component that enforces access based on user identity and device context. Integrated with Google Workspace, it provides secure access without VPNs while meeting all authentication requirements.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf",
-  "section": "Case Study"
+  "section": "S4",
+  "sectionContext": "Case Study",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.736,
+  "classificationHits": [
+   "vpc",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28498,
@@ -452,11 +804,25 @@
    "Single-region Cloud SQL with backups"
   ],
   "correct": [
-   "B, D"
+   "B",
+   "D"
   ],
   "explanation": "Managed instance groups with autoscaling provide horizontal scalability and automatic recovery. Cloud SQL with backups enables database availability across regions. Together these components support high availability and regional failover capabilities.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M2",
+  "label": "D1/M2/S1",
+  "classificationConfidence": 0.967,
+  "classificationHits": [
+   "availability",
+   "failover",
+   "high"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Robust Cloud Infrastructures",
+  "sectionTitle": "High Availability and Failover Design"
  },
  {
   "id": 28499,
@@ -473,7 +839,20 @@
   ],
   "explanation": "Cloud Storage offers the most cost-effective bulk storage. Using existing FTP processes with automated uploads to Cloud Storage meets data retention needs while minimizing migration complexity and ongoing costs.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_terramearth.pdf",
-  "section": "Case Study"
+  "section": "S4",
+  "sectionContext": "Case Study",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28500,
@@ -490,7 +869,20 @@
   ],
   "explanation": "Reconfiguring with non-overlapping IP ranges is the only sustainable solution. This eliminates routing conflicts while allowing full connectivity between all resources through the VPN tunnel.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.824,
+  "classificationHits": [
+   "data",
+   "vpc",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28501,
@@ -507,7 +899,26 @@
   ],
   "explanation": "An external HTTP(S) load balancer provides global load balancing to reduce latency. Cloud Armor offers DDoS protection and WAF capabilities to mitigate attacks. This combination addresses both performance and security requirements.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "armor",
+   "cloud",
+   "compute engine",
+   "ddos",
+   "gke",
+   "iap",
+   "vpc",
+   "waf",
+   "with"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Securing Networks with IAP, Cloud Armor, and Cloud IDS"
  },
  {
   "id": 28502,
@@ -520,11 +931,24 @@
    "Use public GKE clusters for easier accessibility"
   ],
   "correct": [
-   "B, C"
+   "B",
+   "C"
   ],
   "explanation": "Least privilege IAM policies minimize attack surfaces, while Cloud Audit Logs provide visibility into API activities. These are fundamental security practices that meet compliance requirements without compromising functionality.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_mountkirk_games.pdf",
-  "section": "Case Study"
+  "section": "S6",
+  "sectionContext": "Case Study",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S6",
+  "classificationConfidence": 0.804,
+  "classificationHits": [
+   "compliance",
+   "iam"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Compliance and Observability"
  },
  {
   "id": 28503,
@@ -537,11 +961,25 @@
    "Cloud Functions"
   ],
   "correct": [
-   "A, B"
+   "A",
+   "B"
   ],
   "explanation": "GKE provides full container orchestration capabilities, while App Engine Flexible offers a simpler managed environment for containers. Both are fully managed services that support custom containers with different levels of control.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.956,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28504,
@@ -558,7 +996,21 @@
   ],
   "explanation": "Object Lifecycle Management automatically handles storage class transitions and deletions based on age criteria. This managed solution requires no custom scripting and executes reliably according to the defined rules.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.962,
+  "classificationHits": [
+   "cloud",
+   "cloud storage",
+   "data",
+   "management"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  },
  {
   "id": 28505,
@@ -575,7 +1027,18 @@
   ],
   "explanation": "Increasing the initial delay allows VMs sufficient time to fully initialize before health checks begin. This prevents premature scale-up events while maintaining the autoscaling group's responsiveness to actual demand.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.648,
+  "classificationHits": [
+   "instance"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28506,
@@ -592,7 +1055,22 @@
   ],
   "explanation": "Cloud KMS provides secure key management with audit logging and rotation capabilities. Combined with IAP for identity-based access control, this offers a comprehensive security solution that meets regulatory requirements.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.973,
+  "classificationHits": [
+   "cloud",
+   "data",
+   "encryption",
+   "kms",
+   "management"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  },
  {
   "id": 28507,
@@ -609,7 +1087,18 @@
   ],
   "explanation": "Non-preemptible instances ensure jobs aren't interrupted, while GPUs provide the required acceleration. Cluster autoscaling maintains capacity with at least one node always available to accept workloads.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S3",
+  "classificationConfidence": 0.591,
+  "classificationHits": [
+   "gke"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration"
  },
  {
   "id": 28508,
@@ -626,7 +1115,22 @@
   ],
   "explanation": "Multi-region instance groups with HTTP load balancing provide automatic regional failover. This architecture ensures high availability while keeping all resources within the same project for easier management.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "groups",
+   "instance"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28509,
@@ -643,7 +1147,18 @@
   ],
   "explanation": "Redundant connections provide failover capability if one connection fails. This high-availability approach maintains connectivity during outages without requiring over-provisioning of bandwidth or resources.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M2",
+  "label": "D1/M2/S4",
+  "classificationConfidence": 0.623,
+  "classificationHits": [
+   "performance"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Robust Cloud Infrastructures",
+  "sectionTitle": "Performance and Latency"
  },
  {
   "id": 28510,
@@ -660,7 +1175,19 @@
   ],
   "explanation": "Cloud Pub/Sub provides a fully managed, scalable queueing service that buffers messages during processing spikes. The application can consume messages at its own pace, preventing data loss without requiring additional VMs.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.674,
+  "classificationHits": [
+   "cloud pub",
+   "managed"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28511,
@@ -677,7 +1204,22 @@
   ],
   "explanation": "GKE provides scalability and modern application management. An external HTTP(S) load balancer ensures global load balancing with encryption. Cloud Armor adds DDoS protection and security policy enforcement.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf",
-  "section": "Healthcare"
+  "section": "S5",
+  "sectionContext": "Healthcare",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S5",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "app engine",
+   "compute",
+   "compute engine",
+   "gke",
+   "kubernetes"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Compute Resources and Platform Products"
  },
  {
   "id": 28512,
@@ -694,7 +1236,19 @@
   ],
   "explanation": "Dedicated Interconnect provides a direct, high-speed connection that reduces latency and packet loss compared to VPN connections.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S1",
+  "classificationConfidence": 0.803,
+  "classificationHits": [
+   "cloud",
+   "interconnect"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Configuring Cloud VPN and Interconnect"
  },
  {
   "id": 28513,
@@ -711,7 +1265,22 @@
   ],
   "explanation": "Anthos provides centralized management and monitoring for multiple GKE clusters across regions.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "centralized",
+   "cloud",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28514,
@@ -728,7 +1297,23 @@
   ],
   "explanation": "Cloud KMS allows customers to manage their own encryption keys while being fully managed by Google, reducing operational overhead.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "customer-managed",
+   "data",
+   "encryption",
+   "google",
+   "kms"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  },
  {
   "id": 28515,
@@ -745,7 +1330,22 @@
   ],
   "explanation": "Transfer Appliance is designed for large-scale data transfers when network bandwidth is insufficient.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "cloud storage",
+   "data",
+   "transfer",
+   "transfer appliance"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Optimizing Data Transfer and Latency and Planning for Data Growth"
  },
  {
   "id": 28516,
@@ -762,7 +1362,20 @@
   ],
   "explanation": "Separate projects for each application and environment provide isolation and better access control.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "development",
+   "with"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Working with Cloud Emulators for Local Development"
  },
  {
   "id": 28517,
@@ -775,11 +1388,23 @@
    "Migrating without changes is called Lift and Shift."
   ],
   "correct": [
-   "C, D"
+   "C",
+   "D"
   ],
   "explanation": "Improve and Move involves optimizing before migration, while Lift and Shift means moving without changes.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.662,
+  "classificationHits": [
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28518,
@@ -796,7 +1421,20 @@
   ],
   "explanation": "VPC Peering allows direct private connectivity between VPC networks within Google's network.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "interconnect",
+   "vpc"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Configuring Cloud VPN and Interconnect"
  },
  {
   "id": 28519,
@@ -813,7 +1451,19 @@
   ],
   "explanation": "A secrets management system provides centralized, secure storage for sensitive credentials.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S3",
+  "classificationConfidence": 0.729,
+  "classificationHits": [
+   "application",
+   "microservices"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Supporting the Application Design"
  },
  {
   "id": 28520,
@@ -830,7 +1480,19 @@
   ],
   "explanation": "Alerting policies define conditions and thresholds for notifications based on specific metrics.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.876,
+  "classificationHits": [
+   "cloud",
+   "logging"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28521,
@@ -847,7 +1509,20 @@
   ],
   "explanation": "VPC Peering enables direct, low-latency communication between VPCs using Google's backbone network.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S2",
+  "classificationConfidence": 0.786,
+  "classificationHits": [
+   "peering",
+   "vpc",
+   "vpc peering"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Configuring VPC Peering"
  },
  {
   "id": 28522,
@@ -864,7 +1539,18 @@
   ],
   "explanation": "Partner Interconnect allows connection through a service provider's network when Dedicated Interconnect isn't feasible.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf",
-  "section": "Healthcare"
+  "section": "S1",
+  "sectionContext": "Healthcare",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S1",
+  "classificationConfidence": 0.841,
+  "classificationHits": [
+   "interconnect"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Integration with On-premises and Multicloud Environments"
  },
  {
   "id": 28523,
@@ -881,7 +1567,21 @@
   ],
   "explanation": "Cloud Run automatically scales to zero when not in use, minimizing costs for low-traffic applications.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "cloud run",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28524,
@@ -898,7 +1598,22 @@
   ],
   "explanation": "GKE provides scalability, Cloud Spanner offers global consistency, and Cloud Interconnect enables high-bandwidth on-premises connectivity.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud interconnect",
+   "cloud vpn",
+   "gke",
+   "interconnect",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Integration with On-premises and Multicloud Environments"
  },
  {
   "id": 28525,
@@ -915,7 +1630,20 @@
   ],
   "explanation": "Warm standby with minimal running infrastructure balances cost and recovery time, while multi-regional storage ensures data availability.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D4",
+  "module": "M1",
+  "label": "D4/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "disaster",
+   "disaster recovery",
+   "recovery"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Designing for Business Continuity and Disaster Recovery"
  },
  {
   "id": 28526,
@@ -932,7 +1660,18 @@
   ],
   "explanation": "Coldline provides low-cost storage for infrequently accessed data that still requires immediate availability.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S4",
+  "classificationConfidence": 0.644,
+  "classificationHits": [
+   "data"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Optimizing Data Transfer and Latency and Planning for Data Growth"
  },
  {
   "id": 28527,
@@ -949,7 +1688,20 @@
   ],
   "explanation": "Dedicated Interconnect provides a direct physical connection that reduces latency and packet loss.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "cloud vpn",
+   "interconnect"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Configuring Cloud VPN and Interconnect"
  },
  {
   "id": 28528,
@@ -962,11 +1714,26 @@
    "Store data in Cloud Spanner."
   ],
   "correct": [
-   "A, C"
+   "A",
+   "C"
   ],
   "explanation": "Cloud Storage provides cost-effective archival storage, while BigQuery enables serverless analytics on the data.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S1",
+  "classificationConfidence": 0.819,
+  "classificationHits": [
+   "bigquery",
+   "cloud",
+   "cloud storage",
+   "google"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Mastering Cloud Shell and the Google Cloud SDK"
  },
  {
   "id": 28529,
@@ -983,7 +1750,22 @@
   ],
   "explanation": "Shielded VMs provide verified boot integrity, protecting against rootkit and bootkit attacks for sensitive workloads.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "instance",
+   "managed",
+   "preemptible"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28530,
@@ -1000,7 +1782,19 @@
   ],
   "explanation": "Deployments manage replica sets, and Services provide stable DNS names for accessing pods regardless of scaling.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.694,
+  "classificationHits": [
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28531,
@@ -1017,7 +1811,20 @@
   ],
   "explanation": "Dedicated Interconnect provides direct, high-bandwidth connectivity with low latency between on-premises and Google Cloud.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.966,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28532,
@@ -1034,7 +1841,20 @@
   ],
   "explanation": "Mirrored topology replicates the on-premises network in the cloud for seamless failover during disasters.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.761,
+  "classificationHits": [
+   "cloud",
+   "data",
+   "google"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  },
  {
   "id": 28533,
@@ -1051,7 +1871,20 @@
   ],
   "explanation": "This combination allows viewing billing data and modifying billing settings without granting unnecessary permissions.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S1",
+  "classificationConfidence": 0.653,
+  "classificationHits": [
+   "iam",
+   "organization",
+   "project"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Designing Identity and Resource Hierarchy"
  },
  {
   "id": 28534,
@@ -1068,7 +1901,22 @@
   ],
   "explanation": "CI/CD pipelines with isolated emulator testing ensure proper component interaction without affecting production.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "emulator",
+   "emulators",
+   "local",
+   "with"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Working with Cloud Emulators for Local Development"
  },
  {
   "id": 28535,
@@ -1085,7 +1933,19 @@
   ],
   "explanation": "Pub/Sub provides scalable message queuing that buffers data during processing spikes.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S3",
+  "classificationConfidence": 0.84,
+  "classificationHits": [
+   "data",
+   "processing"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Data Processing Technologies"
  },
  {
   "id": 28536,
@@ -1102,7 +1962,20 @@
   ],
   "explanation": "GKE provides scalability, HTTP(S) load balancing ensures encrypted traffic, and Cloud Armor provides DDoS protection.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf",
-  "section": "Healthcare"
+  "section": "S4",
+  "sectionContext": "Healthcare",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.988,
+  "classificationHits": [
+   "data",
+   "external",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28537,
@@ -1119,7 +1992,23 @@
   ],
   "explanation": "The Pricing Calculator provides comprehensive cost estimation for all Google Cloud services and components.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "batch",
+   "bigquery",
+   "cloud storage",
+   "data",
+   "dataproc",
+   "processing"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Data Processing Technologies"
  },
  {
   "id": 28538,
@@ -1136,7 +2025,22 @@
   ],
   "explanation": "Pub/Sub handles high-volume ingestion, Dataflow processes in real-time, and BigQuery supports streaming analytics.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "cloud",
+   "compute engine",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28539,
@@ -1153,7 +2057,18 @@
   ],
   "explanation": "A dedicated scalable environment in GCP allows realistic testing without impacting production.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_mountkirk_games.pdf",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D4",
+  "module": "M3",
+  "label": "D4/M3/S3",
+  "classificationConfidence": 0.606,
+  "classificationHits": [
+   "testing"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Ensuring Production Reliability",
+  "sectionTitle": "Validating Security with Penetration Testing"
  },
  {
   "id": 28540,
@@ -1170,7 +2085,19 @@
   ],
   "explanation": "Cloud Interconnect provides the high-bandwidth, low-latency connection needed for real-time database access.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S1",
+  "classificationConfidence": 0.814,
+  "classificationHits": [
+   "cloud",
+   "interconnect"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Configuring Cloud VPN and Interconnect"
  },
  {
   "id": 28541,
@@ -1187,7 +2114,19 @@
   ],
   "explanation": "Partner Interconnect enables private connectivity through service providers without requiring new hardware.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf",
-  "section": "Healthcare"
+  "section": "S4",
+  "sectionContext": "Healthcare",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.811,
+  "classificationHits": [
+   "data",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28542,
@@ -1204,7 +2143,20 @@
   ],
   "explanation": "Google Marketplace provides pre-configured software solutions like Jenkins for easy deployment.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.8,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28543,
@@ -1221,7 +2173,20 @@
   ],
   "explanation": "YouTube Live Streaming API leverages Google's global infrastructure for low-latency video delivery.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_helicopter_racing_league.pdf",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.796,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28544,
@@ -1238,7 +2203,20 @@
   ],
   "explanation": "Healthcare API is designed for PHI with built-in HIPAA compliance, and audit logs provide necessary monitoring.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.982,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28545,
@@ -1255,7 +2233,20 @@
   ],
   "explanation": "Circuit breakers prevent cascading failures by isolating failing services, with backoff allowing recovery time.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D4",
+  "module": "M1",
+  "label": "D4/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "disaster",
+   "disaster recovery",
+   "recovery"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Designing for Business Continuity and Disaster Recovery"
  },
  {
   "id": 28546,
@@ -1272,7 +2263,20 @@
   ],
   "explanation": "Cloud Run automatically scales containerized applications with no infrastructure management required.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.901,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "cloud run"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28547,
@@ -1289,7 +2293,20 @@
   ],
   "explanation": "Health checks detect failures and trigger the load balancer to redirect traffic to healthy standby instances.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S4",
+  "classificationConfidence": 0.851,
+  "classificationHits": [
+   "armor",
+   "cloud",
+   "with"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Securing Networks with IAP, Cloud Armor, and Cloud IDS"
  },
  {
   "id": 28548,
@@ -1306,7 +2323,24 @@
   ],
   "explanation": "Managed Instance Groups support autoscaling based on CPU utilization for lift-and-shift workloads.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "groups",
+   "instance",
+   "managed",
+   "mig"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28549,
@@ -1323,7 +2357,21 @@
   ],
   "explanation": "Multi-node clusters with SAP HANA System Replication provide both high availability and disaster recovery.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.914,
+  "classificationHits": [
+   "cloud",
+   "data",
+   "gke",
+   "google"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  },
  {
   "id": 28550,
@@ -1340,7 +2388,21 @@
   ],
   "explanation": "Dataflow is a fully managed service for both batch and stream data processing with real-time analytics capabilities.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.962,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "managed"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28551,
@@ -1357,7 +2419,19 @@
   ],
   "explanation": "Creating targeted service perimeters around sensitive projects allows Cloud Shell usage while protecting critical services.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_mountkirk_games.pdf",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.786,
+  "classificationHits": [
+   "access",
+   "vpc service controls"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 28552,
@@ -1374,7 +2448,18 @@
   ],
   "explanation": "These KPIs directly align with the stated business goals of availability, scalability, and engagement.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D4",
+  "module": "M2",
+  "label": "D4/M2/S2",
+  "classificationConfidence": 0.67,
+  "classificationHits": [
+   "success"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Aligning Business Processes with Cloud Strategy",
+  "sectionTitle": "Creating Decision-making and Customer Success Frameworks"
  },
  {
   "id": 28553,
@@ -1391,7 +2476,20 @@
   ],
   "explanation": "VPC Service Controls create security perimeters that prevent data from leaving specified regions.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf",
-  "section": "Healthcare"
+  "section": "S4",
+  "sectionContext": "Healthcare",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.811,
+  "classificationHits": [
+   "data",
+   "vpc",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28554,
@@ -1408,7 +2506,21 @@
   ],
   "explanation": "Local SSDs provide the highest performance but are ephemeral (data doesn't persist after instance termination).",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "instance"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28555,
@@ -1425,7 +2537,20 @@
   ],
   "explanation": "Regional Cloud SQL ensures EU data residency, and automated deletion complies with right to erasure requirements.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S3",
+  "classificationConfidence": 0.916,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "processing"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Data Processing Technologies"
  },
  {
   "id": 28556,
@@ -1442,7 +2567,20 @@
   ],
   "explanation": "Archive storage offers the lowest cost for rarely accessed data that must be retained long-term.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S4",
+  "classificationConfidence": 0.72,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "lifecycle"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Optimizing Data Transfer and Latency and Planning for Data Growth"
  },
  {
   "id": 28557,
@@ -1459,7 +2597,21 @@
   ],
   "explanation": "App Engine provides global frontend scaling, shared VPC enables private communication, and SSL/TLS ensures encryption.",
   "reference": "",
-  "section": "General"
+  "section": "S5",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S5",
+  "classificationConfidence": 0.913,
+  "classificationHits": [
+   "app engine",
+   "compute",
+   "compute engine",
+   "gke"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Compute Resources and Platform Products"
  },
  {
   "id": 28558,
@@ -1476,7 +2628,21 @@
   ],
   "explanation": "Cloud Monitoring/Logging provides full observability, and CMEK ensures encryption control for sensitive financial data.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.929,
+  "classificationHits": [
+   "cloud",
+   "gke",
+   "logging",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28559,
@@ -1493,7 +2659,16 @@
   ],
   "explanation": "Rate limiting API calls prevents bots from overwhelming the system while allowing legitimate usage.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D4",
+  "module": "M1",
+  "label": "D4/M1/S1",
+  "classificationConfidence": 0.476,
+  "classificationHits": [],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Modernizing the SDLC with CI/CD"
  },
  {
   "id": 28560,
@@ -1510,7 +2685,19 @@
   ],
   "explanation": "A pilot migration allows testing the process with lower risk before full migration.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M4",
+  "label": "D1/M4/S2",
+  "classificationConfidence": 0.64,
+  "classificationHits": [
+   "migration",
+   "planning"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Plan Cloud Migrations",
+  "sectionTitle": "Planning a Migration"
  },
  {
   "id": 28561,
@@ -1527,7 +2714,21 @@
   ],
   "explanation": "Cloud KMS allows creating and managing regional encryption keys while being fully managed.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.869,
+  "classificationHits": [
+   "cloud",
+   "data",
+   "encryption",
+   "kms"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  },
  {
   "id": 28562,
@@ -1544,7 +2745,20 @@
   ],
   "explanation": "App Engine Flexible supports custom networking, and Cloud VPN provides secure connectivity to on-premises resources.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28563,
@@ -1561,7 +2775,21 @@
   ],
   "explanation": "Pub/Sub handles high-volume ingestion, Dataflow processes in real-time, and Bigtable scales for global data.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S2",
+  "classificationConfidence": 0.799,
+  "classificationHits": [
+   "bigtable",
+   "cloud",
+   "firestore",
+   "with"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Working with Cloud Emulators for Local Development"
  },
  {
   "id": 28564,
@@ -1578,7 +2806,20 @@
   ],
   "explanation": "Shared VPC with layered subnets and firewall rules replicates on-premises network segmentation.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S2",
+  "classificationConfidence": 0.742,
+  "classificationHits": [
+   "firewall",
+   "shared vpc",
+   "vpc"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Cloud-native Networking"
  },
  {
   "id": 28565,
@@ -1595,7 +2836,20 @@
   ],
   "explanation": "This combination provides read-only access to both organization and project metadata without modification rights.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S1",
+  "classificationConfidence": 0.642,
+  "classificationHits": [
+   "iam",
+   "organization",
+   "project"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Designing Identity and Resource Hierarchy"
  },
  {
   "id": 28566,
@@ -1612,7 +2866,21 @@
   ],
   "explanation": "Pub/Sub captures change events efficiently, and Dataflow streams them to BigQuery with minimal latency.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.829,
+  "classificationHits": [
+   "bigquery",
+   "cloud",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28567,
@@ -1629,7 +2897,21 @@
   ],
   "explanation": "Bigtable handles high-speed market data, Cloud Storage provides auditing, and Pub/Sub enables real-time messaging.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.876,
+  "classificationHits": [
+   "bigquery",
+   "cloud",
+   "compute engine",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28568,
@@ -1646,7 +2928,20 @@
   ],
   "explanation": "Non-overlapping CIDRs prevent conflicts, and redundant Interconnects provide scalable, reliable hybrid connectivity.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "interconnect",
+   "vpc"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Configuring Cloud VPN and Interconnect"
  },
  {
   "id": 28569,
@@ -1663,7 +2958,19 @@
   ],
   "explanation": "Standard HTTP codes indicate error categories, while payload details help developers diagnose specific issues.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M3",
+  "label": "D6/M3/S3",
+  "classificationConfidence": 0.71,
+  "classificationHits": [
+   "best",
+   "practices"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Troubleshooting and Incident Response",
+  "sectionTitle": "Incident Management Best Practices"
  },
  {
   "id": 28570,
@@ -1680,7 +2987,19 @@
   ],
   "explanation": "Active-active with globally consistent Cloud Spanner provides continuous availability during regional outages.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S1",
+  "classificationConfidence": 0.661,
+  "classificationHits": [
+   "cloud",
+   "spanner"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery"
  },
  {
   "id": 28571,
@@ -1697,7 +3016,20 @@
   ],
   "explanation": "APIs must be explicitly enabled before use, which can be done through the Cloud Console.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28572,
@@ -1714,7 +3046,22 @@
   ],
   "explanation": "Organization with department folders and team projects provides policy inheritance with resource isolation.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "hierarchy",
+   "iam",
+   "organization",
+   "project",
+   "resource"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Designing Identity and Resource Hierarchy"
  },
  {
   "id": 28573,
@@ -1731,7 +3078,21 @@
   ],
   "explanation": "BigQuery provides long-term storage with powerful analytics capabilities for log data.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S1",
+  "classificationConfidence": 0.826,
+  "classificationHits": [
+   "bigquery",
+   "bigtable",
+   "cloud",
+   "cloud storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery"
  },
  {
   "id": 28574,
@@ -1748,7 +3109,19 @@
   ],
   "explanation": "Archive storage offers the lowest cost for data that must be retained long-term with infrequent access.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.726,
+  "classificationHits": [
+   "data",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28575,
@@ -1765,7 +3138,19 @@
   ],
   "explanation": "Expanding the existing subnet range is the simplest solution that maintains all existing resources.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M4",
+  "label": "D1/M4/S1",
+  "classificationConfidence": 0.601,
+  "classificationHits": [
+   "existing",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Plan Cloud Migrations",
+  "sectionTitle": "Integration with Existing Systems"
  },
  {
   "id": 28576,
@@ -1782,7 +3167,20 @@
   ],
   "explanation": "APIs must be explicitly enabled before use, regardless of service account permissions.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28577,
@@ -1799,7 +3197,19 @@
   ],
   "explanation": "Rolling updates incrementally replace pods while health checks ensure traffic only goes to healthy instances.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S3",
+  "classificationConfidence": 0.564,
+  "classificationHits": [
+   "application",
+   "gke"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Supporting the Application Design"
  },
  {
   "id": 28578,
@@ -1816,7 +3226,18 @@
   ],
   "explanation": "Tags with specific firewall rules provide granular control over inter-tier communication.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.721,
+  "classificationHits": [
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28579,
@@ -1833,7 +3254,22 @@
   ],
   "explanation": "Cloud Storage is optimized for object storage, and Cloud Functions can process upload events efficiently.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "cloud storage",
+   "filestore",
+   "firestore",
+   "storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
  },
  {
   "id": 28580,
@@ -1850,7 +3286,20 @@
   ],
   "explanation": "Canary deployments gradually roll out changes to a small percentage of users first, limiting potential impact.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M2",
+  "label": "D6/M2/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "blue/green",
+   "canary",
+   "deployments"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Managing Deployments and Ensuring Quality",
+  "sectionTitle": "Implementing Blue/Green and Canary Deployments"
  },
  {
   "id": 28581,
@@ -1867,7 +3316,20 @@
   ],
   "explanation": "Multi-region deployment with global load balancing ensures availability, while multi-regional storage provides data redundancy.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M2",
+  "label": "D1/M2/S1",
+  "classificationConfidence": 0.931,
+  "classificationHits": [
+   "availability",
+   "high",
+   "multi-region"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Robust Cloud Infrastructures",
+  "sectionTitle": "High Availability and Failover Design"
  },
  {
   "id": 28582,
@@ -1884,7 +3346,19 @@
   ],
   "explanation": "A balanced scorecard approach considering all relevant KPIs provides the most comprehensive evaluation.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.778,
+  "classificationHits": [
+   "cloud",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28583,
@@ -1901,7 +3375,19 @@
   ],
   "explanation": "Traffic splitting allows testing the fix with a small percentage of users before full rollout.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.729,
+  "classificationHits": [
+   "app engine",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28584,
@@ -1918,7 +3404,19 @@
   ],
   "explanation": "These SLOs provide measurable targets for both service reliability (successful requests) and performance (latency).",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M2",
+  "label": "D1/M2/S4",
+  "classificationConfidence": 0.798,
+  "classificationHits": [
+   "latency",
+   "performance"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Robust Cloud Infrastructures",
+  "sectionTitle": "Performance and Latency"
  },
  {
   "id": 28585,
@@ -1935,7 +3433,22 @@
   ],
   "explanation": "Pub/Sub handles ingestion spikes, Dataflow processes in real-time, and BigQuery provides analytics capabilities.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "cloud",
+   "compute engine",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28586,
@@ -1952,7 +3465,19 @@
   ],
   "explanation": "A secrets management system provides secure storage, access control, and auditing for sensitive credentials.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.754,
+  "classificationHits": [
+   "management",
+   "secrets"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  },
  {
   "id": 28587,
@@ -1969,7 +3494,21 @@
   ],
   "explanation": "Pub/Sub handles high-volume ingestion, Dataflow enables real-time processing, and BigQuery supports analytics.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S3",
+  "classificationConfidence": 0.853,
+  "classificationHits": [
+   "bigquery",
+   "dataflow",
+   "dataproc",
+   "processing"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Data Processing Technologies"
  },
  {
   "id": 28588,
@@ -1986,7 +3525,21 @@
   ],
   "explanation": "Multi-region GKE provides elastic scaling, Firestore handles metadata, and global CDN delivers content efficiently.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.967,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "mig"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28589,
@@ -2003,7 +3556,18 @@
   ],
   "explanation": "The maxNumReplicas parameter directly controls the maximum number of instances in an autoscaling group.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.488,
+  "classificationHits": [
+   "instance"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28590,
@@ -2020,7 +3584,20 @@
   ],
   "explanation": "Non-overlapping CIDRs prevent IP conflicts, and redundant Interconnects provide reliable hybrid connectivity.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "interconnect",
+   "vpc"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Configuring Cloud VPN and Interconnect"
  },
  {
   "id": 28591,
@@ -2037,7 +3614,20 @@
   ],
   "explanation": "Cloud Interconnect provides dedicated, high-performance connectivity without managing infrastructure.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28592,
@@ -2054,7 +3644,19 @@
   ],
   "explanation": "Granular ACLs provide precise access control to sensitive data following least privilege principles.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S1",
+  "classificationConfidence": 0.718,
+  "classificationHits": [
+   "cloud",
+   "google"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Mastering Cloud Shell and the Google Cloud SDK"
  },
  {
   "id": 28593,
@@ -2071,7 +3673,20 @@
   ],
   "explanation": "Cloud Spanner provides global scale, strong consistency, and automatic scaling for high-volume transactional workloads.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.822,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28594,
@@ -2088,7 +3703,22 @@
   ],
   "explanation": "Warm standby meets RPO/RTO requirements cost-effectively with minimal running infrastructure in the DR region.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D4",
+  "module": "M1",
+  "label": "D4/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "disaster",
+   "disaster recovery",
+   "recovery",
+   "rpo",
+   "rto"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Designing for Business Continuity and Disaster Recovery"
  },
  {
   "id": 28595,
@@ -2105,7 +3735,20 @@
   ],
   "explanation": "Department folders with team projects enable billing separation and policy inheritance while maintaining isolation.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S1",
+  "classificationConfidence": 0.778,
+  "classificationHits": [
+   "folder",
+   "organization",
+   "project"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Designing Identity and Resource Hierarchy"
  },
  {
   "id": 28596,
@@ -2122,7 +3765,19 @@
   ],
   "explanation": "Automated testing throughout the pipeline catches issues early without creating bottlenecks.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M2",
+  "label": "D6/M2/S2",
+  "classificationConfidence": 0.602,
+  "classificationHits": [
+   "control",
+   "quality"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Managing Deployments and Ensuring Quality",
+  "sectionTitle": "Quality Control and Continuous Improvement"
  },
  {
   "id": 28597,
@@ -2139,7 +3794,21 @@
   ],
   "explanation": "Multi-region GKE provides elastic scaling, Firestore handles metadata, and CDN delivers content globally.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.972,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "mig"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28598,
@@ -2156,7 +3825,19 @@
   ],
   "explanation": "Cloud CDN with Media CDN optimizes video delivery to global edge locations for low-latency streaming.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_helicopter_racing_league.pdf",
-  "section": "Gaming"
+  "section": "S4",
+  "sectionContext": "Gaming",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.904,
+  "classificationHits": [
+   "cloud storage",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28599,
@@ -2169,11 +3850,24 @@
    "Use preemptible VMs for batch jobs."
   ],
   "correct": [
-   "B, D"
+   "B",
+   "D"
   ],
   "explanation": "Billing export with labels enables cost tracking by project, while preemptible VMs reduce compute costs for batch workloads.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S2",
+  "classificationConfidence": 0.756,
+  "classificationHits": [
+   "local",
+   "with"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Working with Cloud Emulators for Local Development"
  },
  {
   "id": 28600,
@@ -2190,7 +3884,20 @@
   ],
   "explanation": "AutoML Tables automatically builds and can periodically retrain models on structured data without ML expertise.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.712,
+  "classificationHits": [
+   "bigquery",
+   "cloud",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28601,
@@ -2207,7 +3914,20 @@
   ],
   "explanation": "Group-based access with read-only permissions simplifies user management while maintaining security.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.721,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28602,
@@ -2224,7 +3944,24 @@
   ],
   "explanation": "Rehosting provides minimal downtime, while Bare Metal Solution maintains Oracle compatibility during migration.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "app engine",
+   "bigquery",
+   "cloud",
+   "cloud storage",
+   "compute engine",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28603,
@@ -2241,7 +3978,22 @@
   ],
   "explanation": "Logging sinks to a central project combined with Cloud Monitoring provides unified observability.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "centralized",
+   "cloud",
+   "cloud storage",
+   "logging",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28604,
@@ -2258,7 +4010,18 @@
   ],
   "explanation": "HTTP(S) Load Balancer is global, integrates with CDN, and supports content-based routing.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S1",
+  "classificationConfidence": 0.644,
+  "classificationHits": [
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Integration with On-premises and Multicloud Environments"
  },
  {
   "id": 28605,
@@ -2275,7 +4038,20 @@
   ],
   "explanation": "GKE supports container orchestration, rolling updates, and HTTPS load balancing for secure traffic.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S3",
+  "classificationConfidence": 0.942,
+  "classificationHits": [
+   "container",
+   "gke",
+   "orchestration"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration"
  },
  {
   "id": 28606,
@@ -2292,7 +4068,19 @@
   ],
   "explanation": "DaemonSet ensures exactly one pod runs on each node, ideal for cluster-wide monitoring.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S3",
+  "classificationConfidence": 0.677,
+  "classificationHits": [
+   "gke",
+   "kubernetes"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration"
  },
  {
   "id": 28607,
@@ -2309,7 +4097,21 @@
   ],
   "explanation": "BigQuery ML can create and execute ML models directly on the data using SQL queries.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.836,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "dataflow",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28608,
@@ -2326,7 +4128,19 @@
   ],
   "explanation": "Cloud DLP can tokenize/anonymize PII before processing while maintaining data utility.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S3",
+  "classificationConfidence": 0.662,
+  "classificationHits": [
+   "data",
+   "processing"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Data Processing Technologies"
  },
  {
   "id": 28609,
@@ -2343,7 +4157,20 @@
   ],
   "explanation": "Cloud Interconnect provides dedicated, high-bandwidth connectivity with lower latency than VPN.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S2",
+  "classificationConfidence": 0.786,
+  "classificationHits": [
+   "peering",
+   "vpc",
+   "vpc peering"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Configuring VPC Peering"
  },
  {
   "id": 28610,
@@ -2360,7 +4187,19 @@
   ],
   "explanation": "Managed services provide encryption and scaling automatically while reducing operational overhead.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.92,
+  "classificationHits": [
+   "designing",
+   "secure"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 28611,
@@ -2377,7 +4216,21 @@
   ],
   "explanation": "Dataproc with preemptible VMs provides significant cost savings for batch workloads with flexible timing.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "preemptible"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28612,
@@ -2394,7 +4247,20 @@
   ],
   "explanation": "Pub/Sub handles ingestion, Dataflow enables real-time processing/transformation, and BigQuery provides analysis.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.85,
+  "classificationHits": [
+   "bigquery",
+   "cloud",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28613,
@@ -2411,7 +4277,22 @@
   ],
   "explanation": "Pub/Sub buffers messages during disconnects, and Dataflow processes streaming data into BigQuery.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.934,
+  "classificationHits": [
+   "bigquery",
+   "cloud sql",
+   "data",
+   "dataflow",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28614,
@@ -2428,7 +4309,19 @@
   ],
   "explanation": "Cloud Functions can trigger on storage events and execute compliance checks immediately.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S3",
+  "classificationConfidence": 0.739,
+  "classificationHits": [
+   "cloud",
+   "storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
  },
  {
   "id": 28615,
@@ -2445,7 +4338,22 @@
   ],
   "explanation": "Containerization provides migration flexibility while setting up modern infrastructure for future scaling.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.867,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "compute engine",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28616,
@@ -2462,7 +4370,20 @@
   ],
   "explanation": "The bq command-line tool handles all BigQuery operations including table creation and data loading.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.9,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28617,
@@ -2479,7 +4400,21 @@
   ],
   "explanation": "Private Google Access allows VMs without public IPs to access Google APIs like Cloud Storage.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S3",
+  "classificationConfidence": 0.853,
+  "classificationHits": [
+   "cloud",
+   "cloud storage",
+   "compute engine",
+   "storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
  },
  {
   "id": 28618,
@@ -2496,7 +4431,21 @@
   ],
   "explanation": "Persistent disk performance scales with size, and resizing doesn't require restarting the instance.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "instance"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28619,
@@ -2513,7 +4462,21 @@
   ],
   "explanation": "Coldline provides low-cost storage for infrequently accessed data that still requires immediate availability.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "disks",
+   "persistent",
+   "storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
  },
  {
   "id": 28620,
@@ -2530,7 +4493,21 @@
   ],
   "explanation": "GKE provides scalability, HTTP(S) load balancing ensures encryption, and Cloud Armor protects against IP spoofing.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf",
-  "section": "Healthcare"
+  "section": "S5",
+  "sectionContext": "Healthcare",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S5",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "app engine",
+   "compute",
+   "compute engine",
+   "gke"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Compute Resources and Platform Products"
  },
  {
   "id": 28621,
@@ -2547,7 +4524,21 @@
   ],
   "explanation": "Cloud Bigtable is designed for massive-scale, low-latency NoSQL workloads with petabyte scalability.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S1",
+  "classificationConfidence": 0.866,
+  "classificationHits": [
+   "bigquery",
+   "bigtable",
+   "cloud",
+   "spanner"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery"
  },
  {
   "id": 28622,
@@ -2564,7 +4555,21 @@
   ],
   "explanation": "Istio provides service mesh security with mTLS, and Private Service Connect keeps traffic private.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S2",
+  "classificationConfidence": 0.984,
+  "classificationHits": [
+   "gke",
+   "peering",
+   "vpc",
+   "vpc peering"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Configuring VPC Peering"
  },
  {
   "id": 28623,
@@ -2581,7 +4586,20 @@
   ],
   "explanation": "Dataproc with preemptible VMs provides significant cost savings for batch processing workloads.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.718,
+  "classificationHits": [
+   "cloud",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28624,
@@ -2598,7 +4616,21 @@
   ],
   "explanation": "Persistent disk performance scales with size, and resizing doesn't require instance restart.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "instance"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28625,
@@ -2615,7 +4647,19 @@
   ],
   "explanation": "Cloud Logging and Monitoring provide comprehensive observability across all application components.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.936,
+  "classificationHits": [
+   "cloud",
+   "logging"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28626,
@@ -2632,7 +4676,20 @@
   ],
   "explanation": "Standard storage during processing with transition to Coldline for archival provides optimal cost efficiency.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S3",
+  "classificationConfidence": 0.917,
+  "classificationHits": [
+   "cloud",
+   "persistent",
+   "storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
  },
  {
   "id": 28627,
@@ -2649,7 +4706,20 @@
   ],
   "explanation": "GKE provides application scalability, and Cloud Interconnect ensures low-latency database access.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.983,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28628,
@@ -2666,7 +4736,20 @@
   ],
   "explanation": "Firewall rule logging must be explicitly enabled to generate the logs that Firewall Insights analyzes.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M2",
+  "label": "D3/M2/S3",
+  "classificationConfidence": 0.739,
+  "classificationHits": [
+   "iam",
+   "logging",
+   "vpc"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Designing for Compliance",
+  "sectionTitle": "Designing for Auditability and Logging"
  },
  {
   "id": 28629,
@@ -2683,7 +4766,20 @@
   ],
   "explanation": "MemoryStore with Redis provides an in-memory cache for frequently accessed data, reducing database queries.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M2",
+  "label": "D1/M2/S4",
+  "classificationConfidence": 0.736,
+  "classificationHits": [
+   "cache",
+   "cdn",
+   "performance"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Robust Cloud Infrastructures",
+  "sectionTitle": "Performance and Latency"
  },
  {
   "id": 28630,
@@ -2700,7 +4796,20 @@
   ],
   "explanation": "SSD Persistent Disks provide high IOPS, and RAID-0 increases throughput while maintaining persistence.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "disks",
+   "persistent",
+   "storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
  },
  {
   "id": 28631,
@@ -2717,7 +4826,21 @@
   ],
   "explanation": "Single VPC with regional subnets provides unified management, while Cloud NAT enhances security.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.919,
+  "classificationHits": [
+   "cloud",
+   "google",
+   "management",
+   "vpc"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  },
  {
   "id": 28632,
@@ -2734,7 +4857,20 @@
   ],
   "explanation": "Pub/Sub provides scalable message queuing, and Managed Instance Groups automatically scale processing capacity.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S1",
+  "classificationConfidence": 0.78,
+  "classificationHits": [
+   "bigquery",
+   "bigtable",
+   "cloud"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery"
  },
  {
   "id": 28633,
@@ -2751,7 +4887,20 @@
   ],
   "explanation": "BigQuery provides petabyte-scale analytics with standard SQL interface.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S1",
+  "classificationConfidence": 0.96,
+  "classificationHits": [
+   "bigquery",
+   "cloud",
+   "cloud sql"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery"
  },
  {
   "id": 28634,
@@ -2768,7 +4917,19 @@
   ],
   "explanation": "These SLOs provide measurable targets for both reliability (successful responses) and performance (latency).",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_mountkirk_games.pdf",
-  "section": "Gaming"
+  "section": "S4",
+  "sectionContext": "Gaming",
+  "domain": "D1",
+  "module": "M2",
+  "label": "D1/M2/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "latency",
+   "performance"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Robust Cloud Infrastructures",
+  "sectionTitle": "Performance and Latency"
  },
  {
   "id": 28635,
@@ -2785,7 +4946,22 @@
   ],
   "explanation": "Pub/Sub handles intermittent connectivity by buffering messages, and Dataflow processes streaming data.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.934,
+  "classificationHits": [
+   "bigquery",
+   "cloud sql",
+   "data",
+   "dataflow",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28636,
@@ -2802,7 +4978,21 @@
   ],
   "explanation": "BigQuery enables analytics on anonymized data and supports automatic data expiration policies.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_mountkirk_games.pdf",
-  "section": "Gaming"
+  "section": "S4",
+  "sectionContext": "Gaming",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "dataflow",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28637,
@@ -2819,7 +5009,21 @@
   ],
   "explanation": "BigQuery analyzes transaction patterns, and Dataflow processes streaming data in real-time.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.936,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "dataflow",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28638,
@@ -2836,7 +5040,20 @@
   ],
   "explanation": "Identity-Aware Proxy provides secure access without VPN by authenticating users via their Google accounts.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf",
-  "section": "Healthcare"
+  "section": "S3",
+  "sectionContext": "Healthcare",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.66,
+  "classificationHits": [
+   "access",
+   "secure",
+   "security"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 28639,
@@ -2853,7 +5070,19 @@
   ],
   "explanation": "Cloud Monitoring enables custom metrics for tracking specific application aspects, with alerting capabilities when thresholds are exceeded. This proactive monitoring helps address performance issues before users are affected.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S1",
+  "classificationConfidence": 0.838,
+  "classificationHits": [
+   "cloud",
+   "google"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Introduction to Google Cloud's Operations Suite"
  },
  {
   "id": 28640,
@@ -2870,7 +5099,20 @@
   ],
   "explanation": "A single multi-region VPC provides centralized control with regional isolation. Cloud NAT enhances security for outbound traffic, while custom firewall rules ensure precise traffic control without compromising performance.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.837,
+  "classificationHits": [
+   "centralized",
+   "cloud",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28641,
@@ -2887,7 +5129,20 @@
   ],
   "explanation": "BigQuery efficiently handles large transaction volumes, while Cloud Dataflow provides serverless real-time processing. Together they offer a scalable solution for immediate fraud detection and alerts.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S1",
+  "classificationConfidence": 0.839,
+  "classificationHits": [
+   "bigquery",
+   "cloud",
+   "google"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Mastering Cloud Shell and the Google Cloud SDK"
  },
  {
   "id": 28642,
@@ -2904,7 +5159,19 @@
   ],
   "explanation": "IAP enables secure BeyondCorp access without VPN by verifying user identity and context. This matches the requirement to replace VPN while maintaining security through Google Workspace authentication.",
   "reference": "https://services.google.com/fh/files/blogs/master_case_study_ehr_healthcare.pdf",
-  "section": "Case Study: EHR Healthcare"
+  "section": "S4",
+  "sectionContext": "Case Study: EHR Healthcare",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "external",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28643,
@@ -2921,7 +5188,19 @@
   ],
   "explanation": "High-priority (low numeric value) allow rules ensure permitted traffic is processed before default deny rules. This guarantees load balancer traffic isn't blocked while restricting other access.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S3",
+  "classificationConfidence": 0.71,
+  "classificationHits": [
+   "securing",
+   "with"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Securing Networks with NGFW"
  },
  {
   "id": 28644,
@@ -2938,7 +5217,21 @@
   ],
   "explanation": "Transfer Appliance physically transports large datasets, bypassing slow internet connections. This meets compliance needs while enabling rapid migration without business disruption.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S4",
+  "classificationConfidence": 0.986,
+  "classificationHits": [
+   "data",
+   "storage transfer",
+   "transfer",
+   "transfer appliance"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Optimizing Data Transfer and Latency and Planning for Data Growth"
  },
  {
   "id": 28645,
@@ -2955,7 +5248,23 @@
   ],
   "explanation": "Pilot light provides a balance between cost and recovery capabilities, maintaining critical components in standby while meeting the specified RPO/RTO requirements.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D4",
+  "module": "M1",
+  "label": "D4/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "disaster",
+   "disaster recovery",
+   "recovery",
+   "rpo",
+   "rto",
+   "spanner"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Designing for Business Continuity and Disaster Recovery"
  },
  {
   "id": 28646,
@@ -2972,7 +5281,22 @@
   ],
   "explanation": "Google-managed encryption provides automatic encryption at rest for all data stored in GCP services, meeting HIPAA requirements without additional configuration.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "data",
+   "encryption",
+   "kms",
+   "management"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  },
  {
   "id": 28647,
@@ -2989,7 +5313,23 @@
   ],
   "explanation": "Pub/Sub handles streaming data ingestion, Dataflow provides complex event processing capabilities, and BigQuery enables anomaly detection through analytics.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "dataflow",
+   "dataproc",
+   "processing",
+   "streaming"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Data Processing Technologies"
  },
  {
   "id": 28648,
@@ -3006,7 +5346,22 @@
   ],
   "explanation": "Dataproc provides managed Hadoop/Spark for batch processing, while preemptible VMs offer significant cost savings for fault-tolerant workloads.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "managed",
+   "preemptible"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28649,
@@ -3023,7 +5378,20 @@
   ],
   "explanation": "Database Migration Service provides continuous replication from on-premises Oracle to Cloud SQL or other GCP database services with minimal downtime.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S2",
+  "classificationConfidence": 0.792,
+  "classificationHits": [
+   "cloud",
+   "spanner",
+   "with"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Working with Cloud Emulators for Local Development"
  },
  {
   "id": 28650,
@@ -3040,7 +5408,21 @@
   ],
   "explanation": "Cloud Storage location restrictions allow you to specify exactly where data will be stored at rest, meeting data sovereignty requirements.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M2",
+  "label": "D3/M2/S2",
+  "classificationConfidence": 0.919,
+  "classificationHits": [
+   "data",
+   "designing",
+   "sovereignty",
+   "vpc"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Designing for Compliance",
+  "sectionTitle": "Designing for Data Privacy, Residency, and Sovereignty"
  },
  {
   "id": 28651,
@@ -3057,7 +5439,20 @@
   ],
   "explanation": "Cloud CDN caches static content at edge locations worldwide, while Cloud Storage provides a scalable backend, delivering optimal performance for global users.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28652,
@@ -3074,7 +5469,21 @@
   ],
   "explanation": "Dataset-level IAM roles assigned to Google Groups provide scalable, manageable access control that can evolve with organizational changes.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "access",
+   "bigquery",
+   "iam",
+   "security"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 28653,
@@ -3091,7 +5500,21 @@
   ],
   "explanation": "Cloud Build provides serverless CI/CD, Artifact Registry manages container images, and Cloud Run offers serverless deployment - a fully managed pipeline.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D4",
+  "module": "M1",
+  "label": "D4/M1/S1",
+  "classificationConfidence": 0.803,
+  "classificationHits": [
+   "artifact registry",
+   "ci/cd",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Modernizing the SDLC with CI/CD"
  },
  {
   "id": 28654,
@@ -3108,7 +5531,21 @@
   ],
   "explanation": "BigQuery handles petabyte-scale data with automatic scaling, supports standard SQL, and can process logs efficiently through scheduled queries.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.83,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "external",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28655,
@@ -3125,7 +5562,19 @@
   ],
   "explanation": "Signed URLs provide time-limited, revocable access to specific objects without exposing credentials or making data publicly accessible.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.804,
+  "classificationHits": [
+   "access",
+   "secure"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 28656,
@@ -3142,7 +5591,23 @@
   ],
   "explanation": "Cloud Bigtable provides consistent sub-millisecond latency for large-scale, globally distributed applications requiring a NoSQL database.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S4",
+  "classificationConfidence": 0.948,
+  "classificationHits": [
+   "appropriate",
+   "bigtable",
+   "firestore",
+   "memorystore",
+   "nosql",
+   "spanner"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Appropriate Storage Types"
  },
  {
   "id": 28657,
@@ -3159,7 +5624,21 @@
   ],
   "explanation": "Memorystore (Redis) provides sub-millisecond latency for session data at scale, with fully managed operation and high availability.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S4",
+  "classificationConfidence": 0.951,
+  "classificationHits": [
+   "data",
+   "firestore",
+   "latency",
+   "spanner"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Optimizing Data Transfer and Latency and Planning for Data Growth"
  },
  {
   "id": 28658,
@@ -3176,7 +5655,23 @@
   ],
   "explanation": "IoT Core ingests device data, Pub/Sub buffers messages, Dataflow processes streams, and BigQuery enables analytics - a complete scalable pipeline.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M3",
+  "label": "D1/M3/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "cloud storage",
+   "data",
+   "dataflow",
+   "dataproc",
+   "processing"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Choosing Data Processing Technologies"
  },
  {
   "id": 28659,
@@ -3193,7 +5688,18 @@
   ],
   "explanation": "Committed use discounts provide significant savings (up to 70%) for predictable workloads while maintaining full VM availability.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S1",
+  "classificationConfidence": 0.62,
+  "classificationHits": [
+   "strategy"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Product Strategy and Success Measurements"
  },
  {
   "id": 28660,
@@ -3210,7 +5716,19 @@
   ],
   "explanation": "Dedicated Interconnect provides private, high-bandwidth (10Gbps or 100Gbps) connections with 99.9% or higher availability SLA.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S1",
+  "classificationConfidence": 0.792,
+  "classificationHits": [
+   "cloud",
+   "interconnect"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Configuring Cloud VPN and Interconnect"
  },
  {
   "id": 28661,
@@ -3227,7 +5745,22 @@
   ],
   "explanation": "Cloud Spanner provides external consistency across regions, combining horizontal scaling with ACID transactions for global applications.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigtable",
+   "cloud",
+   "firestore",
+   "spanner",
+   "with"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Working with Cloud Emulators for Local Development"
  },
  {
   "id": 28662,
@@ -3244,7 +5777,21 @@
   ],
   "explanation": "Logging sinks can aggregate logs from multiple projects into a central location (like Cloud Storage or BigQuery) for consolidated analysis.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "centralized",
+   "cloud",
+   "logging"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28663,
@@ -3261,7 +5808,20 @@
   ],
   "explanation": "Cloud DLP API provides advanced inspection and classification capabilities for sensitive data across GCP services and storage systems.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M1",
+  "label": "D2/M1/S4",
+  "classificationConfidence": 0.699,
+  "classificationHits": [
+   "armor",
+   "cloud",
+   "vpc"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Securing Networks with IAP, Cloud Armor, and Cloud IDS"
  },
  {
   "id": 28664,
@@ -3278,7 +5838,21 @@
   ],
   "explanation": "Cloud Monitoring can trigger autoscaling for Compute Engine based on custom metrics, providing flexible scaling for VM-based workloads.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D6",
+  "module": "M1",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.893,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "compute engine",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 28665,
@@ -3295,7 +5869,21 @@
   ],
   "explanation": "Document AI specializes in document processing, while Cloud Run provides serverless execution - together offering a fully managed solution.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S1",
+  "classificationConfidence": 0.936,
+  "classificationHits": [
+   "compute",
+   "compute engine",
+   "engine",
+   "managed"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Compute Engine VMs and Managed Instance Groups"
  },
  {
   "id": 28666,
@@ -3312,7 +5900,21 @@
   ],
   "explanation": "BigQuery is GCP's serverless data warehouse capable of analyzing petabytes with SQL queries in seconds, without infrastructure management.",
   "reference": "",
-  "section": "General"
+  "section": "S1",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "cloud",
+   "spanner",
+   "warehouse"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery"
  },
  {
   "id": 28667,
@@ -3329,7 +5931,20 @@
   ],
   "explanation": "Lift-and-shift to Compute Engine preserves the existing application architecture while moving it to the cloud with minimal changes.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M3",
+  "label": "D2/M3/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "app engine",
+   "cloud",
+   "engine"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Configuring Cloud Run and App Engine"
  },
  {
   "id": 28668,
@@ -3346,7 +5961,21 @@
   ],
   "explanation": "BigQuery ML provides built-in time-series anomaly detection models that can process manufacturing data at scale with SQL simplicity.",
   "reference": "",
-  "section": "General"
+  "section": "S4",
+  "sectionContext": "General",
+  "domain": "D1",
+  "module": "M1",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.776,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "dataflow",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 28669,
@@ -3363,7 +5992,24 @@
   ],
   "explanation": "Cloud Storage provides scalable object storage for large files, while Cloud CDN caches content at edge locations for global low-latency access.",
   "reference": "",
-  "section": "General"
+  "section": "S3",
+  "sectionContext": "General",
+  "domain": "D2",
+  "module": "M2",
+  "label": "D2/M2/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "compute engine",
+   "disks",
+   "filestore",
+   "firestore",
+   "persistent",
+   "storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
  },
  {
   "id": 28670,
@@ -3380,7 +6026,20 @@
   ],
   "explanation": "Pub/Sub provides durable message delivery and Dataflow supports exactly-once processing for reliable financial transaction pipelines.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D5",
+  "module": "M2",
+  "label": "D5/M2/S2",
+  "classificationConfidence": 0.727,
+  "classificationHits": [
+   "cloud",
+   "firestore",
+   "with"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Working with Cloud Emulators for Local Development"
  },
  {
   "id": 28671,
@@ -3397,6 +6056,18 @@
   ],
   "explanation": "Terraform provides multi-cloud support, rich GCP resource coverage, and state management ideal for enterprise infrastructure as code.",
   "reference": "",
-  "section": "General"
+  "section": "S2",
+  "sectionContext": "General",
+  "domain": "D3",
+  "module": "M1",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.682,
+  "classificationHits": [
+   "cloud",
+   "management"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  }
 ]

@@ -1,408 +1,1018 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GCP PCA — Mock 1 (Healthcare / EHR)</title>
-<style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.55}
-.wrap{max-width:900px;margin:0 auto;padding:24px 16px 80px}
-header.hd{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-bottom:20px}
-header.hd h1{margin:0 0 6px;font-size:1.5rem;color:#1a73e8}
-.meta{color:#475569;font-size:.9rem}
-.bar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.bar a{color:#1a73e8;text-decoration:none;font-weight:600;font-size:.85rem}
-.bar button{font:inherit;cursor:pointer;border:1px solid #cbd5e1;background:#f8fafc;border-radius:8px;padding:5px 12px;font-size:.85rem}
-.q{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin-bottom:14px}
-.qnum{font-size:.78rem;font-weight:700;color:#1a73e8;letter-spacing:.03em}
-.qtype{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:#64748b;border-radius:999px;padding:2px 8px;margin-left:8px}
-.qtype.multi{background:#b45309}
-.qtext{font-weight:600;margin:8px 0 12px}
-ul.opts{list-style:none;margin:0;padding:0;display:grid;gap:7px}
-ul.opts li{border:1px solid #e2e8f0;border-radius:9px;padding:8px 12px 8px 40px;position:relative;background:#f8fafc;font-size:.92rem}
-ul.opts li::before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:999px;background:#e2e8f0;color:#334155;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center}
-.reveal ul.opts li.correct{background:#e6f4ea;border-color:#34a853}
-.reveal ul.opts li.correct::before{background:#34a853;color:#fff}
-.ans{margin-top:12px;border-left:4px solid #34a853;background:#f0fdf4;border-radius:0 9px 9px 0;padding:10px 14px;display:none}
-.reveal .ans{display:block}
-.ans .lbl{font-weight:700;color:#137333;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
-.ans a{color:#1a73e8;word-break:break-all}
-</style></head><body>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.5}
+.bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar a{color:#1a73e8;text-decoration:none;font-weight:700;font-size:.88rem}
+.bar button{font:inherit;border:1px solid #cbd5e1;background:#f8fafc;border-radius:7px;padding:5px 10px;cursor:pointer}
+.wrap{max-width:960px;margin:auto;padding:24px 16px 80px}
+.head,.q,.filters{background:#fff;border:1px solid #e2e8f0;border-radius:12px}
+.head{padding:20px;margin-bottom:14px}
+.head h1{margin:0 0 6px;color:#1a73e8;font-size:1.35rem}
+.muted{color:#64748b;font-size:.9rem}
+.filters{padding:14px 16px;margin-bottom:14px;display:grid;gap:10px}
+.filters .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.filters label{font-size:.8rem;font-weight:700;color:#475569;min-width:70px}
+.filters select{font:inherit;border:1px solid #cbd5e1;border-radius:8px;padding:6px 10px;min-width:220px;background:#fff}
+#resultCount{font-size:.85rem;color:#1a73e8;font-weight:700}
+.q{padding:16px 18px;margin-bottom:12px}
+.q.hidden{display:none}
+.meta-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
+.num{font-size:.76rem;font-weight:800;color:#1a73e8}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.02em}
+.badge.d{background:#e8f0fe;color:#1a73e8}
+.badge.m{background:#f3e8ff;color:#7c3aed}
+.badge.s{background:#ecfdf5;color:#047857}
+.badge.type{background:#64748b;color:#fff;text-transform:uppercase}
+.badge.type.multi{background:#b45309}
+.sec-title{font-size:.78rem;color:#64748b}
+.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line}
+.opts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.opts li{position:relative;padding:8px 10px 8px 40px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:.92rem}
+.opts li:before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e2e8f0;font-size:.72rem;font-weight:800}
+.show .correct{background:#e6f4ea;border-color:#34a853}
+.show .correct:before{background:#34a853;color:#fff}
+.ans{display:none;margin-top:10px;padding:9px 12px;border-left:4px solid #34a853;background:#f0fdf4}
+.show .ans{display:block}
+.ans b{color:#137333}
+.ref{margin-top:5px;font-size:.8rem}
+.ref a{color:#1a73e8;word-break:break-all}
+.grid-mocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px}
+.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}
+.card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
+.card .n{width:32px;height:32px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800}
+</style>
+</head><body>
 <nav class="bar">
-<a href="index.html">&larr; Tous les mocks</a>
-<button id="showAll">Afficher toutes les réponses</button>
-<button id="hideAll">Masquer les réponses</button>
-<span style="color:#64748b;font-size:.8rem">Astuce : cliquez une question pour révéler sa réponse</span>
+  <a href="../index.html">← Menu principal</a>
+  <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Site original ↗</a>
+  <button type="button" onclick="all(true)">Afficher les réponses</button>
+  <button type="button" onclick="all(false)">Masquer les réponses</button>
 </nav>
-<div class="wrap">
-<header class="hd">
-<h1>Mock 1 — Healthcare / EHR</h1>
-<div class="meta">Google Cloud Professional Cloud Architect · 60 questions · Source&nbsp;: gcppcatest.com</div>
+<main class="wrap">
+<header class="head">
+  <h1>GCP PCA — Mock 1 (Healthcare / EHR)</h1>
+  <div class="muted">60 questions · labels D/M/S · <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Source</a></div>
 </header>
-<div class="q" id="q1">
-<div><span class="qnum">Question 1 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare is migrating its legacy on-premises patient data system to Google Cloud. The system currently uses a proprietary database that needs to be migrated to a fully managed relational database service that supports PostgreSQL. The solution must comply with HIPAA regulations, ensure high availability across multiple zones, and automatically encrypt data at rest. Which service should you choose and how should you configure it?</div>
-<ul class="opts"><li class="correct" data-l="A">Use Cloud SQL for PostgreSQL. Enable High Availability (HA). Verify that Google-managed encryption keys are enabled by default, which satisfies the requirement for encryption at rest for HIPAA compliance.</li><li data-l="B">Use Cloud Spanner. configured with a multi-region instance configuration. Use default Google-managed encryption keys.</li><li data-l="C">Use BigQuery with a dataset configured for the US region. Enable authorized views for access control.</li><li data-l="D">Use Cloud SQL for PostgreSQL. Enable High Availability (HA) and ensure the instance is in a VPC Service Controls perimeter. Configure Customer-Managed Encryption Keys (CMEK) for data at rest.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Cloud SQL for PostgreSQL is a fully managed relational database that can be configured for High Availability (HA) across multiple zones. Data is encrypted at rest by default using Google-managed encryption keys, which is sufficient for HIPAA compliance when combined with proper access controls. While Customer-Managed Encryption Keys (CMEK) provide additional control, they are not strictly required unless specified by organization policy.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/sql/docs/postgres/high-availability" target="_blank" rel="noopener">https://cloud.google.com/sql/docs/postgres/high-availability</a></div></div>
-</div><div class="q" id="q2">
-<div><span class="qnum">Question 2 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">EHR Healthcare wants to store X-ray and MRI images (unstructured data) in Google Cloud. The data must be highly durable, available globally with low latency for doctors in the US and Europe, and cost-effective for data that is rarely accessed after 3 years. Which TWO actions should you take?</div>
-<ul class="opts"><li data-l="A">Store data in a Multi-Region Cloud Storage bucket (US and EU).</li><li class="correct" data-l="B">Store data in a Dual-Region Cloud Storage bucket (US and EU).</li><li class="correct" data-l="C">Use a Lifecycle Management policy to change the storage class to Archive Storage after 3 years.</li><li data-l="D">Use a Lifecycle Management policy to change the storage class to Standard Storage after 3 years.</li><li data-l="E">Store data in separate Regional buckets in US and Europe and manage replication manually.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, C</span></div>
-<div style="margin-top:6px">Option B is correct because a Dual-Region bucket (e.g., US and EU) is a specific configuration that replicates data across two defined regions, offering high availability and low latency for users in those locations. Option C is correct for cost optimization, as Archive Storage is designed for data accessed less than once a year.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/locations#location-types" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/locations#location-types</a></div></div>
-</div><div class="q" id="q3">
-<div><span class="qnum">Question 3 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your team needs to de-identify sensitive patient data (PHI) before loading it into BigQuery for analytics. The original dataset is in Cloud Storage buffers in CSV format. You want to use a managed service to automatically inspect and mask this data based on HIPAA identifiers (like SSN, Name). What should you do?</div>
-<ul class="opts"><li class="correct" data-l="A">Use a Dataflow job with the Sensitive Data Protection (Cloud DLP) API to read the CSVs, de-identify the content, and write to BigQuery.</li><li data-l="B">Load the CSVs directly into BigQuery and use BigQuery column-level security to hide the columns.</li><li data-l="C">Use Pub/Sub to trigger a Cloud Function that runs a custom regex script to replace SSNs.</li><li data-l="D">Use Vertex AI to read the data and generate synthetic data.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Sensitive Data Protection (formerly Cloud DLP) is the specific Google Cloud service for inspecting and de-identifying sensitive data like PII and PHI. Using Dataflow to process data from Cloud Storage through the DLP API to BigQuery is the standard architecture for ensuring data is de-identified before storage.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data" target="_blank" rel="noopener">https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data</a></div></div>
-</div><div class="q" id="q4">
-<div><span class="qnum">Question 4 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare is designing a disaster recovery (DR) strategy for their critical patient management application running on Compute Engine. The RTO is 4 hours and RPO is 1 hour. They want to minimize costs while meeting these targets. Which DR pattern is most appropriate?</div>
-<ul class="opts"><li data-l="A">Hot Standby (Active-Passive) with a fully scaled replica in the DR region.</li><li data-l="B">Warm Standby: Maintain a minimum viable version of the environment in the DR region, capable of scaling up.</li><li data-l="C">Active-Active: Run full capacity in both regions behind a global load balancer.</li><li class="correct" data-l="D">Cold Surveillance: Create snapshots of disks every hour. In a disaster, create instances from snapshots.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">Cold Surveillance (often just Cold DR or Backup/Restore) fits the &#x27;minimize costs&#x27; driver better than Warm or Hot standbys. An RPO of 1 hour can be met by hourly snapshots. An RTO of 4 hours gives enough time to spin up instances from those snapshots. Warm Standby (B) costs more (running instances). Hot Standby/Active-Active (A/D) are comprehensive but expensive and overkill for 4h RTO.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/architecture/disaster-recovery" target="_blank" rel="noopener">https://cloud.google.com/architecture/disaster-recovery</a></div></div>
-</div><div class="q" id="q5">
-<div><span class="qnum">Question 5 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">The data analytics team wants to build a predictive model to identify patients at risk of chronic illness using historical records. They have CSV data in Cloud Storage and limited machine learning expertise. They want to build, train, and deploy a model quickly. Which TWO tools should they use?</div>
-<ul class="opts"><li data-l="A">Use Vertex AI Training with a custom TensorFlow container.</li><li class="correct" data-l="B">Use Vertex AI AutoML (for tabular data) to train a model without writing code.</li><li class="correct" data-l="C">Use BigQuery ML to create and evaluate a model using standard SQL queries.</li><li data-l="D">Use Kubernetes Engine to run a Jupyter Notebook server for manual training.</li><li data-l="E">Use Dataflow to pre-process data and write to TFRecords.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, C</span></div>
-<div style="margin-top:6px">BigQuery ML (B) allows users to create models using SQL, which is perfect for analytics teams familiar with data but less so with deep ML coding. Vertex AI AutoML (D) is designed for &#x27;limited expertise&#x27; usage, automating the model selection and training process. Option A and C require more engineering effort.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/bqml-introduction" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/bqml-introduction</a></div></div>
-</div><div class="q" id="q6">
-<div><span class="qnum">Question 6 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare requires a hybrid connectivity solution to connect their on-premises data center to Google Cloud. They need a dedicated connection with a guaranteed bandwidth of 10 Gbps and an SLA for availability. What should you recommend?</div>
-<ul class="opts"><li class="correct" data-l="A">Dedicated Interconnect.</li><li data-l="B">Partner Interconnect.</li><li data-l="C">Cloud VPN (HA VPN).</li><li data-l="D">Direct Peering.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Dedicated Interconnect provides a direct physical connection with guaranteed bandwidth (10 Gbps or 100 Gbps chunks) and an SLA. Partner Interconnect uses a service provider and might not guarantee the full physical pipe in the same way (though it has SLAs). VPN is over the public internet (no bandwidth guarantee). Direct Peering has no SLA.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/network-connectivity/docs/interconnect/concepts/overview" target="_blank" rel="noopener">https://cloud.google.com/network-connectivity/docs/interconnect/concepts/overview</a></div></div>
-</div><div class="q" id="q7">
-<div><span class="qnum">Question 7 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You are managing a fleet of GKE clusters for the EHR system. You need to ensure that pod-to-pod communication is encrypted and that you can define fine-grained traffic policies between services (e.g., Frontend can talk to Backend, but not to Database). You also want to enforce mTLS. What implies the least operational overhead?</div>
-<ul class="opts"><li class="correct" data-l="A">Implement Anthos Service Mesh (ASM) or Istio on the clusters.</li><li data-l="B">Manually configure IPSec tunnels between all nodes.</li><li data-l="C">Use Network Policies to restrict traffic based on IP ranges.</li><li data-l="D">Configure application-level SSL encryption in every microservice code.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Anthos Service Mesh (managed Istio) provides mTLS (mutual TLS) for service-to-service communication out of the box, along with fine-grained traffic management and observability. Option D puts the burden on developers. Option C (Network Policies) controls reachability (L3/L4) but doesn&#x27;t handle mTLS encryption/identity seamlessly.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/service-mesh/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/service-mesh/docs/overview</a></div></div>
-</div><div class="q" id="q8">
-<div><span class="qnum">Question 8 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">EHR Healthcare is developing a new patient-facing mobile app using a microservices architecture on Cloud Run. They need to manage external user identities (patients) and internal staff identities separately. Patients should be able to sign in with Google, Facebook, or email/password. Staff should use the corporate Active Directory. Which TWO services/features should you integrate?</div>
-<ul class="opts"><li data-l="A">Use Cloud IAM conditions to restrict patient access.</li><li data-l="B">Use Google Cloud Directory Sync (GCDS) to sync Active Directory to Cloud Identity for staff.</li><li class="correct" data-l="C">Use Identity Platform (GCIP) for patient authentication.</li><li class="correct" data-l="D">Use Identity-Aware Proxy (IAP) to protect internal admin tools for staff access.</li><li data-l="E">Use Firebase Realtime Database for storing all user credentials.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C, D</span></div>
-<div style="margin-top:6px">Identity Platform (A) is the customer identity and access management (CIAM) solution for external users, supporting social login and email/password. Identity-Aware Proxy (IAP) (D) is ideal for protecting internal applications (like admin tools) by enforcing corporate identity (synced from AD) and context-aware access, without VPNs. Option B is a sync tool, not the runtime auth service itself, though it&#x27;s part of the flow, D is the enforcement point.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/identity-platform/docs" target="_blank" rel="noopener">https://cloud.google.com/identity-platform/docs</a></div></div>
-</div><div class="q" id="q9">
-<div><span class="qnum">Question 9 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">The compliance team creates a requirement that no Cloud Storage bucket can be public. You want to enforce this check automatically across the entire organization and prevent any future buckets from being made public. What is the most effective way to achieve this?</div>
-<ul class="opts"><li data-l="A">Create a Cloud Function triggered by bucket creation logs to revoke public IAM roles.</li><li data-l="B">Use an Organizational Policy Constraint &#x27;storage.uniformBucketLevelAccess&#x27;.</li><li class="correct" data-l="C">Use an Organizational Policy Constraint &#x27;storage.publicAccessPrevention&#x27;.</li><li data-l="D">Send an email to all developers instructing them not to make buckets public.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">The Organizational Policy Constraint `storage.publicAccessPrevention` (enforced as &#x27;enforce&#x27;) prevents the creation of public buckets and revokes public access from existing ones. This is a preventive control. `storage.uniformBucketLevelAccess` is about ACLs vs IAM, which helps but isn&#x27;t the direct &#x27;no public&#x27; switch like PAP is. Option C is reactive.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/public-access-prevention" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/public-access-prevention</a></div></div>
-</div><div class="q" id="q10">
-<div><span class="qnum">Question 10 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to migrate a 50 TB Oracle Data Warehouse to BigQuery. The migration must happen within a 2-week window. You have limited internet bandwidth (100 Mbps) at the data center. Which migration path is feasible?</div>
-<ul class="opts"><li data-l="A">Upload data directly to Cloud Storage using gsutil over the internet.</li><li class="correct" data-l="B">Use Transfer Appliance to ship data physically to Google Cloud.</li><li data-l="C">Use BigQuery Data Transfer Service for Oracle.</li><li data-l="D">Compress the data and use a multipart upload script.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">50 TB over 100 Mbps would take ~46 days (50 * 8 * 1000 * 1000 / 100 / 3600 / 24). This exceeds the 2-week window. Transfer Appliance is a physical server sent to the datacenter, filled with data, and shipped back, which is the standard solution for &#x27;large data, slow net&#x27; scenarios.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/transfer-appliance/docs/4.0" target="_blank" rel="noopener">https://cloud.google.com/transfer-appliance/docs/4.0</a></div></div>
-</div><div class="q" id="q11">
-<div><span class="qnum">Question 11 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">EHR Healthcare&#x27;s compliance lead asks how to ensure that administrators cannot grant themselves permissions to sensitive projects without approval. You need to implement a &#x27;least privilege&#x27; and &#x27;separation of duties&#x27; model. Which TWO features should you use?</div>
-<ul class="opts"><li class="correct" data-l="A">Required Access (Access Approval).</li><li class="correct" data-l="B">Privileged Access Manager (PAM) (or Just-In-Time access solutions).</li><li data-l="C">VPC Service Controls.</li><li data-l="D">Cloud Asset Inventory feeds.</li><li data-l="E">IAM Conditions with temporary access.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, B</span></div>
-<div style="margin-top:6px">Privileged Access Manager (PAM) (B) allows for requesting temporary, elevated access that requires approval, ensuring administrators cannot permanently grant themselves high-risk permissions. IAM Conditions (E) provide the mechanism for time-bound and conditional access. Together, they enforce least privilege and separation of duties.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/iam/docs/pam-overview" target="_blank" rel="noopener">https://cloud.google.com/iam/docs/pam-overview</a></div></div>
-</div><div class="q" id="q12">
-<div><span class="qnum">Question 12 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You are deploying a GenAI chatbot for patient triage using Vertex AI. The chatbot occasionally hallucinates non-existent medical protocols. You need to ground the model&#x27;s responses in your verified internal medical knowledge base (PDFs and Docs). What should you implement?</div>
-<ul class="opts"><li data-l="A">Fine-tune the base model (e.g., Gemini) with all your PDFs.</li><li class="correct" data-l="B">Use Retrieval-Augmented Generation (RAG) with Vertex AI Search serving the knowledge base.</li><li data-l="C">Increase the temperature parameter of the model.</li><li data-l="D">Hard-code the answers for common questions in the application layer.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">RAG (Retrieval-Augmented Generation) is the standard pattern for reducing hallucinations and grounding LLMs in specific, private data. Vertex AI Search (previously Gen App Builder) makes it easy to index documents and use them as a grounding source. Fine-tuning (A) teaches style/format but is hard to update with new facts and doesn&#x27;t guarantee factuality as well as RAG.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/generative-ai/grounding/overview" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/generative-ai/grounding/overview</a></div></div>
-</div><div class="q" id="q13">
-<div><span class="qnum">Question 13 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">To speed up the loading of high-resolution medical images in the web portal, you want to use a Content Delivery Network (CDN). The images are stored in a private Cloud Storage bucket. You want to serve them via Cloud CDN using signed URLs to ensure only authenticated users can access them. How should you configure the backend?</div>
-<ul class="opts"><li class="correct" data-l="A">Set up an External Application Load Balancer with the Cloud Storage bucket as a backend bucket. Enable Cloud CDN.</li><li data-l="B">Set up a Network Load Balancer with the bucket as a backend.</li><li data-l="C">Use the Cloud Storage public endpoint directly.</li><li data-l="D">Configure Cloud CDN directly on the Cloud Storage bucket settings.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Cloud CDN works with the Global External Application Load Balancer (HTTP/S LB). You configure a &#x27;backend bucket&#x27; pointing to GCS and enable CDN on that backend service. Signed URLs are then generated by your app to allow access to the cached content.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/cdn/docs/setting-up-cdn-with-bucket" target="_blank" rel="noopener">https://cloud.google.com/cdn/docs/setting-up-cdn-with-bucket</a></div></div>
-</div><div class="q" id="q14">
-<div><span class="qnum">Question 14 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">Your finance team notices a spike in Compute Engine costs. They want to attribute costs to specific environments (Dev, Test, Prod) and departments. Resources are currently mixed in shared projects. Which TWO steps should you take to improve cost visibility?</div>
-<ul class="opts"><li data-l="A">Move resources into separate projects for each Environment/Department combination.</li><li class="correct" data-l="B">Apply labels (e.g., env=prod, dept=cardiology) to all resources.</li><li class="correct" data-l="C">Enable Billing Export to BigQuery.</li><li data-l="D">view the &#x27;All Services&#x27; report in the Billing Console.</li><li data-l="E">Create a new Billing Account for every department.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, C</span></div>
-<div style="margin-top:6px">Labels (B) are the primary mechanism for granular cost tracking (cost allocation) within shared projects. Exporting billing data to BigQuery (C) allows for custom SQL analysis of that data using the labels to group costs. Segregating by project (A) is also good but a heavy migration if already mixed; labels are the immediate fix for &#x27;mixed resources&#x27;.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/how-to/export-data-bigquery" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/how-to/export-data-bigquery</a></div></div>
-</div><div class="q" id="q15">
-<div><span class="qnum">Question 15 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare wants to use Gemini on Vertex AI to summarize doctor notes. The notes are highly confidential. The legal team asks: &#x27;Will our data be used to train Google&#x27;s base foundation models?&#x27; What is the correct answer?</div>
-<ul class="opts"><li data-l="A">Yes, by default all data sent to Vertex AI improves the model for everyone.</li><li class="correct" data-l="B">No, by default Google does not use customer data (prompts/responses) to train its foundation models.</li><li data-l="C">Yes, unless you purchase the Enterprise tier.</li><li data-l="D">No, but only if you use VPC Service Controls.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Google Cloud&#x27;s data governance policy for Vertex AI states that customer data (prompts/inputs and generated outputs) is NOT used to train the shared foundation models. The data stays within the customer&#x27;s tenant scope.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/generative-ai/data-governance" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/generative-ai/data-governance</a></div></div>
-</div><div class="q" id="q16">
-<div><span class="qnum">Question 16 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You have a fleet of Windows Server instances running on Compute Engine. You need to manage OS patches and configuration updates automatically without setting up a bastion host or RDP. Which service should you use?</div>
-<ul class="opts"><li data-l="A">Remote Desktop Protocol (RDP) via Identity-Aware Proxy.</li><li class="correct" data-l="B">VM Manager.</li><li data-l="C">Unmanaged Instance Groups with startup scripts.</li><li data-l="D">Cloud Deployment Manager.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">VM Manager is a suite of tools (OS Config, Patch Management) that allows you to manage OS policies and patching across your fleet automatically. It works via the OS Config agent installed on the VMs, requiring no RDP access.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/vm-manager" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/vm-manager</a></div></div>
-</div><div class="q" id="q17">
-<div><span class="qnum">Question 17 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">EHR Healthcare runs a Kubernetes application that processes patient admission forms. The workload varies wildly during the day. You need to scale the pods based on the number of messages in a Pub/Sub queue, not just CPU usage. Which TWO configurations are required?</div>
-<ul class="opts"><li data-l="A">Configure a Cluster Autoscaler.</li><li class="correct" data-l="B">Configure the Horizontal Pod Autoscaler (HPA) to use external metrics.</li><li data-l="C">Hardcode the replica count to the maximum expected load.</li><li class="correct" data-l="D">Deploy the Stackdriver Adapter (Custom Metrics Adapter) for Cloud Monitoring in the cluster.</li><li data-l="E">Use the Vertical Pod Autoscaler (VPA).</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, D</span></div>
-<div style="margin-top:6px">To scale on Pub/Sub (an external metric to the cluster), you need HPA (A) configured to look at external metrics. For HPA to see these Google Cloud metrics, you must install the Custom Metrics Adapter (B) (often part of the Stackdriver adapter) which bridges Cloud Monitoring metrics to the Kubernetes metrics API.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/tutorials/autoscaling-metrics" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/tutorials/autoscaling-metrics</a></div></div>
-</div><div class="q" id="q18">
-<div><span class="qnum">Question 18 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You are designing the network for the EHR application. You have a frontend subnet and a backend subnet. You want to deny all traffic from the frontend to the backend except on port 443. Which Google Cloud resource is the primary place to enforce this stateful firewall inspection?</div>
-<ul class="opts"><li class="correct" data-l="A">VPC Firewall Rules.</li><li data-l="B">VPC Service Controls.</li><li data-l="C">Cloud Armor.</li><li data-l="D">Cloud IDS.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">VPC Firewall Rules (or global network firewall policies) are the standard L3/L4 mechanism to control traffic between subnets (east-west traffic) based on IP, port, and protocol. They are stateful.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vpc/docs/firewalls" target="_blank" rel="noopener">https://cloud.google.com/vpc/docs/firewalls</a></div></div>
-</div><div class="q" id="q19">
-<div><span class="qnum">Question 19 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">A legacy application relies on a specific IP address hardcoded in client devices. You are migrating this app to Google Cloud Run. You need to expose the Cloud Run service via that single static global IP address. What should you do?</div>
-<ul class="opts"><li data-l="A">Assign a static IP directly to the Cloud Run instance variables.</li><li class="correct" data-l="B">Put a Global External Application Load Balancer in front of Cloud Run and reserve a global static IP for the forwarding rule.</li><li data-l="C">Deploy Cloud Run and map a custom domain.</li><li data-l="D">Use Cloud NAT/Router.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Cloud Run services are regional and don&#x27;t natively have a single global static ingress IP. To get a global static anycast IP, you place a Global External Load Balancer in front of it (via a Serverless NEG).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/mapping-custom-domains#load-balancer" target="_blank" rel="noopener">https://cloud.google.com/run/docs/mapping-custom-domains#load-balancer</a></div></div>
-</div><div class="q" id="q20">
-<div><span class="qnum">Question 20 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">EHR Healthcare is planning to use Anthos (Google Distributed Cloud) to run some workloads on-premises due to data residency laws. They want to manage these on-prem clusters from the Google Cloud Console. Which TWO components facilitate this connection?</div>
-<ul class="opts"><li data-l="A">BigQuery Omni.</li><li class="correct" data-l="B">Connect Gateway.</li><li data-l="C">Cloud Build Private Pools.</li><li class="correct" data-l="D">Hub (Fleet) registration.</li><li data-l="E">Cloud Interconnect.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, D</span></div>
-<div style="margin-top:6px">To manage external clusters (Anthos/GKE on-prem) from the cloud console, you register them to a Fleet (Hub) (B). The Connect Gateway (A) then allows you to interact with the cluster API server securely via Google Cloud identity without direct VPNs to the API server.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/anthos/multicluster-management/connect/gateway" target="_blank" rel="noopener">https://cloud.google.com/anthos/multicluster-management/connect/gateway</a></div></div>
-</div><div class="q" id="q21">
-<div><span class="qnum">Question 21 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You are migrating a 200GB PostgreSQL database to Cloud SQL. The source database is on-premises and has a very high write rate. You cannot afford downtime longer than 5 minutes during the cutover. Which migration method should you use?</div>
-<ul class="opts"><li class="correct" data-l="A">Use Database Migration Service (DMS) for PostgreSQL.</li><li data-l="B">Export the database to a SQL dump file, upload to GCS, and import into Cloud SQL.</li><li data-l="C">Use Cloud Storage Transfer Service.</li><li data-l="D">Use BigQuery Data Transfer Service.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Database Migration Service (DMS) provides a continuous replication (CDC) mechanism from source to destination, allowing for minimal downtime cutover (seconds to minutes). Option B (Dump/Restore) would require stopping the writes during the dump+upload+import, which for 200GB could take hours, exceeding the 5-minute window.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/database-migration/docs/postgres" target="_blank" rel="noopener">https://cloud.google.com/database-migration/docs/postgres</a></div></div>
-</div><div class="q" id="q22">
-<div><span class="qnum">Question 22 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your security team requires that all container images deployed to your GKE production cluster must be scanned for vulnerabilities and signed by your trusted CI/CD pipeline (Cloud Build). Images not meeting this criteria must be blocked from deployment. What should you configure?</div>
-<ul class="opts"><li class="correct" data-l="A">Binary Authorization.</li><li data-l="B">Container Analysis.</li><li data-l="C">VPC Service Controls.</li><li data-l="D">Artifact Registry Vulnerability Scanning.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Binary Authorization is the service that enforces deploy-time security controls. It checks for attestations (signatures) on images (e.g., &#x27;signed by CI/CD&#x27;) and can block deployment if the image isn&#x27;t signed or has vulnerabilities (when coupled with vulnerability scanning policies). Container Analysis (B) does the scanning but doesn&#x27;t block deployment on its own.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/binary-authorization/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/binary-authorization/docs/overview</a></div></div>
-</div><div class="q" id="q23">
-<div><span class="qnum">Question 23 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">EHR Healthcare wants to analyze logs from all their Google Cloud projects (over 50 projects) in a single central BigQuery dataset for auditing. They also want to retain these logs for 7 years for compliance. Which TWO steps should you take?</div>
-<ul class="opts"><li class="correct" data-l="A">Create an aggregated Log Sink at the Organization or Folder level.</li><li class="correct" data-l="B">Configure the sink to include children projects and set the destination to the central BigQuery dataset.</li><li data-l="C">Create a separate Log Sink in every single project manually.</li><li data-l="D">Use Cloud Storage as the destination for better query performance.</li><li data-l="E">Export logs to Pub/Sub and use Dataflow to write to BigQuery.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, B</span></div>
-<div style="margin-top:6px">Aggregated Log Sinks (Organization-level exports) allow you to collect logs from all projects in the org (including future ones) via the `includeChildren` property. Sending to BigQuery (B) is correct for &#x27;analysis&#x27; (SQL querying). Cloud Storage (D) is cheaper for &#x27;retention&#x27; but hard to &#x27;analyze&#x27;. Given the dual requirement (analyze + retain), BigQuery with partition expiration or long-term storage is valid, or BQ for analysis + GCS for archive. But for &#x27;analyzing in a single dataset&#x27;, BQ is the destination. The Sink configuration covers A and B.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/logging/docs/export/aggregated_sinks" target="_blank" rel="noopener">https://cloud.google.com/logging/docs/export/aggregated_sinks</a></div></div>
-</div><div class="q" id="q24">
-<div><span class="qnum">Question 24 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You have a global application served by a Global External Application Load Balancer. You want to route traffic from European users to a specific GKE cluster in Zurich (europe-west6) and US users to a cluster in Iowa (us-central1). You also want to perform A/B testing for a new feature only for users in France. Which feature should you use?</div>
-<ul class="opts"><li data-l="A">Anycast IP routing.</li><li class="correct" data-l="B">URL Maps with advanced traffic management (header-based routing and geo-routing).</li><li data-l="C">DNS Geolocation policies using Cloud DNS.</li><li data-l="D">Network Load Balancer with backends in both regions.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Global External HTTP(S) Load Balancer uses URL Maps to define routing rules. You can route based on client location/region (standard behavior) but for specific &#x27;A/B testing&#x27; logic (e.g. headers or fine-grained geo matches), URL Maps traffic splitting and header-based routing is the mechanism. Cloud DNS (B) is for resolution, not L7 traffic splitting.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/load-balancing/docs/https/traffic-management-overview" target="_blank" rel="noopener">https://cloud.google.com/load-balancing/docs/https/traffic-management-overview</a></div></div>
-</div><div class="q" id="q25">
-<div><span class="qnum">Question 25 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare&#x27;s app needs to retrieve temporary credentials to access an AWS S3 bucket containing partner data. You want to avoid storing long-lived AWS Access Keys in your Google Cloud environment. What is the best practice solution?</div>
-<ul class="opts"><li class="correct" data-l="A">Use Workload Identity Federation to allow your Google Cloud Service Account to impersonate an AWS Role.</li><li data-l="B">Store the AWS keys in Secret Manager and rotate them daily.</li><li data-l="C">Hardcode the keys in the application code but obfuscate them.</li><li data-l="D">Use Google Cloud Storage Transfer Service with an Access Key.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Workload Identity Federation creates a trust relationship between GCP and AWS (or other OIDC providers), allowing a GCP Service Account to exchange its token for an AWS temporary session token (via STS) without ever handling or storing long-lived keys. This is the modern security best practice.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/iam/docs/workload-identity-federation" target="_blank" rel="noopener">https://cloud.google.com/iam/docs/workload-identity-federation</a></div></div>
-</div><div class="q" id="q26">
-<div><span class="qnum">Question 26 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You are building a real-time patient monitoring dashboard. Devices send heart rate data (JSON) every second via MQTT. You need to ingest this data, process it in real-time (calculate moving averages), and store the alerts. Which TWO services form the core of this pipeline?</div>
-<ul class="opts"><li class="correct" data-l="A">Pub/Sub for ingestion.</li><li class="correct" data-l="B">Dataflow for stream processing.</li><li data-l="C">Cloud Storage for ingestion.</li><li data-l="D">Cloud Functions for stream processing.</li><li data-l="E">BigQuery for ingestion.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, B</span></div>
-<div style="margin-top:6px">Pub/Sub (A) is the scalable messaging service for ingestion (often fronted by an MQTT bridge or IoT Core replacement). Dataflow (B) (running Beam) is the standard for complex stream processing (like windowing/moving averages) that Cloud Functions (D) struggles with at stateful high scale.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/dataflow/docs/stream-analytics-patterns" target="_blank" rel="noopener">https://cloud.google.com/dataflow/docs/stream-analytics-patterns</a></div></div>
-</div><div class="q" id="q27">
-<div><span class="qnum">Question 27 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">A developer wants to SSH into a private Compute Engine instance that has no public IP address. They are working from home and do not have a VPN to the VPC. What is the most secure and simplest way to allow this?</div>
-<ul class="opts"><li class="correct" data-l="A">Use Identity-Aware Proxy (IAP) for TCP forwarding.</li><li data-l="B">Assign an External IP to the instance temporarily.</li><li data-l="C">Setup a Bastion Host with a public IP.</li><li data-l="D">Create a firewall rule allowing 0.0.0.0/0 on port 22.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">IAP for TCP forwarding allows you to tunnel SSH access through the Google front-end (over HTTPS) to the private instance without giving the instance a public IP. Authorization is handled via IAM policies (user@example.com needs &#x27;IAP-secured Tunnel User&#x27;). This avoids the operational overhead and surface area of a Bastion host.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/iap/docs/using-tcp-forwarding" target="_blank" rel="noopener">https://cloud.google.com/iap/docs/using-tcp-forwarding</a></div></div>
-</div><div class="q" id="q28">
-<div><span class="qnum">Question 28 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare stores backup tapes in a physical vault. They want to replace this with Cloud Storage. The backups must be kept for 10 years for regulatory reasons and will likely never be read. You need the lowest cost solution that enforces the retention period. What should you choose?</div>
-<ul class="opts"><li class="correct" data-l="A">Archive Storage class with a Bucket Lock (Retention Policy).</li><li data-l="B">Standard Storage class.</li><li data-l="C">Nearline Storage class.</li><li data-l="D">Coldline Storage class with Object Versioning.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Archive Storage is the lowest cost class for data accessed &lt; 1/year. Bucket Lock (Retention Policy) enforces the WORM (Write Once Read Many) compliance requirement, preventing deletion before the 10-year mark.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/retention-policies" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/retention-policies</a></div></div>
-</div><div class="q" id="q29">
-<div><span class="qnum">Question 29 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You are running a critical legacy application on a Sole-tenant Node in Compute Engine to meet licensing requirements. The application is sensitive to host maintenance restarts. You want to control when the maintenance occurs. What should you do?</div>
-<ul class="opts"><li data-l="A">Migrate the application to GKE.</li><li data-l="B">You cannot control maintenance timing on GCP.</li><li data-l="C">Use Live Migration (default behavior).</li><li class="correct" data-l="D">Configure a Maintenance Window on the Sole-tenant Group.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">Sole-tenant nodes allow you to configure Maintenance Windows to schedule when Google performs disruptive maintenance updates, satisfying strict uptime/licensing visibility requirements.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/nodes/maintenance-windows" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/nodes/maintenance-windows</a></div></div>
-</div><div class="q" id="q30">
-<div><span class="qnum">Question 30 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">EHR Healthcare wants to create a &#x27;Data Mesh&#x27; architecture. They have data spread across multiple projects and buckets. They want a central catalog to discover data, manage metadata, and enforce governance policies without moving the data. Which TWO tools are critical for this?</div>
-<ul class="opts"><li class="correct" data-l="A">Dataplex.</li><li class="correct" data-l="B">Data Catalog (now part of Dataplex).</li><li data-l="C">Cloud Composer.</li><li data-l="D">Dataflow.</li><li data-l="E">Bigtable.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, B</span></div>
-<div style="margin-top:6px">Dataplex (A) is Google&#x27;s intelligent data fabric that enables a data mesh architecture by unifying distributed data (GCS, BQ) into logical &#x27;Lakes&#x27; and &#x27;Zones&#x27;. Data Catalog (B) (integrated into Dataplex) handles the discovery, tagging, and metadata management.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/dataplex/docs/introduction" target="_blank" rel="noopener">https://cloud.google.com/dataplex/docs/introduction</a></div></div>
-</div><div class="q" id="q31">
-<div><span class="qnum">Question 31 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You have a Cloud Run service that connects to a Cloud SQL database. During peak load, the database connection pool is exhausted, causing errors. You want to solve this without increasing the database size if possible. What should you deploy?</div>
-<ul class="opts"><li data-l="A">Cloud SQL Auth Proxy as a sidecar.</li><li data-l="B">A serverless VPC Access Connector.</li><li data-l="C">Only increase the Cloud SQL machine type.</li><li class="correct" data-l="D">Dedicated PgBouncer instance or pooler (or use Cloud SQL Insights to debug).</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">Connection exhaustion is a common issue with serverless functions that scale rapidly. The recommended architectural fix is to introduce a connection pooler like PgBouncer. Some versions of Cloud SQL now offer managed sidecar poolers, which helps manage limited connection resources without resizing the database.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/sql/docs/postgres/manage-connections#connection_pooling" target="_blank" rel="noopener">https://cloud.google.com/sql/docs/postgres/manage-connections#connection_pooling</a></div></div>
-</div><div class="q" id="q32">
-<div><span class="qnum">Question 32 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">Your team uses Terraform to manage GCP infrastructure. You want to ensure that no one can accidentally delete the production database via Terraform destroy. What is the best way to prevent this?</div>
-<ul class="opts"><li data-l="A">Use a localized state file.</li><li data-l="B">Remove the `owner` role from the Terraform service account.</li><li class="correct" data-l="C">Set `deletion_protection = true` in the Terraform resource block for the Cloud SQL instance.</li><li data-l="D">Use a git branch protection rule.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Setting `deletion_protection = true` on stateful resources (like Cloud SQL) within the Terraform config (and the API) prevents Terraform from deleting the resource, even if you run `destroy`. The API call will fail.</div><div><span class="lbl">Référence</span> <a href="https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance#deletion_protection" target="_blank" rel="noopener">https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance#deletion_protection</a></div></div>
-</div><div class="q" id="q33">
-<div><span class="qnum">Question 33 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You are designing a multi-region deployment. You want all user traffic to enter the Google network as close to the user as possible and traverse Google&#x27;s private backbone to reach your backend. Which network tier should you use?</div>
-<ul class="opts"><li class="correct" data-l="A">Premium Tier.</li><li data-l="B">Standard Tier.</li><li data-l="C">Basic Tier.</li><li data-l="D">Enhanced Tier.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Premium Tier delivers traffic from the user to the nearest Google Point of Presence (PoP) via cold-potato routing (enter Google global network ASAP). Standard Tier uses public internet (ISP networks) to reach the region where the VM is located (hot-potato routing).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/network-tiers/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/network-tiers/docs/overview</a></div></div>
-</div><div class="q" id="q34">
-<div><span class="qnum">Question 34 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">EHR Healthcare needs to run a high-performance computing (HPC) workload for genomic sequencing. The workload requires thousands of cores for a few hours a week. It is fault-tolerant and can resume from checkpoints. You want to minimize cost. Which TWO choices are appropriate?</div>
-<ul class="opts"><li class="correct" data-l="A">Use Spot VMs (Compute Engine).</li><li class="correct" data-l="B">Use Batch (Google Cloud Batch).</li><li data-l="C">Use Reserved Instances.</li><li data-l="D">Use Sole-tenant nodes.</li><li data-l="E">Use App Engine Standard.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, B</span></div>
-<div style="margin-top:6px">Spot VMs (A) offer deep discounts (60-91%) for preemptible capacity, perfect for fault-tolerant batch jobs. Google Cloud Batch (B) is the managed service specifically for scheduling and running batch jobs, handling the retries and provisioning of those Spot VMs automatically.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/batch/docs/get-started" target="_blank" rel="noopener">https://cloud.google.com/batch/docs/get-started</a></div></div>
-</div><div class="q" id="q35">
-<div><span class="qnum">Question 35 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You have an application running in GKE that needs to access a Cloud Spanner database. Use strict security: Workload Identity. How do you configure the link?</div>
-<ul class="opts"><li data-l="A">Use node-level metadata.</li><li class="correct" data-l="B">Create a Google Service Account (GSA) with Spanner access. Bind the Kubernetes Service Account (KSA) to the GSA using the `iam.workloadIdentityUser` role. Annotate the KSA with the GSA email.</li><li data-l="C">Grant the Compute Engine default service account access to Spanner.</li><li data-l="D">Create a JSON key for the GSA and mount it as a Kubernetes Secret.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Workload Identity allows a Kubernetes Service Account (KSA) to act as a Google Service Account (GSA). The steps are: 1. Create GSA + Roles. 2. Bind KSA to GSA (allow KSA to impersonate). 3. Annotate KSA with GSA email. This avoids secrets/keys (B) and broad node permissions (C).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity</a></div></div>
-</div><div class="q" id="q36">
-<div><span class="qnum">Question 36 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare uses Google Workspace. They want to use their existing Google Groups to manage permissions in Google Cloud projects (e.g., &#x27;data-engineers@ehr.com&#x27; gets BigQuery User). What is the benefit of this?</div>
-<ul class="opts"><li class="correct" data-l="A">It decouples IAM policy management from user lifecycle management. Adding a user to the Group grants them access without updating Cloud IAM policies.</li><li data-l="B">It allows for finer-grained permissions than IAM roles.</li><li data-l="C">It is required for VPC Service Controls.</li><li data-l="D">It removes the need for 2FA.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Using Groups for IAM is a best practice. You apply the IAM binding once to the Group email. Then, when staff join/leave, you only manage their membership in the Google Workspace Group. You don&#x27;t have to touch the GCP Project IAM bindings. Scaling efficiency.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/iam/docs/groups-in-cloud-console" target="_blank" rel="noopener">https://cloud.google.com/iam/docs/groups-in-cloud-console</a></div></div>
-</div><div class="q" id="q37">
-<div><span class="qnum">Question 37 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to store sensitive configuration data (database passwords, API keys) for your Cloud Functions. You want to audit access to these secrets and rotate them automatically where possible. What service should you use?</div>
-<ul class="opts"><li class="correct" data-l="A">Secret Manager.</li><li data-l="B">Cloud KMS.</li><li data-l="C">Environment Variables.</li><li data-l="D">Store in Source Code.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">Secret Manager is the secure storage system for API keys, passwords, and certificates. It supports versioning, access audit logging, and rotation (often via Cloud Functions). Cloud KMS (B) manages existing *encryption keys*, not the storage of the secret payloads themselves (though it encrypts them). Environment variables (C) are often visible in the console and not encrypted at rest in the same way/auditable.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/secret-manager/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/secret-manager/docs/overview</a></div></div>
-</div><div class="q" id="q38">
-<div><span class="qnum">Question 38 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">Your web application on Cloud Run is experiencing high latency. Logs show that the startup time (cold start) of your container is 10 seconds due to loading large ML models. You need to reduce this latency for users. Which TWO actions help?</div>
-<ul class="opts"><li class="correct" data-l="A">Configure &#x27;min-instances&#x27; to be greater than 0.</li><li data-l="B">Enable &#x27;CPU always allocated&#x27;.</li><li class="correct" data-l="C">Use Startup CPU Boost.</li><li data-l="D">Increase the request timeout.</li><li data-l="E">Use a Global Load Balancer.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
-<div style="margin-top:6px">Min-instances (A) keeps a set of containers warm, eliminating cold starts for those initial requests. Startup CPU Boost (C) temporarily increases CPU during the instance startup phase, significantly reducing the time it takes to load those heavy ML models. &#x27;CPU always allocated&#x27; (B) helps with background processing *after* startup but doesn&#x27;t necessarily speed up the *loading* phase efficiently on its own.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/configuring/cpu-boost" target="_blank" rel="noopener">https://cloud.google.com/run/docs/configuring/cpu-boost</a></div></div>
-</div><div class="q" id="q39">
-<div><span class="qnum">Question 39 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare requires that all data stored in Cloud Storage buckets must be encrypted with keys managed by their internal security team (on-premises HSM), not by Google. They want to keep the keys on-prem. What encryption solution meets this?</div>
-<ul class="opts"><li data-l="A">Customer-Supplied Encryption Keys (CSEK).</li><li data-l="B">Google-managed keys.</li><li data-l="C">Cloud HSM.</li><li class="correct" data-l="D">Customer-Managed Encryption Keys (CMEK) with Cloud EKM.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">CMEK with Cloud External Key Manager (Cloud EKM) allows you to use keys that you manage *outside* of Google Cloud (e.g., in an on-prem HSM or third-party provider) to encrypt data in GCP services. CSEK (A) involves sending the raw key with the request, which is harder to manage for managed services and usually just for GCS/Compute.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kms/docs/ekm" target="_blank" rel="noopener">https://cloud.google.com/kms/docs/ekm</a></div></div>
-</div><div class="q" id="q40">
-<div><span class="qnum">Question 40 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You are building a data pipeline. You need to orchestrate a complex workflow involving Dataflow jobs, BigQuery queries, and custom Python scripts. The workflow has dependencies (Task B starts after Task A succeeds). Which service is the managed Apache Airflow solution for this?</div>
-<ul class="opts"><li data-l="A">Cloud Scheduler.</li><li class="correct" data-l="B">Cloud Composer.</li><li data-l="C">Cloud Tasks.</li><li data-l="D">Cloud Workflows.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Cloud Composer is the fully managed service for Apache Airflow, used for orchestrating complex data pipelines (DAGs). Cloud Workflows (C) is for service-orchestration (HTTP APIs), not typically heavy data ETL jobs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/composer/docs/concepts/overview" target="_blank" rel="noopener">https://cloud.google.com/composer/docs/concepts/overview</a></div></div>
-</div><div class="q" id="q41">
-<div><span class="qnum">Question 41 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare uses Shared VPC to segregate network administration from service project permissions. You need to deploy a new Cloud Function in a service project that connects to a private Redis instance in the Shared VPC Host project&#x27;s subnet. What must you configure?</div>
-<ul class="opts"><li data-l="A">VPC Peering between the Service Project and Host Project.</li><li class="correct" data-l="B">Create the Serverless VPC Access Connector in the Service Project, targeting the Shared VPC subnet.</li><li data-l="C">Use Serverless VPC Access Connector created in the Shared VPC Host project and granting the Cloud Function service account permission to it.</li><li data-l="D">Public IP for Redis.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">To connect Serverless services (Cloud Run/Functions) to a Shared VPC, you create the Serverless VPC Access Connector *in the service project* (where the function lives), but configured to point to the shared subnet (ensure the Host project has shared that subnet with the service project).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vpc/docs/configure-serverless-vpc-access#shared-vpc" target="_blank" rel="noopener">https://cloud.google.com/vpc/docs/configure-serverless-vpc-access#shared-vpc</a></div></div>
-</div><div class="q" id="q42">
-<div><span class="qnum">Question 42 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You are designing the encryption strategy for a highly sensitive patient database on Cloud SQL. The requirements state that key material must be generated on a specialized FIPS 140-2 Level 3 Hardware Security Module (HSM) managed by Google, and the key itself should never leave the HSM boundary. Which TWO choices are relevant?</div>
-<ul class="opts"><li data-l="A">Use Cloud KMS with a software protection level.</li><li class="correct" data-l="B">Use Cloud KMS with a &#x27;Hardware&#x27; (HSM) protection level.</li><li data-l="C">Use Customer-Supplied Encryption Keys (CSEK).</li><li class="correct" data-l="D">Enable CMEK on the Cloud SQL instance referencing the Cloud HSM key.</li><li data-l="E">Use Google-default encryption.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B, D</span></div>
-<div style="margin-top:6px">To use Google-managed HSMs (FIPS 140-2 L3), you create a key in Cloud KMS with the &#x27;protection level&#x27; set to HSM (B). Then, to apply this to Cloud SQL, you configure CMEK (Customer-Managed Encryption Keys) on the database instance to point to that HSM-backend key (D).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kms/docs/cloud-hsm-overview" target="_blank" rel="noopener">https://cloud.google.com/kms/docs/cloud-hsm-overview</a></div></div>
-</div><div class="q" id="q43">
-<div><span class="qnum">Question 43 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">An analytics job in BigQuery is failing with an &#x27;Access Denied&#x27; error when trying to query a table in another project. You verified the service account has &#x27;BigQuery Data Viewer&#x27; on the target dataset. The projects are in different specialized VPC Service Controls perimeters. What is the likely cause and fix?</div>
-<ul class="opts"><li data-l="A">The service account needs &#x27;BigQuery Job User&#x27; in the target project.</li><li class="correct" data-l="B">VPC Service Controls are blocking the request. Configure an Ingress/Egress rule or a Perimeter Bridge.</li><li data-l="C">The service account needs &#x27;Owner&#x27; role.</li><li data-l="D">Cross-project queries are not allowed in BigQuery.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">If identities and IAM roles are correct but access is denied between projects in different security perimeters, VPC Service Controls (VPC-SC) is the blocker. You need to bridge the perimeters (using a Bridge or Ingress/Egress policies) to allow the API call to cross the boundary.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vpc-service-controls/docs/troubleshoot-vpc-sc" target="_blank" rel="noopener">https://cloud.google.com/vpc-service-controls/docs/troubleshoot-vpc-sc</a></div></div>
-</div><div class="q" id="q44">
-<div><span class="qnum">Question 44 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare wants to reduce the storage cost of their BigQuery log tables. They currently keep all logs for 5 years in the &#x27;Active&#x27; storage class. Most logs are never queried after 90 days. What is the most cost-effective automated solution?</div>
-<ul class="opts"><li class="correct" data-l="A">Do nothing. BigQuery automatically moves unaccessed partitions to &#x27;Long-term&#x27; storage (50% cheaper) after 90 days.</li><li data-l="B">Script a daily job to move tables to a &#x27;Cold&#x27; dataset.</li><li data-l="C">Use BigQuery Physical Storage billing model.</li><li data-l="D">Export logs to Cloud Storage Archive class after 90 days.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">BigQuery has a built-in feature where any table or partition that has not been modified for 90 days is automatically considered &#x27;Long-term storage&#x27; and the price drops by approximately 50%. This requires no configuration.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/pricing#storage" target="_blank" rel="noopener">https://cloud.google.com/bigquery/pricing#storage</a></div></div>
-</div><div class="q" id="q45">
-<div><span class="qnum">Question 45 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You are deploying a global UDP-based gaming leaderboard service for the healthcare gamification app. Low latency is critical. You need an anycast IP. Which TWO load balancer types support this?</div>
-<ul class="opts"><li data-l="A">Global External Application Load Balancer.</li><li class="correct" data-l="B">Global External Proxy Network Load Balancer.</li><li data-l="C">Global External Passthrough Network Load Balancer (not available usually).</li><li data-l="D">Regional External Network Load Balancer.</li><li data-l="E">UDP is not supported on Global Load Balancers.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">The Global External Proxy Network Load Balancer supports UDP traffic with a single anycast IP address, providing low-latency global reach for gaming applications. Standard Network Load Balancers are regional and do not support global anycast VIPs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/load-balancing/docs/choosing-load-balancer" target="_blank" rel="noopener">https://cloud.google.com/load-balancing/docs/choosing-load-balancer</a></div></div>
-</div><div class="q" id="q46">
-<div><span class="qnum">Question 46 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare&#x27;s CI/CD pipeline deploys to Cloud Run. You want to ensure that 10% of traffic goes to the new revision &#x27;v2&#x27; while 90% stays on &#x27;v1&#x27; to monitor for errors before a full rollout. How do you achieve this?</div>
-<ul class="opts"><li data-l="A">Use Istio VirtualService.</li><li data-l="B">Manually edit the Traffic settings in Cloud Run console to split 90/10.</li><li data-l="C">Use Cloud Deploy to manage the rollout with a canary strategy.</li><li class="correct" data-l="D">Both A and B are valid approaches.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">Cloud Run natively supports traffic splitting between revisions, allowing for granular control during rollouts. While Cloud Deploy manages the delivery pipeline, the splitting itself is an inherent feature of the Cloud Run service.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/deploy/docs/canary" target="_blank" rel="noopener">https://cloud.google.com/deploy/docs/canary</a></div></div>
-</div><div class="q" id="q47">
-<div><span class="qnum">Question 47 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You have a Dataproc cluster running Apache Spark jobs. The cluster performs poorly during the &#x27;shuffle&#x27; phase. Logs show disk I/O bottlenecks. What is the most effective modification to the cluster config?</div>
-<ul class="opts"><li data-l="A">Use Preemptible VMs.</li><li class="correct" data-l="B">Attach Local SSDs to the worker nodes.</li><li data-l="C">Switch compatibility to &#x27;High Mem&#x27; machine types.</li><li data-l="D">Increase the CPU count on worker nodes.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Spark shuffle operations are highly I/O intensive as intermediate data is written to disk. Local SSDs provide extremely high IOPS and throughput compared to standard persistent disks, significantly speeding up the shuffle phase.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/dataproc/docs/concepts/compute/local-ssds" target="_blank" rel="noopener">https://cloud.google.com/dataproc/docs/concepts/compute/local-ssds</a></div></div>
-</div><div class="q" id="q48">
-<div><span class="qnum">Question 48 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to grant a third-party auditor read-only access to a specific Cloud Storage bucket named &#x27;audit-logs&#x27;. They have a Google account &#x27;auditor@partner.com&#x27;. They should NOT see any other buckets. What IAM binding should you apply?</div>
-<ul class="opts"><li data-l="A">Role: Storage Object Viewer, Member: auditor@partner.com, Resource: Project.</li><li data-l="B">Role: Viewer, Member: auditor@partner.com, Resource: Project.</li><li class="correct" data-l="C">Role: Storage Object Viewer, Member: auditor@partner.com, Resource: Bucket &#x27;audit-logs&#x27;.</li><li data-l="D">Role: Storage Admin, Member: auditor@partner.com, Resource: Bucket &#x27;audit-logs&#x27;.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Granting the role at the Bucket level (not Project level) ensures Least Privilege. &#x27;Storage Object Viewer&#x27; allows reading objects, which covers the &#x27;read-only&#x27; requirement. Granting at Project level (A/B) would reveal all buckets.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/access-control/iam#bucket-level" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/access-control/iam#bucket-level</a></div></div>
-</div><div class="q" id="q49">
-<div><span class="qnum">Question 49 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">Your team is debugging a latency issue in a microservices chain (App Engine -&gt; Cloud Functions -&gt; Firestore). You need to see the end-to-end latency trace and identify which hop is slow. Which TWO tools/actions are required?</div>
-<ul class="opts"><li class="correct" data-l="A">Enable Cloud Trace API.</li><li data-l="B">Check the CPU usage in Cloud Monitoring.</li><li class="correct" data-l="C">Ensure the applications propagate the &#x27;X-Cloud-Trace-Context&#x27; header.</li><li data-l="D">Use Cloud Profiler.</li><li data-l="E">Parse text logs in Cloud Logging.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
-<div style="margin-top:6px">Cloud Trace (A) is the distributed tracing system. For traces to be stitched together across different services (especially if using custom http clients), you must propagate the trace context header (C). Google&#x27;s libraries often do this automatically, but it&#x27;s the strict requirement for the &#x27;chain&#x27; visibility.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/trace/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/trace/docs/overview</a></div></div>
-</div><div class="q" id="q50">
-<div><span class="qnum">Question 50 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare wants to run a legacy windows application that requires a specific USB license dongle. They want to move this to Google Cloud. What solution allows this?</div>
-<ul class="opts"><li data-l="A">Google Cloud VMware Engine (GCVE).</li><li data-l="B">Compute Engine Sole-tenant Nodes.</li><li class="correct" data-l="C">Bare Metal Solution.</li><li data-l="D">It is not possible to use USB dongles.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Bare Metal Solution provides physical hardware co-located in Google data centers, enabling the use of physical hardware security keys or legacy licensing dongles that are not supported on virtualized platforms like Compute Engine.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bare-metal/docs" target="_blank" rel="noopener">https://cloud.google.com/bare-metal/docs</a></div></div>
-</div><div class="q" id="q51">
-<div><span class="qnum">Question 51 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You have a Cloud SQL instance that is serving production traffic. You need to create a clone of this instance for testing a schematic change. You want the clone to be independent of the master (not a read replica). What is the fastest way?</div>
-<ul class="opts"><li data-l="A">Create a Read Replica, then promote it to a standalone instance.</li><li data-l="B">Restore from the most recent backup.</li><li class="correct" data-l="C">Use the &#x27;Clone&#x27; feature in Cloud SQL.</li><li data-l="D">Export data to SQL file and import to new instance.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
-<div style="margin-top:6px">Cloud SQL has a native &#x27;Clone&#x27; feature that creates a new, independent instance from an existing one (using point-in-time recovery underlying tech). This is faster and simpler than setting up replication and breaking it (A) or manual export/import (D).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/sql/docs/postgres/clone-instance" target="_blank" rel="noopener">https://cloud.google.com/sql/docs/postgres/clone-instance</a></div></div>
-</div><div class="q" id="q52">
-<div><span class="qnum">Question 52 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You are setting up a Cloud VPN (HA VPN) between GCP and your on-prem router. The connection is up, but BGP routes are not being exchanged. You verified the ASN numbers and Peer IPs. Which TWO firewall rules might be missing?</div>
-<ul class="opts"><li class="correct" data-l="A">Allow ingress TCP port 179 (BGP) on the Cloud Router.</li><li data-l="B">Allow ingress UDP port 500/4500 (IKE) on the VPC.</li><li data-l="C">Allow ingress from on-prem subnets to cloud subnets.</li><li data-l="D">Implied allow rule for BGP traffic.</li><li class="correct" data-l="E">On-prem firewall blocking TCP 179.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, E</span></div>
-<div style="margin-top:6px">BGP uses TCP port 179. While Cloud Router automatically handles BGP traffic on the Google Cloud side, on-premises firewalls must be explicitly configured to allow port 179 for the session to be established.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/network-connectivity/docs/vpn/troubleshooting/troubleshoot-bgp" target="_blank" rel="noopener">https://cloud.google.com/network-connectivity/docs/vpn/troubleshooting/troubleshoot-bgp</a></div></div>
-</div><div class="q" id="q53">
-<div><span class="qnum">Question 53 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare stores millions of small JSON files (1KB each) in a Cloud Storage bucket. A Dataflow job listing these files is performing slowly. What is the best way to improve listing performance?</div>
-<ul class="opts"><li data-l="A">Shard the file names (use a random prefix hash).</li><li class="correct" data-l="B">Use Cloud Bigtable instead of Cloud Storage for small files.</li><li data-l="C">Use a hierarchical folder structure.</li><li data-l="D">Switch to High-Performance Object Storage.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Sharding file prefixes (adding a hash or random string to the start of object names) helps distribute the GCS index partition load, which is essential for high-velocity operations involving millions of small files. This prevents &#x27;hotspotting&#x27; on specific index ranges.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/request-rate" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/request-rate</a></div></div>
-</div><div class="q" id="q54">
-<div><span class="qnum">Question 54 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You want to run a highly secure confidential workload (processing unencrypted memory) on GKE. You need to ensure the node&#x27;s memory is encrypted with a key that Google does not have access to (using AMD SEV). What GKE feature do you enable?</div>
-<ul class="opts"><li data-l="A">GKE Sandbox (gVisor).</li><li class="correct" data-l="B">Confidential GKE Nodes.</li><li data-l="C">Shielded GKE Nodes.</li><li data-l="D">Binary Authorization.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
-<div style="margin-top:6px">Confidential GKE Nodes use Confidential VMs (built on AMD SEV technology) to encrypt memory in use. This protects data-in-use even from the cloud provider. Shielded Nodes (C) protect boot integrity but not memory encryption.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/confidential-gke-nodes" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/how-to/confidential-gke-nodes</a></div></div>
-</div><div class="q" id="q55">
-<div><span class="qnum">Question 55 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">You are tasked with backing up an existing localized (zonal) Persistent Disk (500GB) to a different region for disaster recovery. What are the correct steps?</div>
-<ul class="opts"><li class="correct" data-l="A">Configure the Snapshot to be stored in the destination region (or multi-region).</li><li data-l="B">Snapshots are global by default, no configuration needed.</li><li data-l="C">Create a Machine Image.</li><li data-l="D">Copy the disk bytes using `dd` over VPN.</li><li class="correct" data-l="E">Create a Snapshot of the disk.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A, E</span></div>
-<div style="margin-top:6px">Snapshots (A) are the standard backup tool. When creating a snapshot, you can specify the storage location (B) (regional or multi-regional). If you want it in a DR region, you select that region or a multi-region that includes it. They are not &#x27;global&#x27; in storage location (they sit in a bucket essentially), but accessible globally for restore.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/disks/create-snapshots" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/disks/create-snapshots</a></div></div>
-</div><div class="q" id="q56">
-<div><span class="qnum">Question 56 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare&#x27;s app allows doctors to dictate notes. These audio files are uploaded to Cloud Storage. You want to automatically trigger a workflow to transcribe the audio using Speech-to-Text API and save the text to BigQuery. Which architecture is event-driven and scalable?</div>
-<ul class="opts"><li class="correct" data-l="A">Cloud Storage Notification -&gt; Pub/Sub -&gt; Cloud Functions -&gt; Speech API -&gt; BigQuery.</li><li data-l="B">Cloud Logging Sink -&gt; BigQuery.</li><li data-l="C">App Engine Cron Job polling the bucket.</li><li data-l="D">Dataflow streaming job watching the bucket.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">This is the classic event-driven pattern. GCS notifies Pub/Sub on object finalize. Pub/Sub triggers Cloud Function. Function calls Speech API and writes result to BQ. It scales to zero and handles bursts.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/functions/docs/tutorials/ocr" target="_blank" rel="noopener">https://cloud.google.com/functions/docs/tutorials/ocr</a></div></div>
-</div><div class="q" id="q57">
-<div><span class="qnum">Question 57 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You need to connect an application in a VPC to a Google API (e.g., Cloud Storage) without the traffic traversing the public internet. You also want to allow this access for instances without external IP addresses. What should you configure?</div>
-<ul class="opts"><li data-l="A">Identity-Aware Proxy.</li><li data-l="B">Cloud NAT.</li><li data-l="C">VPC Peering.</li><li class="correct" data-l="D">Private Google Access.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
-<div style="margin-top:6px">Private Google Access (PGA) allows VM instances which only have internal IP addresses (no external IP) to reach the external IP addresses of Google APIs and Services using Google&#x27;s private network. Cloud NAT (B) also works but incurs cost/complexity for just API access where PGA is a subnet toggle.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vpc/docs/private-google-access" target="_blank" rel="noopener">https://cloud.google.com/vpc/docs/private-google-access</a></div></div>
-</div><div class="q" id="q58">
-<div><span class="qnum">Question 58 / 60</span><span class="qtype multi">multi</span></div>
-<div class="qtext">EHR Healthcare has a compliance requirement to retain an audit trail of all &#x27;Admin Write&#x27; operations (e.g., creating VMs, changing IAM) for 3 years. Which TWO configuration steps are needed?</div>
-<ul class="opts"><li data-l="A">&#x27;Data Access&#x27; logs must be enabled explicitly.</li><li data-l="B">Increase the default logging retention in Cloud Logging to 3 years.</li><li class="correct" data-l="C">Verify &#x27;Admin Activity&#x27; logs are enabled (they are on by default).</li><li class="correct" data-l="D">Create a Log Sink to export &#x27;Admin Activity&#x27; logs to a Storage Bucket with a 3-year retention policy.</li><li data-l="E">Export logs to Pub/Sub.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : C, D</span></div>
-<div style="margin-top:6px">Admin Activity logs are generated automatically and are retained in Cloud Logging for a limited time. To meet the 3-year compliance requirement, you must create a Log Sink to export these logs to a long-term storage destination like Cloud Storage, where a 3-year retention policy can be enforced.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/logging/docs/audit" target="_blank" rel="noopener">https://cloud.google.com/logging/docs/audit</a></div></div>
-</div><div class="q" id="q59">
-<div><span class="qnum">Question 59 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">You are implementing a multi-layer defense against DDoS attacks. You have deployed Cloud Armor at the edge (Global Load Balancer). You also want to protect your backend VMs from direct traffic that bypasses the Load Balancer. What should you do?</div>
-<ul class="opts"><li class="correct" data-l="A">Configure firewall rules to allow ingress only from the Google Front Ends (GFEs) IP ranges.</li><li data-l="B">Use Identity-Aware Proxy.</li><li data-l="C">Install a third-party WAF on the VMs.</li><li data-l="D">Remove the external IPs from the VMs and use Cloud NAT.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">To ensure traffic comes *through* the Load Balancer (and thus Cloud Armor), you must lock down the backend VMs. Allowing ingress only from the GFE source IP ranges (130.211.0.0/22 and 35.191.0.0/16) prevents direct attacks on the VM public IPs (if they have them) or general internet noise.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/load-balancing/docs/https/setting-up-https#configuring_firewall_rules" target="_blank" rel="noopener">https://cloud.google.com/load-balancing/docs/https/setting-up-https#configuring_firewall_rules</a></div></div>
-</div><div class="q" id="q60">
-<div><span class="qnum">Question 60 / 60</span><span class="qtype single">single</span></div>
-<div class="qtext">EHR Healthcare is considering moving their SAP S/4HANA workload to Google Cloud. They need a certified, high-memory instance type (up to 12TB RAM). Which Compute Engine machine family should they choose?</div>
-<ul class="opts"><li class="correct" data-l="A">M2 or M3 Memory-optimized family.</li><li data-l="B">N2 General-purpose family.</li><li data-l="C">C2 Compute-optimized family.</li><li data-l="D">A2 Accelerator-optimized family.</li></ul>
-<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
-<div style="margin-top:6px">The &#x27;Memory-optimized&#x27; (M-series, M1, M2, M3) family is designed specifically for large in-memory databases like SAP HANA, offering up to 12TB (or more) of memory and are SAP certified.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/machine-types#m2_machine_types" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/machine-types#m2_machine_types</a></div></div>
+
+<div class="filters">
+  <div class="row">
+    <label for="filterDomain">Domaine</label>
+    <select id="filterDomain"><option value="">Tous les domaines</option><option value="D1">D1 — Designing and Planning a Cloud Solution Architecture</option><option value="D2">D2 — Managing and Provisioning a Solution Infrastructure</option><option value="D3">D3 — Designing for Security and Compliance</option><option value="D4">D4 — Analyzing and Optimizing Technical and Business Processes</option><option value="D5">D5 — Managing Implementation</option><option value="D6">D6 — Ensuring Solution and Operations Reliability</option></select>
+    <label for="filterModule">Module</label>
+    <select id="filterModule"><option value="">Tous les modules</option><option value="D1/M1" data-domain="D1">D1/M1 — Design for Business Outcomes</option><option value="D1/M2" data-domain="D1">D1/M2 — Design Robust Cloud Infrastructures</option><option value="D1/M3" data-domain="D1">D1/M3 — Design Network, Storage, and Compute</option><option value="D1/M4" data-domain="D1">D1/M4 — Plan Cloud Migrations</option><option value="D1/M5" data-domain="D1">D1/M5 — Evolve and Adapt Solutions</option><option value="D2/M1" data-domain="D2">D2/M1 — Configure and Secure Networks</option><option value="D2/M2" data-domain="D2">D2/M2 — Configure Storage Resources</option><option value="D2/M3" data-domain="D2">D2/M3 — Configure Compute Resources</option><option value="D3/M1" data-domain="D3">D3/M1 — Architecting Secure Google Cloud Solutions</option><option value="D3/M2" data-domain="D3">D3/M2 — Designing for Compliance</option><option value="D4/M1" data-domain="D4">D4/M1 — Optimizing Technical Processes and Development Lifecycle</option><option value="D4/M2" data-domain="D4">D4/M2 — Aligning Business Processes with Cloud Strategy</option><option value="D4/M3" data-domain="D4">D4/M3 — Ensuring Production Reliability</option><option value="D5/M1" data-domain="D5">D5/M1 — Guiding Development and Operations Teams</option><option value="D5/M2" data-domain="D5">D5/M2 — Interacting with Google Cloud Programmatically</option><option value="D6/M1" data-domain="D6">D6/M1 — Monitoring, Logging, and Alerting for Reliability</option><option value="D6/M2" data-domain="D6">D6/M2 — Managing Deployments and Ensuring Quality</option><option value="D6/M3" data-domain="D6">D6/M3 — Troubleshooting and Incident Response</option></select>
+    <button type="button" onclick="resetFilters()">Réinitialiser</button>
+    <span id="resultCount"></span>
+  </div>
 </div>
-</div>
+
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 1 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare is migrating its legacy on-premises patient data system to Google Cloud. The system currently uses a proprietary database that needs to be migrated to a fully managed relational database service that supports PostgreSQL. The solution must comply with HIPAA regulations, ensure high availability across multiple zones, and automatically encrypt data at rest. Which service should you choose and how should you configure it?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use Cloud SQL for PostgreSQL. Enable High Availability (HA). Verify that Google-managed encryption keys are enabled by default, which satisfies the requirement for encryption at rest for HIPAA compliance.</li><li data-l="B">Use Cloud Spanner. configured with a multi-region instance configuration. Use default Google-managed encryption keys.</li><li data-l="C">Use BigQuery with a dataset configured for the US region. Enable authorized views for access control.</li><li data-l="D">Use Cloud SQL for PostgreSQL. Enable High Availability (HA) and ensure the instance is in a VPC Service Controls perimeter. Configure Customer-Managed Encryption Keys (CMEK) for data at rest.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Cloud SQL for PostgreSQL is a fully managed relational database that can be configured for High Availability (HA) across multiple zones. Data is encrypted at rest by default using Google-managed encryption keys, which is sufficient for HIPAA compliance when combined with proper access controls. While Customer-Managed Encryption Keys (CMEK) provide additional control, they are not strictly required unless specified by organization policy.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/postgres/high-availability" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 2 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare wants to store X-ray and MRI images (unstructured data) in Google Cloud. The data must be highly durable, available globally with low latency for doctors in the US and Europe, and cost-effective for data that is rarely accessed after 3 years. Which TWO actions should you take?</div>
+  <ul class="opts"><li data-l="A">Store data in a Multi-Region Cloud Storage bucket (US and EU).</li><li class="correct" data-l="B">Store data in a Dual-Region Cloud Storage bucket (US and EU).</li><li class="correct" data-l="C">Use a Lifecycle Management policy to change the storage class to Archive Storage after 3 years.</li><li data-l="D">Use a Lifecycle Management policy to change the storage class to Standard Storage after 3 years.</li><li data-l="E">Store data in separate Regional buckets in US and Europe and manage replication manually.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C</b><div>Option B is correct because a Dual-Region bucket (e.g., US and EU) is a specific configuration that replicates data across two defined regions, offering high availability and low latency for users in those locations. Option C is correct for cost optimization, as Archive Storage is designed for data accessed less than once a year.</div><div class="ref"><a href="https://cloud.google.com/storage/docs/locations#location-types" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 3 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
+    
+  </div>
+  <div class="qt">Your team needs to de-identify sensitive patient data (PHI) before loading it into BigQuery for analytics. The original dataset is in Cloud Storage buffers in CSV format. You want to use a managed service to automatically inspect and mask this data based on HIPAA identifiers (like SSN, Name). What should you do?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use a Dataflow job with the Sensitive Data Protection (Cloud DLP) API to read the CSVs, de-identify the content, and write to BigQuery.</li><li data-l="B">Load the CSVs directly into BigQuery and use BigQuery column-level security to hide the columns.</li><li data-l="C">Use Pub/Sub to trigger a Cloud Function that runs a custom regex script to replace SSNs.</li><li data-l="D">Use Vertex AI to read the data and generate synthetic data.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Sensitive Data Protection (formerly Cloud DLP) is the specific Google Cloud service for inspecting and de-identifying sensitive data like PII and PHI. Using Dataflow to process data from Cloud Storage through the DLP API to BigQuery is the standard architecture for ensuring data is de-identified before storage.</div><div class="ref"><a href="https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 4 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare is designing a disaster recovery (DR) strategy for their critical patient management application running on Compute Engine. The RTO is 4 hours and RPO is 1 hour. They want to minimize costs while meeting these targets. Which DR pattern is most appropriate?</div>
+  <ul class="opts"><li data-l="A">Hot Standby (Active-Passive) with a fully scaled replica in the DR region.</li><li data-l="B">Warm Standby: Maintain a minimum viable version of the environment in the DR region, capable of scaling up.</li><li data-l="C">Active-Active: Run full capacity in both regions behind a global load balancer.</li><li class="correct" data-l="D">Cold Surveillance: Create snapshots of disks every hour. In a disaster, create instances from snapshots.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Cold Surveillance (often just Cold DR or Backup/Restore) fits the &#x27;minimize costs&#x27; driver better than Warm or Hot standbys. An RPO of 1 hour can be met by hourly snapshots. An RTO of 4 hours gives enough time to spin up instances from those snapshots. Warm Standby (B) costs more (running instances). Hot Standby/Active-Active (A/D) are comprehensive but expensive and overkill for 4h RTO.</div><div class="ref"><a href="https://cloud.google.com/architecture/disaster-recovery" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 5 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">The data analytics team wants to build a predictive model to identify patients at risk of chronic illness using historical records. They have CSV data in Cloud Storage and limited machine learning expertise. They want to build, train, and deploy a model quickly. Which TWO tools should they use?</div>
+  <ul class="opts"><li data-l="A">Use Vertex AI Training with a custom TensorFlow container.</li><li class="correct" data-l="B">Use Vertex AI AutoML (for tabular data) to train a model without writing code.</li><li class="correct" data-l="C">Use BigQuery ML to create and evaluate a model using standard SQL queries.</li><li data-l="D">Use Kubernetes Engine to run a Jupyter Notebook server for manual training.</li><li data-l="E">Use Dataflow to pre-process data and write to TFRecords.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C</b><div>BigQuery ML (B) allows users to create models using SQL, which is perfect for analytics teams familiar with data but less so with deep ML coding. Vertex AI AutoML (D) is designed for &#x27;limited expertise&#x27; usage, automating the model selection and training process. Option A and C require more engineering effort.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/bqml-introduction" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S1">
+  <div class="meta-line">
+    <span class="num">Question 6 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M3</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M3/S1 · Integration with On-premises and Multicloud Environments</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare requires a hybrid connectivity solution to connect their on-premises data center to Google Cloud. They need a dedicated connection with a guaranteed bandwidth of 10 Gbps and an SLA for availability. What should you recommend?</div>
+  <ul class="opts"><li class="correct" data-l="A">Dedicated Interconnect.</li><li data-l="B">Partner Interconnect.</li><li data-l="C">Cloud VPN (HA VPN).</li><li data-l="D">Direct Peering.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Dedicated Interconnect provides a direct physical connection with guaranteed bandwidth (10 Gbps or 100 Gbps chunks) and an SLA. Partner Interconnect uses a service provider and might not guarantee the full physical pipe in the same way (though it has SLAs). VPN is over the public internet (no bandwidth guarantee). Direct Peering has no SLA.</div><div class="ref"><a href="https://cloud.google.com/network-connectivity/docs/interconnect/concepts/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 7 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
+    
+  </div>
+  <div class="qt">You are managing a fleet of GKE clusters for the EHR system. You need to ensure that pod-to-pod communication is encrypted and that you can define fine-grained traffic policies between services (e.g., Frontend can talk to Backend, but not to Database). You also want to enforce mTLS. What implies the least operational overhead?</div>
+  <ul class="opts"><li class="correct" data-l="A">Implement Anthos Service Mesh (ASM) or Istio on the clusters.</li><li data-l="B">Manually configure IPSec tunnels between all nodes.</li><li data-l="C">Use Network Policies to restrict traffic based on IP ranges.</li><li data-l="D">Configure application-level SSL encryption in every microservice code.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Anthos Service Mesh (managed Istio) provides mTLS (mutual TLS) for service-to-service communication out of the box, along with fine-grained traffic management and observability. Option D puts the burden on developers. Option C (Network Policies) controls reachability (L3/L4) but doesn&#x27;t handle mTLS encryption/identity seamlessly.</div><div class="ref"><a href="https://cloud.google.com/service-mesh/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 8 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare is developing a new patient-facing mobile app using a microservices architecture on Cloud Run. They need to manage external user identities (patients) and internal staff identities separately. Patients should be able to sign in with Google, Facebook, or email/password. Staff should use the corporate Active Directory. Which TWO services/features should you integrate?</div>
+  <ul class="opts"><li data-l="A">Use Cloud IAM conditions to restrict patient access.</li><li data-l="B">Use Google Cloud Directory Sync (GCDS) to sync Active Directory to Cloud Identity for staff.</li><li class="correct" data-l="C">Use Identity Platform (GCIP) for patient authentication.</li><li class="correct" data-l="D">Use Identity-Aware Proxy (IAP) to protect internal admin tools for staff access.</li><li data-l="E">Use Firebase Realtime Database for storing all user credentials.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, D</b><div>Identity Platform (A) is the customer identity and access management (CIAM) solution for external users, supporting social login and email/password. Identity-Aware Proxy (IAP) (D) is ideal for protecting internal applications (like admin tools) by enforcing corporate identity (synced from AD) and context-aware access, without VPNs. Option B is a sync tool, not the runtime auth service itself, though it&#x27;s part of the flow, D is the enforcement point.</div><div class="ref"><a href="https://cloud.google.com/identity-platform/docs" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 9 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">The compliance team creates a requirement that no Cloud Storage bucket can be public. You want to enforce this check automatically across the entire organization and prevent any future buckets from being made public. What is the most effective way to achieve this?</div>
+  <ul class="opts"><li data-l="A">Create a Cloud Function triggered by bucket creation logs to revoke public IAM roles.</li><li data-l="B">Use an Organizational Policy Constraint &#x27;storage.uniformBucketLevelAccess&#x27;.</li><li class="correct" data-l="C">Use an Organizational Policy Constraint &#x27;storage.publicAccessPrevention&#x27;.</li><li data-l="D">Send an email to all developers instructing them not to make buckets public.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>The Organizational Policy Constraint `storage.publicAccessPrevention` (enforced as &#x27;enforce&#x27;) prevents the creation of public buckets and revokes public access from existing ones. This is a preventive control. `storage.uniformBucketLevelAccess` is about ACLs vs IAM, which helps but isn&#x27;t the direct &#x27;no public&#x27; switch like PAP is. Option C is reactive.</div><div class="ref"><a href="https://cloud.google.com/storage/docs/public-access-prevention" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 10 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You need to migrate a 50 TB Oracle Data Warehouse to BigQuery. The migration must happen within a 2-week window. You have limited internet bandwidth (100 Mbps) at the data center. Which migration path is feasible?</div>
+  <ul class="opts"><li data-l="A">Upload data directly to Cloud Storage using gsutil over the internet.</li><li class="correct" data-l="B">Use Transfer Appliance to ship data physically to Google Cloud.</li><li data-l="C">Use BigQuery Data Transfer Service for Oracle.</li><li data-l="D">Compress the data and use a multipart upload script.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>50 TB over 100 Mbps would take ~46 days (50 * 8 * 1000 * 1000 / 100 / 3600 / 24). This exceeds the 2-week window. Transfer Appliance is a physical server sent to the datacenter, filled with data, and shipped back, which is the standard solution for &#x27;large data, slow net&#x27; scenarios.</div><div class="ref"><a href="https://cloud.google.com/transfer-appliance/docs/4.0" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 11 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare&#x27;s compliance lead asks how to ensure that administrators cannot grant themselves permissions to sensitive projects without approval. You need to implement a &#x27;least privilege&#x27; and &#x27;separation of duties&#x27; model. Which TWO features should you use?</div>
+  <ul class="opts"><li class="correct" data-l="A">Required Access (Access Approval).</li><li class="correct" data-l="B">Privileged Access Manager (PAM) (or Just-In-Time access solutions).</li><li data-l="C">VPC Service Controls.</li><li data-l="D">Cloud Asset Inventory feeds.</li><li data-l="E">IAM Conditions with temporary access.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B</b><div>Privileged Access Manager (PAM) (B) allows for requesting temporary, elevated access that requires approval, ensuring administrators cannot permanently grant themselves high-risk permissions. IAM Conditions (E) provide the mechanism for time-bound and conditional access. Together, they enforce least privilege and separation of duties.</div><div class="ref"><a href="https://cloud.google.com/iam/docs/pam-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 12 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">You are deploying a GenAI chatbot for patient triage using Vertex AI. The chatbot occasionally hallucinates non-existent medical protocols. You need to ground the model&#x27;s responses in your verified internal medical knowledge base (PDFs and Docs). What should you implement?</div>
+  <ul class="opts"><li data-l="A">Fine-tune the base model (e.g., Gemini) with all your PDFs.</li><li class="correct" data-l="B">Use Retrieval-Augmented Generation (RAG) with Vertex AI Search serving the knowledge base.</li><li data-l="C">Increase the temperature parameter of the model.</li><li data-l="D">Hard-code the answers for common questions in the application layer.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>RAG (Retrieval-Augmented Generation) is the standard pattern for reducing hallucinations and grounding LLMs in specific, private data. Vertex AI Search (previously Gen App Builder) makes it easy to index documents and use them as a grounding source. Fine-tuning (A) teaches style/format but is hard to update with new facts and doesn&#x27;t guarantee factuality as well as RAG.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/generative-ai/grounding/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 13 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">To speed up the loading of high-resolution medical images in the web portal, you want to use a Content Delivery Network (CDN). The images are stored in a private Cloud Storage bucket. You want to serve them via Cloud CDN using signed URLs to ensure only authenticated users can access them. How should you configure the backend?</div>
+  <ul class="opts"><li class="correct" data-l="A">Set up an External Application Load Balancer with the Cloud Storage bucket as a backend bucket. Enable Cloud CDN.</li><li data-l="B">Set up a Network Load Balancer with the bucket as a backend.</li><li data-l="C">Use the Cloud Storage public endpoint directly.</li><li data-l="D">Configure Cloud CDN directly on the Cloud Storage bucket settings.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Cloud CDN works with the Global External Application Load Balancer (HTTP/S LB). You configure a &#x27;backend bucket&#x27; pointing to GCS and enable CDN on that backend service. Signed URLs are then generated by your app to allow access to the cached content.</div><div class="ref"><a href="https://cloud.google.com/cdn/docs/setting-up-cdn-with-bucket" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M2" data-label="D3/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 14 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D3/M2/S2 · Designing for Data Privacy, Residency, and Sovereignty</span>
+    
+  </div>
+  <div class="qt">Your finance team notices a spike in Compute Engine costs. They want to attribute costs to specific environments (Dev, Test, Prod) and departments. Resources are currently mixed in shared projects. Which TWO steps should you take to improve cost visibility?</div>
+  <ul class="opts"><li data-l="A">Move resources into separate projects for each Environment/Department combination.</li><li class="correct" data-l="B">Apply labels (e.g., env=prod, dept=cardiology) to all resources.</li><li class="correct" data-l="C">Enable Billing Export to BigQuery.</li><li data-l="D">view the &#x27;All Services&#x27; report in the Billing Console.</li><li data-l="E">Create a new Billing Account for every department.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, C</b><div>Labels (B) are the primary mechanism for granular cost tracking (cost allocation) within shared projects. Exporting billing data to BigQuery (C) allows for custom SQL analysis of that data using the labels to group costs. Segregating by project (A) is also good but a heavy migration if already mixed; labels are the immediate fix for &#x27;mixed resources&#x27;.</div><div class="ref"><a href="https://cloud.google.com/billing/docs/how-to/export-data-bigquery" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 15 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare wants to use Gemini on Vertex AI to summarize doctor notes. The notes are highly confidential. The legal team asks: &#x27;Will our data be used to train Google&#x27;s base foundation models?&#x27; What is the correct answer?</div>
+  <ul class="opts"><li data-l="A">Yes, by default all data sent to Vertex AI improves the model for everyone.</li><li class="correct" data-l="B">No, by default Google does not use customer data (prompts/responses) to train its foundation models.</li><li data-l="C">Yes, unless you purchase the Enterprise tier.</li><li data-l="D">No, but only if you use VPC Service Controls.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Google Cloud&#x27;s data governance policy for Vertex AI states that customer data (prompts/inputs and generated outputs) is NOT used to train the shared foundation models. The data stays within the customer&#x27;s tenant scope.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/generative-ai/data-governance" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 16 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
+    
+  </div>
+  <div class="qt">You have a fleet of Windows Server instances running on Compute Engine. You need to manage OS patches and configuration updates automatically without setting up a bastion host or RDP. Which service should you use?</div>
+  <ul class="opts"><li data-l="A">Remote Desktop Protocol (RDP) via Identity-Aware Proxy.</li><li class="correct" data-l="B">VM Manager.</li><li data-l="C">Unmanaged Instance Groups with startup scripts.</li><li data-l="D">Cloud Deployment Manager.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>VM Manager is a suite of tools (OS Config, Patch Management) that allows you to manage OS policies and patching across your fleet automatically. It works via the OS Config agent installed on the VMs, requiring no RDP access.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/vm-manager" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 17 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare runs a Kubernetes application that processes patient admission forms. The workload varies wildly during the day. You need to scale the pods based on the number of messages in a Pub/Sub queue, not just CPU usage. Which TWO configurations are required?</div>
+  <ul class="opts"><li data-l="A">Configure a Cluster Autoscaler.</li><li class="correct" data-l="B">Configure the Horizontal Pod Autoscaler (HPA) to use external metrics.</li><li data-l="C">Hardcode the replica count to the maximum expected load.</li><li class="correct" data-l="D">Deploy the Stackdriver Adapter (Custom Metrics Adapter) for Cloud Monitoring in the cluster.</li><li data-l="E">Use the Vertical Pod Autoscaler (VPA).</li></ul>
+  <div class="ans"><b>Bonne réponse : B, D</b><div>To scale on Pub/Sub (an external metric to the cluster), you need HPA (A) configured to look at external metrics. For HPA to see these Google Cloud metrics, you must install the Custom Metrics Adapter (B) (often part of the Stackdriver adapter) which bridges Cloud Monitoring metrics to the Kubernetes metrics API.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/tutorials/autoscaling-metrics" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 18 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">You are designing the network for the EHR application. You have a frontend subnet and a backend subnet. You want to deny all traffic from the frontend to the backend except on port 443. Which Google Cloud resource is the primary place to enforce this stateful firewall inspection?</div>
+  <ul class="opts"><li class="correct" data-l="A">VPC Firewall Rules.</li><li data-l="B">VPC Service Controls.</li><li data-l="C">Cloud Armor.</li><li data-l="D">Cloud IDS.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>VPC Firewall Rules (or global network firewall policies) are the standard L3/L4 mechanism to control traffic between subnets (east-west traffic) based on IP, port, and protocol. They are stateful.</div><div class="ref"><a href="https://cloud.google.com/vpc/docs/firewalls" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 19 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">A legacy application relies on a specific IP address hardcoded in client devices. You are migrating this app to Google Cloud Run. You need to expose the Cloud Run service via that single static global IP address. What should you do?</div>
+  <ul class="opts"><li data-l="A">Assign a static IP directly to the Cloud Run instance variables.</li><li class="correct" data-l="B">Put a Global External Application Load Balancer in front of Cloud Run and reserve a global static IP for the forwarding rule.</li><li data-l="C">Deploy Cloud Run and map a custom domain.</li><li data-l="D">Use Cloud NAT/Router.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Cloud Run services are regional and don&#x27;t natively have a single global static ingress IP. To get a global static anycast IP, you place a Global External Load Balancer in front of it (via a Serverless NEG).</div><div class="ref"><a href="https://cloud.google.com/run/docs/mapping-custom-domains#load-balancer" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 20 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare is planning to use Anthos (Google Distributed Cloud) to run some workloads on-premises due to data residency laws. They want to manage these on-prem clusters from the Google Cloud Console. Which TWO components facilitate this connection?</div>
+  <ul class="opts"><li data-l="A">BigQuery Omni.</li><li class="correct" data-l="B">Connect Gateway.</li><li data-l="C">Cloud Build Private Pools.</li><li class="correct" data-l="D">Hub (Fleet) registration.</li><li data-l="E">Cloud Interconnect.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, D</b><div>To manage external clusters (Anthos/GKE on-prem) from the cloud console, you register them to a Fleet (Hub) (B). The Connect Gateway (A) then allows you to interact with the cluster API server securely via Google Cloud identity without direct VPNs to the API server.</div><div class="ref"><a href="https://cloud.google.com/anthos/multicluster-management/connect/gateway" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 21 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">You are migrating a 200GB PostgreSQL database to Cloud SQL. The source database is on-premises and has a very high write rate. You cannot afford downtime longer than 5 minutes during the cutover. Which migration method should you use?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use Database Migration Service (DMS) for PostgreSQL.</li><li data-l="B">Export the database to a SQL dump file, upload to GCS, and import into Cloud SQL.</li><li data-l="C">Use Cloud Storage Transfer Service.</li><li data-l="D">Use BigQuery Data Transfer Service.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Database Migration Service (DMS) provides a continuous replication (CDC) mechanism from source to destination, allowing for minimal downtime cutover (seconds to minutes). Option B (Dump/Restore) would require stopping the writes during the dump+upload+import, which for 200GB could take hours, exceeding the 5-minute window.</div><div class="ref"><a href="https://cloud.google.com/database-migration/docs/postgres" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 22 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">Your security team requires that all container images deployed to your GKE production cluster must be scanned for vulnerabilities and signed by your trusted CI/CD pipeline (Cloud Build). Images not meeting this criteria must be blocked from deployment. What should you configure?</div>
+  <ul class="opts"><li class="correct" data-l="A">Binary Authorization.</li><li data-l="B">Container Analysis.</li><li data-l="C">VPC Service Controls.</li><li data-l="D">Artifact Registry Vulnerability Scanning.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Binary Authorization is the service that enforces deploy-time security controls. It checks for attestations (signatures) on images (e.g., &#x27;signed by CI/CD&#x27;) and can block deployment if the image isn&#x27;t signed or has vulnerabilities (when coupled with vulnerability scanning policies). Container Analysis (B) does the scanning but doesn&#x27;t block deployment on its own.</div><div class="ref"><a href="https://cloud.google.com/binary-authorization/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 23 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D3/M1/S1 · Designing Identity and Resource Hierarchy</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare wants to analyze logs from all their Google Cloud projects (over 50 projects) in a single central BigQuery dataset for auditing. They also want to retain these logs for 7 years for compliance. Which TWO steps should you take?</div>
+  <ul class="opts"><li class="correct" data-l="A">Create an aggregated Log Sink at the Organization or Folder level.</li><li class="correct" data-l="B">Configure the sink to include children projects and set the destination to the central BigQuery dataset.</li><li data-l="C">Create a separate Log Sink in every single project manually.</li><li data-l="D">Use Cloud Storage as the destination for better query performance.</li><li data-l="E">Export logs to Pub/Sub and use Dataflow to write to BigQuery.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B</b><div>Aggregated Log Sinks (Organization-level exports) allow you to collect logs from all projects in the org (including future ones) via the `includeChildren` property. Sending to BigQuery (B) is correct for &#x27;analysis&#x27; (SQL querying). Cloud Storage (D) is cheaper for &#x27;retention&#x27; but hard to &#x27;analyze&#x27;. Given the dual requirement (analyze + retain), BigQuery with partition expiration or long-term storage is valid, or BQ for analysis + GCS for archive. But for &#x27;analyzing in a single dataset&#x27;, BQ is the destination. The Sink configuration covers A and B.</div><div class="ref"><a href="https://cloud.google.com/logging/docs/export/aggregated_sinks" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 24 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You have a global application served by a Global External Application Load Balancer. You want to route traffic from European users to a specific GKE cluster in Zurich (europe-west6) and US users to a cluster in Iowa (us-central1). You also want to perform A/B testing for a new feature only for users in France. Which feature should you use?</div>
+  <ul class="opts"><li data-l="A">Anycast IP routing.</li><li class="correct" data-l="B">URL Maps with advanced traffic management (header-based routing and geo-routing).</li><li data-l="C">DNS Geolocation policies using Cloud DNS.</li><li data-l="D">Network Load Balancer with backends in both regions.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Global External HTTP(S) Load Balancer uses URL Maps to define routing rules. You can route based on client location/region (standard behavior) but for specific &#x27;A/B testing&#x27; logic (e.g. headers or fine-grained geo matches), URL Maps traffic splitting and header-based routing is the mechanism. Cloud DNS (B) is for resolution, not L7 traffic splitting.</div><div class="ref"><a href="https://cloud.google.com/load-balancing/docs/https/traffic-management-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 25 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare&#x27;s app needs to retrieve temporary credentials to access an AWS S3 bucket containing partner data. You want to avoid storing long-lived AWS Access Keys in your Google Cloud environment. What is the best practice solution?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use Workload Identity Federation to allow your Google Cloud Service Account to impersonate an AWS Role.</li><li data-l="B">Store the AWS keys in Secret Manager and rotate them daily.</li><li data-l="C">Hardcode the keys in the application code but obfuscate them.</li><li data-l="D">Use Google Cloud Storage Transfer Service with an Access Key.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Workload Identity Federation creates a trust relationship between GCP and AWS (or other OIDC providers), allowing a GCP Service Account to exchange its token for an AWS temporary session token (via STS) without ever handling or storing long-lived keys. This is the modern security best practice.</div><div class="ref"><a href="https://cloud.google.com/iam/docs/workload-identity-federation" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 26 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You are building a real-time patient monitoring dashboard. Devices send heart rate data (JSON) every second via MQTT. You need to ingest this data, process it in real-time (calculate moving averages), and store the alerts. Which TWO services form the core of this pipeline?</div>
+  <ul class="opts"><li class="correct" data-l="A">Pub/Sub for ingestion.</li><li class="correct" data-l="B">Dataflow for stream processing.</li><li data-l="C">Cloud Storage for ingestion.</li><li data-l="D">Cloud Functions for stream processing.</li><li data-l="E">BigQuery for ingestion.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B</b><div>Pub/Sub (A) is the scalable messaging service for ingestion (often fronted by an MQTT bridge or IoT Core replacement). Dataflow (B) (running Beam) is the standard for complex stream processing (like windowing/moving averages) that Cloud Functions (D) struggles with at stateful high scale.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/stream-analytics-patterns" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 27 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">A developer wants to SSH into a private Compute Engine instance that has no public IP address. They are working from home and do not have a VPN to the VPC. What is the most secure and simplest way to allow this?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use Identity-Aware Proxy (IAP) for TCP forwarding.</li><li data-l="B">Assign an External IP to the instance temporarily.</li><li data-l="C">Setup a Bastion Host with a public IP.</li><li data-l="D">Create a firewall rule allowing 0.0.0.0/0 on port 22.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>IAP for TCP forwarding allows you to tunnel SSH access through the Google front-end (over HTTPS) to the private instance without giving the instance a public IP. Authorization is handled via IAM policies (user@example.com needs &#x27;IAP-secured Tunnel User&#x27;). This avoids the operational overhead and surface area of a Bastion host.</div><div class="ref"><a href="https://cloud.google.com/iap/docs/using-tcp-forwarding" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M2" data-label="D3/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 28 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M2/S2 · Designing for Data Privacy, Residency, and Sovereignty</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare stores backup tapes in a physical vault. They want to replace this with Cloud Storage. The backups must be kept for 10 years for regulatory reasons and will likely never be read. You need the lowest cost solution that enforces the retention period. What should you choose?</div>
+  <ul class="opts"><li class="correct" data-l="A">Archive Storage class with a Bucket Lock (Retention Policy).</li><li data-l="B">Standard Storage class.</li><li data-l="C">Nearline Storage class.</li><li data-l="D">Coldline Storage class with Object Versioning.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Archive Storage is the lowest cost class for data accessed &lt; 1/year. Bucket Lock (Retention Policy) enforces the WORM (Write Once Read Many) compliance requirement, preventing deletion before the 10-year mark.</div><div class="ref"><a href="https://cloud.google.com/storage/docs/retention-policies" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 29 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">You are running a critical legacy application on a Sole-tenant Node in Compute Engine to meet licensing requirements. The application is sensitive to host maintenance restarts. You want to control when the maintenance occurs. What should you do?</div>
+  <ul class="opts"><li data-l="A">Migrate the application to GKE.</li><li data-l="B">You cannot control maintenance timing on GCP.</li><li data-l="C">Use Live Migration (default behavior).</li><li class="correct" data-l="D">Configure a Maintenance Window on the Sole-tenant Group.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Sole-tenant nodes allow you to configure Maintenance Windows to schedule when Google performs disruptive maintenance updates, satisfying strict uptime/licensing visibility requirements.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/nodes/maintenance-windows" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 30 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare wants to create a &#x27;Data Mesh&#x27; architecture. They have data spread across multiple projects and buckets. They want a central catalog to discover data, manage metadata, and enforce governance policies without moving the data. Which TWO tools are critical for this?</div>
+  <ul class="opts"><li class="correct" data-l="A">Dataplex.</li><li class="correct" data-l="B">Data Catalog (now part of Dataplex).</li><li data-l="C">Cloud Composer.</li><li data-l="D">Dataflow.</li><li data-l="E">Bigtable.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B</b><div>Dataplex (A) is Google&#x27;s intelligent data fabric that enables a data mesh architecture by unifying distributed data (GCS, BQ) into logical &#x27;Lakes&#x27; and &#x27;Zones&#x27;. Data Catalog (B) (integrated into Dataplex) handles the discovery, tagging, and metadata management.</div><div class="ref"><a href="https://cloud.google.com/dataplex/docs/introduction" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 31 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D1/M2/S2 · Elasticity of Cloud Resources</span>
+    
+  </div>
+  <div class="qt">You have a Cloud Run service that connects to a Cloud SQL database. During peak load, the database connection pool is exhausted, causing errors. You want to solve this without increasing the database size if possible. What should you deploy?</div>
+  <ul class="opts"><li data-l="A">Cloud SQL Auth Proxy as a sidecar.</li><li data-l="B">A serverless VPC Access Connector.</li><li data-l="C">Only increase the Cloud SQL machine type.</li><li class="correct" data-l="D">Dedicated PgBouncer instance or pooler (or use Cloud SQL Insights to debug).</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Connection exhaustion is a common issue with serverless functions that scale rapidly. The recommended architectural fix is to introduce a connection pooler like PgBouncer. Some versions of Cloud SQL now offer managed sidecar poolers, which helps manage limited connection resources without resizing the database.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/postgres/manage-connections#connection_pooling" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 32 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">Your team uses Terraform to manage GCP infrastructure. You want to ensure that no one can accidentally delete the production database via Terraform destroy. What is the best way to prevent this?</div>
+  <ul class="opts"><li data-l="A">Use a localized state file.</li><li data-l="B">Remove the `owner` role from the Terraform service account.</li><li class="correct" data-l="C">Set `deletion_protection = true` in the Terraform resource block for the Cloud SQL instance.</li><li data-l="D">Use a git branch protection rule.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Setting `deletion_protection = true` on stateful resources (like Cloud SQL) within the Terraform config (and the API) prevents Terraform from deleting the resource, even if you run `destroy`. The API call will fail.</div><div class="ref"><a href="https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance#deletion_protection" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 33 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S1 · Designing Identity and Resource Hierarchy</span>
+    
+  </div>
+  <div class="qt">You are designing a multi-region deployment. You want all user traffic to enter the Google network as close to the user as possible and traverse Google&#x27;s private backbone to reach your backend. Which network tier should you use?</div>
+  <ul class="opts"><li class="correct" data-l="A">Premium Tier.</li><li data-l="B">Standard Tier.</li><li data-l="C">Basic Tier.</li><li data-l="D">Enhanced Tier.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Premium Tier delivers traffic from the user to the nearest Google Point of Presence (PoP) via cold-potato routing (enter Google global network ASAP). Standard Tier uses public internet (ISP networks) to reach the region where the VM is located (hot-potato routing).</div><div class="ref"><a href="https://cloud.google.com/network-tiers/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 34 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare needs to run a high-performance computing (HPC) workload for genomic sequencing. The workload requires thousands of cores for a few hours a week. It is fault-tolerant and can resume from checkpoints. You want to minimize cost. Which TWO choices are appropriate?</div>
+  <ul class="opts"><li class="correct" data-l="A">Use Spot VMs (Compute Engine).</li><li class="correct" data-l="B">Use Batch (Google Cloud Batch).</li><li data-l="C">Use Reserved Instances.</li><li data-l="D">Use Sole-tenant nodes.</li><li data-l="E">Use App Engine Standard.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, B</b><div>Spot VMs (A) offer deep discounts (60-91%) for preemptible capacity, perfect for fault-tolerant batch jobs. Google Cloud Batch (B) is the managed service specifically for scheduling and running batch jobs, handling the retries and provisioning of those Spot VMs automatically.</div><div class="ref"><a href="https://cloud.google.com/batch/docs/get-started" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 35 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">You have an application running in GKE that needs to access a Cloud Spanner database. Use strict security: Workload Identity. How do you configure the link?</div>
+  <ul class="opts"><li data-l="A">Use node-level metadata.</li><li class="correct" data-l="B">Create a Google Service Account (GSA) with Spanner access. Bind the Kubernetes Service Account (KSA) to the GSA using the `iam.workloadIdentityUser` role. Annotate the KSA with the GSA email.</li><li data-l="C">Grant the Compute Engine default service account access to Spanner.</li><li data-l="D">Create a JSON key for the GSA and mount it as a Kubernetes Secret.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Workload Identity allows a Kubernetes Service Account (KSA) to act as a Google Service Account (GSA). The steps are: 1. Create GSA + Roles. 2. Bind KSA to GSA (allow KSA to impersonate). 3. Annotate KSA with GSA email. This avoids secrets/keys (B) and broad node permissions (C).</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 36 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare uses Google Workspace. They want to use their existing Google Groups to manage permissions in Google Cloud projects (e.g., &#x27;data-engineers@ehr.com&#x27; gets BigQuery User). What is the benefit of this?</div>
+  <ul class="opts"><li class="correct" data-l="A">It decouples IAM policy management from user lifecycle management. Adding a user to the Group grants them access without updating Cloud IAM policies.</li><li data-l="B">It allows for finer-grained permissions than IAM roles.</li><li data-l="C">It is required for VPC Service Controls.</li><li data-l="D">It removes the need for 2FA.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Using Groups for IAM is a best practice. You apply the IAM binding once to the Group email. Then, when staff join/leave, you only manage their membership in the Google Workspace Group. You don&#x27;t have to touch the GCP Project IAM bindings. Scaling efficiency.</div><div class="ref"><a href="https://cloud.google.com/iam/docs/groups-in-cloud-console" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 37 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
+    
+  </div>
+  <div class="qt">You need to store sensitive configuration data (database passwords, API keys) for your Cloud Functions. You want to audit access to these secrets and rotate them automatically where possible. What service should you use?</div>
+  <ul class="opts"><li class="correct" data-l="A">Secret Manager.</li><li data-l="B">Cloud KMS.</li><li data-l="C">Environment Variables.</li><li data-l="D">Store in Source Code.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>Secret Manager is the secure storage system for API keys, passwords, and certificates. It supports versioning, access audit logging, and rotation (often via Cloud Functions). Cloud KMS (B) manages existing *encryption keys*, not the storage of the secret payloads themselves (though it encrypts them). Environment variables (C) are often visible in the console and not encrypted at rest in the same way/auditable.</div><div class="ref"><a href="https://cloud.google.com/secret-manager/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 38 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
+    
+  </div>
+  <div class="qt">Your web application on Cloud Run is experiencing high latency. Logs show that the startup time (cold start) of your container is 10 seconds due to loading large ML models. You need to reduce this latency for users. Which TWO actions help?</div>
+  <ul class="opts"><li class="correct" data-l="A">Configure &#x27;min-instances&#x27; to be greater than 0.</li><li data-l="B">Enable &#x27;CPU always allocated&#x27;.</li><li class="correct" data-l="C">Use Startup CPU Boost.</li><li data-l="D">Increase the request timeout.</li><li data-l="E">Use a Global Load Balancer.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, C</b><div>Min-instances (A) keeps a set of containers warm, eliminating cold starts for those initial requests. Startup CPU Boost (C) temporarily increases CPU during the instance startup phase, significantly reducing the time it takes to load those heavy ML models. &#x27;CPU always allocated&#x27; (B) helps with background processing *after* startup but doesn&#x27;t necessarily speed up the *loading* phase efficiently on its own.</div><div class="ref"><a href="https://cloud.google.com/run/docs/configuring/cpu-boost" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 39 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare requires that all data stored in Cloud Storage buckets must be encrypted with keys managed by their internal security team (on-premises HSM), not by Google. They want to keep the keys on-prem. What encryption solution meets this?</div>
+  <ul class="opts"><li data-l="A">Customer-Supplied Encryption Keys (CSEK).</li><li data-l="B">Google-managed keys.</li><li data-l="C">Cloud HSM.</li><li class="correct" data-l="D">Customer-Managed Encryption Keys (CMEK) with Cloud EKM.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>CMEK with Cloud External Key Manager (Cloud EKM) allows you to use keys that you manage *outside* of Google Cloud (e.g., in an on-prem HSM or third-party provider) to encrypt data in GCP services. CSEK (A) involves sending the raw key with the request, which is harder to manage for managed services and usually just for GCS/Compute.</div><div class="ref"><a href="https://cloud.google.com/kms/docs/ekm" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M2" data-label="D3/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 40 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M2/S2 · Designing for Data Privacy, Residency, and Sovereignty</span>
+    
+  </div>
+  <div class="qt">You are building a data pipeline. You need to orchestrate a complex workflow involving Dataflow jobs, BigQuery queries, and custom Python scripts. The workflow has dependencies (Task B starts after Task A succeeds). Which service is the managed Apache Airflow solution for this?</div>
+  <ul class="opts"><li data-l="A">Cloud Scheduler.</li><li class="correct" data-l="B">Cloud Composer.</li><li data-l="C">Cloud Tasks.</li><li data-l="D">Cloud Workflows.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Cloud Composer is the fully managed service for Apache Airflow, used for orchestrating complex data pipelines (DAGs). Cloud Workflows (C) is for service-orchestration (HTTP APIs), not typically heavy data ETL jobs.</div><div class="ref"><a href="https://cloud.google.com/composer/docs/concepts/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 41 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare uses Shared VPC to segregate network administration from service project permissions. You need to deploy a new Cloud Function in a service project that connects to a private Redis instance in the Shared VPC Host project&#x27;s subnet. What must you configure?</div>
+  <ul class="opts"><li data-l="A">VPC Peering between the Service Project and Host Project.</li><li class="correct" data-l="B">Create the Serverless VPC Access Connector in the Service Project, targeting the Shared VPC subnet.</li><li data-l="C">Use Serverless VPC Access Connector created in the Shared VPC Host project and granting the Cloud Function service account permission to it.</li><li data-l="D">Public IP for Redis.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>To connect Serverless services (Cloud Run/Functions) to a Shared VPC, you create the Serverless VPC Access Connector *in the service project* (where the function lives), but configured to point to the shared subnet (ensure the Host project has shared that subnet with the service project).</div><div class="ref"><a href="https://cloud.google.com/vpc/docs/configure-serverless-vpc-access#shared-vpc" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 42 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
+    
+  </div>
+  <div class="qt">You are designing the encryption strategy for a highly sensitive patient database on Cloud SQL. The requirements state that key material must be generated on a specialized FIPS 140-2 Level 3 Hardware Security Module (HSM) managed by Google, and the key itself should never leave the HSM boundary. Which TWO choices are relevant?</div>
+  <ul class="opts"><li data-l="A">Use Cloud KMS with a software protection level.</li><li class="correct" data-l="B">Use Cloud KMS with a &#x27;Hardware&#x27; (HSM) protection level.</li><li data-l="C">Use Customer-Supplied Encryption Keys (CSEK).</li><li class="correct" data-l="D">Enable CMEK on the Cloud SQL instance referencing the Cloud HSM key.</li><li data-l="E">Use Google-default encryption.</li></ul>
+  <div class="ans"><b>Bonne réponse : B, D</b><div>To use Google-managed HSMs (FIPS 140-2 L3), you create a key in Cloud KMS with the &#x27;protection level&#x27; set to HSM (B). Then, to apply this to Cloud SQL, you configure CMEK (Customer-Managed Encryption Keys) on the database instance to point to that HSM-backend key (D).</div><div class="ref"><a href="https://cloud.google.com/kms/docs/cloud-hsm-overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 43 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">An analytics job in BigQuery is failing with an &#x27;Access Denied&#x27; error when trying to query a table in another project. You verified the service account has &#x27;BigQuery Data Viewer&#x27; on the target dataset. The projects are in different specialized VPC Service Controls perimeters. What is the likely cause and fix?</div>
+  <ul class="opts"><li data-l="A">The service account needs &#x27;BigQuery Job User&#x27; in the target project.</li><li class="correct" data-l="B">VPC Service Controls are blocking the request. Configure an Ingress/Egress rule or a Perimeter Bridge.</li><li data-l="C">The service account needs &#x27;Owner&#x27; role.</li><li data-l="D">Cross-project queries are not allowed in BigQuery.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>If identities and IAM roles are correct but access is denied between projects in different security perimeters, VPC Service Controls (VPC-SC) is the blocker. You need to bridge the perimeters (using a Bridge or Ingress/Egress policies) to allow the API call to cross the boundary.</div><div class="ref"><a href="https://cloud.google.com/vpc-service-controls/docs/troubleshoot-vpc-sc" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 44 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare wants to reduce the storage cost of their BigQuery log tables. They currently keep all logs for 5 years in the &#x27;Active&#x27; storage class. Most logs are never queried after 90 days. What is the most cost-effective automated solution?</div>
+  <ul class="opts"><li class="correct" data-l="A">Do nothing. BigQuery automatically moves unaccessed partitions to &#x27;Long-term&#x27; storage (50% cheaper) after 90 days.</li><li data-l="B">Script a daily job to move tables to a &#x27;Cold&#x27; dataset.</li><li data-l="C">Use BigQuery Physical Storage billing model.</li><li data-l="D">Export logs to Cloud Storage Archive class after 90 days.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>BigQuery has a built-in feature where any table or partition that has not been modified for 90 days is automatically considered &#x27;Long-term storage&#x27; and the price drops by approximately 50%. This requires no configuration.</div><div class="ref"><a href="https://cloud.google.com/bigquery/pricing#storage" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+  <div class="meta-line">
+    <span class="num">Question 45 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
+    
+  </div>
+  <div class="qt">You are deploying a global UDP-based gaming leaderboard service for the healthcare gamification app. Low latency is critical. You need an anycast IP. Which TWO load balancer types support this?</div>
+  <ul class="opts"><li data-l="A">Global External Application Load Balancer.</li><li class="correct" data-l="B">Global External Proxy Network Load Balancer.</li><li data-l="C">Global External Passthrough Network Load Balancer (not available usually).</li><li data-l="D">Regional External Network Load Balancer.</li><li data-l="E">UDP is not supported on Global Load Balancers.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>The Global External Proxy Network Load Balancer supports UDP traffic with a single anycast IP address, providing low-latency global reach for gaming applications. Standard Network Load Balancers are regional and do not support global anycast VIPs.</div><div class="ref"><a href="https://cloud.google.com/load-balancing/docs/choosing-load-balancer" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 46 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare&#x27;s CI/CD pipeline deploys to Cloud Run. You want to ensure that 10% of traffic goes to the new revision &#x27;v2&#x27; while 90% stays on &#x27;v1&#x27; to monitor for errors before a full rollout. How do you achieve this?</div>
+  <ul class="opts"><li data-l="A">Use Istio VirtualService.</li><li data-l="B">Manually edit the Traffic settings in Cloud Run console to split 90/10.</li><li data-l="C">Use Cloud Deploy to manage the rollout with a canary strategy.</li><li class="correct" data-l="D">Both A and B are valid approaches.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Cloud Run natively supports traffic splitting between revisions, allowing for granular control during rollouts. While Cloud Deploy manages the delivery pipeline, the splitting itself is an inherent feature of the Cloud Run service.</div><div class="ref"><a href="https://cloud.google.com/deploy/docs/canary" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M2" data-label="D3/M2/S2">
+  <div class="meta-line">
+    <span class="num">Question 47 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M2/S2 · Designing for Data Privacy, Residency, and Sovereignty</span>
+    
+  </div>
+  <div class="qt">You have a Dataproc cluster running Apache Spark jobs. The cluster performs poorly during the &#x27;shuffle&#x27; phase. Logs show disk I/O bottlenecks. What is the most effective modification to the cluster config?</div>
+  <ul class="opts"><li data-l="A">Use Preemptible VMs.</li><li class="correct" data-l="B">Attach Local SSDs to the worker nodes.</li><li data-l="C">Switch compatibility to &#x27;High Mem&#x27; machine types.</li><li data-l="D">Increase the CPU count on worker nodes.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Spark shuffle operations are highly I/O intensive as intermediate data is written to disk. Local SSDs provide extremely high IOPS and throughput compared to standard persistent disks, significantly speeding up the shuffle phase.</div><div class="ref"><a href="https://cloud.google.com/dataproc/docs/concepts/compute/local-ssds" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 48 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S1 · Designing Identity and Resource Hierarchy</span>
+    
+  </div>
+  <div class="qt">You need to grant a third-party auditor read-only access to a specific Cloud Storage bucket named &#x27;audit-logs&#x27;. They have a Google account &#x27;auditor@partner.com&#x27;. They should NOT see any other buckets. What IAM binding should you apply?</div>
+  <ul class="opts"><li data-l="A">Role: Storage Object Viewer, Member: auditor@partner.com, Resource: Project.</li><li data-l="B">Role: Viewer, Member: auditor@partner.com, Resource: Project.</li><li class="correct" data-l="C">Role: Storage Object Viewer, Member: auditor@partner.com, Resource: Bucket &#x27;audit-logs&#x27;.</li><li data-l="D">Role: Storage Admin, Member: auditor@partner.com, Resource: Bucket &#x27;audit-logs&#x27;.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Granting the role at the Bucket level (not Project level) ensures Least Privilege. &#x27;Storage Object Viewer&#x27; allows reading objects, which covers the &#x27;read-only&#x27; requirement. Granting at Project level (A/B) would reveal all buckets.</div><div class="ref"><a href="https://cloud.google.com/storage/docs/access-control/iam#bucket-level" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S4">
+  <div class="meta-line">
+    <span class="num">Question 49 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S4</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M2/S4 · Performance and Latency</span>
+    
+  </div>
+  <div class="qt">Your team is debugging a latency issue in a microservices chain (App Engine -&gt; Cloud Functions -&gt; Firestore). You need to see the end-to-end latency trace and identify which hop is slow. Which TWO tools/actions are required?</div>
+  <ul class="opts"><li class="correct" data-l="A">Enable Cloud Trace API.</li><li data-l="B">Check the CPU usage in Cloud Monitoring.</li><li class="correct" data-l="C">Ensure the applications propagate the &#x27;X-Cloud-Trace-Context&#x27; header.</li><li data-l="D">Use Cloud Profiler.</li><li data-l="E">Parse text logs in Cloud Logging.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, C</b><div>Cloud Trace (A) is the distributed tracing system. For traces to be stitched together across different services (especially if using custom http clients), you must propagate the trace context header (C). Google&#x27;s libraries often do this automatically, but it&#x27;s the strict requirement for the &#x27;chain&#x27; visibility.</div><div class="ref"><a href="https://cloud.google.com/trace/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+  <div class="meta-line">
+    <span class="num">Question 50 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S2</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare wants to run a legacy windows application that requires a specific USB license dongle. They want to move this to Google Cloud. What solution allows this?</div>
+  <ul class="opts"><li data-l="A">Google Cloud VMware Engine (GCVE).</li><li data-l="B">Compute Engine Sole-tenant Nodes.</li><li class="correct" data-l="C">Bare Metal Solution.</li><li data-l="D">It is not possible to use USB dongles.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Bare Metal Solution provides physical hardware co-located in Google data centers, enabling the use of physical hardware security keys or legacy licensing dongles that are not supported on virtualized platforms like Compute Engine.</div><div class="ref"><a href="https://cloud.google.com/bare-metal/docs" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 51 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">You have a Cloud SQL instance that is serving production traffic. You need to create a clone of this instance for testing a schematic change. You want the clone to be independent of the master (not a read replica). What is the fastest way?</div>
+  <ul class="opts"><li data-l="A">Create a Read Replica, then promote it to a standalone instance.</li><li data-l="B">Restore from the most recent backup.</li><li class="correct" data-l="C">Use the &#x27;Clone&#x27; feature in Cloud SQL.</li><li data-l="D">Export data to SQL file and import to new instance.</li></ul>
+  <div class="ans"><b>Bonne réponse : C</b><div>Cloud SQL has a native &#x27;Clone&#x27; feature that creates a new, independent instance from an existing one (using point-in-time recovery underlying tech). This is faster and simpler than setting up replication and breaking it (A) or manual export/import (D).</div><div class="ref"><a href="https://cloud.google.com/sql/docs/postgres/clone-instance" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 52 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">You are setting up a Cloud VPN (HA VPN) between GCP and your on-prem router. The connection is up, but BGP routes are not being exchanged. You verified the ASN numbers and Peer IPs. Which TWO firewall rules might be missing?</div>
+  <ul class="opts"><li class="correct" data-l="A">Allow ingress TCP port 179 (BGP) on the Cloud Router.</li><li data-l="B">Allow ingress UDP port 500/4500 (IKE) on the VPC.</li><li data-l="C">Allow ingress from on-prem subnets to cloud subnets.</li><li data-l="D">Implied allow rule for BGP traffic.</li><li class="correct" data-l="E">On-prem firewall blocking TCP 179.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, E</b><div>BGP uses TCP port 179. While Cloud Router automatically handles BGP traffic on the Google Cloud side, on-premises firewalls must be explicitly configured to allow port 179 for the session to be established.</div><div class="ref"><a href="https://cloud.google.com/network-connectivity/docs/vpn/troubleshooting/troubleshoot-bgp" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 53 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S1 · Designing Identity and Resource Hierarchy</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare stores millions of small JSON files (1KB each) in a Cloud Storage bucket. A Dataflow job listing these files is performing slowly. What is the best way to improve listing performance?</div>
+  <ul class="opts"><li data-l="A">Shard the file names (use a random prefix hash).</li><li class="correct" data-l="B">Use Cloud Bigtable instead of Cloud Storage for small files.</li><li data-l="C">Use a hierarchical folder structure.</li><li data-l="D">Switch to High-Performance Object Storage.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Sharding file prefixes (adding a hash or random string to the start of object names) helps distribute the GCS index partition load, which is essential for high-velocity operations involving millions of small files. This prevents &#x27;hotspotting&#x27; on specific index ranges.</div><div class="ref"><a href="https://cloud.google.com/storage/docs/request-rate" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 54 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">You want to run a highly secure confidential workload (processing unencrypted memory) on GKE. You need to ensure the node&#x27;s memory is encrypted with a key that Google does not have access to (using AMD SEV). What GKE feature do you enable?</div>
+  <ul class="opts"><li data-l="A">GKE Sandbox (gVisor).</li><li class="correct" data-l="B">Confidential GKE Nodes.</li><li data-l="C">Shielded GKE Nodes.</li><li data-l="D">Binary Authorization.</li></ul>
+  <div class="ans"><b>Bonne réponse : B</b><div>Confidential GKE Nodes use Confidential VMs (built on AMD SEV technology) to encrypt memory in use. This protects data-in-use even from the cloud provider. Shielded Nodes (C) protect boot integrity but not memory encryption.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/confidential-gke-nodes" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S1">
+  <div class="meta-line">
+    <span class="num">Question 55 / 60</span>
+    <span class="badge d">D1</span>
+    <span class="badge m">M4</span>
+    <span class="badge s">S1</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D1/M4/S1 · Integration with Existing Systems</span>
+    
+  </div>
+  <div class="qt">You are tasked with backing up an existing localized (zonal) Persistent Disk (500GB) to a different region for disaster recovery. What are the correct steps?</div>
+  <ul class="opts"><li class="correct" data-l="A">Configure the Snapshot to be stored in the destination region (or multi-region).</li><li data-l="B">Snapshots are global by default, no configuration needed.</li><li data-l="C">Create a Machine Image.</li><li data-l="D">Copy the disk bytes using `dd` over VPN.</li><li class="correct" data-l="E">Create a Snapshot of the disk.</li></ul>
+  <div class="ans"><b>Bonne réponse : A, E</b><div>Snapshots (A) are the standard backup tool. When creating a snapshot, you can specify the storage location (B) (regional or multi-regional). If you want it in a DR region, you select that region or a multi-region that includes it. They are not &#x27;global&#x27; in storage location (they sit in a bucket essentially), but accessible globally for restore.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/disks/create-snapshots" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M2" data-label="D3/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 56 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M2/S3 · Designing for Auditability and Logging</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare&#x27;s app allows doctors to dictate notes. These audio files are uploaded to Cloud Storage. You want to automatically trigger a workflow to transcribe the audio using Speech-to-Text API and save the text to BigQuery. Which architecture is event-driven and scalable?</div>
+  <ul class="opts"><li class="correct" data-l="A">Cloud Storage Notification -&gt; Pub/Sub -&gt; Cloud Functions -&gt; Speech API -&gt; BigQuery.</li><li data-l="B">Cloud Logging Sink -&gt; BigQuery.</li><li data-l="C">App Engine Cron Job polling the bucket.</li><li data-l="D">Dataflow streaming job watching the bucket.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>This is the classic event-driven pattern. GCS notifies Pub/Sub on object finalize. Pub/Sub triggers Cloud Function. Function calls Speech API and writes result to BQ. It scales to zero and handles bursts.</div><div class="ref"><a href="https://cloud.google.com/functions/docs/tutorials/ocr" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 57 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">You need to connect an application in a VPC to a Google API (e.g., Cloud Storage) without the traffic traversing the public internet. You also want to allow this access for instances without external IP addresses. What should you configure?</div>
+  <ul class="opts"><li data-l="A">Identity-Aware Proxy.</li><li data-l="B">Cloud NAT.</li><li data-l="C">VPC Peering.</li><li class="correct" data-l="D">Private Google Access.</li></ul>
+  <div class="ans"><b>Bonne réponse : D</b><div>Private Google Access (PGA) allows VM instances which only have internal IP addresses (no external IP) to reach the external IP addresses of Google APIs and Services using Google&#x27;s private network. Cloud NAT (B) also works but incurs cost/complexity for just API access where PGA is a subnet toggle.</div><div class="ref"><a href="https://cloud.google.com/vpc/docs/private-google-access" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M2" data-label="D3/M2/S3">
+  <div class="meta-line">
+    <span class="num">Question 58 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M2</span>
+    <span class="badge s">S3</span>
+    <span class="badge type multi">multi</span>
+    <span class="sec-title">D3/M2/S3 · Designing for Auditability and Logging</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare has a compliance requirement to retain an audit trail of all &#x27;Admin Write&#x27; operations (e.g., creating VMs, changing IAM) for 3 years. Which TWO configuration steps are needed?</div>
+  <ul class="opts"><li data-l="A">&#x27;Data Access&#x27; logs must be enabled explicitly.</li><li data-l="B">Increase the default logging retention in Cloud Logging to 3 years.</li><li class="correct" data-l="C">Verify &#x27;Admin Activity&#x27; logs are enabled (they are on by default).</li><li class="correct" data-l="D">Create a Log Sink to export &#x27;Admin Activity&#x27; logs to a Storage Bucket with a 3-year retention policy.</li><li data-l="E">Export logs to Pub/Sub.</li></ul>
+  <div class="ans"><b>Bonne réponse : C, D</b><div>Admin Activity logs are generated automatically and are retained in Cloud Logging for a limited time. To meet the 3-year compliance requirement, you must create a Log Sink to export these logs to a long-term storage destination like Cloud Storage, where a 3-year retention policy can be enforced.</div><div class="ref"><a href="https://cloud.google.com/logging/docs/audit" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S1">
+  <div class="meta-line">
+    <span class="num">Question 59 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S1</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S1 · Designing Identity and Resource Hierarchy</span>
+    
+  </div>
+  <div class="qt">You are implementing a multi-layer defense against DDoS attacks. You have deployed Cloud Armor at the edge (Global Load Balancer). You also want to protect your backend VMs from direct traffic that bypasses the Load Balancer. What should you do?</div>
+  <ul class="opts"><li class="correct" data-l="A">Configure firewall rules to allow ingress only from the Google Front Ends (GFEs) IP ranges.</li><li data-l="B">Use Identity-Aware Proxy.</li><li data-l="C">Install a third-party WAF on the VMs.</li><li data-l="D">Remove the external IPs from the VMs and use Cloud NAT.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>To ensure traffic comes *through* the Load Balancer (and thus Cloud Armor), you must lock down the backend VMs. Allowing ingress only from the GFE source IP ranges (130.211.0.0/22 and 35.191.0.0/16) prevents direct attacks on the VM public IPs (if they have them) or general internet noise.</div><div class="ref"><a href="https://cloud.google.com/load-balancing/docs/https/setting-up-https#configuring_firewall_rules" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+  <div class="meta-line">
+    <span class="num">Question 60 / 60</span>
+    <span class="badge d">D3</span>
+    <span class="badge m">M1</span>
+    <span class="badge s">S3</span>
+    <span class="badge type single">single</span>
+    <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
+    
+  </div>
+  <div class="qt">EHR Healthcare is considering moving their SAP S/4HANA workload to Google Cloud. They need a certified, high-memory instance type (up to 12TB RAM). Which Compute Engine machine family should they choose?</div>
+  <ul class="opts"><li class="correct" data-l="A">M2 or M3 Memory-optimized family.</li><li data-l="B">N2 General-purpose family.</li><li data-l="C">C2 Compute-optimized family.</li><li data-l="D">A2 Accelerator-optimized family.</li></ul>
+  <div class="ans"><b>Bonne réponse : A</b><div>The &#x27;Memory-optimized&#x27; (M-series, M1, M2, M3) family is designed specifically for large in-memory databases like SAP HANA, offering up to 12TB (or more) of memory and are SAP certified.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/machine-types#m2_machine_types" target="_blank" rel="noopener">Référence</a></div></div>
+</section>
+
+</main>
 <script>
-function toggleAll(show){document.querySelectorAll('.q').forEach(function(q){q.classList.toggle('reveal',show);});}
-document.addEventListener('DOMContentLoaded',function(){
- document.getElementById('showAll').addEventListener('click',function(){toggleAll(true);});
- document.getElementById('hideAll').addEventListener('click',function(){toggleAll(false);});
- document.querySelectorAll('.q').forEach(function(q){q.addEventListener('click',function(e){if(e.target.closest('a'))return;q.classList.toggle('reveal');});});
+function all(v){document.querySelectorAll('.q').forEach(q=>q.classList.toggle('show',v))}
+function applyFilters(){
+  const d=document.getElementById('filterDomain').value;
+  const m=document.getElementById('filterModule').value;
+  let n=0;
+  document.querySelectorAll('.q').forEach(q=>{
+    const okD=!d||q.dataset.domain===d;
+    const okM=!m||q.dataset.module===m;
+    const show=okD&&okM;
+    q.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  const el=document.getElementById('resultCount');
+  if(el) el.textContent=n+' question'+(n>1?'s':'');
+}
+function syncModules(){
+  const d=document.getElementById('filterDomain').value;
+  const sel=document.getElementById('filterModule');
+  const cur=sel.value;
+  [...sel.options].forEach((o,i)=>{
+    if(i===0){o.hidden=false;return;}
+    o.hidden=!!(d&&o.dataset.domain!==d);
+  });
+  if(cur && sel.selectedOptions[0] && sel.selectedOptions[0].hidden) sel.value='';
+  applyFilters();
+}
+function resetFilters(){
+  document.getElementById('filterDomain').value='';
+  document.getElementById('filterModule').value='';
+  syncModules();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.q').forEach(q=>q.addEventListener('click',e=>{
+    if(e.target.closest('a,select,button,label'))return;
+    q.classList.toggle('show');
+  }));
+  const fd=document.getElementById('filterDomain');
+  const fm=document.getElementById('filterModule');
+  if(fd) fd.addEventListener('change',syncModules);
+  if(fm) fm.addEventListener('change',applyFilters);
+  applyFilters();
 });
 </script>
-<script src="../tts.js"></script></body></html>
+</body></html>

@@ -12,7 +12,20 @@
   "correct": [
    "D"
   ],
-  "explanation": "The requirements favor a prebuilt agent and enterprise search approach instead of a custom model workflow. Agent Builder in Gemini Enterprise is designed to assemble grounded agents over approved enterprise data sources with less custom infrastructure than building retrieval, orchestration, and chat logic from scratch. Governance can be preserved by using managed identity-aware access, audit logging, and safety layers such as Model Armor and Sensitive Data Protection for prompt/response filtering and PHI/PII handling. The key design implication is to configure a managed, governed agent first, then customize only where requirements are not met."
+  "explanation": "The requirements favor a prebuilt agent and enterprise search approach instead of a custom model workflow. Agent Builder in Gemini Enterprise is designed to assemble grounded agents over approved enterprise data sources with less custom infrastructure than building retrieval, orchestration, and chat logic from scratch. Governance can be preserved by using managed identity-aware access, audit logging, and safety layers such as Model Armor and Sensitive Data Protection for prompt/response filtering and PHI/PII handling. The key design implication is to configure a managed, governed agent first, then customize only where requirements are not met.",
+  "domain": "D2",
+  "module": "M3",
+  "section": "S3",
+  "label": "D2/M3/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "gke",
+   "orchestration",
+   "provisioning"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration"
  },
  {
   "id": 2,
@@ -27,7 +40,20 @@
   "correct": [
    "D"
   ],
-  "explanation": "For an internal assistant over enterprise content, the best fit is a prebuilt agent or enterprise search-style integration that can connect to existing sources, ground answers in authorized documents, and support governance controls. Gemini Enterprise or Agent Builder reduces implementation effort compared with building retrieval, orchestration, and model-serving components from scratch. It also better supports the security requirement because access-aware connectors and centralized logging can align responses with each user’s permissions. Fine-tuning or building a custom RAG platform may be useful in some cases, but they increase delivery and operations burden and require the team to recreate governance controls."
+  "explanation": "For an internal assistant over enterprise content, the best fit is a prebuilt agent or enterprise search-style integration that can connect to existing sources, ground answers in authorized documents, and support governance controls. Gemini Enterprise or Agent Builder reduces implementation effort compared with building retrieval, orchestration, and model-serving components from scratch. It also better supports the security requirement because access-aware connectors and centralized logging can align responses with each user’s permissions. Fine-tuning or building a custom RAG platform may be useful in some cases, but they increase delivery and operations burden and require the team to recreate governance controls.",
+  "domain": "D2",
+  "module": "M3",
+  "section": "S3",
+  "label": "D2/M3/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "gke",
+   "orchestration",
+   "provisioning"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration"
  },
  {
   "id": 3,
@@ -42,7 +68,20 @@
   "correct": [
    "C"
   ],
-  "explanation": "A strong resilience validation plan ties tests to the stated architecture goals and runs them early enough to fix issues before launch. Here, temporary production-like testing validates latency and failover without paying for a permanent duplicate environment. A controlled production game day during an approved low-traffic window adds realism while protecting availability. SRE ownership ensures alerts, runbooks, escalation, and rollback behavior are exercised, while product and compliance stakeholders provide approval and evidence review. The key trade-off is not maximum realism at any cost; it is enough realism to validate recovery and operations without violating customer-impact and compliance constraints."
+  "explanation": "A strong resilience validation plan ties tests to the stated architecture goals and runs them early enough to fix issues before launch. Here, temporary production-like testing validates latency and failover without paying for a permanent duplicate environment. A controlled production game day during an approved low-traffic window adds realism while protecting availability. SRE ownership ensures alerts, runbooks, escalation, and rollback behavior are exercised, while product and compliance stakeholders provide approval and evidence review. The key trade-off is not maximum realism at any cost; it is enough realism to validate recovery and operations without violating customer-impact and compliance constraints.",
+  "domain": "D6",
+  "module": "M1",
+  "section": "S1",
+  "label": "D6/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "google",
+   "operations"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Introduction to Google Cloud's Operations Suite"
  },
  {
   "id": 4,
@@ -57,7 +96,19 @@
   "correct": [
    "B"
   ],
-  "explanation": "Model Armor is the appropriate control when the risk is in generative AI inputs, outputs, or application behavior. In this scenario, the assistant accepts untrusted free-form prompts and returns generated responses, so the architecture needs guardrails in the request and response path. Model Armor can apply policies for risks such as prompt injection, jailbreak attempts, harmful content, and sensitive data handling, and its enforcement can support audit evidence. This fits the low-latency first release better than retraining or manual review."
+  "explanation": "Model Armor is the appropriate control when the risk is in generative AI inputs, outputs, or application behavior. In this scenario, the assistant accepts untrusted free-form prompts and returns generated responses, so the architecture needs guardrails in the request and response path. Model Armor can apply policies for risks such as prompt injection, jailbreak attempts, harmful content, and sensitive data handling, and its enforcement can support audit evidence. This fits the low-latency first release better than retraining or manual review.",
+  "domain": "D3",
+  "module": "M1",
+  "section": "S3",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "designing",
+   "security"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 5,
@@ -72,7 +123,20 @@
   "correct": [
    "A"
   ],
-  "explanation": "The core issue is manual risk across a multi-step ML lifecycle, not model serving or access friction. Vertex AI Pipelines is designed to orchestrate repeatable AI workflows such as data extraction, training, evaluation, registration, and deployment. Pipeline components can pass artifacts explicitly, capture metadata and lineage, parameterize runs, and add a quality gate so a model is not promoted unless evaluation completes successfully. This reduces the chance of using stale files, losing run parameters, or skipping approval steps. A checklist may help process discipline, but it does not provide the same reproducibility or automated control."
+  "explanation": "The core issue is manual risk across a multi-step ML lifecycle, not model serving or access friction. Vertex AI Pipelines is designed to orchestrate repeatable AI workflows such as data extraction, training, evaluation, registration, and deployment. Pipeline components can pass artifacts explicitly, capture metadata and lineage, parameterize runs, and add a quality gate so a model is not promoted unless evaluation completes successfully. This reduces the chance of using stale files, losing run parameters, or skipping approval steps. A checklist may help process discipline, but it does not provide the same reproducibility or automated control.",
+  "domain": "D2",
+  "module": "M2",
+  "section": "S4",
+  "label": "D2/M2/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "lifecycle"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Optimizing Data Transfer and Latency and Planning for Data Growth"
  },
  {
   "id": 6,
@@ -87,7 +151,20 @@
   "correct": [
    "A"
   ],
-  "explanation": "For sustained, latency-sensitive multicloud exchange with private transport and redundant paths, a dedicated multicloud interconnect pattern is the best fit. Cross-Cloud Interconnect connects Google Cloud to supported cloud providers through dedicated links, while Cloud Router uses BGP for dynamic route control and failover. Redundant links improve availability and avoid internet path variability. This costs more and requires planning, but the stem’s data volume, compliance, latency, and operational-control requirements justify that trade-off. HA VPN can be useful for smaller, less latency-sensitive, or interim connectivity."
+  "explanation": "For sustained, latency-sensitive multicloud exchange with private transport and redundant paths, a dedicated multicloud interconnect pattern is the best fit. Cross-Cloud Interconnect connects Google Cloud to supported cloud providers through dedicated links, while Cloud Router uses BGP for dynamic route control and failover. Redundant links improve availability and avoid internet path variability. This costs more and requires planning, but the stem’s data volume, compliance, latency, and operational-control requirements justify that trade-off. HA VPN can be useful for smaller, less latency-sensitive, or interim connectivity.",
+  "domain": "D1",
+  "module": "M3",
+  "section": "S1",
+  "label": "D1/M3/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "interconnect",
+   "multicloud",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Network, Storage, and Compute",
+  "sectionTitle": "Integration with On-premises and Multicloud Environments"
  },
  {
   "id": 7,
@@ -102,7 +179,20 @@
   "correct": [
    "D"
   ],
-  "explanation": "An API rollout plan should validate compatibility before production, control exposure during production release, and measure real consumer impact. For this scenario, contract and load tests reduce the risk of breaking the unchanged API contract or missing latency regressions. A canary or weighted traffic rollout in Apigee limits blast radius while still exercising real partner traffic. Monitoring by API product, developer app, status code, and latency helps detect consumer-specific failures early. A prepared rollback to the prior revision or backend path meets the minutes-level recovery requirement. This approach is faster and lighter than a long parallel platform, but safer than a full cutover."
+  "explanation": "An API rollout plan should validate compatibility before production, control exposure during production release, and measure real consumer impact. For this scenario, contract and load tests reduce the risk of breaking the unchanged API contract or missing latency regressions. A canary or weighted traffic rollout in Apigee limits blast radius while still exercising real partner traffic. Monitoring by API product, developer app, status code, and latency helps detect consumer-specific failures early. A prepared rollback to the prior revision or backend path meets the minutes-level recovery requirement. This approach is faster and lighter than a long parallel platform, but safer than a full cutover.",
+  "domain": "D5",
+  "module": "M1",
+  "section": "S1",
+  "label": "D5/M1/S1",
+  "classificationConfidence": 0.854,
+  "classificationHits": [
+   "api",
+   "apigee",
+   "developer"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Guiding Development and Operations Teams",
+  "sectionTitle": "Advising on Application Development and APIs"
  },
  {
   "id": 8,
@@ -117,7 +207,19 @@
   "correct": [
    "C"
   ],
-  "explanation": "The best design reduces operational risk by making production behavior measurable without creating new risk. SLO-based observability focuses telemetry on user-facing outcomes such as checkout latency, error rate, and availability. Using Google Cloud Observability with targeted metrics, alerts, sampled distributed traces, and redacted or excluded sensitive log fields gives teams enough signal to detect and diagnose incidents. Sampling and focused instrumentation help control latency and cost, while redaction supports compliance requirements. This is also realistic for a small SRE team because alerts can be tied to service-level objectives instead of every low-level metric."
+  "explanation": "The best design reduces operational risk by making production behavior measurable without creating new risk. SLO-based observability focuses telemetry on user-facing outcomes such as checkout latency, error rate, and availability. Using Google Cloud Observability with targeted metrics, alerts, sampled distributed traces, and redacted or excluded sensitive log fields gives teams enough signal to detect and diagnose incidents. Sampling and focused instrumentation help control latency and cost, while redaction supports compliance requirements. This is also realistic for a small SRE team because alerts can be tied to service-level objectives instead of every low-level metric.",
+  "domain": "D1",
+  "module": "M1",
+  "section": "S6",
+  "label": "D1/M1/S6",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compliance",
+   "observability"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Compliance and Observability"
  },
  {
   "id": 9,
@@ -132,7 +234,19 @@
   "correct": [
    "D"
   ],
-  "explanation": "Resource optimization should match the resource pattern and constraints. A stateless service with low average utilization but short, high peaks is a strong fit for autoscaling: keep enough baseline capacity for normal traffic and scale out during events to protect latency. Rightsizing is better when a workload is consistently overprovisioned, not when peak demand still needs capacity. Managed services or redesign can be valuable, but they are less suitable here because the business explicitly wants to avoid application or packaging changes this quarter."
+  "explanation": "Resource optimization should match the resource pattern and constraints. A stateless service with low average utilization but short, high peaks is a strong fit for autoscaling: keep enough baseline capacity for normal traffic and scale out during events to protect latency. Rightsizing is better when a workload is consistently overprovisioned, not when peak demand still needs capacity. Managed services or redesign can be valuable, but they are less suitable here because the business explicitly wants to avoid application or packaging changes this quarter.",
+  "domain": "D4",
+  "module": "M1",
+  "section": "S1",
+  "label": "D4/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "compute engine",
+   "with"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Modernizing the SDLC with CI/CD"
  },
  {
   "id": 10,
@@ -147,7 +261,21 @@
   "correct": [
    "A"
   ],
-  "explanation": "Operations teams need signals that map to user experience, not only infrastructure symptoms. For services on Cloud Run and GKE, Cloud Monitoring dashboards and SLO-based burn-rate alerts built from request latency and error-rate metrics help identify when the error budget is being consumed. Adding service and version labels supports fast release-level triage. Detailed logs can still be retained for audit and investigation, but they should not be the primary paging signal unless converted into carefully scoped log-based metrics tied to user impact. The key is to reduce noise while making customer-impacting degradation visible quickly."
+  "explanation": "Operations teams need signals that map to user experience, not only infrastructure symptoms. For services on Cloud Run and GKE, Cloud Monitoring dashboards and SLO-based burn-rate alerts built from request latency and error-rate metrics help identify when the error budget is being consumed. Adding service and version labels supports fast release-level triage. Detailed logs can still be retained for audit and investigation, but they should not be the primary paging signal unless converted into carefully scoped log-based metrics tied to user impact. The key is to reduce noise while making customer-impacting degradation visible quickly.",
+  "domain": "D6",
+  "module": "M1",
+  "section": "S3",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "cloud",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 11,
@@ -162,7 +290,22 @@
   "correct": [
    "B"
   ],
-  "explanation": "The key risk is exfiltration through Google APIs from regulated projects to an unapproved Google Cloud project. IAM controls who can access data, but it does not by itself create a service boundary that prevents an authorized or compromised identity from moving data to another project. VPC Service Controls can create a perimeter around the analytics projects and use ingress and egress rules to allow approved internal jobs while restricting movement to untrusted projects or services."
+  "explanation": "The key risk is exfiltration through Google APIs from regulated projects to an unapproved Google Cloud project. IAM controls who can access data, but it does not by itself create a service boundary that prevents an authorized or compromised identity from moving data to another project. VPC Service Controls can create a perimeter around the analytics projects and use ingress and egress rules to allow approved internal jobs while restricting movement to untrusted projects or services.",
+  "domain": "D3",
+  "module": "M1",
+  "section": "S3",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "access",
+   "designing",
+   "iam",
+   "security",
+   "vpc service controls"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 12,
@@ -177,7 +320,20 @@
   "correct": [
    "A"
   ],
-  "explanation": "Infrastructure as code should make infrastructure changes reproducible, reviewable, and controlled without creating unnecessary operational burden. A practical Google Cloud approach is to keep Terraform configuration and reusable modules in source control, require pull request review, run terraform plan in CI, and apply changes only through an approved pipeline with remote state. This gives auditors a change history, reduces drift from manual changes, and lets a small team start with a manageable workflow. Reusable modules also help less experienced teams standardize project, network, IAM, and service configurations over time."
+  "explanation": "Infrastructure as code should make infrastructure changes reproducible, reviewable, and controlled without creating unnecessary operational burden. A practical Google Cloud approach is to keep Terraform configuration and reusable modules in source control, require pull request review, run terraform plan in CI, and apply changes only through an approved pipeline with remote state. This gives auditors a change history, reduces drift from manual changes, and lets a small team start with a manageable workflow. Reusable modules also help less experienced teams standardize project, network, IAM, and service configurations over time.",
+  "domain": "D5",
+  "module": "M2",
+  "section": "S2",
+  "label": "D5/M2/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "local",
+   "with"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Working with Cloud Emulators for Local Development"
  },
  {
   "id": 13,
@@ -192,7 +348,21 @@
   "correct": [
    "B"
   ],
-  "explanation": "Operational excellence improvements should be tied to visible incident evidence and measurable outcomes. The exhibit shows a recurring release-related pattern, existing observability by revision, slow manual diagnosis, and a missing rollback decision path. A runbook that links the alert to revision-filtered dashboards, defines rollback and escalation criteria, and tracks MTTR and repeat incidents directly addresses the support gap. It also gives leadership evidence that production support is improving over time."
+  "explanation": "Operational excellence improvements should be tied to visible incident evidence and measurable outcomes. The exhibit shows a recurring release-related pattern, existing observability by revision, slow manual diagnosis, and a missing rollback decision path. A runbook that links the alert to revision-filtered dashboards, defines rollback and escalation criteria, and tracks MTTR and repeat incidents directly addresses the support gap. It also gives leadership evidence that production support is improving over time.",
+  "domain": "D6",
+  "module": "M1",
+  "section": "S3",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "cloud run",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 14,
@@ -207,7 +377,21 @@
   "correct": [
    "B"
   ],
-  "explanation": "Operational excellence is a system of practices, not a single feature. In this scenario, the failures span detection, release safety, decision-making, and learning from incidents. A strong decision combines SLOs and error budgets, actionable Cloud Monitoring and Cloud Logging telemetry, automated canary or blue-green releases with rollback criteria, and clear on-call, runbook, and postmortem ownership. This preserves release speed while reducing customer impact and avoids the risk of a rushed replatform. A tool can assist, but it cannot replace agreed reliability targets, safe delivery patterns, and accountable team practices."
+  "explanation": "Operational excellence is a system of practices, not a single feature. In this scenario, the failures span detection, release safety, decision-making, and learning from incidents. A strong decision combines SLOs and error budgets, actionable Cloud Monitoring and Cloud Logging telemetry, automated canary or blue-green releases with rollback criteria, and clear on-call, runbook, and postmortem ownership. This preserves release speed while reducing customer impact and avoids the risk of a rushed replatform. A tool can assist, but it cannot replace agreed reliability targets, safe delivery patterns, and accountable team practices.",
+  "domain": "D6",
+  "module": "M1",
+  "section": "S3",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "gke",
+   "logging",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 15,
@@ -222,7 +406,22 @@
   "correct": [
    "A"
   ],
-  "explanation": "Cloud Audit Logs are the right evidence source for administrative changes and data-access activity, while Cloud Run request logs provide operational context for failed requests. A centralized log bucket or sink with scoped filters, appropriate retention, and exclusions for noisy nonessential logs balances compliance evidence, troubleshooting needs, cost control, and operational effort. This also avoids adding latency because log collection is not part of the application request path and avoids last-minute code changes."
+  "explanation": "Cloud Audit Logs are the right evidence source for administrative changes and data-access activity, while Cloud Run request logs provide operational context for failed requests. A centralized log bucket or sink with scoped filters, appropriate retention, and exclusions for noisy nonessential logs balances compliance evidence, troubleshooting needs, cost control, and operational effort. This also avoids adding latency because log collection is not part of the application request path and avoids last-minute code changes.",
+  "domain": "D6",
+  "module": "M1",
+  "section": "S3",
+  "label": "D6/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "centralized",
+   "cloud",
+   "logging",
+   "with"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
  },
  {
   "id": 16,
@@ -237,7 +436,23 @@
   "correct": [
    "D"
   ],
-  "explanation": "Cross-Cloud Interconnect is the best fit when a Google Cloud environment must exchange data privately with another cloud provider at predictable, scalable bandwidth. Cloud Router uses BGP to exchange routes dynamically, which gives the central network team operational control over advertised prefixes and link state. Redundant connections and VLAN attachments should be used for availability, with firewall rules and route controls limiting which systems can exchange data. If payload encryption is required by policy, add encryption at the application layer or an approved tunnel, but the primary connectivity pattern remains a private multicloud interconnect rather than internet-facing access."
+  "explanation": "Cross-Cloud Interconnect is the best fit when a Google Cloud environment must exchange data privately with another cloud provider at predictable, scalable bandwidth. Cloud Router uses BGP to exchange routes dynamically, which gives the central network team operational control over advertised prefixes and link state. Redundant connections and VLAN attachments should be used for availability, with firewall rules and route controls limiting which systems can exchange data. If payload encryption is required by policy, add encryption at the application layer or an approved tunnel, but the primary connectivity pattern remains a private multicloud interconnect rather than internet-facing access.",
+  "domain": "D1",
+  "module": "M1",
+  "section": "S4",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud provider",
+   "data",
+   "external",
+   "systems",
+   "vpc",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 17,
@@ -252,7 +467,22 @@
   "correct": [
    "A"
   ],
-  "explanation": "The requirement calls for layered data protection across at rest, in transit, and in-use states. CMEK-backed managed services give security teams control and auditability for regulated stored data without putting key material in application code. Private connectivity with enforced TLS protects partner and service-to-service traffic while avoiding public exposure and preserving low latency. Confidential GKE nodes reduce exposure during processing by using Confidential Computing for the scoring runtime. This balances compliance and security with managed-service availability, rotation support, and lower operational effort."
+  "explanation": "The requirement calls for layered data protection across at rest, in transit, and in-use states. CMEK-backed managed services give security teams control and auditability for regulated stored data without putting key material in application code. Private connectivity with enforced TLS protects partner and service-to-service traffic while avoiding public exposure and preserving low latency. Confidential GKE nodes reduce exposure during processing by using Confidential Computing for the scoring runtime. This balances compliance and security with managed-service availability, rotation support, and lower operational effort.",
+  "domain": "D3",
+  "module": "M1",
+  "section": "S2",
+  "label": "D3/M1/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "data",
+   "encryption",
+   "gke",
+   "google",
+   "protection"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
  },
  {
   "id": 18,
@@ -267,7 +497,20 @@
   "correct": [
    "B"
   ],
-  "explanation": "AI workflows add risks beyond ordinary application security because user prompts, retrieved context, model outputs, logs, and deployment pipelines can all expose sensitive data or create unsafe behavior. For this scenario, the strongest decision is a layered control pattern: use Sensitive Data Protection to discover and redact PHI before model interaction where possible, use Model Armor to help inspect prompts and responses for unsafe or policy-violating content, retain audit logs as compliance evidence, and require approved CI/CD gates before production release. These controls map directly to the stated risks without relying on a single model setting or network boundary."
+  "explanation": "AI workflows add risks beyond ordinary application security because user prompts, retrieved context, model outputs, logs, and deployment pipelines can all expose sensitive data or create unsafe behavior. For this scenario, the strongest decision is a layered control pattern: use Sensitive Data Protection to discover and redact PHI before model interaction where possible, use Model Armor to help inspect prompts and responses for unsafe or policy-violating content, retain audit logs as compliance evidence, and require approved CI/CD gates before production release. These controls map directly to the stated risks without relying on a single model setting or network boundary.",
+  "domain": "D3",
+  "module": "M1",
+  "section": "S3",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "designing",
+   "security"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 19,
@@ -282,7 +525,19 @@
   "correct": [
    "B"
   ],
-  "explanation": "A migration wave should pause when an unresolved critical dependency could violate availability, latency, or support requirements during cutover. Here, the checkout service depends on a synchronous on-premises appliance and has not been tested in the target environment. A focused proof of concept can validate connectivity, latency, failover behavior, and remediation options without stopping the whole migration program. Continuing lower-risk waves preserves progress while preventing a high-impact outage in a customer-facing service."
+  "explanation": "A migration wave should pause when an unresolved critical dependency could violate availability, latency, or support requirements during cutover. Here, the checkout service depends on a synchronous on-premises appliance and has not been tested in the target environment. A focused proof of concept can validate connectivity, latency, failover behavior, and remediation options without stopping the whole migration program. Continuing lower-risk waves preserves progress while preventing a high-impact outage in a customer-facing service.",
+  "domain": "D5",
+  "module": "M2",
+  "section": "S1",
+  "label": "D5/M2/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "google"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Mastering Cloud Shell and the Google Cloud SDK"
  },
  {
   "id": 20,
@@ -297,7 +552,20 @@
   "correct": [
    "D"
   ],
-  "explanation": "Recurring deployment failures are a process signal, not just a platform problem. The first corrective action should be a blameless root-cause analysis process that documents contributing factors, assigns remediation owners and due dates, and verifies completion through release validation or SLO evidence. This satisfies the need for auditable remediation while preserving the business requirement for weekly releases. It also helps distinguish whether the fix belongs in tests, deployment gates, monitoring, rollback criteria, or service design. A blanket freeze or replatforming effort may be considered later only if the analysis proves it is necessary."
+  "explanation": "Recurring deployment failures are a process signal, not just a platform problem. The first corrective action should be a blameless root-cause analysis process that documents contributing factors, assigns remediation owners and due dates, and verifies completion through release validation or SLO evidence. This satisfies the need for auditable remediation while preserving the business requirement for weekly releases. It also helps distinguish whether the fix belongs in tests, deployment gates, monitoring, rollback criteria, or service design. A blanket freeze or replatforming effort may be considered later only if the analysis proves it is necessary.",
+  "domain": "D4",
+  "module": "M1",
+  "section": "S1",
+  "label": "D4/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "ci/cd",
+   "gke",
+   "with"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Modernizing the SDLC with CI/CD"
  },
  {
   "id": 21,
@@ -312,7 +580,19 @@
   "correct": [
    "C"
   ],
-  "explanation": "The process needs controlled self-service, not unmanaged delegation or more manual gates. Approved Infrastructure as Code modules can encode required Shared VPC, audit logging, IAM, and organization policy baselines once, then let teams provision standard environments quickly. CI/CD pipelines add repeatable plans, automated validation, tests, production approval gates, and audit trails. This improves implementation speed by reducing ticket queues and improves operational safety by making every environment and release follow the same governed path. Fast but unmanaged access would increase drift and incident risk."
+  "explanation": "The process needs controlled self-service, not unmanaged delegation or more manual gates. Approved Infrastructure as Code modules can encode required Shared VPC, audit logging, IAM, and organization policy baselines once, then let teams provision standard environments quickly. CI/CD pipelines add repeatable plans, automated validation, tests, production approval gates, and audit trails. This improves implementation speed by reducing ticket queues and improves operational safety by making every environment and release follow the same governed path. Fast but unmanaged access would increase drift and incident risk.",
+  "domain": "D4",
+  "module": "M1",
+  "section": "S1",
+  "label": "D4/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "ci/cd",
+   "with"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Modernizing the SDLC with CI/CD"
  },
  {
   "id": 22,
@@ -327,7 +607,19 @@
   "correct": [
    "B"
   ],
-  "explanation": "Operational excellence improvements reduce recurring operational risk by improving observability, readiness, automation, and learning from incidents. In the exhibit, the team is repeatedly using senior-engineer manual tuning after customers are already affected. Adding SLO-based alerts, campaign load testing, and automated scaling or capacity checks changes the operating model: the team can detect impact earlier, validate readiness before launch, and avoid relying on a person to repeat an emergency action. The key distinction is system improvement versus temporary recovery. A workaround may restore service for one incident, but it does not make future campaigns safer or more predictable."
+  "explanation": "Operational excellence improvements reduce recurring operational risk by improving observability, readiness, automation, and learning from incidents. In the exhibit, the team is repeatedly using senior-engineer manual tuning after customers are already affected. Adding SLO-based alerts, campaign load testing, and automated scaling or capacity checks changes the operating model: the team can detect impact earlier, validate readiness before launch, and avoid relying on a person to repeat an emergency action. The key distinction is system improvement versus temporary recovery. A workaround may restore service for one incident, but it does not make future campaigns safer or more predictable.",
+  "domain": "D6",
+  "module": "M1",
+  "section": "S1",
+  "label": "D6/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "operations"
+  ],
+  "domainTitle": "Ensuring Solution and Operations Reliability",
+  "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
+  "sectionTitle": "Introduction to Google Cloud's Operations Suite"
  },
  {
   "id": 23,
@@ -342,7 +634,19 @@
   "correct": [
    "C"
   ],
-  "explanation": "Architecture decisions should start with the business use cases and measurable outcomes that matter most, not with a preferred product or migration pattern. In this scenario, the decisive goals are increasing conversions, reducing churn, meeting the launch window, lowering personalization latency, controlling spend, protecting EU customer data, and fitting the team’s operating skills. Defining outcome measures such as p95 latency, churn reduction, conversion lift, cost per user, and data-control requirements gives the architect a basis for selecting Google Cloud services and sequencing the migration. The best recommendation balances product impact with constraints instead of optimizing only for platform flexibility, lowest infrastructure cost, or migration completeness."
+  "explanation": "Architecture decisions should start with the business use cases and measurable outcomes that matter most, not with a preferred product or migration pattern. In this scenario, the decisive goals are increasing conversions, reducing churn, meeting the launch window, lowering personalization latency, controlling spend, protecting EU customer data, and fitting the team’s operating skills. Defining outcome measures such as p95 latency, churn reduction, conversion lift, cost per user, and data-control requirements gives the architect a basis for selecting Google Cloud services and sequencing the migration. The best recommendation balances product impact with constraints instead of optimizing only for platform flexibility, lowest infrastructure cost, or migration completeness.",
+  "domain": "D1",
+  "module": "M1",
+  "section": "S4",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "data",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 24,
@@ -357,7 +661,22 @@
   "correct": [
    "D"
   ],
-  "explanation": "Storage-backed batch workloads bottleneck when compute is serialized, far from the data, or forced through a staging disk. Here, the workload is file-based ETL and aggregation over Cloud Storage with variable volume and a strict completion window. A Dataflow batch pipeline can read objects in parallel, autoscale workers in the same region as the bucket, and handle aggregation without requiring cluster management. You would still benchmark and set appropriate worker limits and machine types, but the core architecture avoids the single-node, disk-staging, and cross-region transfer bottlenecks."
+  "explanation": "Storage-backed batch workloads bottleneck when compute is serialized, far from the data, or forced through a staging disk. Here, the workload is file-based ETL and aggregation over Cloud Storage with variable volume and a strict completion window. A Dataflow batch pipeline can read objects in parallel, autoscale workers in the same region as the bucket, and handle aggregation without requiring cluster management. You would still benchmark and set appropriate worker limits and machine types, but the core architecture avoids the single-node, disk-staging, and cross-region transfer bottlenecks.",
+  "domain": "D2",
+  "module": "M2",
+  "section": "S3",
+  "label": "D2/M2/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "compute engine",
+   "disks",
+   "persistent",
+   "storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
  },
  {
   "id": 25,
@@ -372,7 +691,21 @@
   "correct": [
    "B"
   ],
-  "explanation": "A cloud-first approach does not mean moving everything immediately or abandoning governance. The best design starts with a Google Cloud landing zone: organization and folder structure, project standards, Shared VPC, IAM, organization policies such as location constraints, centralized logging, and IaC-based provisioning. Then workloads can move in waves based on risk, dependencies, and business value. New or refactored capabilities can use managed Google Cloud services while legacy systems continue through secure hybrid connectivity until they are ready to migrate or retire. This balances faster delivery with auditability, security, and migration realism."
+  "explanation": "A cloud-first approach does not mean moving everything immediately or abandoning governance. The best design starts with a Google Cloud landing zone: organization and folder structure, project standards, Shared VPC, IAM, organization policies such as location constraints, centralized logging, and IaC-based provisioning. Then workloads can move in waves based on risk, dependencies, and business value. New or refactored capabilities can use managed Google Cloud services while legacy systems continue through secure hybrid connectivity until they are ready to migrate or retire. This balances faster delivery with auditability, security, and migration realism.",
+  "domain": "D1",
+  "module": "M1",
+  "section": "S4",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "moving",
+   "systems",
+   "vpc",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 26,
@@ -387,7 +720,20 @@
   "correct": [
    "D"
   ],
-  "explanation": "Before cutover, migration risk should be reduced through a production-like rehearsal that validates the target architecture and the cutover process. Database Migration Service continuous replication can keep Cloud SQL close to the on-premises PostgreSQL source, reducing final write downtime. A short-lived staging environment limits cost while still allowing smoke tests, data validation, load tests, and operational runbook practice for Cloud Run. Rehearsing rollback also improves team readiness. This approach balances availability, data movement, latency validation, cost, and operations effort instead of pushing discovery into the cutover window."
+  "explanation": "Before cutover, migration risk should be reduced through a production-like rehearsal that validates the target architecture and the cutover process. Database Migration Service continuous replication can keep Cloud SQL close to the on-premises PostgreSQL source, reducing final write downtime. A short-lived staging environment limits cost while still allowing smoke tests, data validation, load tests, and operational runbook practice for Cloud Run. Rehearsing rollback also improves team readiness. This approach balances availability, data movement, latency validation, cost, and operations effort instead of pushing discovery into the cutover window.",
+  "domain": "D5",
+  "module": "M1",
+  "section": "S3",
+  "label": "D5/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud run",
+   "compute engine",
+   "migration"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Guiding Development and Operations Teams",
+  "sectionTitle": "Leveraging Migration Tooling"
  },
  {
   "id": 27,
@@ -402,7 +748,21 @@
   "correct": [
    "A"
   ],
-  "explanation": "Hierarchical firewall policies are the right control when firewall rules must be inherited consistently across projects or folders. Attaching the deny rules to the Prod and Regulated folders applies them to descendant projects and VPC networks, including future projects in those folders, while leaving the Sandbox folder outside the scope. Because these policies are centrally managed and evaluated above local VPC firewall rules, project teams can still manage application-specific rules but cannot override the centralized deny for SSH and RDP from the internet. Network firewall policies and VPC firewall rules can be useful, but they do not provide the same resource-hierarchy inheritance for this folder-scoped requirement."
+  "explanation": "Hierarchical firewall policies are the right control when firewall rules must be inherited consistently across projects or folders. Attaching the deny rules to the Prod and Regulated folders applies them to descendant projects and VPC networks, including future projects in those folders, while leaving the Sandbox folder outside the scope. Because these policies are centrally managed and evaluated above local VPC firewall rules, project teams can still manage application-specific rules but cannot override the centralized deny for SSH and RDP from the internet. Network firewall policies and VPC firewall rules can be useful, but they do not provide the same resource-hierarchy inheritance for this folder-scoped requirement.",
+  "domain": "D3",
+  "module": "M1",
+  "section": "S1",
+  "label": "D3/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "designing",
+   "folder",
+   "organization",
+   "project"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Designing Identity and Resource Hierarchy"
  },
  {
   "id": 28,
@@ -417,7 +777,22 @@
   "correct": [
    "D"
   ],
-  "explanation": "Local tooling is the best fit when compliance, offline testing, and custom developer environments are decisive. The team can install the Google Cloud CLI, language client libraries, and local emulators through managed-device controls, keeping source code and test data on approved laptops while supporting offline unit tests. This has more setup effort than Cloud Shell, but it satisfies the mandatory constraints. Cloud Code would be attractive for IDE-integrated development, but the stem says new IDE extensions are not approved before the deadline."
+  "explanation": "Local tooling is the best fit when compliance, offline testing, and custom developer environments are decisive. The team can install the Google Cloud CLI, language client libraries, and local emulators through managed-device controls, keeping source code and test data on approved laptops while supporting offline unit tests. This has more setup effort than Cloud Shell, but it satisfies the mandatory constraints. Cloud Code would be attractive for IDE-integrated development, but the stem says new IDE extensions are not approved before the deadline.",
+  "domain": "D5",
+  "module": "M2",
+  "section": "S2",
+  "label": "D5/M2/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "development",
+   "emulators",
+   "local",
+   "with"
+  ],
+  "domainTitle": "Managing Implementation",
+  "moduleTitle": "Interacting with Google Cloud Programmatically",
+  "sectionTitle": "Working with Cloud Emulators for Local Development"
  },
  {
   "id": 29,
@@ -432,7 +807,21 @@
   "correct": [
    "D"
   ],
-  "explanation": "The core decision is stakeholder-aligned phased modernization. Because the application can run as a container, Cloud Run can provide a managed runtime without requiring the small operations team to operate Kubernetes clusters. Private hybrid connectivity keeps the required on-premises database reachable without exposing it publicly, while centralized logging, monitoring, and audit logs support security evidence. Automated build and deployment processes help the product team release faster within the 3-month target. This approach defers the database migration and deeper refactoring until licensing and schedule constraints allow it."
+  "explanation": "The core decision is stakeholder-aligned phased modernization. Because the application can run as a container, Cloud Run can provide a managed runtime without requiring the small operations team to operate Kubernetes clusters. Private hybrid connectivity keeps the required on-premises database reachable without exposing it publicly, while centralized logging, monitoring, and audit logs support security evidence. Automated build and deployment processes help the product team release faster within the 3-month target. This approach defers the database migration and deeper refactoring until licensing and schedule constraints allow it.",
+  "domain": "D4",
+  "module": "M2",
+  "section": "S1",
+  "label": "D4/M2/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "gke",
+   "kubernetes",
+   "stakeholders",
+   "team"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Aligning Business Processes with Cloud Strategy",
+  "sectionTitle": "Managing Stakeholders, Change, and Team Readiness"
  },
  {
   "id": 30,
@@ -447,7 +836,22 @@
   "correct": [
    "B"
   ],
-  "explanation": "Well-Architected design balances pillars instead of optimizing only one. The best fit uses managed, autoscaling services to reduce toil, cost, and idle energy use; Pub/Sub to decouple bursts and improve reliability; a regional HA managed database to tolerate a zone failure; and private connectivity plus least-privilege IAM for regulated data. SLO monitoring and infrastructure as code support operational excellence by making reliability targets visible and deployments repeatable. The key trade-off is using enough resilience to meet the stated zone-failure requirement without building an unnecessarily complex, always-on multi-region platform."
+  "explanation": "Well-Architected design balances pillars instead of optimizing only one. The best fit uses managed, autoscaling services to reduce toil, cost, and idle energy use; Pub/Sub to decouple bursts and improve reliability; a regional HA managed database to tolerate a zone failure; and private connectivity plus least-privilege IAM for regulated data. SLO monitoring and infrastructure as code support operational excellence by making reliability targets visible and deployments repeatable. The key trade-off is using enough resilience to meet the stated zone-failure requirement without building an unnecessarily complex, always-on multi-region platform.",
+  "domain": "D1",
+  "module": "M1",
+  "section": "S3",
+  "label": "D1/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud run",
+   "compute engine",
+   "design",
+   "gke",
+   "iam"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Supporting the Application Design"
  },
  {
   "id": 31,
@@ -462,7 +866,21 @@
   "correct": [
    "C"
   ],
-  "explanation": "The main gap is not a missing Google Cloud service; it is an unclear support model. For a production migration with 24/7 support and separation of duties, the architecture decision should define who owns each operational responsibility before go-live. A RACI-style operating model, SLOs, alert routing, runbooks, escalation paths, and sign-off criteria make the handoff testable and auditable. This also preserves independent deployments because product teams can own application releases while platform teams own shared infrastructure boundaries. Changing compute platforms or broadening permissions does not solve unclear ownership and may increase risk."
+  "explanation": "The main gap is not a missing Google Cloud service; it is an unclear support model. For a production migration with 24/7 support and separation of duties, the architecture decision should define who owns each operational responsibility before go-live. A RACI-style operating model, SLOs, alert routing, runbooks, escalation paths, and sign-off criteria make the handoff testable and auditable. This also preserves independent deployments because product teams can own application releases while platform teams own shared infrastructure boundaries. Changing compute platforms or broadening permissions does not solve unclear ownership and may increase risk.",
+  "domain": "D4",
+  "module": "M1",
+  "section": "S1",
+  "label": "D4/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "ci/cd",
+   "gke",
+   "pipeline",
+   "with"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Modernizing the SDLC with CI/CD"
  },
  {
   "id": 32,
@@ -477,7 +895,20 @@
   "correct": [
    "B"
   ],
-  "explanation": "Future improvements should be justified by observable outcomes, not only by architectural ambition. In this scenario, availability is already meeting the SLO, so a broad multi-region GKE migration is not supported by the current evidence and would add operational risk for a small team with limited GKE experience. The measured gaps are EU latency and deployment-related incidents. Cloud CDN for cacheable content can reduce user-facing latency, while automated progressive delivery on Cloud Run can reduce failed releases and rollback toil without a platform rewrite. Success should be tracked with p95 latency, conversion impact, deployment failure rate, rollback time, and SRE effort. Revisit larger platform changes only if measured growth or requirements show the current design cannot meet future needs."
+  "explanation": "Future improvements should be justified by observable outcomes, not only by architectural ambition. In this scenario, availability is already meeting the SLO, so a broad multi-region GKE migration is not supported by the current evidence and would add operational risk for a small team with limited GKE experience. The measured gaps are EU latency and deployment-related incidents. Cloud CDN for cacheable content can reduce user-facing latency, while automated progressive delivery on Cloud Run can reduce failed releases and rollback toil without a platform rewrite. Success should be tracked with p95 latency, conversion impact, deployment failure rate, rollback time, and SRE effort. Revisit larger platform changes only if measured growth or requirements show the current design cannot meet future needs.",
+  "domain": "D1",
+  "module": "M1",
+  "section": "S4",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud sql",
+   "moving",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 33,
@@ -492,7 +923,19 @@
   "correct": [
    "A"
   ],
-  "explanation": "The proposed provisioning does not satisfy the combined data access, security, and operational requirements. Project-level BigQuery access for a user group is broader than the stated table-only need, and scheduled notebooks running under user identities create brittle ownership, audit, and credential-management issues. Cron on Workbench VMs also does not provide the managed lineage, retries, and repeatable pipeline execution expected for a production ML workflow. A better approach is to provision Vertex AI Pipelines using a dedicated pipeline service account with only the required BigQuery read and job permissions plus scoped write access to the artifact bucket. This keeps execution identity stable and operational history centralized."
+  "explanation": "The proposed provisioning does not satisfy the combined data access, security, and operational requirements. Project-level BigQuery access for a user group is broader than the stated table-only need, and scheduled notebooks running under user identities create brittle ownership, audit, and credential-management issues. Cron on Workbench VMs also does not provide the managed lineage, retries, and repeatable pipeline execution expected for a production ML workflow. A better approach is to provision Vertex AI Pipelines using a dedicated pipeline service account with only the required BigQuery read and job permissions plus scoped write access to the artifact bucket. This keeps execution identity stable and operational history centralized.",
+  "domain": "D2",
+  "module": "M2",
+  "section": "S1",
+  "label": "D2/M2/S1",
+  "classificationConfidence": 0.928,
+  "classificationHits": [
+   "bigquery",
+   "cloud"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery"
  },
  {
   "id": 34,
@@ -507,7 +950,20 @@
   "correct": [
    "B"
   ],
-  "explanation": "Cloud Storage retention policies and Object Lifecycle Management address different parts of this requirement. A retention policy, locked after validation, prevents deletion or replacement of objects during the 7-year compliance period. Lifecycle rules can then reduce cost by moving older objects to colder storage classes as access drops and by deleting objects only after the retention period has expired. This preserves the compliance boundary while automating cost control. Changing only the default storage class does not protect existing records or automate deletion, and deletion rules must not remove protected versions before the required retention period ends."
+  "explanation": "Cloud Storage retention policies and Object Lifecycle Management address different parts of this requirement. A retention policy, locked after validation, prevents deletion or replacement of objects during the 7-year compliance period. Lifecycle rules can then reduce cost by moving older objects to colder storage classes as access drops and by deleting objects only after the retention period has expired. This preserves the compliance boundary while automating cost control. Changing only the default storage class does not protect existing records or automate deletion, and deletion rules must not remove protected versions before the required retention period ends.",
+  "domain": "D2",
+  "module": "M2",
+  "section": "S3",
+  "label": "D2/M2/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "iam",
+   "storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
  },
  {
   "id": 35,
@@ -522,7 +978,20 @@
   "correct": [
    "B"
   ],
-  "explanation": "The best process change is to move from manual ticket fulfillment to governed self-service. Approved infrastructure-as-code modules exposed through an internal service catalog let delivery teams provision repeatable environments quickly. CI/CD policy checks can enforce labels, network baselines, IAM patterns, and required approvals before deployment, while pipeline logs and approvals provide audit evidence. This aligns business controls with delivery-team needs instead of choosing speed or governance alone."
+  "explanation": "The best process change is to move from manual ticket fulfillment to governed self-service. Approved infrastructure-as-code modules exposed through an internal service catalog let delivery teams provision repeatable environments quickly. CI/CD policy checks can enforce labels, network baselines, IAM patterns, and required approvals before deployment, while pipeline logs and approvals provide audit evidence. This aligns business controls with delivery-team needs instead of choosing speed or governance alone.",
+  "domain": "D4",
+  "module": "M1",
+  "section": "S1",
+  "label": "D4/M1/S1",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "ci/cd",
+   "pipeline",
+   "with"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Modernizing the SDLC with CI/CD"
  },
  {
   "id": 36,
@@ -537,7 +1006,21 @@
   "correct": [
    "A"
   ],
-  "explanation": "The proposed path meets only part of the network requirement: the VMs have no public IPs. It fails the identity and compliance requirements because a shared Linux account and shared SSH key do not provide per-user identity, fast individual revocation, or useful per-user audit trails. It also grants broader network reach than required by allowing SSH from the vendor CIDR to all production VMs. A better pattern is to federate the vendor IdP into Google Cloud IAM, authorize only the required users and VMs, use IAP TCP forwarding for SSH to private VMs, and use OS Login for user-level Linux access. VPN encryption alone is not enough when identity and auditability are explicit requirements."
+  "explanation": "The proposed path meets only part of the network requirement: the VMs have no public IPs. It fails the identity and compliance requirements because a shared Linux account and shared SSH key do not provide per-user identity, fast individual revocation, or useful per-user audit trails. It also grants broader network reach than required by allowing SSH from the vendor CIDR to all production VMs. A better pattern is to federate the vendor IdP into Google Cloud IAM, authorize only the required users and VMs, use IAP TCP forwarding for SSH to private VMs, and use OS Login for user-level Linux access. VPN encryption alone is not enough when identity and auditability are explicit requirements.",
+  "domain": "D3",
+  "module": "M1",
+  "section": "S3",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "access",
+   "designing",
+   "iam",
+   "security"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 37,
@@ -552,7 +1035,22 @@
   "correct": [
    "A"
   ],
-  "explanation": "Data classification should drive where data is stored, who can access it, how it is encrypted, how long it is retained, and what audit evidence is collected. Restricted PII/payment data needs stronger boundaries: regional storage and databases in us-central1, CMEK managed by the security team, least-privilege IAM, retention controls, and enabled audit logging with log sinks. Internal analytics should use de-identified or filtered datasets so analysts can work cost-effectively without accessing Restricted fields. Public catalog data can use caching because it has a lower sensitivity level. The key is to apply controls proportionally by classification rather than using labels alone or applying the most restrictive controls to everything."
+  "explanation": "Data classification should drive where data is stored, who can access it, how it is encrypted, how long it is retained, and what audit evidence is collected. Restricted PII/payment data needs stronger boundaries: regional storage and databases in us-central1, CMEK managed by the security team, least-privilege IAM, retention controls, and enabled audit logging with log sinks. Internal analytics should use de-identified or filtered datasets so analysts can work cost-effectively without accessing Restricted fields. Public catalog data can use caching because it has a lower sensitivity level. The key is to apply controls proportionally by classification rather than using labels alone or applying the most restrictive controls to everything.",
+  "domain": "D3",
+  "module": "M1",
+  "section": "S3",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "access",
+   "bigquery",
+   "designing",
+   "iam",
+   "security"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 38,
@@ -567,7 +1065,19 @@
   "correct": [
    "D"
   ],
-  "explanation": "Migration validation should prove that the target solution is ready from multiple angles, not just that servers start. A production-like pilot or dress rehearsal can use masked or representative data, a realistic traffic profile, security control checks, DR or rollback testing, monitoring, alerts, and operational runbooks. Clear go/no-go criteria tie the test results to business SLAs, compliance evidence, RTO/RPO expectations, and team readiness. This approach also respects the budget constraint by avoiding a long-lived full duplicate environment while still reducing cutover risk. The key takeaway is to validate readiness across business, technical, security, and operations domains before approving production migration."
+  "explanation": "Migration validation should prove that the target solution is ready from multiple angles, not just that servers start. A production-like pilot or dress rehearsal can use masked or representative data, a realistic traffic profile, security control checks, DR or rollback testing, monitoring, alerts, and operational runbooks. Clear go/no-go criteria tie the test results to business SLAs, compliance evidence, RTO/RPO expectations, and team readiness. This approach also respects the budget constraint by avoiding a long-lived full duplicate environment while still reducing cutover risk. The key takeaway is to validate readiness across business, technical, security, and operations domains before approving production migration.",
+  "domain": "D1",
+  "module": "M1",
+  "section": "S4",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "data",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 39,
@@ -582,7 +1092,21 @@
   "correct": [
    "C"
   ],
-  "explanation": "The exhibit points to an ML lifecycle problem, not just a storage or serving problem. Vertex AI Pipelines is designed to orchestrate repeatable ML workflows such as data extraction, preprocessing, training, evaluation, registration, and deployment. Pipeline components can be versioned in source control, runs can be parameterized, and artifacts and metadata can be tracked for lineage and auditability. This gives data teams a consistent way to build and validate models while giving application teams a clear, governed handoff for deployable artifacts. A versioned bucket or API may help one stage, but it does not solve workflow repeatability, traceability, and cross-team collaboration."
+  "explanation": "The exhibit points to an ML lifecycle problem, not just a storage or serving problem. Vertex AI Pipelines is designed to orchestrate repeatable ML workflows such as data extraction, preprocessing, training, evaluation, registration, and deployment. Pipeline components can be versioned in source control, runs can be parameterized, and artifacts and metadata can be tracked for lineage and auditability. This gives data teams a consistent way to build and validate models while giving application teams a clear, governed handoff for deployable artifacts. A versioned bucket or API may help one stage, but it does not solve workflow repeatability, traceability, and cross-team collaboration.",
+  "domain": "D2",
+  "module": "M2",
+  "section": "S3",
+  "label": "D2/M2/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud",
+   "cloud storage",
+   "compute engine",
+   "storage"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Storage Resources",
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
  },
  {
   "id": 40,
@@ -597,7 +1121,23 @@
   "correct": [
    "D"
   ],
-  "explanation": "The key review focus is architecture evolution: checking whether current service boundaries, integration patterns, data governance, operational practices, and decision records can support the business roadmap while taking advantage of newer cloud capabilities incrementally. This is broader than optimizing one service. For this scenario, the architect should create or refresh an evolution roadmap that links business goals, likely technology changes, risks, dependencies, and migration increments. That keeps quarterly releases moving while preserving cost and operational visibility. A forced platform migration or a change freeze would either overcommit the team or block needed adaptation."
+  "explanation": "The key review focus is architecture evolution: checking whether current service boundaries, integration patterns, data governance, operational practices, and decision records can support the business roadmap while taking advantage of newer cloud capabilities incrementally. This is broader than optimizing one service. For this scenario, the architect should create or refresh an evolution roadmap that links business goals, likely technology changes, risks, dependencies, and migration increments. That keeps quarterly releases moving while preserving cost and operational visibility. A forced platform migration or a change freeze would either overcommit the team or block needed adaptation.",
+  "domain": "D1",
+  "module": "M1",
+  "section": "S4",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "dataflow",
+   "integration",
+   "moving",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 41,
@@ -612,7 +1152,21 @@
   "correct": [
    "B"
   ],
-  "explanation": "Workforce Identity Federation is the appropriate pattern for external human users who already authenticate with a trusted external IdP. It avoids creating and deleting local Google identities, supports rapid revocation through the partner’s IdP, and eliminates long-lived service account keys. Mapping IdP attributes or groups to least-privilege IAM bindings keeps access scoped, while service account impersonation can provide controlled privileged access for deployment tasks with audit trails that preserve the external user context. This balances compliance, security, and operational effort better than local accounts, shared credentials, or network-based trust."
+  "explanation": "Workforce Identity Federation is the appropriate pattern for external human users who already authenticate with a trusted external IdP. It avoids creating and deleting local Google identities, supports rapid revocation through the partner’s IdP, and eliminates long-lived service account keys. Mapping IdP attributes or groups to least-privilege IAM bindings keeps access scoped, while service account impersonation can provide controlled privileged access for deployment tasks with audit trails that preserve the external user context. This balances compliance, security, and operational effort better than local accounts, shared credentials, or network-based trust.",
+  "domain": "D3",
+  "module": "M1",
+  "section": "S3",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "access",
+   "designing",
+   "iam",
+   "security"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 42,
@@ -627,7 +1181,19 @@
   "correct": [
    "D"
   ],
-  "explanation": "Observability requirements should shape the architecture before implementation when the business has explicit SLOs, latency targets, release safety needs, diagnostic goals, and privacy limits. In this case, default platform logs are not enough. The design should include structured application logs with redaction, metrics aligned to checkout success and latency, distributed tracing across Cloud Run and Pub/Sub boundaries where applicable, profiling for performance hotspots, customer-impact alerting, and dashboards for service and user-journey health. The privacy requirement also means telemetry must avoid sensitive payloads while still preserving useful correlation IDs and operational context. The key takeaway is that observability is part of the solution design, not only an operations task after launch."
+  "explanation": "Observability requirements should shape the architecture before implementation when the business has explicit SLOs, latency targets, release safety needs, diagnostic goals, and privacy limits. In this case, default platform logs are not enough. The design should include structured application logs with redaction, metrics aligned to checkout success and latency, distributed tracing across Cloud Run and Pub/Sub boundaries where applicable, profiling for performance hotspots, customer-impact alerting, and dashboards for service and user-journey health. The privacy requirement also means telemetry must avoid sensitive payloads while still preserving useful correlation IDs and operational context. The key takeaway is that observability is part of the solution design, not only an operations task after launch.",
+  "domain": "D1",
+  "module": "M2",
+  "section": "S4",
+  "label": "D1/M2/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "latency",
+   "performance"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design Robust Cloud Infrastructures",
+  "sectionTitle": "Performance and Latency"
  },
  {
   "id": 43,
@@ -642,7 +1208,19 @@
   "correct": [
    "B"
   ],
-  "explanation": "Technical requirements describe what the solution must achieve, such as latency, availability, durability, RPO, or failure tolerance. Solution constraints limit how the team can meet those requirements, such as no application-code changes, license restrictions, fixed timelines, or mandated platforms. A named Google Cloud service in a proposal is usually an implementation choice unless the business explicitly makes it a constraint. In this case, latency and RPO are measurable technical requirements, while the no-code first wave is a migration constraint. Cloud SQL should be evaluated against those facts rather than accepted as a requirement by itself."
+  "explanation": "Technical requirements describe what the solution must achieve, such as latency, availability, durability, RPO, or failure tolerance. Solution constraints limit how the team can meet those requirements, such as no application-code changes, license restrictions, fixed timelines, or mandated platforms. A named Google Cloud service in a proposal is usually an implementation choice unless the business explicitly makes it a constraint. In this case, latency and RPO are measurable technical requirements, while the no-code first wave is a migration constraint. Cloud SQL should be evaluated against those facts rather than accepted as a requirement by itself.",
+  "domain": "D1",
+  "module": "M1",
+  "section": "S5",
+  "label": "D1/M1/S5",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "decision",
+   "design"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Buy vs Build and Design Decision Trade-offs"
  },
  {
   "id": 44,
@@ -657,7 +1235,22 @@
   "correct": [
    "D"
   ],
-  "explanation": "The decisive requirement is node-level control. GKE Standard keeps the Kubernetes control plane managed by Google while allowing more control over node pools and workload patterns such as approved privileged DaemonSets that need host access. It also preserves the team’s Helm charts, manifests, and Kubernetes API portability. GKE Autopilot would reduce node operations more, but it is best suited when workloads do not need direct node management or privileged host-level behavior. Cloud Run lowers operations further but changes the orchestration model. Self-managed Kubernetes gives maximum control, but it adds control-plane operations the team explicitly wants to avoid."
+  "explanation": "The decisive requirement is node-level control. GKE Standard keeps the Kubernetes control plane managed by Google while allowing more control over node pools and workload patterns such as approved privileged DaemonSets that need host access. It also preserves the team’s Helm charts, manifests, and Kubernetes API portability. GKE Autopilot would reduce node operations more, but it is best suited when workloads do not need direct node management or privileged host-level behavior. Cloud Run lowers operations further but changes the orchestration model. Self-managed Kubernetes gives maximum control, but it adds control-plane operations the team explicitly wants to avoid.",
+  "domain": "D2",
+  "module": "M3",
+  "section": "S3",
+  "label": "D2/M3/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "autopilot",
+   "gke",
+   "kubernetes",
+   "orchestration",
+   "provisioning"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure Compute Resources",
+  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration"
  },
  {
   "id": 45,
@@ -672,7 +1265,21 @@
   "correct": [
    "D"
   ],
-  "explanation": "The core decision is whether a managed relational service satisfies the workload while reducing operational burden. Cloud SQL for PostgreSQL fits a predictable regional PostgreSQL workload and removes much of the work for OS maintenance, backups, and HA failover configuration. It also supports private IP connectivity and CMEK, which align with the security requirements without forcing a major application or data model redesign. This is a better balance than self-managing PostgreSQL for control or adopting a more disruptive distributed database when the workload does not require it."
+  "explanation": "The core decision is whether a managed relational service satisfies the workload while reducing operational burden. Cloud SQL for PostgreSQL fits a predictable regional PostgreSQL workload and removes much of the work for OS maintenance, backups, and HA failover configuration. It also supports private IP connectivity and CMEK, which align with the security requirements without forcing a major application or data model redesign. This is a better balance than self-managing PostgreSQL for control or adopting a more disruptive distributed database when the workload does not require it.",
+  "domain": "D1",
+  "module": "M1",
+  "section": "S4",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "bigquery",
+   "data",
+   "moving",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 46,
@@ -687,7 +1294,23 @@
   "correct": [
    "C"
   ],
-  "explanation": "The key requirements are sustained multi-Gbps bandwidth, private connectivity, predictable latency/jitter, and resilience to a single connectivity failure. Dedicated Interconnect is the best fit when the organization can connect in a supported colocation facility and needs high-throughput private connectivity to Google Cloud. Using redundant physical connections and Cloud Router with BGP helps maintain routing if a link or edge path fails. HA VPN is often faster and lower cost to deploy, but it uses the public internet and is less suited to sustained 12-15 Gbps, jitter-sensitive traffic. A single interconnect path would leave a clear single point of failure."
+  "explanation": "The key requirements are sustained multi-Gbps bandwidth, private connectivity, predictable latency/jitter, and resilience to a single connectivity failure. Dedicated Interconnect is the best fit when the organization can connect in a supported colocation facility and needs high-throughput private connectivity to Google Cloud. Using redundant physical connections and Cloud Router with BGP helps maintain routing if a link or edge path fails. HA VPN is often faster and lower cost to deploy, but it uses the public internet and is less suited to sustained 12-15 Gbps, jitter-sensitive traffic. A single interconnect path would leave a clear single point of failure.",
+  "domain": "D1",
+  "module": "M1",
+  "section": "S4",
+  "label": "D1/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "cloud interconnect",
+   "data",
+   "moving",
+   "systems",
+   "vpc",
+   "with"
+  ],
+  "domainTitle": "Designing and Planning a Cloud Solution Architecture",
+  "moduleTitle": "Design for Business Outcomes",
+  "sectionTitle": "Integration with External Systems and Moving Data"
  },
  {
   "id": 47,
@@ -702,7 +1325,20 @@
   "correct": [
    "D"
   ],
-  "explanation": "AI compliance evidence should show both control design and operating effectiveness. Cloud Audit Logs can support who changed security-relevant configurations, sanitized application or Model Armor enforcement events can show allow/block policy decisions, and Cloud Monitoring metrics can demonstrate ongoing operation. A documented security or compliance review connects that evidence to the required controls. Keeping the evidence in Google Cloud with redaction or minimized content supports privacy requirements, reduces data movement, and is feasible for a small team on a short timeline. Raw transcript review may look thorough, but it creates unnecessary privacy and data-handling risk."
+  "explanation": "AI compliance evidence should show both control design and operating effectiveness. Cloud Audit Logs can support who changed security-relevant configurations, sanitized application or Model Armor enforcement events can show allow/block policy decisions, and Cloud Monitoring metrics can demonstrate ongoing operation. A documented security or compliance review connects that evidence to the required controls. Keeping the evidence in Google Cloud with redaction or minimized content supports privacy requirements, reduces data movement, and is feasible for a small team on a short timeline. Raw transcript review may look thorough, but it creates unnecessary privacy and data-handling risk.",
+  "domain": "D3",
+  "module": "M2",
+  "section": "S2",
+  "label": "D3/M2/S2",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "data",
+   "designing",
+   "privacy"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Designing for Compliance",
+  "sectionTitle": "Designing for Data Privacy, Residency, and Sovereignty"
  },
  {
   "id": 48,
@@ -717,7 +1353,20 @@
   "correct": [
    "C"
   ],
-  "explanation": "AI workflows introduce security risks at prompt input, model output, deployment, and logging points. In this scenario, the best architecture uses managed controls close to the assistant: Sensitive Data Protection can help identify or redact PHI before prompts or logs are retained, Model Armor can help screen prompts and responses for unsafe interactions, least-privilege service access limits who and what can invoke the workflow, and audit logging provides compliance evidence. This layered approach fits the low-latency pilot and avoids asking a small team to build and operate custom moderation infrastructure. The key trade-off is using managed controls to reduce risk without blocking the business pilot or removing evidence auditors need."
+  "explanation": "AI workflows introduce security risks at prompt input, model output, deployment, and logging points. In this scenario, the best architecture uses managed controls close to the assistant: Sensitive Data Protection can help identify or redact PHI before prompts or logs are retained, Model Armor can help screen prompts and responses for unsafe interactions, least-privilege service access limits who and what can invoke the workflow, and audit logging provides compliance evidence. This layered approach fits the low-latency pilot and avoids asking a small team to build and operate custom moderation infrastructure. The key trade-off is using managed controls to reduce risk without blocking the business pilot or removing evidence auditors need.",
+  "domain": "D3",
+  "module": "M1",
+  "section": "S3",
+  "label": "D3/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "access",
+   "designing",
+   "security"
+  ],
+  "domainTitle": "Designing for Security and Compliance",
+  "moduleTitle": "Architecting Secure Google Cloud Solutions",
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
  },
  {
   "id": 49,
@@ -732,7 +1381,19 @@
   "correct": [
    "C"
   ],
-  "explanation": "The key gap is governance in the provisioning workflow, not Terraform itself. A balanced solution keeps infrastructure as code, but makes it controlled and repeatable: store changes in Git, require peer or owner review for production, run automated plan checks, separate environments into distinct projects or folders, and use tagged releases or known-good commits for rollback. This improves compliance evidence and reduces blast radius without stopping delivery for months. Automation also reduces manual operational effort compared with a ticket-only or laptop-based process."
+  "explanation": "The key gap is governance in the provisioning workflow, not Terraform itself. A balanced solution keeps infrastructure as code, but makes it controlled and repeatable: store changes in Git, require peer or owner review for production, run automated plan checks, separate environments into distinct projects or folders, and use tagged releases or known-good commits for rollback. This improves compliance evidence and reduces blast radius without stopping delivery for months. Automation also reduces manual operational effort compared with a ticket-only or laptop-based process.",
+  "domain": "D4",
+  "module": "M1",
+  "section": "S3",
+  "label": "D4/M1/S3",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "provisioning",
+   "terraform"
+  ],
+  "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
+  "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
+  "sectionTitle": "Testing, Validation, and Service Provisioning"
  },
  {
   "id": 50,
@@ -747,6 +1408,20 @@
   "correct": [
    "B"
   ],
-  "explanation": "Network Connectivity Center fits a multi-VPC and multicloud topology where connectivity needs to scale without building pairwise links between every network. The Google Cloud VPCs can be attached as VPC spokes, and AWS can connect through an HA VPN spoke. A central network team can manage the routing pattern, while hierarchical firewall policies, VPC firewall rules, and route design limit payment and analytics communication to approved paths. The key point is to separate the connectivity fabric from the segmentation controls: NCC provides scalable private reachability, and policy controls determine which flows are allowed."
+  "explanation": "Network Connectivity Center fits a multi-VPC and multicloud topology where connectivity needs to scale without building pairwise links between every network. The Google Cloud VPCs can be attached as VPC spokes, and AWS can connect through an HA VPN spoke. A central network team can manage the routing pattern, while hierarchical firewall policies, VPC firewall rules, and route design limit payment and analytics communication to approved paths. The key point is to separate the connectivity fabric from the segmentation controls: NCC provides scalable private reachability, and policy controls determine which flows are allowed.",
+  "domain": "D2",
+  "module": "M1",
+  "section": "S4",
+  "label": "D2/M1/S4",
+  "classificationConfidence": 0.99,
+  "classificationHits": [
+   "armor",
+   "cloud",
+   "vpc",
+   "with"
+  ],
+  "domainTitle": "Managing and Provisioning a Solution Infrastructure",
+  "moduleTitle": "Configure and Secure Networks",
+  "sectionTitle": "Securing Networks with IAP, Cloud Armor, and Cloud IDS"
  }
 ]
