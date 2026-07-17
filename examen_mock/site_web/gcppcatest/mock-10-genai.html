@@ -20,6 +20,7 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 #resultCount{font-size:.85rem;color:#1a73e8;font-weight:700}
 .q{padding:16px 18px;margin-bottom:12px}
 .q.hidden{display:none}
+.q:target{border-color:#1a73e8;box-shadow:0 0 0 3px rgba(26,115,232,.14)}
 .meta-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
 .num{font-size:.76rem;font-weight:800;color:#1a73e8}
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.02em}
@@ -29,7 +30,11 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 .badge.type{background:#64748b;color:#fff;text-transform:uppercase}
 .badge.type.multi{background:#b45309}
 .sec-title{font-size:.78rem;color:#64748b}
-.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line}
+.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line;display:flex;gap:8px;align-items:flex-start}
+.qt-text{flex:1}
+.tts{flex:0 0 auto;font:inherit;font-size:.76rem;font-weight:700;color:#1a73e8;border:1px solid #bfdbfe;background:#eff6ff;border-radius:7px;padding:4px 8px;cursor:pointer}
+.tts:hover{background:#dbeafe}
+.tts.speaking{color:#b91c1c;border-color:#fecaca;background:#fef2f2}
 .opts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .opts li{position:relative;padding:8px 10px 8px 40px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:.92rem}
 .opts li:before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e2e8f0;font-size:.72rem;font-weight:800}
@@ -44,10 +49,24 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 .card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}
 .card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
 .card .n{width:32px;height:32px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.overview-card{display:flex;gap:12px;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;min-height:118px}
+.overview-card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
+.overview-card .n{flex:0 0 auto;width:34px;height:34px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800}
+.overview-card .summary{font-size:.86rem;font-weight:650;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.overview-card .labels{display:flex;gap:5px;align-items:center;margin-bottom:6px}
+.domain-progress{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:14px}
+.domain-progress h2{font-size:1rem;margin:0 0 12px}
+.progress-row{display:grid;grid-template-columns:42px minmax(100px,1fr) 82px;gap:10px;align-items:center;margin:8px 0}
+.progress-label{font-size:.78rem;font-weight:800;color:#475569}
+.progress-track{height:11px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#1a73e8,#60a5fa);border-radius:999px}
+.progress-value{text-align:right;font-size:.76rem;font-weight:700;color:#475569}
 </style>
 </head><body>
 <nav class="bar">
   <a href="../index.html">← Menu principal</a>
+  <a href="mock-10-genai-overview.html">Vue d’ensemble</a>
   <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Site original ↗</a>
   <button type="button" onclick="all(true)">Afficher les réponses</button>
   <button type="button" onclick="all(false)">Masquer les réponses</button>
@@ -70,7 +89,7 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 </div>
 
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-1" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 1 / 60</span>
     <span class="badge d">D1</span>
@@ -80,12 +99,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You need to build a custom image classification model with minimal ML expertise. Your dataset has 10,000 labeled images across 50 categories. Which Vertex AI feature is most appropriate?</div>
+  <div class="qt">
+    <div class="qt-text">You need to build a custom image classification model with minimal ML expertise. Your dataset has 10,000 labeled images across 50 categories. Which Vertex AI feature is most appropriate?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Vertex AI Generative AI Studio.</li><li class="correct" data-l="B">Vertex AI AutoML Image Classification.</li><li data-l="C">BigQuery ML.</li><li data-l="D">Custom training with TensorFlow from scratch.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>AutoML Image Classification automatically builds high-quality models from labeled data without requiring ML expertise. It handles feature engineering, architecture selection, and hyperparameter tuning.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/image-data/classification/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
+<section class="q" id="question-2" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
   <div class="meta-line">
     <span class="num">Question 2 / 60</span>
     <span class="badge d">D1</span>
@@ -95,12 +117,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S1 · Product Strategy and Success Measurements</span>
     
   </div>
-  <div class="qt">You&#x27;re deploying a Gemini-based application. Which TWO factors should you consider for production deployment?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re deploying a Gemini-based application. Which TWO factors should you consider for production deployment?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">The color of the UI.</li><li data-l="B">Time of day for deployment.</li><li class="correct" data-l="C">Token limits for input and output.</li><li data-l="D">The programming language of the backend only.</li><li class="correct" data-l="E">Quota and rate limits for API calls.</li></ul>
   <div class="ans"><b>Bonne réponse : C, E</b><div>Token limits affect how much context can be processed. Quota and rate limits determine throughput capacity. These are critical for production planning.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/quotas" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-3" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 3 / 60</span>
     <span class="badge d">D1</span>
@@ -110,12 +135,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">Your team wants to fine-tune a foundation model for domain-specific terminology in healthcare. What Vertex AI capability enables this?</div>
+  <div class="qt">
+    <div class="qt-text">Your team wants to fine-tune a foundation model for domain-specific terminology in healthcare. What Vertex AI capability enables this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">AutoML Text Classification.</li><li class="correct" data-l="B">Vertex AI Model Tuning (supervised fine-tuning or RLHF).</li><li data-l="C">BigQuery ML CREATE MODEL.</li><li data-l="D">Cloud Functions.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Vertex AI Model Tuning allows fine-tuning foundation models on domain-specific data to improve performance for specialized use cases like healthcare terminology.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/models/tune-models" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-4" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 4 / 60</span>
     <span class="badge d">D1</span>
@@ -125,12 +153,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re building a RAG (Retrieval-Augmented Generation) system. What component stores and retrieves relevant document chunks based on semantic similarity?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re building a RAG (Retrieval-Augmented Generation) system. What component stores and retrieves relevant document chunks based on semantic similarity?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Pub/Sub topics.</li><li data-l="B">Cloud Storage buckets.</li><li data-l="C">Cloud SQL relational tables.</li><li class="correct" data-l="D">Vector database (like Vertex AI Vector Search or AlloyDB with pgvector).</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Vector databases store document embeddings and enable semantic similarity search, which is essential for RAG systems to retrieve relevant context for LLM prompts.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/vector-search/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S2">
+<section class="q" id="question-5" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S2">
   <div class="meta-line">
     <span class="num">Question 5 / 60</span>
     <span class="badge d">D5</span>
@@ -140,12 +171,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D5/M1/S2 · Implementing Testing Frameworks</span>
     
   </div>
-  <div class="qt">You&#x27;re implementing embeddings for a document search system. Which TWO steps are required?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re implementing embeddings for a document search system. Which TWO steps are required?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Index embeddings in a vector database for similarity search.</li><li class="correct" data-l="B">Convert documents to vector embeddings using an embedding model.</li><li data-l="C">Store documents as plain text only.</li><li data-l="D">Use keyword matching exclusively.</li><li data-l="E">Disable all search functionality.</li></ul>
   <div class="ans"><b>Bonne réponse : A, B</b><div>Embeddings require converting text to vectors using embedding models, then indexing them for efficient similarity search. This enables semantic search beyond keywords.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/embeddings/get-text-embeddings" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-6" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 6 / 60</span>
     <span class="badge d">D1</span>
@@ -155,12 +189,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">Your ML model training job requires 8 NVIDIA A100 GPUs for 48 hours. What&#x27;s the most cost-effective Vertex AI training option?</div>
+  <div class="qt">
+    <div class="qt-text">Your ML model training job requires 8 NVIDIA A100 GPUs for 48 hours. What&#x27;s the most cost-effective Vertex AI training option?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use CPUs only.</li><li data-l="B">Train longer on fewer GPUs without optimization.</li><li data-l="C">On-demand training without any cost optimization.</li><li class="correct" data-l="D">Custom training with Spot VMs (preemptible) and checkpointing for recovery.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Spot VMs provide significant GPU discounts for training. Checkpointing ensures jobs can resume if preempted, making this cost-effective for long training runs.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/training/using-spot-vms" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
+<section class="q" id="question-7" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
   <div class="meta-line">
     <span class="num">Question 7 / 60</span>
     <span class="badge d">D5</span>
@@ -170,12 +207,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D5/M2/S2 · Working with Cloud Emulators for Local Development</span>
     
   </div>
-  <div class="qt">You need to deploy a trained model for real-time predictions with auto-scaling based on traffic. What Vertex AI resource should you create?</div>
+  <div class="qt">
+    <div class="qt-text">You need to deploy a trained model for real-time predictions with auto-scaling based on traffic. What Vertex AI resource should you create?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Compute Engine VM with manual scaling.</li><li data-l="B">Cloud Functions with model embedded.</li><li data-l="C">Cloud Run without GPU support.</li><li class="correct" data-l="D">Vertex AI Endpoint with auto-scaling configuration.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Vertex AI Endpoints provide managed model serving with automatic scaling, load balancing, and GPU support for real-time predictions.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/predictions/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-8" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 8 / 60</span>
     <span class="badge d">D1</span>
@@ -185,12 +225,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re building a Vertex AI Pipeline for ML workflow automation. Which TWO benefits does this provide?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re building a Vertex AI Pipeline for ML workflow automation. Which TWO benefits does this provide?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">No ability to schedule runs.</li><li class="correct" data-l="B">Reproducible ML workflows with versioning.</li><li class="correct" data-l="C">Automated data preprocessing, training, and deployment.</li><li data-l="D">Increased manual intervention.</li><li data-l="E">Manual execution of each step.</li></ul>
   <div class="ans"><b>Bonne réponse : B, C</b><div>Vertex AI Pipelines automate ML workflows end-to-end with reproducibility, versioning, and scheduling capabilities.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/pipelines/introduction" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-9" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 9 / 60</span>
     <span class="badge d">D1</span>
@@ -200,12 +243,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">Your application needs to generate images from text descriptions. Which Vertex AI model is designed for this?</div>
+  <div class="qt">
+    <div class="qt-text">Your application needs to generate images from text descriptions. Which Vertex AI model is designed for this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Vertex AI Matching Engine.</li><li data-l="B">Gemini for text analysis only.</li><li data-l="C">AutoML Vision for image classification.</li><li class="correct" data-l="D">Imagen model for text-to-image generation.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Imagen is Google&#x27;s text-to-image generation model available through Vertex AI, capable of generating high-quality images from natural language descriptions.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/image/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S1">
+<section class="q" id="question-10" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S1">
   <div class="meta-line">
     <span class="num">Question 10 / 60</span>
     <span class="badge d">D5</span>
@@ -215,12 +261,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D5/M2/S1 · Mastering Cloud Shell and the Google Cloud SDK</span>
     
   </div>
-  <div class="qt">You want to evaluate the quality of your LLM&#x27;s responses before production. What Vertex AI feature provides automated evaluation?</div>
+  <div class="qt">
+    <div class="qt-text">You want to evaluate the quality of your LLM&#x27;s responses before production. What Vertex AI feature provides automated evaluation?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Vertex AI Model Evaluation with metrics like groundedness, coherence, and safety.</li><li data-l="B">Cloud Logging.</li><li data-l="C">BigQuery queries.</li><li data-l="D">Manual review only.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Vertex AI provides automated evaluation for generative models with metrics including groundedness, fluency, coherence, and safety assessments.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/models/evaluation-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-11" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 11 / 60</span>
     <span class="badge d">D1</span>
@@ -230,12 +279,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">Your RAG system retrieves too many irrelevant documents. How can you improve retrieval quality?</div>
+  <div class="qt">
+    <div class="qt-text">Your RAG system retrieves too many irrelevant documents. How can you improve retrieval quality?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Tune the similarity threshold and use hybrid search (combining semantic and keyword matching).</li><li data-l="B">Use larger embedding dimensions only.</li><li data-l="C">Increase the number of retrieved documents.</li><li data-l="D">Disable semantic search.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Adjusting similarity thresholds filters low-relevance matches. Hybrid search combines semantic understanding with keyword precision for better results.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/vector-search/filtering" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S2">
+<section class="q" id="question-12" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S2">
   <div class="meta-line">
     <span class="num">Question 12 / 60</span>
     <span class="badge d">D5</span>
@@ -245,12 +297,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D5/M1/S2 · Implementing Testing Frameworks</span>
     
   </div>
-  <div class="qt">You&#x27;re implementing responsible AI practices for your generative AI application. Which TWO controls should you implement?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re implementing responsible AI practices for your generative AI application. Which TWO controls should you implement?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Allow any user input without validation.</li><li class="correct" data-l="B">Content safety filters to block harmful outputs.</li><li data-l="C">Ignore harmful content generation.</li><li class="correct" data-l="D">Prompt injection detection and prevention.</li><li data-l="E">Disable all content filtering.</li></ul>
   <div class="ans"><b>Bonne réponse : B, D</b><div>Content safety filters prevent harmful outputs, and prompt injection detection prevents malicious manipulation of model behavior. Both are essential for responsible AI.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/configure-safety-attributes" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-13" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 13 / 60</span>
     <span class="badge d">D1</span>
@@ -260,12 +315,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">Your custom training job on Vertex AI needs to access data in Cloud Storage and write metrics to BigQuery. How should you configure authentication?</div>
+  <div class="qt">
+    <div class="qt-text">Your custom training job on Vertex AI needs to access data in Cloud Storage and write metrics to BigQuery. How should you configure authentication?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Attach a service account with appropriate IAM roles to the training job.</li><li data-l="B">Use public buckets and datasets.</li><li data-l="C">Hard-code credentials in the training script.</li><li data-l="D">Authentication isn&#x27;t required.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Service accounts with appropriate IAM roles provide secure, managed authentication for training jobs accessing GCP resources.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/training/create-custom-job#service-account" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-14" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 14 / 60</span>
     <span class="badge d">D1</span>
@@ -275,12 +333,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You need to chunk large documents for embedding in a RAG system. What&#x27;s the recommended approach?</div>
+  <div class="qt">
+    <div class="qt-text">You need to chunk large documents for embedding in a RAG system. What&#x27;s the recommended approach?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Use overlapping chunks with consistent size (e.g., 512 tokens with 50 token overlap).</li><li data-l="B">Random chunk sizes without overlap.</li><li data-l="C">Store entire documents as single embeddings.</li><li data-l="D">Single sentence per chunk.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Overlapping chunks maintain context across boundaries. Consistent sizing ensures predictable embedding quality. This balances retrieval precision with context preservation.</div><div class="ref"><a href="https://cloud.google.com/architecture/rag-capable-gen-ai-app-using-vertex-ai" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-15" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 15 / 60</span>
     <span class="badge d">D1</span>
@@ -290,12 +351,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re deploying a multi-modal model that processes both text and images. Which TWO Gemini capabilities support this?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re deploying a multi-modal model that processes both text and images. Which TWO Gemini capabilities support this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Gemini Pro Vision for analyzing images with text prompts.</li><li class="correct" data-l="B">Multi-modal input processing in a single API call.</li><li data-l="C">Image generation only.</li><li data-l="D">Audio-only processing.</li><li data-l="E">Text-only processing exclusively.</li></ul>
   <div class="ans"><b>Bonne réponse : A, B</b><div>Gemini models support multi-modal inputs including text and images in single requests, enabling complex analysis combining visual and textual understanding.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-16" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 16 / 60</span>
     <span class="badge d">D1</span>
@@ -305,12 +369,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">Your ML model in production is experiencing data drift. What Vertex AI feature detects this?</div>
+  <div class="qt">
+    <div class="qt-text">Your ML model in production is experiencing data drift. What Vertex AI feature detects this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Manual data inspection.</li><li data-l="B">Cloud Logging only.</li><li data-l="C">BigQuery scheduled queries.</li><li class="correct" data-l="D">Vertex AI Model Monitoring with skew and drift detection.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Vertex AI Model Monitoring continuously monitors prediction inputs and outputs, detecting training-serving skew and data drift that affects model performance.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/model-monitoring/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S1">
+<section class="q" id="question-17" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S1">
   <div class="meta-line">
     <span class="num">Question 17 / 60</span>
     <span class="badge d">D1</span>
@@ -320,12 +387,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M4/S1 · Integration with Existing Systems</span>
     
   </div>
-  <div class="qt">You want to use Gemini API with your existing OpenAI-compatible code. What feature enables this?</div>
+  <div class="qt">
+    <div class="qt-text">You want to use Gemini API with your existing OpenAI-compatible code. What feature enables this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Vertex AI&#x27;s OpenAI-compatible endpoint.</li><li data-l="B">OpenAI doesn&#x27;t work with GCP.</li><li data-l="C">Complete code rewrite required.</li><li data-l="D">Use Cloud Functions wrapper.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Vertex AI provides OpenAI-compatible endpoints, allowing existing code using OpenAI libraries to work with Gemini models with minimal changes.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/call-gemini-using-openai-library" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-18" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 18 / 60</span>
     <span class="badge d">D1</span>
@@ -335,12 +405,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re building a conversational AI assistant with memory of previous interactions. Which TWO techniques help maintain context?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re building a conversational AI assistant with memory of previous interactions. Which TWO techniques help maintain context?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Use a vector database to store and retrieve relevant past conversations.</li><li data-l="B">Delete all session data.</li><li data-l="C">Start fresh with each request.</li><li data-l="D">Ignore user history.</li><li class="correct" data-l="E">Include conversation history in the prompt context.</li></ul>
   <div class="ans"><b>Bonne réponse : A, E</b><div>Including history in prompts provides immediate context. Vector databases enable retrieval of relevant past interactions across sessions for long-term memory.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/chat/chat-prompts" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S6">
+<section class="q" id="question-19" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S6">
   <div class="meta-line">
     <span class="num">Question 19 / 60</span>
     <span class="badge d">D1</span>
@@ -350,12 +423,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S6 · Compliance and Observability</span>
     
   </div>
-  <div class="qt">Your organization requires all AI model artifacts to be stored in a specific region for compliance. How do you enforce this in Vertex AI?</div>
+  <div class="qt">
+    <div class="qt-text">Your organization requires all AI model artifacts to be stored in a specific region for compliance. How do you enforce this in Vertex AI?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Configure Vertex AI resources in a specific region and use organization policies to restrict locations.</li><li data-l="B">Ask users to check manually.</li><li data-l="C">Models are always globally stored.</li><li data-l="D">Regional storage isn&#x27;t supported.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Vertex AI resources can be created in specific regions. Organization policies can restrict allowed locations for compliance requirements.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/general/locations" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+<section class="q" id="question-20" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
   <div class="meta-line">
     <span class="num">Question 20 / 60</span>
     <span class="badge d">D1</span>
@@ -365,12 +441,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
     
   </div>
-  <div class="qt">You need batch predictions on 1 million records. Real-time latency isn&#x27;t required. What&#x27;s the most cost-effective approach?</div>
+  <div class="qt">
+    <div class="qt-text">You need batch predictions on 1 million records. Real-time latency isn&#x27;t required. What&#x27;s the most cost-effective approach?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Call the online prediction endpoint 1 million times.</li><li class="correct" data-l="B">Vertex AI Batch Prediction job.</li><li data-l="C">Don&#x27;t use predictions.</li><li data-l="D">Process one record at a time manually.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Batch prediction jobs are optimized for large-scale offline inference, processing many records efficiently without the overhead of individual API calls.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/predictions/batch-predictions" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
+<section class="q" id="question-21" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
   <div class="meta-line">
     <span class="num">Question 21 / 60</span>
     <span class="badge d">D1</span>
@@ -380,12 +459,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S4 · Choosing Appropriate Storage Types</span>
     
   </div>
-  <div class="qt">Your embedding model produces 768-dimensional vectors. You need to reduce storage and speed up similarity search. What technique helps?</div>
+  <div class="qt">
+    <div class="qt-text">Your embedding model produces 768-dimensional vectors. You need to reduce storage and speed up similarity search. What technique helps?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Use approximate nearest neighbor (ANN) algorithms and consider dimensionality reduction.</li><li data-l="B">Double the dimensions.</li><li data-l="C">Disable indexing.</li><li data-l="D">Store all dimensions in full precision.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>ANN algorithms like ScaNN provide fast approximate search. Dimensionality reduction techniques can reduce storage while maintaining search quality.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/vector-search/choosing-algorithm" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-22" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 22 / 60</span>
     <span class="badge d">D1</span>
@@ -395,12 +477,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re setting up data governance for AI workloads. Which TWO practices are essential?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re setting up data governance for AI workloads. Which TWO practices are essential?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Implement access controls on training data and model artifacts.</li><li class="correct" data-l="B">Track data lineage from source to model training.</li><li data-l="C">Ignore data privacy regulations.</li><li data-l="D">Use public datasets without tracking.</li><li data-l="E">Share model access with everyone.</li></ul>
   <div class="ans"><b>Bonne réponse : A, B</b><div>Data lineage ensures traceability for compliance. Access controls protect sensitive training data and model artifacts from unauthorized access.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/datasets/data-governance" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-23" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 23 / 60</span>
     <span class="badge d">D1</span>
@@ -410,12 +495,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">Your LLM application needs to call external APIs (weather, databases) based on user requests. What capability enables this?</div>
+  <div class="qt">
+    <div class="qt-text">Your LLM application needs to call external APIs (weather, databases) based on user requests. What capability enables this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Manual API calls outside the model.</li><li data-l="B">Only text responses are possible.</li><li data-l="C">Disable all external integrations.</li><li class="correct" data-l="D">Function calling (tool use) in Gemini models.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Function calling allows Gemini models to recognize when to call external functions/APIs and format the appropriate parameters, enabling integration with external systems.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/function-calling" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-24" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 24 / 60</span>
     <span class="badge d">D1</span>
@@ -425,12 +513,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">You want to reduce hallucinations in your LLM application. What technique is most effective?</div>
+  <div class="qt">
+    <div class="qt-text">You want to reduce hallucinations in your LLM application. What technique is most effective?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Ground responses in retrieved facts using RAG.</li><li data-l="B">Increase temperature to maximum.</li><li data-l="C">Remove all context from prompts.</li><li data-l="D">Use shorter prompts.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>RAG provides factual grounding by retrieving relevant, verified information for the model to reference, significantly reducing hallucinations.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/grounding/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-25" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 25 / 60</span>
     <span class="badge d">D1</span>
@@ -440,12 +531,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re implementing Vertex AI Feature Store for ML features. Which TWO benefits does it provide?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re implementing Vertex AI Feature Store for ML features. Which TWO benefits does it provide?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">No feature versioning.</li><li class="correct" data-l="B">Centralized feature storage with consistent values for training and serving.</li><li data-l="C">Inconsistent training and serving features.</li><li class="correct" data-l="D">Point-in-time feature retrieval to avoid data leakage.</li><li data-l="E">Features must be computed each time.</li></ul>
   <div class="ans"><b>Bonne réponse : B, D</b><div>Feature Store provides centralized, versioned feature management with point-in-time correctness, ensuring consistency between training and serving.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/featurestore/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-26" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 26 / 60</span>
     <span class="badge d">D1</span>
@@ -455,12 +549,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">Your text-to-SQL application sometimes generates invalid SQL. How can you improve reliability?</div>
+  <div class="qt">
+    <div class="qt-text">Your text-to-SQL application sometimes generates invalid SQL. How can you improve reliability?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Provide schema information in the prompt and validate/test generated SQL before execution.</li><li data-l="B">Use only natural language responses.</li><li data-l="C">Execute all generated SQL blindly.</li><li data-l="D">Remove schema context.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Schema context helps the model generate valid SQL. Validation catches errors before execution, improving reliability and preventing invalid queries.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/code/code-completion-prompts" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-27" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 27 / 60</span>
     <span class="badge d">D1</span>
@@ -470,12 +567,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You need to serve a large language model with low latency. The model has 7 billion parameters. What GPU configuration is appropriate?</div>
+  <div class="qt">
+    <div class="qt-text">You need to serve a large language model with low latency. The model has 7 billion parameters. What GPU configuration is appropriate?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use CPU only for all serving.</li><li data-l="B">Any GPU regardless of memory.</li><li data-l="C">GPU memory doesn&#x27;t matter.</li><li class="correct" data-l="D">Select GPU with sufficient VRAM (e.g., A100 40GB or L4) based on model size and batch requirements.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>LLM serving requires GPUs with sufficient VRAM to hold model weights. Model size and batch requirements determine minimum GPU memory needs.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/predictions/use-gpu" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-28" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 28 / 60</span>
     <span class="badge d">D1</span>
@@ -485,12 +585,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re building an ML pipeline with Vertex AI Pipelines and Kubeflow. Which TWO components are essential?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re building an ML pipeline with Vertex AI Pipelines and Kubeflow. Which TWO components are essential?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">No artifact tracking.</li><li class="correct" data-l="B">Pipeline definition using Kubeflow Pipelines SDK.</li><li data-l="C">Manual execution of each step.</li><li data-l="D">Single monolithic script.</li><li class="correct" data-l="E">Component containers for each pipeline step.</li></ul>
   <div class="ans"><b>Bonne réponse : B, E</b><div>Kubeflow SDK defines pipeline structure. Containerized components ensure reproducibility and isolation for each step.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/pipelines/build-pipeline" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-29" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 29 / 60</span>
     <span class="badge d">D1</span>
@@ -500,12 +603,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">Your generative AI application needs to cite sources for generated content. What Vertex AI feature provides this?</div>
+  <div class="qt">
+    <div class="qt-text">Your generative AI application needs to cite sources for generated content. What Vertex AI feature provides this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Citations are not supported.</li><li data-l="B">Disable all source references.</li><li class="correct" data-l="C">Grounding with Google Search or custom data sources with citation metadata.</li><li data-l="D">Manual source tracking only.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Vertex AI Grounding connects LLM responses to verifiable sources and can provide citation metadata for transparency and verification.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/grounding/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S4">
+<section class="q" id="question-30" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S4">
   <div class="meta-line">
     <span class="num">Question 30 / 60</span>
     <span class="badge d">D1</span>
@@ -515,12 +621,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M2/S4 · Performance and Latency</span>
     
   </div>
-  <div class="qt">You&#x27;re comparing prompt performance across different Gemini model versions. What feature helps track and compare results?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re comparing prompt performance across different Gemini model versions. What feature helps track and compare results?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Manual spreadsheet tracking.</li><li class="correct" data-l="B">Vertex AI Experiments for tracking prompt variations and metrics.</li><li data-l="C">No comparison tools exist.</li><li data-l="D">Run each prompt once only.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Vertex AI Experiments provides systematic tracking of prompt variations, model versions, and associated metrics for comparison and optimization.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/experiments/intro-vertex-ai-experiments" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S6">
+<section class="q" id="question-31" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S6">
   <div class="meta-line">
     <span class="num">Question 31 / 60</span>
     <span class="badge d">D1</span>
@@ -530,12 +639,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S6 · Compliance and Observability</span>
     
   </div>
-  <div class="qt">Your organization wants to use Gemini but needs to ensure responses comply with company guidelines. What approach helps?</div>
+  <div class="qt">
+    <div class="qt-text">Your organization wants to use Gemini but needs to ensure responses comply with company guidelines. What approach helps?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Users must self-police.</li><li class="correct" data-l="B">System instructions and safety settings to guide model behavior.</li><li data-l="C">Disable all outputs.</li><li data-l="D">No control over model outputs.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>System instructions set behavioral guardrails for the model. Safety settings control content filtering levels to ensure compliance with guidelines.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompts/system-instructions" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
+<section class="q" id="question-32" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
   <div class="meta-line">
     <span class="num">Question 32 / 60</span>
     <span class="badge d">D1</span>
@@ -545,12 +657,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S1 · Product Strategy and Success Measurements</span>
     
   </div>
-  <div class="qt">You&#x27;re implementing vector search for a product catalog with 10 million items. Which TWO optimizations improve performance?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re implementing vector search for a product catalog with 10 million items. Which TWO optimizations improve performance?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Use appropriate index type (tree-based or hash-based) for your scale.</li><li data-l="B">Search entire dataset for every query.</li><li class="correct" data-l="C">Implement filtering before vector search to reduce candidate set.</li><li data-l="D">Linear scan through all vectors.</li><li data-l="E">No indexing required.</li></ul>
   <div class="ans"><b>Bonne réponse : A, C</b><div>Appropriate indexing enables sub-linear search complexity. Pre-filtering reduces the candidate set, improving both speed and relevance.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/vector-search/filtering" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M5" data-label="D1/M5/S1">
+<section class="q" id="question-33" data-domain="D1" data-module="D1/M5" data-label="D1/M5/S1">
   <div class="meta-line">
     <span class="num">Question 33 / 60</span>
     <span class="badge d">D1</span>
@@ -560,12 +675,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M5/S1 · Stay Updated and Promote Adoption</span>
     
   </div>
-  <div class="qt">Your AutoML model training is taking too long. The dataset has 100,000 images. What can speed up training?</div>
+  <div class="qt">
+    <div class="qt-text">Your AutoML model training is taking too long. The dataset has 100,000 images. What can speed up training?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Add more images to the dataset.</li><li data-l="B">Reduce image quality significantly.</li><li class="correct" data-l="C">Set a training budget limit (node-hours) and let AutoML optimize within constraints.</li><li data-l="D">Training time cannot be controlled.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Training budget controls allow balancing between training time and model quality. AutoML optimizes within the specified budget.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/training-overview#training_with_automl" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-34" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 34 / 60</span>
     <span class="badge d">D1</span>
@@ -575,12 +693,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You need to deploy multiple ML models that share common preprocessing logic. What Vertex AI feature enables this?</div>
+  <div class="qt">
+    <div class="qt-text">You need to deploy multiple ML models that share common preprocessing logic. What Vertex AI feature enables this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Remove all preprocessing.</li><li data-l="B">Duplicate preprocessing in each model.</li><li data-l="C">No shared code is possible.</li><li class="correct" data-l="D">Custom prediction routines with shared preprocessing container.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Custom prediction routines allow packaging preprocessing logic in containers that can be shared across model deployments.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/predictions/custom-prediction-routines" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-35" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 35 / 60</span>
     <span class="badge d">D1</span>
@@ -590,12 +711,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re fine-tuning a Gemini model for customer support. Which TWO data preparation steps are essential?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re fine-tuning a Gemini model for customer support. Which TWO data preparation steps are essential?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Random unstructured text only.</li><li data-l="B">Use minimal training data.</li><li class="correct" data-l="C">Create high-quality training examples in the required format.</li><li class="correct" data-l="D">Include diverse examples covering edge cases.</li><li data-l="E">Ignore data quality.</li></ul>
   <div class="ans"><b>Bonne réponse : C, D</b><div>Quality training examples in correct format are essential. Diverse examples ensure the model handles various scenarios.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/models/tune-text-models-sft" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
+<section class="q" id="question-36" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
   <div class="meta-line">
     <span class="num">Question 36 / 60</span>
     <span class="badge d">D1</span>
@@ -605,12 +729,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S1 · Product Strategy and Success Measurements</span>
     
   </div>
-  <div class="qt">Your embedding search returns 1000 results for every query. You need to show only the top 10 most relevant. What parameter controls this?</div>
+  <div class="qt">
+    <div class="qt-text">Your embedding search returns 1000 results for every query. You need to show only the top 10 most relevant. What parameter controls this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Set the top-k parameter to limit returned results.</li><li data-l="B">Return all results always.</li><li data-l="C">Top-k cannot be configured.</li><li data-l="D">Retrieve all and filter in application.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>The top-k parameter limits the number of nearest neighbors returned, improving response time and relevance by returning only most similar results.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/vector-search/quickstart" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-37" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 37 / 60</span>
     <span class="badge d">D1</span>
@@ -620,12 +747,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">Your generative AI application needs to handle concurrent requests from 1000 users. What should you configure?</div>
+  <div class="qt">
+    <div class="qt-text">Your generative AI application needs to handle concurrent requests from 1000 users. What should you configure?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Request quota increases and configure endpoint scaling for expected load.</li><li data-l="B">Ignore capacity planning.</li><li data-l="C">Single model instance for all users.</li><li data-l="D">Rate limit to 1 request per minute.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Production applications need appropriate quotas and endpoint scaling to handle concurrent load. Capacity planning ensures availability.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/quotas" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-38" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 38 / 60</span>
     <span class="badge d">D1</span>
@@ -635,12 +765,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re implementing document understanding with Gemini. Which TWO approaches work for processing PDFs?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re implementing document understanding with Gemini. Which TWO approaches work for processing PDFs?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Delete all PDF files.</li><li class="correct" data-l="B">Use multimodal capabilities to process PDF page images directly.</li><li class="correct" data-l="C">Extract text from PDFs and process with text model.</li><li data-l="D">Only plain text files work.</li><li data-l="E">PDFs cannot be processed.</li></ul>
   <div class="ans"><b>Bonne réponse : B, C</b><div>PDFs can be processed by extracting text or by rendering pages as images for multimodal analysis, depending on content complexity.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/document-understanding" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S2">
+<section class="q" id="question-39" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S2">
   <div class="meta-line">
     <span class="num">Question 39 / 60</span>
     <span class="badge d">D1</span>
@@ -650,12 +783,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M2/S2 · Elasticity of Cloud Resources</span>
     
   </div>
-  <div class="qt">Your ML model endpoint is over-provisioned with expensive GPUs but traffic is low. What reduces costs?</div>
+  <div class="qt">
+    <div class="qt-text">Your ML model endpoint is over-provisioned with expensive GPUs but traffic is low. What reduces costs?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Keep maximum GPUs running always.</li><li data-l="B">Remove the model entirely.</li><li data-l="C">Endpoints cannot be scaled.</li><li class="correct" data-l="D">Configure autoscaling with scale-to-zero or minimum replicas based on traffic.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Autoscaling adjusts resources based on demand. Scale-to-zero (where supported) or low minimums reduce costs during low-traffic periods.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/predictions/autoscale" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
+<section class="q" id="question-40" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
   <div class="meta-line">
     <span class="num">Question 40 / 60</span>
     <span class="badge d">D5</span>
@@ -665,12 +801,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D5/M2/S2 · Working with Cloud Emulators for Local Development</span>
     
   </div>
-  <div class="qt">You need to version and track your ML models throughout the development lifecycle. What Vertex AI feature provides this?</div>
+  <div class="qt">
+    <div class="qt-text">You need to version and track your ML models throughout the development lifecycle. What Vertex AI feature provides this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Vertex AI Model Registry for versioning and metadata tracking.</li><li data-l="B">Store models in Cloud Storage only.</li><li data-l="C">Manual file naming.</li><li data-l="D">No versioning is available.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Model Registry provides centralized model versioning, metadata tracking, and lifecycle management for ML models.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/model-registry/introduction" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
+<section class="q" id="question-41" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
   <div class="meta-line">
     <span class="num">Question 41 / 60</span>
     <span class="badge d">D5</span>
@@ -680,12 +819,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D5/M2/S2 · Working with Cloud Emulators for Local Development</span>
     
   </div>
-  <div class="qt">Your team uses Jupyter notebooks for ML development. How can you run these notebooks at scale on Vertex AI?</div>
+  <div class="qt">
+    <div class="qt-text">Your team uses Jupyter notebooks for ML development. How can you run these notebooks at scale on Vertex AI?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Run only on local laptops.</li><li data-l="B">Rewrite everything in Java.</li><li class="correct" data-l="C">Use Vertex AI Workbench and convert notebooks to managed notebook executions or custom training jobs.</li><li data-l="D">Notebooks cannot scale.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Vertex AI Workbench provides managed notebooks that can be executed at scale, with options for custom training jobs using notebook code.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/workbench/introduction" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S2">
+<section class="q" id="question-42" data-domain="D5" data-module="D5/M1" data-label="D5/M1/S2">
   <div class="meta-line">
     <span class="num">Question 42 / 60</span>
     <span class="badge d">D5</span>
@@ -695,12 +837,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D5/M1/S2 · Implementing Testing Frameworks</span>
     
   </div>
-  <div class="qt">You&#x27;re implementing a code generation assistant using Codey models. Which TWO safety measures should you implement?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re implementing a code generation assistant using Codey models. Which TWO safety measures should you implement?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Sandbox code execution environments.</li><li data-l="B">Disable all security scanning.</li><li data-l="C">Trust all generated code blindly.</li><li data-l="D">Execute all generated code immediately in production.</li><li class="correct" data-l="E">Review generated code before execution.</li></ul>
   <div class="ans"><b>Bonne réponse : A, E</b><div>Code review catches potential issues. Sandboxing prevents unsafe code from affecting production systems. Never execute generated code without validation.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/code/code-models-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+<section class="q" id="question-43" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
   <div class="meta-line">
     <span class="num">Question 43 / 60</span>
     <span class="badge d">D1</span>
@@ -710,12 +855,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
     
   </div>
-  <div class="qt">Your embedding index needs to be updated with new documents daily. What&#x27;s the recommended approach?</div>
+  <div class="qt">
+    <div class="qt-text">Your embedding index needs to be updated with new documents daily. What&#x27;s the recommended approach?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Never update the index.</li><li class="correct" data-l="B">Use streaming updates or batch updates to the vector index.</li><li data-l="C">Rebuild entire index from scratch daily.</li><li data-l="D">Delete and recreate the service.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Vertex AI Vector Search supports incremental updates through streaming or batch operations, avoiding full index rebuilds.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/vector-search/update-item-index" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S4">
+<section class="q" id="question-44" data-domain="D1" data-module="D1/M4" data-label="D1/M4/S4">
   <div class="meta-line">
     <span class="num">Question 44 / 60</span>
     <span class="badge d">D1</span>
@@ -725,12 +873,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M4/S4 · Testing and Proofs of Concept</span>
     
   </div>
-  <div class="qt">You want to test different prompts systematically and measure which performs best. What approach is recommended?</div>
+  <div class="qt">
+    <div class="qt-text">You want to test different prompts systematically and measure which performs best. What approach is recommended?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">A/B testing with Vertex AI Experiments to compare prompt variations.</li><li data-l="B">Use the first prompt that works.</li><li data-l="C">No testing is needed.</li><li data-l="D">Random prompt selection.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>A/B testing with Experiments enables systematic comparison of prompt variations with tracked metrics to identify optimal prompts.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/experiments/intro-vertex-ai-experiments" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-45" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 45 / 60</span>
     <span class="badge d">D1</span>
@@ -740,12 +891,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">You&#x27;re building a chatbot that needs to remember user preferences across sessions. Which TWO components support this?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re building a chatbot that needs to remember user preferences across sessions. Which TWO components support this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Stateless requests only.</li><li data-l="B">No memory across sessions.</li><li data-l="C">Delete user data after each message.</li><li class="correct" data-l="D">Persistent storage (database) for user preferences.</li><li class="correct" data-l="E">Include relevant user context in prompts.</li></ul>
   <div class="ans"><b>Bonne réponse : D, E</b><div>Persistent storage maintains user data across sessions. Including relevant context in prompts helps the model provide personalized responses.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/chat/chat-prompts" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S6">
+<section class="q" id="question-46" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S6">
   <div class="meta-line">
     <span class="num">Question 46 / 60</span>
     <span class="badge d">D1</span>
@@ -755,12 +909,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S6 · Compliance and Observability</span>
     
   </div>
-  <div class="qt">Your organization needs to ensure AI models are explainable for regulatory compliance. What Vertex AI feature helps?</div>
+  <div class="qt">
+    <div class="qt-text">Your organization needs to ensure AI models are explainable for regulatory compliance. What Vertex AI feature helps?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Ignore regulatory requirements.</li><li data-l="B">Use black-box models only.</li><li data-l="C">No explainability tools exist.</li><li class="correct" data-l="D">Vertex AI Explainable AI for feature attributions and model interpretability.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Vertex AI Explainable AI provides feature attributions and explanations for model predictions, supporting regulatory compliance and trust.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/explainable-ai/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
+<section class="q" id="question-47" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
   <div class="meta-line">
     <span class="num">Question 47 / 60</span>
     <span class="badge d">D1</span>
@@ -770,12 +927,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S1 · Product Strategy and Success Measurements</span>
     
   </div>
-  <div class="qt">You&#x27;re using Gemini for summarization. Outputs are sometimes too long. How do you control output length?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re using Gemini for summarization. Outputs are sometimes too long. How do you control output length?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Set max_output_tokens parameter and provide length guidance in the prompt.</li><li data-l="B">Use a different model.</li><li data-l="C">Output length cannot be controlled.</li><li data-l="D">Post-process by truncating.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>The max_output_tokens parameter limits generation length. Prompt instructions like &#x27;summarize in 3 sentences&#x27; provide additional guidance.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/control-generated-output" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
+<section class="q" id="question-48" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
   <div class="meta-line">
     <span class="num">Question 48 / 60</span>
     <span class="badge d">D1</span>
@@ -785,12 +945,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S5 · Choosing Compute Resources and Platform Products</span>
     
   </div>
-  <div class="qt">You&#x27;re deploying an ML model that requires both CPU preprocessing and GPU inference. Which TWO configurations support this?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re deploying an ML model that requires both CPU preprocessing and GPU inference. Which TWO configurations support this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Custom container with CPU preprocessing and GPU inference stages.</li><li data-l="B">No mixed compute is possible.</li><li class="correct" data-l="C">Endpoint with appropriate machine type and GPU configuration.</li><li data-l="D">CPU-only deployment for all stages.</li><li data-l="E">GPU preprocessing only.</li></ul>
   <div class="ans"><b>Bonne réponse : A, C</b><div>Custom containers can implement mixed compute workflows. Endpoint configuration determines available compute resources for inference.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/predictions/use-gpu" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+<section class="q" id="question-49" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
   <div class="meta-line">
     <span class="num">Question 49 / 60</span>
     <span class="badge d">D1</span>
@@ -800,12 +963,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
     
   </div>
-  <div class="qt">Your RAG system needs to handle real-time updates to the knowledge base. What architecture pattern supports this?</div>
+  <div class="qt">
+    <div class="qt-text">Your RAG system needs to handle real-time updates to the knowledge base. What architecture pattern supports this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Streaming ingestion pipeline that updates embeddings and vector index in near real-time.</li><li data-l="B">Manual updates by operators.</li><li data-l="C">No updates after initial load.</li><li data-l="D">Daily batch updates only.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Streaming ingestion enables near real-time updates to the knowledge base, keeping RAG responses current with latest information.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/vector-search/stream-update-index" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S2">
+<section class="q" id="question-50" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S2">
   <div class="meta-line">
     <span class="num">Question 50 / 60</span>
     <span class="badge d">D1</span>
@@ -815,12 +981,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S2 · Cloud-native Networking</span>
     
   </div>
-  <div class="qt">You need to deploy a private ML endpoint that&#x27;s only accessible from your VPC. What should you configure?</div>
+  <div class="qt">
+    <div class="qt-text">You need to deploy a private ML endpoint that&#x27;s only accessible from your VPC. What should you configure?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Public endpoint with firewall rules.</li><li data-l="B">Expose to the internet.</li><li data-l="C">Private endpoints aren&#x27;t supported.</li><li class="correct" data-l="D">Private endpoint with VPC peering or Private Service Connect.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Private endpoints in Vertex AI can be configured with VPC peering or Private Service Connect for secure, VPC-only access.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/predictions/using-private-endpoints" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-51" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 51 / 60</span>
     <span class="badge d">D1</span>
@@ -830,12 +999,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">Your generative AI application needs to generate structured JSON output. How do you ensure valid JSON?</div>
+  <div class="qt">
+    <div class="qt-text">Your generative AI application needs to generate structured JSON output. How do you ensure valid JSON?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Parse any text as JSON.</li><li class="correct" data-l="B">Use response MIME type setting for JSON and provide JSON schema in the prompt.</li><li data-l="C">JSON output isn&#x27;t supported.</li><li data-l="D">Hope the model outputs valid JSON.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Setting response MIME type to application/json and providing schema guidance helps ensure structured, valid JSON outputs.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/control-generated-output" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
+<section class="q" id="question-52" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
   <div class="meta-line">
     <span class="num">Question 52 / 60</span>
     <span class="badge d">D1</span>
@@ -845,12 +1017,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S5 · Choosing Compute Resources and Platform Products</span>
     
   </div>
-  <div class="qt">You&#x27;re optimizing inference costs for a deployed model. Which TWO techniques help reduce costs?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re optimizing inference costs for a deployed model. Which TWO techniques help reduce costs?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Increase replica count permanently.</li><li class="correct" data-l="B">Model quantization to reduce memory and compute requirements.</li><li data-l="C">Disable autoscaling.</li><li data-l="D">Use largest GPU available regardless of need.</li><li class="correct" data-l="E">Batch prediction for non-real-time workloads.</li></ul>
   <div class="ans"><b>Bonne réponse : B, E</b><div>Quantization reduces model size and compute needs. Batch prediction is cheaper for non-real-time use cases than online endpoints.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/predictions/batch-predictions" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
+<section class="q" id="question-53" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S2">
   <div class="meta-line">
     <span class="num">Question 53 / 60</span>
     <span class="badge d">D5</span>
@@ -860,12 +1035,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D5/M2/S2 · Working with Cloud Emulators for Local Development</span>
     
   </div>
-  <div class="qt">Your team wants to collaborate on prompt engineering. How can you share and version prompts across the team?</div>
+  <div class="qt">
+    <div class="qt-text">Your team wants to collaborate on prompt engineering. How can you share and version prompts across the team?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Store prompts in version control (Git) and use prompt management tools.</li><li data-l="B">Each person creates their own prompts.</li><li data-l="C">No prompt sharing is possible.</li><li data-l="D">Share prompts via email.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Version control enables collaborative prompt development with history tracking. Prompt management tools provide additional organization and testing capabilities.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/prompt-gallery/samples" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+<section class="q" id="question-54" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
   <div class="meta-line">
     <span class="num">Question 54 / 60</span>
     <span class="badge d">D1</span>
@@ -875,12 +1053,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
     
   </div>
-  <div class="qt">You need to process audio files and transcribe them. Which Vertex AI capability supports this?</div>
+  <div class="qt">
+    <div class="qt-text">You need to process audio files and transcribe them. Which Vertex AI capability supports this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Gemini multimodal with audio input support.</li><li data-l="B">Use a separate transcription service.</li><li data-l="C">Text-only models only.</li><li data-l="D">Audio processing isn&#x27;t supported.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Gemini models support audio input as part of their multimodal capabilities, enabling transcription and audio understanding.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/audio-understanding" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-55" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 55 / 60</span>
     <span class="badge d">D1</span>
@@ -890,12 +1071,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re implementing LLM caching to reduce latency and costs. Which TWO scenarios benefit most from caching?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re implementing LLM caching to reduce latency and costs. Which TWO scenarios benefit most from caching?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Highly personalized content.</li><li class="correct" data-l="B">Repeated queries with identical prompts.</li><li data-l="C">Real-time data requiring fresh responses.</li><li data-l="D">Unique, never-repeated queries.</li><li class="correct" data-l="E">Common document summarization requests.</li></ul>
   <div class="ans"><b>Bonne réponse : B, E</b><div>Caching helps with repeated identical queries and common requests. Unique queries, real-time data, and personalized content don&#x27;t benefit from caching.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/context-cache/context-cache-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-56" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 56 / 60</span>
     <span class="badge d">D1</span>
@@ -905,12 +1089,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">Your ML training job needs to read from BigQuery and write model artifacts to Cloud Storage. What&#x27;s the recommended configuration?</div>
+  <div class="qt">
+    <div class="qt-text">Your ML training job needs to read from BigQuery and write model artifacts to Cloud Storage. What&#x27;s the recommended configuration?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Store all data in local disk only.</li><li data-l="B">Direct BigQuery access isn&#x27;t supported.</li><li data-l="C">Export data manually before training.</li><li class="correct" data-l="D">Use managed datasets in Vertex AI with BigQuery source and configure artifact output location.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Vertex AI managed datasets support BigQuery sources natively. Artifact locations can be configured for organized model storage.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/datasets/create-dataset-console" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
+<section class="q" id="question-57" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
   <div class="meta-line">
     <span class="num">Question 57 / 60</span>
     <span class="badge d">D1</span>
@@ -920,12 +1107,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S1 · Product Strategy and Success Measurements</span>
     
   </div>
-  <div class="qt">You want to reduce prompt length while maintaining context. What technique helps?</div>
+  <div class="qt">
+    <div class="qt-text">You want to reduce prompt length while maintaining context. What technique helps?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Remove all context.</li><li data-l="B">Include full context in every request.</li><li data-l="C">Context compression isn&#x27;t possible.</li><li class="correct" data-l="D">Use context caching to store repeated system instructions and context.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Context caching stores long contexts (like system instructions or documents) and references them across requests, reducing per-request token usage.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/context-cache/context-cache-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-58" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 58 / 60</span>
     <span class="badge d">D1</span>
@@ -935,12 +1125,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re building an agent that can take actions based on user requests. Which TWO Gemini features enable this?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re building an agent that can take actions based on user requests. Which TWO Gemini features enable this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Code execution capability for Python code.</li><li data-l="B">Text generation only.</li><li data-l="C">No action capabilities.</li><li data-l="D">Manual human execution required.</li><li class="correct" data-l="E">Function calling to invoke external tools and APIs.</li></ul>
   <div class="ans"><b>Bonne réponse : A, E</b><div>Function calling enables tool invocation. Code execution lets the model write and run Python code for calculations and data processing.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/function-calling" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-59" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 59 / 60</span>
     <span class="badge d">D1</span>
@@ -950,12 +1143,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">Your video analysis application needs to process 2-hour videos. What&#x27;s the recommended approach with Gemini?</div>
+  <div class="qt">
+    <div class="qt-text">Your video analysis application needs to process 2-hour videos. What&#x27;s the recommended approach with Gemini?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Use Gemini&#x27;s long-context video processing with appropriate token limits.</li><li data-l="B">Convert to audio only.</li><li data-l="C">Video analysis isn&#x27;t available.</li><li data-l="D">Only short clips are supported.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Gemini models support long video contexts. Understanding token limits and using appropriate models enables processing of extended videos.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/video-understanding" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S1">
+<section class="q" id="question-60" data-domain="D5" data-module="D5/M2" data-label="D5/M2/S1">
   <div class="meta-line">
     <span class="num">Question 60 / 60</span>
     <span class="badge d">D5</span>
@@ -965,7 +1161,10 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D5/M2/S1 · Mastering Cloud Shell and the Google Cloud SDK</span>
     
   </div>
-  <div class="qt">You need to evaluate if your fine-tuned model performs better than the base model. What metric comparison approach is recommended?</div>
+  <div class="qt">
+    <div class="qt-text">You need to evaluate if your fine-tuned model performs better than the base model. What metric comparison approach is recommended?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">No comparison is possible.</li><li class="correct" data-l="B">Create evaluation datasets and compare metrics (BLEU, ROUGE, accuracy) between base and fine-tuned models.</li><li data-l="C">Always assume fine-tuned is better.</li><li data-l="D">Subjective opinion only.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Systematic evaluation with held-out datasets and standardized metrics provides objective comparison between model versions.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/models/evaluation-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
@@ -973,6 +1172,41 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 </main>
 <script>
 function all(v){document.querySelectorAll('.q').forEach(q=>q.classList.toggle('show',v))}
+let activeTtsButton=null;
+function resetTtsButton(){
+  if(activeTtsButton){
+    activeTtsButton.classList.remove('speaking');
+    activeTtsButton.textContent=activeTtsButton.dataset.label;
+    activeTtsButton=null;
+  }
+}
+function speakQuestion(event,button){
+  event.stopPropagation();
+  if(!('speechSynthesis' in window)){
+    alert('La synthèse vocale n’est pas prise en charge par ce navigateur.');
+    return;
+  }
+  if(activeTtsButton===button && speechSynthesis.speaking){
+    speechSynthesis.cancel();
+    resetTtsButton();
+    return;
+  }
+  speechSynthesis.cancel();
+  resetTtsButton();
+  const card=button.closest('.q');
+  const statement=card.querySelector('.qt-text').textContent.trim();
+  const answers=[...card.querySelectorAll('.opts li')]
+    .map(li=>li.dataset.l+'. '+li.textContent.trim())
+    .join('. ');
+  const utterance=new SpeechSynthesisUtterance(statement+'. Answers. '+answers);
+  utterance.lang='en-US';
+  utterance.onend=resetTtsButton;
+  utterance.onerror=resetTtsButton;
+  activeTtsButton=button;
+  button.classList.add('speaking');
+  button.textContent='■ Arrêter';
+  speechSynthesis.speak(utterance);
+}
 function applyFilters(){
   const d=document.getElementById('filterDomain').value;
   const m=document.getElementById('filterModule').value;

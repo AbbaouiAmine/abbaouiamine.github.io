@@ -20,6 +20,7 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 #resultCount{font-size:.85rem;color:#1a73e8;font-weight:700}
 .q{padding:16px 18px;margin-bottom:12px}
 .q.hidden{display:none}
+.q:target{border-color:#1a73e8;box-shadow:0 0 0 3px rgba(26,115,232,.14)}
 .meta-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
 .num{font-size:.76rem;font-weight:800;color:#1a73e8}
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.02em}
@@ -29,7 +30,11 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 .badge.type{background:#64748b;color:#fff;text-transform:uppercase}
 .badge.type.multi{background:#b45309}
 .sec-title{font-size:.78rem;color:#64748b}
-.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line}
+.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line;display:flex;gap:8px;align-items:flex-start}
+.qt-text{flex:1}
+.tts{flex:0 0 auto;font:inherit;font-size:.76rem;font-weight:700;color:#1a73e8;border:1px solid #bfdbfe;background:#eff6ff;border-radius:7px;padding:4px 8px;cursor:pointer}
+.tts:hover{background:#dbeafe}
+.tts.speaking{color:#b91c1c;border-color:#fecaca;background:#fef2f2}
 .opts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .opts li{position:relative;padding:8px 10px 8px 40px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:.92rem}
 .opts li:before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e2e8f0;font-size:.72rem;font-weight:800}
@@ -44,10 +49,24 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 .card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}
 .card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
 .card .n{width:32px;height:32px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.overview-card{display:flex;gap:12px;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;min-height:118px}
+.overview-card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
+.overview-card .n{flex:0 0 auto;width:34px;height:34px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800}
+.overview-card .summary{font-size:.86rem;font-weight:650;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.overview-card .labels{display:flex;gap:5px;align-items:center;margin-bottom:6px}
+.domain-progress{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:14px}
+.domain-progress h2{font-size:1rem;margin:0 0 12px}
+.progress-row{display:grid;grid-template-columns:42px minmax(100px,1fr) 82px;gap:10px;align-items:center;margin:8px 0}
+.progress-label{font-size:.78rem;font-weight:800;color:#475569}
+.progress-track{height:11px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#1a73e8,#60a5fa);border-radius:999px}
+.progress-value{text-align:right;font-size:.76rem;font-weight:700;color:#475569}
 </style>
 </head><body>
 <nav class="bar">
   <a href="../index.html">← Menu principal</a>
+  <a href="mock-04-security-overview.html">Vue d’ensemble</a>
   <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Site original ↗</a>
   <button type="button" onclick="all(true)">Afficher les réponses</button>
   <button type="button" onclick="all(false)">Masquer les réponses</button>
@@ -70,7 +89,7 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 </div>
 
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-1" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 1 / 60</span>
     <span class="badge d">D3</span>
@@ -80,12 +99,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">Your organization wants to prevent any project from creating a default VPC network. This must be enforced across the entire organization to prevent accidental non-compliant networks. What should you do?</div>
+  <div class="qt">
+    <div class="qt-text">Your organization wants to prevent any project from creating a default VPC network. This must be enforced across the entire organization to prevent accidental non-compliant networks. What should you do?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use a Custom IAM Role that denies the `compute.networks.create` permission.</li><li data-l="B">Use a Hierarchical Firewall Policy to block all traffic on default networks.</li><li class="correct" data-l="C">Use an Organization Policy with the constraint `compute.skipDefaultNetworkCreation` set to Enforce.</li><li data-l="D">Use VPC Service Controls to block access to the Compute API.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>The Organization Policy Service is designed to enforce constraints across the resource hierarchy. The specific constraint `compute.skipDefaultNetworkCreation` prevents the automatic creation of the &#x27;default&#x27; VPC network when new projects are created.</div><div class="ref"><a href="https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-2" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 2 / 60</span>
     <span class="badge d">D3</span>
@@ -95,12 +117,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You represent a large financial institution. You need to grant a third-party auditor access to a specific BigQuery dataset. The auditor uses their own corporate identity (Azure AD). You do not want to create a new Google Cloud identity for them. What should you configure?</div>
+  <div class="qt">
+    <div class="qt-text">You represent a large financial institution. You need to grant a third-party auditor access to a specific BigQuery dataset. The auditor uses their own corporate identity (Azure AD). You do not want to create a new Google Cloud identity for them. What should you configure?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Workload Identity Federation.</li><li data-l="B">Identity-Aware Proxy (IAP).</li><li data-l="C">Cloud Identity with Google Cloud Directory Sync (GCDS).</li><li class="correct" data-l="D">Workforce Identity Federation.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Workforce Identity Federation allows you to use an external identity provider (IdP) like Azure AD or Okta to authenticate and authorize human users (workforce) to access Google Cloud resources, without syncing those users into Cloud Identity.</div><div class="ref"><a href="https://cloud.google.com/iam/docs/workforce-identity-federation" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-3" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 3 / 60</span>
     <span class="badge d">D3</span>
@@ -110,12 +135,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You have a high-security requirement where Google Support personnel must not be able to access your data in plain text, even during a support ticket investigation, without your explicit approval for each access attempt. What combination of services should you use?</div>
+  <div class="qt">
+    <div class="qt-text">You have a high-security requirement where Google Support personnel must not be able to access your data in plain text, even during a support ticket investigation, without your explicit approval for each access attempt. What combination of services should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Cloud EKM (External Key Manager) and Key Access Justifications (KAJ).</li><li data-l="B">VPC Service Controls and Private Google Access.</li><li data-l="C">Confidential Computing and Shielded VMs.</li><li data-l="D">Access Approval and Transparency.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Key Access Justifications (KAJ) works with Cloud EKM to provide a justification each time a key is requested. You can configure your external key manager to approve or deny these requests based on the justification. This effectively blocks Google from decrypting data without explicit per-access approval.</div><div class="ref"><a href="https://cloud.google.com/kms/docs/key-access-justifications" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-4" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 4 / 60</span>
     <span class="badge d">D3</span>
@@ -125,12 +153,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">Your security team requires that all new VM instances must not use the default Service Account. They also want to ensure that no VM can face the internet with an external IP address unless explicitly exempted. Which TWO Organization Policies should you enforce?</div>
+  <div class="qt">
+    <div class="qt-text">Your security team requires that all new VM instances must not use the default Service Account. They also want to ensure that no VM can face the internet with an external IP address unless explicitly exempted. Which TWO Organization Policies should you enforce?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">`iam.automaticIamGrantsForDefaultServiceAccounts`</li><li class="correct" data-l="B">`compute.vmExternalIpAccess`</li><li data-l="C">`iam.disableServiceAccountKeyCreation`</li><li data-l="D">`storage.uniformBucketLevelAccess`</li><li data-l="E">`compute.disableServiceAccountCreation`</li></ul>
   <div class="ans"><b>Bonne réponse : A, B</b><div>To stop the default service account from getting automatic Editor roles (which is the risk), you enforce `iam.automaticIamGrantsForDefaultServiceAccounts`. To control external IPs, you use `compute.vmExternalIpAccess`, which can deny creation of external IPs for all instances in the scope.</div><div class="ref"><a href="https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+<section class="q" id="question-5" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
   <div class="meta-line">
     <span class="num">Question 5 / 60</span>
     <span class="badge d">D3</span>
@@ -140,12 +171,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
     
   </div>
-  <div class="qt">You are deploying an application that handles credit card data (PCI-DSS). You need to store the credit card numbers in Firestore. The data must be encrypted at the application layer before being sent to the database, so that the database never sees plain text. Which Cloud KMS feature fits this best?</div>
+  <div class="qt">
+    <div class="qt-text">You are deploying an application that handles credit card data (PCI-DSS). You need to store the credit card numbers in Firestore. The data must be encrypted at the application layer before being sent to the database, so that the database never sees plain text. Which Cloud KMS feature fits this best?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Application-Layer Encryption (using Tink or Cloud KMS API).</li><li data-l="B">Cloud EKM.</li><li data-l="C">Server-Side Encryption with Customer-Managed Encryption Keys (CMEK).</li><li data-l="D">Cloud HSM.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Server-side encryption (A) creates transparency; the database sees the data. To ensure the database *never* sees plain text, you must use Application-Layer Encryption (ALE), often implemented using the Tink library or direct KMS API calls to encrypt data on the client side before writing.</div><div class="ref"><a href="https://cloud.google.com/kms/docs/encrypt-decrypt" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-6" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 6 / 60</span>
     <span class="badge d">D3</span>
@@ -155,12 +189,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You have a Cloud Run service that needs to access a secret in Secret Manager. You want to follow the principle of least privilege. Which IAM role should you grant to the Cloud Run service account?</div>
+  <div class="qt">
+    <div class="qt-text">You have a Cloud Run service that needs to access a secret in Secret Manager. You want to follow the principle of least privilege. Which IAM role should you grant to the Cloud Run service account?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">`roles/iam.serviceAccountUser`</li><li class="correct" data-l="B">`roles/secretmanager.secretAccessor`</li><li data-l="C">`roles/secretmanager.admin`</li><li data-l="D">`roles/secretmanager.viewer`</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>`roles/secretmanager.secretAccessor` is the specific role that allows accessing the *payload* (the actual secret value) of a secret version. `viewer` only allows listing metadata.</div><div class="ref"><a href="https://cloud.google.com/secret-manager/docs/access-control" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-7" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 7 / 60</span>
     <span class="badge d">D3</span>
@@ -170,12 +207,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You need to mitigate a Layer 7 DDoS attack (HTTP flood) targeting your global web application. You are using a Global External Application Load Balancer. What Service should you configure?</div>
+  <div class="qt">
+    <div class="qt-text">You need to mitigate a Layer 7 DDoS attack (HTTP flood) targeting your global web application. You are using a Global External Application Load Balancer. What Service should you configure?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Cloud Armor.</li><li data-l="B">Cloud IDS.</li><li data-l="C">Packet Mirroring.</li><li data-l="D">VPC Firewall Rules.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Cloud Armor is the WAF (Web Application Firewall) and DDoS mitigation service for Google Cloud Load Balancers. It operates at Layer 7 to filter malicious HTTP(S) requests.</div><div class="ref"><a href="https://cloud.google.com/armor/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-8" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 8 / 60</span>
     <span class="badge d">D3</span>
@@ -185,12 +225,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">A developer accidentally committed a service account JSON key to a public GitHub repository. You receive a notification from the Security Command Center (SCC). What are the immediate First TWO steps you should take?</div>
+  <div class="qt">
+    <div class="qt-text">A developer accidentally committed a service account JSON key to a public GitHub repository. You receive a notification from the Security Command Center (SCC). What are the immediate First TWO steps you should take?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Revoke all permissions from the Service Account.</li><li data-l="B">Contact GitHub support to delete the repo.</li><li data-l="C">Rotate the key and update the application with the new key.</li><li data-l="D">Enable &#x27;iam.disableServiceAccountKeyCreation&#x27; constraints.</li><li class="correct" data-l="E">Delete the Service Account Key in the Google Cloud Console.</li></ul>
   <div class="ans"><b>Bonne réponse : A, E</b><div>Immediate containment is required. Deleting the compromised key (A) stops anyone with that key from using it. Revoking permissions (B) or disabling the account ensures that even if there are other keys or valid sessions, the actor cannot access resources. Key rotation (D) is a recovery step, but A and B are immediate mitigation.</div><div class="ref"><a href="https://cloud.google.com/docs/security/key-mitigation" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-9" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 9 / 60</span>
     <span class="badge d">D3</span>
@@ -200,12 +243,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are designing the network security for a sensitive workload in GKE. You want to audit all traffic between pods in the cluster, including the payload, to check for malware signatures using a third-party IDS tool. What is the native way to get this traffic?</div>
+  <div class="qt">
+    <div class="qt-text">You are designing the network security for a sensitive workload in GKE. You want to audit all traffic between pods in the cluster, including the payload, to check for malware signatures using a third-party IDS tool. What is the native way to get this traffic?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Packet Mirroring.</li><li data-l="B">Firewall Rules Logging.</li><li data-l="C">Cloud Trace.</li><li data-l="D">VPC Flow Logs.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Packet Mirroring makes a copy of the actual packet payload (full traffic) and sends it to a collector (like an IDS appliance). VPC Flow Logs (B) only captures metadata (5-tuple), not the payload.</div><div class="ref"><a href="https://cloud.google.com/vpc/docs/packet-mirroring" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-10" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 10 / 60</span>
     <span class="badge d">D3</span>
@@ -215,12 +261,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You want to prevent data exfiltration from your BigQuery datasets to unauthorized external storage buckets. You have configured a VPC Service Controls perimeter. To allow your analysts to query the data from the Google Cloud Console, what must you configure?</div>
+  <div class="qt">
+    <div class="qt-text">You want to prevent data exfiltration from your BigQuery datasets to unauthorized external storage buckets. You have configured a VPC Service Controls perimeter. To allow your analysts to query the data from the Google Cloud Console, what must you configure?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Public IP access on the dataset.</li><li class="correct" data-l="B">Access Context Manager to allow access based on User Identity or IP.</li><li data-l="C">Disable the perimeter for Console access.</li><li data-l="D">A Perimeter Bridge.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Access Context Manager is used to define access levels (e.g., &#x27;User is in group Analysts&#x27; or &#x27;User is coming from Corporate IP&#x27;). You attach this Access Level to the Ingress Policy of the Service Perimeter to allow the analysts to access the protected resources via the Console (which is outside the perimeter).</div><div class="ref"><a href="https://cloud.google.com/vpc-service-controls/docs/access-levels" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-11" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 11 / 60</span>
     <span class="badge d">D3</span>
@@ -230,12 +279,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">Your company uses `gcloud` CLI on developers&#x27; laptops. You want to enforce that developers can only access Google Cloud resources if their device is corporate-owned and has an up-to-date OS version. What solution provides this?</div>
+  <div class="qt">
+    <div class="qt-text">Your company uses `gcloud` CLI on developers&#x27; laptops. You want to enforce that developers can only access Google Cloud resources if their device is corporate-owned and has an up-to-date OS version. What solution provides this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">BeyondCorp Enterprise (Context-Aware Access).</li><li data-l="B">Cloud Identity Premium.</li><li data-l="C">VPC Service Controls.</li><li data-l="D">Identity-Aware Proxy.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>BeyondCorp Enterprise allows you to create access levels based on device attributes (device posture), such as OS version, encryption status, and ownership, by integrating with the Endpoint Verification extension in Chrome.</div><div class="ref"><a href="https://cloud.google.com/beyondcorp/docs/concepts/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-12" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 12 / 60</span>
     <span class="badge d">D3</span>
@@ -245,12 +297,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You need to manage SSH access to a fleet of Linux instances. You want to avoid managing static SSH keys and instead use OS Login with Two-Factor Authentication (2FA). Which TWO steps are required?</div>
+  <div class="qt">
+    <div class="qt-text">You need to manage SSH access to a fleet of Linux instances. You want to avoid managing static SSH keys and instead use OS Login with Two-Factor Authentication (2FA). Which TWO steps are required?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Grant the role `roles/compute.osLogin` (or `osLoginAdmin`) to the users.</li><li class="correct" data-l="B">Enable the metadata `enable-oslogin=TRUE` on the project or instance.</li><li data-l="C">Open port 22 to the world.</li><li data-l="D">Configure the SSH keys in the metadata manually.</li><li data-l="E">Grant the user `roles/iam.serviceAccountUser` on the VM&#x27;s service account.</li></ul>
   <div class="ans"><b>Bonne réponse : A, B</b><div>OS Login connects the Linux user account to the Google Identity. Enabling the metadata (A) turns on the feature. The IAM role `roles/compute.osLogin` (B) authorizes the user to log in.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/oslogin" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-13" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 13 / 60</span>
     <span class="badge d">D3</span>
@@ -260,12 +315,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are using Google Cloud Build to build container images. The build process requires access to a private artifact repository in a VPC that has no public internet access. What should you use?</div>
+  <div class="qt">
+    <div class="qt-text">You are using Google Cloud Build to build container images. The build process requires access to a private artifact repository in a VPC that has no public internet access. What should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud Run Jobs.</li><li data-l="B">Cloud Build default worker pool.</li><li class="correct" data-l="C">Cloud Build Private Pools.</li><li data-l="D">A custom VM with a startup script.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Cloud Build Private Pools are dedicated worker pools hosted within a private network that can peer with your VPC, allowing them to access private resources without public internet exposure. The default pool (B) runs in a Google-managed project and is effectively public internet originating.</div><div class="ref"><a href="https://cloud.google.com/build/docs/private-pools/private-pools-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
+<section class="q" id="question-14" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S1">
   <div class="meta-line">
     <span class="num">Question 14 / 60</span>
     <span class="badge d">D4</span>
@@ -275,12 +333,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D4/M1/S1 · Modernizing the SDLC with CI/CD</span>
     
   </div>
-  <div class="qt">You have a requirement to ensure that only container images signed by your CI/CD pipeline&#x27;s trusted attestor can be deployed to your GKE production cluster. Which service enforces this?</div>
+  <div class="qt">
+    <div class="qt-text">You have a requirement to ensure that only container images signed by your CI/CD pipeline&#x27;s trusted attestor can be deployed to your GKE production cluster. Which service enforces this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Artifact Registry.</li><li data-l="B">Cloud Armor.</li><li data-l="C">Container Analysis.</li><li class="correct" data-l="D">Binary Authorization.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Binary Authorization is a deploy-time security control that ensures only trusted container images are deployed on GKE or Cloud Run. It verifies the digital signature (attestation) on the image.</div><div class="ref"><a href="https://cloud.google.com/binary-authorization/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+<section class="q" id="question-15" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
   <div class="meta-line">
     <span class="num">Question 15 / 60</span>
     <span class="badge d">D3</span>
@@ -290,12 +351,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
     
   </div>
-  <div class="qt">You are migrating a legacy application to Compute Engine. The security team requires that the boot disk be encrypted with a key that is periodically rotated. You want Google to manage the rotation automatically. What should you use?</div>
+  <div class="qt">
+    <div class="qt-text">You are migrating a legacy application to Compute Engine. The security team requires that the boot disk be encrypted with a key that is periodically rotated. You want Google to manage the rotation automatically. What should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Customer-Supplied Encryption Keys (CSEK).</li><li data-l="B">Google-default encryption.</li><li class="correct" data-l="C">Customer-Managed Encryption Keys (CMEK) with a rotation schedule.</li><li data-l="D">BitLocker configuration in the OS.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>CMEK allows you to create a key in Cloud KMS and set an automatic rotation schedule (e.g., every 90 days). Compute Engine will automatically use the new key version for new disk encryption operations, and existing disks are re-encrypted if re-keyed (though typically rotation applies to new writes/keys, disk re-encryption is a specific operation, but CMEK is the *mechanism* for customer-defined rotation). Google-default (C) rotates, but you don&#x27;t control the schedule.</div><div class="ref"><a href="https://cloud.google.com/kms/docs/rotating-keys" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S1">
+<section class="q" id="question-16" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S1">
   <div class="meta-line">
     <span class="num">Question 16 / 60</span>
     <span class="badge d">D3</span>
@@ -305,12 +369,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S1 · Designing Identity and Resource Hierarchy</span>
     
   </div>
-  <div class="qt">You need to centrally manage firewall rules for your entire organization, which consists of hundreds of projects and VPCs. You want to ensure a &#x27;Deny SSH from Internet&#x27; rule is applied everywhere and cannot be overridden by project owners. What should you use?</div>
+  <div class="qt">
+    <div class="qt-text">You need to centrally manage firewall rules for your entire organization, which consists of hundreds of projects and VPCs. You want to ensure a &#x27;Deny SSH from Internet&#x27; rule is applied everywhere and cannot be overridden by project owners. What should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Shared VPC.</li><li class="correct" data-l="B">Hierarchical Firewall Policies.</li><li data-l="C">Organization Policy `compute.vmExternalIpAccess`.</li><li data-l="D">VPC Firewall Rules in each project.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Hierarchical Firewall Policies allow you to define firewall rules at the Organization or Folder level. These rules are inherited by all projects and VPCs under them and can be set to override or take precedence over local project rules.</div><div class="ref"><a href="https://cloud.google.com/vpc/docs/firewall-policies" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-17" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 17 / 60</span>
     <span class="badge d">D3</span>
@@ -320,12 +387,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are using BigQuery to analyze sensitive PII. You want to ensure that only users with the &#x27;HR-Manager&#x27; role can see the content of the &#x27;salary&#x27; column, while other users see &#x27;NULL&#x27; or a masked value. Which TWO features work together for this?</div>
+  <div class="qt">
+    <div class="qt-text">You are using BigQuery to analyze sensitive PII. You want to ensure that only users with the &#x27;HR-Manager&#x27; role can see the content of the &#x27;salary&#x27; column, while other users see &#x27;NULL&#x27; or a masked value. Which TWO features work together for this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Policy Tags (Taxonomy) in Data Catalog.</li><li data-l="B">Dataset-level IAM roles.</li><li class="correct" data-l="C">BigQuery Column-level security.</li><li data-l="D">Authorized Views.</li><li data-l="E">BigQuery Row-level security.</li></ul>
   <div class="ans"><b>Bonne réponse : A, C</b><div>To implement Column-level security (B), you create a Taxonomy using Data Catalog (Policy Tags) (A). You assign the policy tags to the sensitive columns and then grant the &#x27;Data Catalog Fine-Grained Reader&#x27; role to the authorized users (HR-Managers) on that specific tag.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/column-level-security-intro" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-18" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 18 / 60</span>
     <span class="badge d">D3</span>
@@ -335,12 +405,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">Your organization requires that all new Cloud Storage buckets must not be publicly accessible. You want this enforced at the Organization level for all current and future projects. What Organization Policy constraint should you enforce?</div>
+  <div class="qt">
+    <div class="qt-text">Your organization requires that all new Cloud Storage buckets must not be publicly accessible. You want this enforced at the Organization level for all current and future projects. What Organization Policy constraint should you enforce?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">`storage.publicAccessPrevention`</li><li data-l="B">`compute.restrictLoadBalancerCreationForTypes`</li><li data-l="C">`storage.uniformBucketLevelAccess`</li><li data-l="D">`iam.disableServiceAccountKeyCreation`</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>`storage.publicAccessPrevention` is the specific constraint that, when enforced, prevents any bucket from being configured with public access (allUsers/allAuthenticatedUsers).</div><div class="ref"><a href="https://cloud.google.com/storage/docs/public-access-prevention" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+<section class="q" id="question-19" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
   <div class="meta-line">
     <span class="num">Question 19 / 60</span>
     <span class="badge d">D3</span>
@@ -350,12 +423,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
     
   </div>
-  <div class="qt">You suspect a cryptocurrency mining malware is running on one of your Compute Engine instances. You want to query the DNS traffic logs to see if the instance is connecting to known mining pools. What must be enabled to see this data?</div>
+  <div class="qt">
+    <div class="qt-text">You suspect a cryptocurrency mining malware is running on one of your Compute Engine instances. You want to query the DNS traffic logs to see if the instance is connecting to known mining pools. What must be enabled to see this data?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Cloud DNS Logging.</li><li data-l="B">VPC Flow Logs.</li><li data-l="C">Cloud Audit Logs.</li><li data-l="D">Firewall Rule Logging.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Cloud DNS Logging records the queries made by your VMs to the Cloud DNS metadata server (169.254.169.254). This will show the domain names (e.g., mining-pool.com) the malware is trying to resolve.</div><div class="ref"><a href="https://cloud.google.com/dns/docs/monitoring" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-20" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 20 / 60</span>
     <span class="badge d">D3</span>
@@ -365,12 +441,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are issuing private TLS certificates for your microservices mesh. You want a managed service to handle the Certificate Authority (CA) infrastructure, scaling, and private key storage, rather than running OpenSSL on a VM. What service should you use?</div>
+  <div class="qt">
+    <div class="qt-text">You are issuing private TLS certificates for your microservices mesh. You want a managed service to handle the Certificate Authority (CA) infrastructure, scaling, and private key storage, rather than running OpenSSL on a VM. What service should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Certificate Manager.</li><li data-l="B">Cloud KMS.</li><li data-l="C">Shielded VMs.</li><li class="correct" data-l="D">Certificate Authority Service (CAS).</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Certificate Authority Service (CAS) is a highly scalable, fully managed private CA service that allows you to issue and manage certificates for your internal private usage.</div><div class="ref"><a href="https://cloud.google.com/certificate-authority-service/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-21" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 21 / 60</span>
     <span class="badge d">D3</span>
@@ -380,12 +459,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">Your security policy states that you must use a specific third-party firewall appliance (e.g., Palo Alto, Fortinet) to inspect traffic between VPCs. You want to route all traffic through a &#x27;Hub&#x27; VPC containing these appliances. What Google Cloud networking feature enables this transitive routing?</div>
+  <div class="qt">
+    <div class="qt-text">Your security policy states that you must use a specific third-party firewall appliance (e.g., Palo Alto, Fortinet) to inspect traffic between VPCs. You want to route all traffic through a &#x27;Hub&#x27; VPC containing these appliances. What Google Cloud networking feature enables this transitive routing?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">VPC Peering.</li><li data-l="B">Shared VPC.</li><li class="correct" data-l="C">Network Connectivity Center (NCC) with Router Appliance.</li><li data-l="D">Serverless VPC Access.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Network Connectivity Center (NCC) with Router Appliance allows you to use third-party network virtual appliances (NVAs) as a hub for traffic exchange, leveraging BGP to dynamically exchange routes between the spokes and the hub appliance.</div><div class="ref"><a href="https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/router-appliance" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-22" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 22 / 60</span>
     <span class="badge d">D3</span>
@@ -395,12 +477,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You have thousands of Google Cloud projects. You need to scan all of them for misconfigurations (e.g., open firewalls, public buckets) in real-time. Which tier of Security Command Center (SCC) do you need, and which module handles this?</div>
+  <div class="qt">
+    <div class="qt-text">You have thousands of Google Cloud projects. You need to scan all of them for misconfigurations (e.g., open firewalls, public buckets) in real-time. Which tier of Security Command Center (SCC) do you need, and which module handles this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">SCC Premium with Security Health Analytics.</li><li data-l="B">SCC Premium with Event Threat Detection.</li><li data-l="C">SCC Standard with Security Health Analytics.</li><li data-l="D">Cloud Asset Inventory.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>While SCC Standard checks for some basic things, Security Command Center Premium provides the comprehensive &#x27;Security Health Analytics&#x27; with a full suite of managed detectors for compliance and misconfiguration across the organization.</div><div class="ref"><a href="https://cloud.google.com/security-command-center/pricing" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-23" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 23 / 60</span>
     <span class="badge d">D3</span>
@@ -410,12 +495,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">A developer needs to access a private GKE cluster&#x27;s control plane to run `kubectl` commands. The control plane has no public endpoint. The developer is on their corporate laptop (not on VPN). Which TWO solutions grant secure access?</div>
+  <div class="qt">
+    <div class="qt-text">A developer needs to access a private GKE cluster&#x27;s control plane to run `kubectl` commands. The control plane has no public endpoint. The developer is on their corporate laptop (not on VPN). Which TWO solutions grant secure access?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Use Identity-Aware Proxy (IAP) for TCP forwarding to the Control Plane (via a jump host).</li><li data-l="B">Allow the developer&#x27;s home IP in the Master Authorized Networks.</li><li data-l="C">Enable the &#x27;Public Endpoint&#x27; on the cluster.</li><li data-l="D">Grant the developer &#x27;Owner&#x27; role.</li><li class="correct" data-l="E">Connect via a Bastion Host (Jump server) with a public IP, secured by IAP.</li></ul>
   <div class="ans"><b>Bonne réponse : A, E</b><div>If the control plane is private, you cannot reach it directly from the internet. The standard pattern is to use a Jump Host (Bastion) inside the VPC. To secure the Jump Host, you use IAP (Identity-Aware Proxy) for TCP forwarding, which allows SSH access without exposing the Bastion to the public internet.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/tutorials/private-cluster-bastion" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+<section class="q" id="question-24" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
   <div class="meta-line">
     <span class="num">Question 24 / 60</span>
     <span class="badge d">D3</span>
@@ -425,12 +513,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
     
   </div>
-  <div class="qt">You need to store cryptographic keys. A compliance requirement states that the keys must be stored in a hardware device that is FIPS 140-2 Level 3 certified. Which Cloud KMS protection level should you choose?</div>
+  <div class="qt">
+    <div class="qt-text">You need to store cryptographic keys. A compliance requirement states that the keys must be stored in a hardware device that is FIPS 140-2 Level 3 certified. Which Cloud KMS protection level should you choose?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Automatic.</li><li class="correct" data-l="B">HSM (Hardware Security Module).</li><li data-l="C">Software.</li><li data-l="D">External.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Cloud KMS with protection level &#x27;HSM&#x27; stores keys in FIPS 140-2 Level 3 validated Hardware Security Modules managed by Google. &#x27;Software&#x27; is FIPS 140-2 Level 1.</div><div class="ref"><a href="https://cloud.google.com/kms/docs/cloud-hsm-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+<section class="q" id="question-25" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
   <div class="meta-line">
     <span class="num">Question 25 / 60</span>
     <span class="badge d">D3</span>
@@ -440,12 +531,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
     
   </div>
-  <div class="qt">You are uploading a large number of sensitive files to Cloud Storage. You want to ensure that if any file contains a known virus or malware, it is detected and quarantined. What native solution applies?</div>
+  <div class="qt">
+    <div class="qt-text">You are uploading a large number of sensitive files to Cloud Storage. You want to ensure that if any file contains a known virus or malware, it is detected and quarantined. What native solution applies?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use Cloud Armor.</li><li data-l="B">Enable Malware Scanning in Google Cloud Storage (via Assured Workloads or third-party integration).</li><li data-l="C">Use Shielded VMs.</li><li class="correct" data-l="D">There is no native GCS scanning; you must use a Cloud Function trigger to scan with a third-party engine (like ClamAV).</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>As of the current standard architecture, Google Cloud Storage does not have a built-in &#x27;check box&#x27; to scan for malware upon upload. The standard pattern is to use an Eventarc/Cloud Function trigger that sends the file to a scanning service (or runs ClamAV) upon upload.</div><div class="ref"><a href="https://cloud.google.com/architecture/scanning-cloud-storage-objects-using-cloud-functions" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-26" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 26 / 60</span>
     <span class="badge d">D3</span>
@@ -455,12 +549,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You want to ensure that a specific Cloud Function is only invocable by a specific Cloud Scheduler job. You want to deny unauthenticated access. What configuration is required?</div>
+  <div class="qt">
+    <div class="qt-text">You want to ensure that a specific Cloud Function is only invocable by a specific Cloud Scheduler job. You want to deny unauthenticated access. What configuration is required?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use VPC Service Controls.</li><li data-l="B">Use an API Key.</li><li class="correct" data-l="C">Deploy the Function with `--no-allow-unauthenticated`. Create a Service Account for the Scheduler, grant it `roles/cloudfunctions.invoker`, and configure the Scheduler OIDC token.</li><li data-l="D">Deploy the Function with `--allow-unauthenticated` and check the user-agent header.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>This is the standard secure pattern for service-to-service auth. You deny public access. You ensure the caller (Scheduler) has an identity (Service Account) with the Invoker role, and passes an OIDC ID Token to authenticate.</div><div class="ref"><a href="https://cloud.google.com/functions/docs/securing/managing-access-iam" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-27" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 27 / 60</span>
     <span class="badge d">D3</span>
@@ -470,12 +567,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are using Directory Sync to sync users from Azure AD to Cloud Identity. You want to temporarily suspend a user&#x27;s access to all Google Cloud resources immediately. What is the most effective way?</div>
+  <div class="qt">
+    <div class="qt-text">You are using Directory Sync to sync users from Azure AD to Cloud Identity. You want to temporarily suspend a user&#x27;s access to all Google Cloud resources immediately. What is the most effective way?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Suspend the user in Azure AD and wait for the sync (up to hours).</li><li data-l="B">Delete the user in IAM.</li><li data-l="C">Revoke all keys.</li><li class="correct" data-l="D">Suspend the user in the Google Admin Console.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Suspending the user in the Google Admin Console (Cloud Identity) invalidates their sessions and access immediately across all of Google Cloud/Workspace. Waiting for sync (C) allows a window of access.</div><div class="ref"><a href="https://support.google.com/a/answer/1110339" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-28" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 28 / 60</span>
     <span class="badge d">D3</span>
@@ -485,12 +585,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">Which TWO fields are required in the signed JWT header when using a Service Account to authenticate to a Google API (using 2-legged OAuth)?</div>
+  <div class="qt">
+    <div class="qt-text">Which TWO fields are required in the signed JWT header when using a Service Account to authenticate to a Google API (using 2-legged OAuth)?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">`iss` (Issuer).</li><li class="correct" data-l="B">`kid` (Key ID).</li><li data-l="C">`ip` (IP Address).</li><li data-l="D">`sub` (Subject).</li><li class="correct" data-l="E">`alg` (Algorithm).</li></ul>
   <div class="ans"><b>Bonne réponse : B, E</b><div>When constructing a signed JWT for authentication, the Header must contain the Algorithm (`alg`) used to sign it and the Key ID (`kid`) hint so the verifier knows which public key to use to verify the signature.</div><div class="ref"><a href="https://cloud.google.com/iam/docs/creating-short-lived-service-account-credentials" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-29" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 29 / 60</span>
     <span class="badge d">D3</span>
@@ -500,12 +603,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You have a requirement to maintain a transparent, immutable log of all access to your data, including internal Google access (e.g., by Support). This is for a hyper-sensitive regulatory environment. Which product provides this?</div>
+  <div class="qt">
+    <div class="qt-text">You have a requirement to maintain a transparent, immutable log of all access to your data, including internal Google access (e.g., by Support). This is for a hyper-sensitive regulatory environment. Which product provides this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud DLP.</li><li data-l="B">Cloud Audit Logs.</li><li data-l="C">VPC Service Controls.</li><li class="correct" data-l="D">Access Transparency.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Access Transparency provides logs of actions taken by Google staff when accessing your content (e.g., for support). This is distinct from Cloud Audit Logs, which track *your* users&#x27; actions.</div><div class="ref"><a href="https://cloud.google.com/logging/docs/audit/access-transparency-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-30" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 30 / 60</span>
     <span class="badge d">D3</span>
@@ -515,12 +621,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are creating a custom IAM role. You want to allow a user to restart a VM but not delete it or change its machine type. Which permission is vital?</div>
+  <div class="qt">
+    <div class="qt-text">You are creating a custom IAM role. You want to allow a user to restart a VM but not delete it or change its machine type. Which permission is vital?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">`compute.instances.delete`</li><li data-l="B">`compute.networks.create`</li><li data-l="C">`compute.instances.setMachineType`</li><li class="correct" data-l="D">`compute.instances.reset`</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>`compute.instances.reset` (or `stop`/`start`) allows cycling the power. `delete` and `setMachineType` are the destructive/mutating permissions you want to avoid.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/access/iam" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-31" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 31 / 60</span>
     <span class="badge d">D3</span>
@@ -530,12 +639,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">Your company uses &#x27;Google Groups&#x27; synced from Active Directory to manage IAM permissions. A user leaves the company, and their AD account is disabled. GCDS runs every 6 hours. You need to revoke their Google Cloud access immediately without breaking the group structure. What is the most effective manual action?</div>
+  <div class="qt">
+    <div class="qt-text">Your company uses &#x27;Google Groups&#x27; synced from Active Directory to manage IAM permissions. A user leaves the company, and their AD account is disabled. GCDS runs every 6 hours. You need to revoke their Google Cloud access immediately without breaking the group structure. What is the most effective manual action?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Remove the IAM role bindings for the Group.</li><li class="correct" data-l="B">Suspend the user&#x27;s Google Cloud Identity account.</li><li data-l="C">Delete the user&#x27;s Google Cloud Identity account.</li><li data-l="D">Remove the user from the Google Workspace Group manually.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Suspending the user account in Cloud Identity/Workspace is the global &#x27;kill switch&#x27;. It invalidates oAuth tokens and revokes access immediately regardless of Group memberships. Deleting the user (B) is destructive and might lose data unless transferred. Removing from group (A) works for group-based access but not direct user-bindings if they exist, and GCDS might re-add them if AD isn&#x27;t synced yet.</div><div class="ref"><a href="https://support.google.com/a/answer/1110339" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-32" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 32 / 60</span>
     <span class="badge d">D3</span>
@@ -545,12 +657,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are deploying a global service on Cloud Run that processes payment transactions. You need to block traffic from sanctioned countries (Geo-blocking) and also block requests that contain specific SQL injection patterns. Which TWO Cloud Armor features satisfy this?</div>
+  <div class="qt">
+    <div class="qt-text">You are deploying a global service on Cloud Run that processes payment transactions. You need to block traffic from sanctioned countries (Geo-blocking) and also block requests that contain specific SQL injection patterns. Which TWO Cloud Armor features satisfy this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Rules Language allowing `origin.region_code` based filtering.</li><li class="correct" data-l="B">Preconfigured WAF rules (modsecurity-based) for SQLi.</li><li data-l="C">Protocol Forwarding.</li><li data-l="D">VPC Firewall Rules.</li><li data-l="E">Google Cloud Armor Adaptive Protection.</li></ul>
   <div class="ans"><b>Bonne réponse : A, B</b><div>To Geo-block, you use Cloud Armor security policy rules with &#x27;origin.region_code&#x27;. To block SQLi, you enable the preconfigured WAF rules (e.g., &#x27;owasp-crs-v030001-idps-sqli&#x27;). VPC Firewall rules (D) operate on IP/Port, not Layer 7 content or Geo-IP resolution in this context.</div><div class="ref"><a href="https://cloud.google.com/armor/docs/security-policy-concepts" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-33" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 33 / 60</span>
     <span class="badge d">D3</span>
@@ -560,12 +675,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You represent a healthcare provider. You need to share a BigQuery dataset containing de-identified patient data with a research partner. The partner has their own Google Cloud organization. You want to charge them for the query costs, but you keep storage costs. What is the most secure and cost-efficient method?</div>
+  <div class="qt">
+    <div class="qt-text">You represent a healthcare provider. You need to share a BigQuery dataset containing de-identified patient data with a research partner. The partner has their own Google Cloud organization. You want to charge them for the query costs, but you keep storage costs. What is the most secure and cost-efficient method?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Export data to GCS and grant them reader access.</li><li data-l="B">Configure BigQuery Authorized Views in your project and grant valid permissions to their identity.</li><li data-l="C">Create a Service Account for them in your project.</li><li class="correct" data-l="D">Use Analytics Hub to create a listing and share it with the partner.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Analytics Hub is the modern, scalable way to share assets across organizations. It allows you to publish a &#x27;Listing&#x27; for the dataset. The consumer subscribes to it, which creates a linked dataset in *their* project. They query their linked dataset, so *they* pay for the compute (queries), while you pay for the storage.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/analytics-hub-introduction" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-34" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 34 / 60</span>
     <span class="badge d">D3</span>
@@ -575,12 +693,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are running a GKE cluster with binary authorization enabled. You attempt to deploy a container image, but it fails with &#x27;Image verification failed&#x27;. You verified the image is signed by the attestor. What is the most likely missing step?</div>
+  <div class="qt">
+    <div class="qt-text">You are running a GKE cluster with binary authorization enabled. You attempt to deploy a container image, but it fails with &#x27;Image verification failed&#x27;. You verified the image is signed by the attestor. What is the most likely missing step?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">The Container Analysis API is disabled.</li><li data-l="B">The Attestor Public Key was not added to the Binary Authorization Policy.</li><li data-l="C">The KMS key used for signing was rotated.</li><li class="correct" data-l="D">The &#x27;Attestation&#x27; occurrence was not created in the Container Analysis API.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Signing the image is not enough; you must explicitly create an &#x27;Attestation&#x27; occurrence (metadata) in the Container Analysis API that links the image digest to the signature. Binary Authorization checks this API to verify the signature exists and is valid.</div><div class="ref"><a href="https://cloud.google.com/binary-authorization/docs/making-attestations" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+<section class="q" id="question-35" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
   <div class="meta-line">
     <span class="num">Question 35 / 60</span>
     <span class="badge d">D3</span>
@@ -590,12 +711,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
     
   </div>
-  <div class="qt">You have a requirement to use Customer-Supplied Encryption Keys (CSEK) for your Compute Engine disks. However, you also want to take advantage of the ease of management of Cloud KMS. Which feature allows you to import your own key material into Cloud KMS?</div>
+  <div class="qt">
+    <div class="qt-text">You have a requirement to use Customer-Supplied Encryption Keys (CSEK) for your Compute Engine disks. However, you also want to take advantage of the ease of management of Cloud KMS. Which feature allows you to import your own key material into Cloud KMS?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">CSEK is incompatible with Cloud KMS.</li><li data-l="B">Cloud EKM.</li><li data-l="C">Cloud HSM.</li><li class="correct" data-l="D">Cloud KMS Import Job.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Cloud KMS allows you to create a key ring and key with &#x27;Import&#x27; purpose. You then use an Import Job to wrap your local key material and upload it. This transitions the pattern from CSEK (raw keys in API calls) to CMEK (managed references to imported keys).</div><div class="ref"><a href="https://cloud.google.com/kms/docs/importing-a-key" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-36" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 36 / 60</span>
     <span class="badge d">D3</span>
@@ -605,12 +729,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are auditing IAM roles. You discover a custom role with `cloudfunctions.functions.sourceCode.set`. This permission allows a user to deploy code. You want to ensure that any code deployed is also reviewed. Which TWO controls help mitigate the risk of malicious internal code deployment?</div>
+  <div class="qt">
+    <div class="qt-text">You are auditing IAM roles. You discover a custom role with `cloudfunctions.functions.sourceCode.set`. This permission allows a user to deploy code. You want to ensure that any code deployed is also reviewed. Which TWO controls help mitigate the risk of malicious internal code deployment?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Use Binary Authorization (with Cloud Build).</li><li data-l="B">Enable &#x27;Data Access&#x27; logs for Cloud Build.</li><li class="correct" data-l="C">Remove the permission and use a CI/CD pipeline service account for deployments.</li><li data-l="D">Use VPC Service Controls.</li><li data-l="E">Enable &#x27;Access Transparency&#x27;.</li></ul>
   <div class="ans"><b>Bonne réponse : A, C</b><div>The robust fix is to remove human write access to production code (A) and force usage of a pipeline. To enforce review, you use Binary Authorization (C) which can require that the image/source was built by a trusted builder (Cloud Build) and potentially passed code review steps (attestations).</div><div class="ref"><a href="https://cloud.google.com/binary-authorization/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-37" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 37 / 60</span>
     <span class="badge d">D3</span>
@@ -620,12 +747,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You need to access a Compute Engine instance via SSH, but the instance has no public IP address and no VPN is connected. You want to use the Google Cloud Console &#x27;SSH&#x27; button. What firewall rule is required?</div>
+  <div class="qt">
+    <div class="qt-text">You need to access a Compute Engine instance via SSH, but the instance has no public IP address and no VPN is connected. You want to use the Google Cloud Console &#x27;SSH&#x27; button. What firewall rule is required?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Allow ingress TCP 22 from `35.235.240.0/20` (IAP range).</li><li data-l="B">No rule is needed if using the Console.</li><li data-l="C">Allow ingress TCP 22 from `130.211.0.0/22` (GFE range).</li><li data-l="D">Allow ingress TCP 22 from `0.0.0.0/0`.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>When using the &#x27;SSH&#x27; button for a private VM, Google uses Identity-Aware Proxy (IAP) TCP forwarding behind the scenes. The traffic comes from the IAP netblock `35.235.240.0/20`. You must allow this range on port 22.</div><div class="ref"><a href="https://cloud.google.com/iap/docs/using-tcp-forwarding" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+<section class="q" id="question-38" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
   <div class="meta-line">
     <span class="num">Question 38 / 60</span>
     <span class="badge d">D3</span>
@@ -635,12 +765,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
     
   </div>
-  <div class="qt">Your company handles highly sensitive trade secrets. You are concerned about &#x27;Rootkit&#x27; attacks where malware persists in the firmware of the VM. Which Compute Engine feature validates the integrity of the BIOS/UEFI on boot?</div>
+  <div class="qt">
+    <div class="qt-text">Your company handles highly sensitive trade secrets. You are concerned about &#x27;Rootkit&#x27; attacks where malware persists in the firmware of the VM. Which Compute Engine feature validates the integrity of the BIOS/UEFI on boot?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Sole-tenant Nodes.</li><li data-l="B">Preemptible VMs.</li><li class="correct" data-l="C">Shielded VMs.</li><li data-l="D">Confidential VMs.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Shielded VMs provide Secure Boot, Virtual Trusted Platform Module (vTPM), and Integrity Monitoring. Secure Boot verifies the digital signature of the system firmware and bootloader to ensure they haven&#x27;t been modified (rootkit protection).</div><div class="ref"><a href="https://cloud.google.com/compute/docs/instances/shielded-vm/shielded-vm" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-39" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 39 / 60</span>
     <span class="badge d">D3</span>
@@ -650,12 +783,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are architecting a multi-tenant SaaS application on GKE. You want to ensure that if a container escape vulnerability occurs, the attacker is contained within a sandboxed kernel and cannot compromise the host node. What should you use?</div>
+  <div class="qt">
+    <div class="qt-text">You are architecting a multi-tenant SaaS application on GKE. You want to ensure that if a container escape vulnerability occurs, the attacker is contained within a sandboxed kernel and cannot compromise the host node. What should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">GKE Sandbox (gVisor).</li><li data-l="B">GKE standard nodes with Pod Security Standards.</li><li data-l="C">Binary Authorization.</li><li data-l="D">Shielded GKE Nodes.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>GKE Sandbox uses gVisor, a user-space kernel, to provide a strong isolation boundary between the container and the host kernel. This is effectively a second layer of defense against container escapes.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/concepts/sandbox-pods" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-40" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 40 / 60</span>
     <span class="badge d">D3</span>
@@ -665,12 +801,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">Your organization uses a &#x27;Hub and Spoke&#x27; network topology. You have a central &#x27;Security&#x27; VPC with a firewall appliance. You want to inspect all East-West traffic between Spoke A and Spoke B. How should you format the routing?</div>
+  <div class="qt">
+    <div class="qt-text">Your organization uses a &#x27;Hub and Spoke&#x27; network topology. You have a central &#x27;Security&#x27; VPC with a firewall appliance. You want to inspect all East-West traffic between Spoke A and Spoke B. How should you format the routing?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use Private Google Access.</li><li class="correct" data-l="B">Peer Spoke A to Hub, Spoke B to Hub. Export custom routes. In Spokes, set default route (or specific route) next-hop to the customized ILB in the Hub (pointing to firewall).</li><li data-l="C">Peer Spoke A and Spoke B directly.</li><li data-l="D">It is not possible to inspect East-West traffic with Peering.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>VPC Peering is non-transitive. Spoke A cannot talk to Spoke B via Hub automatically. To force traffic through an appliance in Hub, you must advertise a custom route from Hub to Spokes (e.g., via exchange custom routes) or configure static routes in Spokes with the Next Hop as the Hub&#x27;s Internal Load Balancer (ILB) that fronts the firewalls.</div><div class="ref"><a href="https://cloud.google.com/architecture/hub-and-spoke-network-architecture-with-next-hop-ilb" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-41" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 41 / 60</span>
     <span class="badge d">D3</span>
@@ -680,12 +819,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You have a Cloud Storage bucket containing PII. You enabled Data Access logging. You want to be alerted immediately if anyone downloads more than 100 objects in a minute (potential exfiltration). What should you use?</div>
+  <div class="qt">
+    <div class="qt-text">You have a Cloud Storage bucket containing PII. You enabled Data Access logging. You want to be alerted immediately if anyone downloads more than 100 objects in a minute (potential exfiltration). What should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud Monitoring Alerting Policy based on a Log-based Metric.</li><li class="correct" data-l="B">Security Command Center Event Threat Detection.</li><li data-l="C">VPC Service Controls.</li><li data-l="D">Cloud DLP.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Security Command Center (Premium) includes Event Threat Detection (ETD), which has specific built-in rules for &#x27;Data Exfiltration&#x27; patterns, including mass downloads/API usage anomalies. While B is possible to build manually, ETD is the managed security solution for this specific threat pattern.</div><div class="ref"><a href="https://cloud.google.com/security-command-center/docs/concepts-event-threat-detection-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-42" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 42 / 60</span>
     <span class="badge d">D3</span>
@@ -695,12 +837,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are defining an Organization Policy to restrict where resources can be deployed. You only want to allow resources in &#x27;us-central1&#x27; and &#x27;europe-west1&#x27;. Which Constraint do you use and how?</div>
+  <div class="qt">
+    <div class="qt-text">You are defining an Organization Policy to restrict where resources can be deployed. You only want to allow resources in &#x27;us-central1&#x27; and &#x27;europe-west1&#x27;. Which Constraint do you use and how?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">`compute.vmExternalIpAccess`</li><li data-l="B">`iam.allowedPolicyMemberDomains`</li><li data-l="C">Set the policy to &#x27;Deny&#x27; All, then exempt the two regions.</li><li class="correct" data-l="D">`gcp.resourceLocations`</li><li class="correct" data-l="E">Set the policy to &#x27;Allow&#x27; specific values: `in:us-central1-locations`, `in:europe-west1-locations`.</li></ul>
   <div class="ans"><b>Bonne réponse : D, E</b><div>The constraint is `gcp.resourceLocations`. To lock it down, you configure it with an &#x27;Allow&#x27; list containing the specific location groups (e.g., `in:us-central1-locations`).</div><div class="ref"><a href="https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-43" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 43 / 60</span>
     <span class="badge d">D3</span>
@@ -710,12 +855,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are managing a highly sensitive project. You want to ensure that even Project Owners cannot disable the audit logs or modify the logging export sinks to evade detection. What is the standard pattern?</div>
+  <div class="qt">
+    <div class="qt-text">You are managing a highly sensitive project. You want to ensure that even Project Owners cannot disable the audit logs or modify the logging export sinks to evade detection. What is the standard pattern?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use VPC Service Controls.</li><li data-l="B">Enable &#x27;Locked&#x27; mode on the Bucket.</li><li class="correct" data-l="C">Use an Aggregated Log Sink at the Organization/Folder level with `includeChildren=true`.</li><li data-l="D">Remove the Owner role from everyone.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Log Sinks created at the Organization or Folder level with `includeChildren=true` are inherited by all child projects and *cannot* be modified or disabled by project-level Owners. This ensures a tamper-proof audit trail exported to a central, secured bucket.</div><div class="ref"><a href="https://cloud.google.com/logging/docs/export/aggregated_sinks" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-44" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 44 / 60</span>
     <span class="badge d">D3</span>
@@ -725,12 +873,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You need to store a private key for a service account. Your developers want to download the JSON key file to their local machines to run tests. Your CISO prohibits any service account keys on local machines. What is the recommended alternative for local development?</div>
+  <div class="qt">
+    <div class="qt-text">You need to store a private key for a service account. Your developers want to download the JSON key file to their local machines to run tests. Your CISO prohibits any service account keys on local machines. What is the recommended alternative for local development?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use `gcloud auth activate-service-account` with the key.</li><li class="correct" data-l="B">Use `gcloud auth application-default login` to masquerade as a user credential (ADC).</li><li data-l="C">Use Metadata Server emulation.</li><li data-l="D">Encrypt the key with GPG.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>`gcloud auth application-default login` acquires a User Credential and stores it in a well-known location. The Application Default Credentials (ADC) libraries will pick this up automatically. This avoids long-lived service account keys on local disks. The user&#x27;s identity is used for the API calls.</div><div class="ref"><a href="https://cloud.google.com/docs/authentication/provide-credentials-adc#local-dev" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-45" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 45 / 60</span>
     <span class="badge d">D3</span>
@@ -740,12 +891,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You utilize Cloud Identity-Aware Proxy (IAP) to protect an internal web application. You want to ensure that sessions expire every 1 hour, forcing the user to re-authenticate. Where do you configure this?</div>
+  <div class="qt">
+    <div class="qt-text">You utilize Cloud Identity-Aware Proxy (IAP) to protect an internal web application. You want to ensure that sessions expire every 1 hour, forcing the user to re-authenticate. Where do you configure this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">In the Google Admin Console session settings.</li><li data-l="B">Using a custom IAP setting `exp` claim?</li><li data-l="C">In the OAuth Consent Screen settings.</li><li data-l="D">In the IAP settings for the specific resource (GCIP re-auth not applicable here). Actually, it&#x27;s via the &#x27;Access Context Manager&#x27;.</li><li class="correct" data-l="E">No, it&#x27;s a &#x27;Condition&#x27; on the IAM binding.</li></ul>
   <div class="ans"><b>Bonne réponse : E</b><div>You can use IAM Conditions on the IAP role binding (`roles/iap.httpsResourceAccessor`). Common patterns for &#x27;time-limited access&#x27; or &#x27;conditional access&#x27; via IAP point to IAM Conditions (e.g., date/time). For &#x27;re-auth&#x27; session length specifically, this is often an Access Level attribute (Session Length) in Access Context Manager referenced by the IAP level.</div><div class="ref"><a href="https://cloud.google.com/iap/docs/manage-sessions" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-46" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 46 / 60</span>
     <span class="badge d">D3</span>
@@ -755,12 +909,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are configuring Cloud DNSSEC. You want to ensure that your domain cannot be hijacked via DNS spoofing. Which TWO records do you need to update at your domain registrar?</div>
+  <div class="qt">
+    <div class="qt-text">You are configuring Cloud DNSSEC. You want to ensure that your domain cannot be hijacked via DNS spoofing. Which TWO records do you need to update at your domain registrar?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">PTR record.</li><li data-l="B">A (Address) record.</li><li class="correct" data-l="C">DS (Delegation Signer) record.</li><li data-l="D">CNAME record.</li><li class="correct" data-l="E">NS (Name Server) record (if changing NS).</li></ul>
   <div class="ans"><b>Bonne réponse : C, E</b><div>To enable DNSSEC, after enabling it in Cloud DNS, you must copy the generated DS records and provide them to your domain registrar (parent zone). You also obviously need the correct NS records pointing to Cloud DNS.</div><div class="ref"><a href="https://cloud.google.com/dns/docs/dnssec-config" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-47" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 47 / 60</span>
     <span class="badge d">D3</span>
@@ -770,12 +927,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You have a Cloud SQL instance with a public IP. You want to restrict access so that only a specific App Engine Standard application can connect to it. What is the most secure method?</div>
+  <div class="qt">
+    <div class="qt-text">You have a Cloud SQL instance with a public IP. You want to restrict access so that only a specific App Engine Standard application can connect to it. What is the most secure method?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Configure the App Engine app to use the Cloud SQL Instance Connection Name (Unix socket/IP) and grant the App Engine Service Account the &#x27;Cloud SQL Client&#x27; role.</li><li data-l="B">Whitelist the App Engine region&#x27;s IP ranges in Cloud SQL.</li><li data-l="C">Use VPC Peering.</li><li data-l="D">Use the Cloud SQL Auth Proxy.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>App Engine Standard connects to Cloud SQL using the instance connection name. The authorization is IAM-based. You grant the App Engine service account the `roles/cloudsql.client` role. This is more secure than IP whitelisting.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/postgres/connect-app-engine-standard" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-48" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 48 / 60</span>
     <span class="badge d">D3</span>
@@ -785,12 +945,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You want to automate the remediation of non-compliant firewall rules. If a rule is created that allows 0.0.0.0/0 on port 22, you want to automatically delete it. Which toolchain handles this?</div>
+  <div class="qt">
+    <div class="qt-text">You want to automate the remediation of non-compliant firewall rules. If a rule is created that allows 0.0.0.0/0 on port 22, you want to automatically delete it. Which toolchain handles this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Security Command Center -&gt; Pub/Sub -&gt; Cloud Functions (remediation script).</li><li data-l="B">VPC Flow Logs -&gt; BigQuery.</li><li data-l="C">Cloud Armor.</li><li data-l="D">Cloud Monitoring -&gt; Alert -&gt; Email.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>This is the &#x27;Automated Remediation&#x27; pattern. SCC detects the finding (Open SSH). It publishes a notification to Pub/Sub. A Cloud Function triggers on that message, calls the Compute API, and deletes the offending firewall rule.</div><div class="ref"><a href="https://cloud.google.com/security-command-center/docs/how-to-remediate-threats" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-49" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 49 / 60</span>
     <span class="badge d">D3</span>
@@ -800,12 +963,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are using BigQuery. You have a table with 100 columns. You want to deny access to 5 specific columns for a group of users, but allow access to the other 95. What is the most efficient way to manage this?</div>
+  <div class="qt">
+    <div class="qt-text">You are using BigQuery. You have a table with 100 columns. You want to deny access to 5 specific columns for a group of users, but allow access to the other 95. What is the most efficient way to manage this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use Authorized Views for every user.</li><li data-l="B">Create a separate table with the 5 columns.</li><li data-l="C">Create a new view with only the 95 columns and grant access to the view.</li><li class="correct" data-l="D">Use Column-level security (Policy Tags) on the 5 columns.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Column-level security allows you to tag the 5 sensitive columns. You can then deny access (or simply not grant the Fine-Grained Reader role) for those specific tags, while granting access to the table. The users will be able to query the 95 columns but will get &#x27;Access Denied&#x27; if they try to select the 5 protected ones (unless &#x27;Best Effort&#x27; masking is used).</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/column-level-security-intro" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-50" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 50 / 60</span>
     <span class="badge d">D3</span>
@@ -815,12 +981,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">What is the primary purpose of &#x27;Google Cloud Armor Managed Protection Plus&#x27; tier compared to Standard?</div>
+  <div class="qt">
+    <div class="qt-text">What is the primary purpose of &#x27;Google Cloud Armor Managed Protection Plus&#x27; tier compared to Standard?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">It adds WAF capabilities (SQLi/XSS).</li><li class="correct" data-l="B">It provides DDoS bill protection (credits for spike overages) and access to the DDoS response team.</li><li data-l="C">It allows Geo-blocking.</li><li data-l="D">It is reliable for internal IPs.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Armor Standard provides the technical filtering. Managed Protection Plus adds the &#x27;Enterprise&#x27; support features: DDoS Bill Protection (Google waives costs caused by the attack traffic) and access to the Google Cloud DDoS Response Team (DRT).</div><div class="ref"><a href="https://cloud.google.com/armor/pricing" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-51" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 51 / 60</span>
     <span class="badge d">D3</span>
@@ -830,12 +999,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You need to store a TLS private key for a load balancer. You want to ensure that the key can be used by the Load Balancer to terminate SSL, but cannot be viewed or exported by any human user. Which service should you use?</div>
+  <div class="qt">
+    <div class="qt-text">You need to store a TLS private key for a load balancer. You want to ensure that the key can be used by the Load Balancer to terminate SSL, but cannot be viewed or exported by any human user. Which service should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Compute Engine Metadata.</li><li data-l="B">Secret Manager.</li><li data-l="C">Cloud Storage with KMS.</li><li class="correct" data-l="D">Certificate Manager (or Certificate Authority Service).</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Certificate Manager allows you to upload certificates and keys. Once uploaded, they are used by the Load Balancer proxy. The private key material is sensitive and Certificate Manager is designed to hold these securely for the LB infrastructure. Secret Manager is for general secrets.</div><div class="ref"><a href="https://cloud.google.com/certificate-manager/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-52" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 52 / 60</span>
     <span class="badge d">D3</span>
@@ -845,12 +1017,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are setting up VPC Service Controls. You have a project with a GCS bucket. You want to allow a Lambda function running in AWS to write to this bucket. The Lambda function has a static public IP. What TWO steps are required?</div>
+  <div class="qt">
+    <div class="qt-text">You are setting up VPC Service Controls. You have a project with a GCS bucket. You want to allow a Lambda function running in AWS to write to this bucket. The Lambda function has a static public IP. What TWO steps are required?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Create a VPN from AWS to GCP.</li><li class="correct" data-l="B">Add an Ingress Rule to the Perimeter Policy allowing API calls from the Access Level to the Project.</li><li data-l="C">Add the Project to a Service Perimeter.</li><li class="correct" data-l="D">Create an Access Level in Access Context Manager allowing the AWS Static IP (subnet).</li><li data-l="E">Use Storage Transfer Service.</li></ul>
   <div class="ans"><b>Bonne réponse : B, D</b><div>To punch a hole in the perimeter for an external IP: 1. Define the &#x27;what&#x27; (Access Level = IP range). 2. Define the &#x27;rule&#x27; (Ingress Policy: Allow Source=AccessLevel, Identity=Any/Specific, Method=storage.objects.create).</div><div class="ref"><a href="https://cloud.google.com/vpc-service-controls/docs/ingress-egress-rules" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-53" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 53 / 60</span>
     <span class="badge d">D3</span>
@@ -860,12 +1035,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You have a requirement to use a single Identity Provider (IdP) for all your applications. You are migrating a legacy app to App Engine that has its own built-in user database. You want to modernize it to use your corporate Okta IdP with minimal code changes. What should you put in front of the app?</div>
+  <div class="qt">
+    <div class="qt-text">You have a requirement to use a single Identity Provider (IdP) for all your applications. You are migrating a legacy app to App Engine that has its own built-in user database. You want to modernize it to use your corporate Okta IdP with minimal code changes. What should you put in front of the app?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Identity-Aware Proxy (IAP).</li><li data-l="B">Apigee.</li><li data-l="C">Cloud Armor.</li><li data-l="D">Cloud Endpoints.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Identity-Aware Proxy (IAP) can be enabled on App Engine. It intercepts all requests, redirects unauthenticated users to the OAuth flow (Okta via GCIP or Google via GCDS), and passes the identity to the app in a header. This offloads auth from the app.</div><div class="ref"><a href="https://cloud.google.com/iap/docs/concepts-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-54" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 54 / 60</span>
     <span class="badge d">D3</span>
@@ -875,12 +1053,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are analyzing Cloud Audit Logs. You see an entry `protoPayload.methodName: &quot;google.iam.admin.v1.SetIamPolicy&quot;`. What happened?</div>
+  <div class="qt">
+    <div class="qt-text">You are analyzing Cloud Audit Logs. You see an entry `protoPayload.methodName: &quot;google.iam.admin.v1.SetIamPolicy&quot;`. What happened?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">A service account key was created.</li><li data-l="B">A user logged in.</li><li data-l="C">A user deleted a VM.</li><li class="correct" data-l="D">A user changed permissions (policy) on a resource.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>`SetIamPolicy` is the API method used to update the IAM policy (permissions) of a resource. This is a critical Admin Activity log entry indicating a potential privilege change.</div><div class="ref"><a href="https://cloud.google.com/iam/docs/audit-logging" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-55" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 55 / 60</span>
     <span class="badge d">D3</span>
@@ -890,12 +1071,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You want to prevent users from creating public IP addresses on Compute Engine instances, but you want to allow it for a specific &#x27;DMZ&#x27; project. How do you structure the Organization Policy?</div>
+  <div class="qt">
+    <div class="qt-text">You want to prevent users from creating public IP addresses on Compute Engine instances, but you want to allow it for a specific &#x27;DMZ&#x27; project. How do you structure the Organization Policy?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">You cannot mix Allow/Deny in Org Policy.</li><li data-l="B">Set &#x27;Enforce&#x27; at Org level. Use &#x27;Include&#x27; to exempt the DMZ project.</li><li data-l="C">Use IAM conditions.</li><li class="correct" data-l="D">Set &#x27;Enforce&#x27; at Org level. Restrict override. Then set &#x27;Not Enforce&#x27; (Allow) at the DMZ Project level.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Org Policies inherit down. You set the constraint `compute.vmExternalIpAccess` to Enforce at the Root. Then, on the specific DMZ project, you edit the policy to &#x27;Do Not Enforce&#x27; (disable the constraint), effectively creating an exception.</div><div class="ref"><a href="https://cloud.google.com/resource-manager/docs/organization-policy/creating-managing-policies" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-56" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 56 / 60</span>
     <span class="badge d">D3</span>
@@ -905,12 +1089,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">Your CISO wants a dashboard showing the compliance status (CIS Benchmark) of all your GCP projects. Which tool provides this native view?</div>
+  <div class="qt">
+    <div class="qt-text">Your CISO wants a dashboard showing the compliance status (CIS Benchmark) of all your GCP projects. Which tool provides this native view?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud Asset Inventory.</li><li data-l="B">Cloud Monitoring.</li><li data-l="C">Policy Troubleshooter.</li><li class="correct" data-l="D">Security Command Center (SCC).</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Security Command Center (Standard/Premium) provides the &#x27;Compliance&#x27; tab which maps the detected misconfigurations to common standards like CIS GCP, PCI-DSS, and NIST.</div><div class="ref"><a href="https://cloud.google.com/security-command-center/docs/concepts-compliance" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-57" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 57 / 60</span>
     <span class="badge d">D3</span>
@@ -920,12 +1107,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You need to investigate a compromised VM. You want to take a snapshot of the disk for forensics without shutting down the instance or alerting the attacker. What should you do?</div>
+  <div class="qt">
+    <div class="qt-text">You need to investigate a compromised VM. You want to take a snapshot of the disk for forensics without shutting down the instance or alerting the attacker. What should you do?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use &#x27;gcloud compute instances screen&#x27;.</li><li class="correct" data-l="B">Create a Snapshot of the disk while the instance is running.</li><li data-l="C">You must stop the instance to take a consistent snapshot.</li><li data-l="D">Use Live Migration.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>GCP supports online snapshots (live snapshots) of running disks. This is useful for forensics as it captures the disk state without a reboot signal, though memory (RAM) is not captured by disk snapshot.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/disks/snapshot-best-practices" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-58" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 58 / 60</span>
     <span class="badge d">D3</span>
@@ -935,12 +1125,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You have a Cloud Function that processes files uploaded to a bucket. The function currently runs with the default App Engine service account, which has Editor permissions. You want to secure this. What is the best practice?</div>
+  <div class="qt">
+    <div class="qt-text">You have a Cloud Function that processes files uploaded to a bucket. The function currently runs with the default App Engine service account, which has Editor permissions. You want to secure this. What is the best practice?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Grant the function &#x27;Owner&#x27; role.</li><li class="correct" data-l="B">Create a user-managed Service Account with minimal roles (e.g., Storage Object Creator) and deploy the function with `--service-account`.</li><li data-l="C">Remove the Editor role from the default service account.</li><li data-l="D">Use Identity-Aware Proxy.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Always replace default service accounts (which often have Editor/Broad scope) with a dedicated, per-service User-Managed Service Account that has the Principle of Least Privilege applied.</div><div class="ref"><a href="https://cloud.google.com/functions/docs/securing/function-identity" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-59" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 59 / 60</span>
     <span class="badge d">D3</span>
@@ -950,12 +1143,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You are configuring a Shared VPC. You want to ensure that the Service Project Admins can use the subnets to create instances but cannot modify the firewall rules or network topology. Which TWO roles are involved?</div>
+  <div class="qt">
+    <div class="qt-text">You are configuring a Shared VPC. You want to ensure that the Service Project Admins can use the subnets to create instances but cannot modify the firewall rules or network topology. Which TWO roles are involved?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Host Project Admin needs `compute.instanceAdmin`.</li><li data-l="B">Service Project Admin needs `compute.securityAdmin`.</li><li data-l="C">Service Project Admin needs `compute.networkAdmin`.</li><li class="correct" data-l="D">Service Project Admin needs `compute.networkUser` on the host project subnet.</li><li class="correct" data-l="E">Host Project Admin needs `compute.networkAdmin`.</li></ul>
   <div class="ans"><b>Bonne réponse : D, E</b><div>Separation of duties: The Host Project Admin (Network Team) holds `networkAdmin` (A) and manages the pipes. They grant the Service Project Admins the `compute.networkUser` role (C) specifically on the subnets they are allowed to use. This allows the Service Admin to &#x27;use&#x27; the network (attach VMs) but not change it.</div><div class="ref"><a href="https://cloud.google.com/vpc/docs/shared-vpc" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
+<section class="q" id="question-60" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S2">
   <div class="meta-line">
     <span class="num">Question 60 / 60</span>
     <span class="badge d">D3</span>
@@ -965,7 +1161,10 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S2 · Data Protection and Secrets Management in Google Cloud</span>
     
   </div>
-  <div class="qt">You want to ensure that all data written to a specific BigQuery dataset is encrypted with a key from Cloud KMS. You want to enforce this at the project level so no one can create a table without CMEK. What Organization Policy do you usage?</div>
+  <div class="qt">
+    <div class="qt-text">You want to ensure that all data written to a specific BigQuery dataset is encrypted with a key from Cloud KMS. You want to enforce this at the project level so no one can create a table without CMEK. What Organization Policy do you usage?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">`bigquery.requireCmek` (hypothetical).</li><li data-l="B">You cannot enforce this via Org Policy; must be IAM.</li><li data-l="C">`bigquery.restrictEncryptionKey`</li><li class="correct" data-l="D">`gcp.restrictCmekCryptoKeyProjects`</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>The constraint `constraints/gcp.restrictCmekCryptoKeyProjects` defines which keys can be used. To require CMEK, you can use `constraints/gcp.restrictNonCmekServices` set to Deny. In this context, ensuring usage of valid keys from a trusted project is governed by the `restrictCmekCryptoKeyProjects` Organization Policy.</div><div class="ref"><a href="https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
@@ -973,6 +1172,41 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 </main>
 <script>
 function all(v){document.querySelectorAll('.q').forEach(q=>q.classList.toggle('show',v))}
+let activeTtsButton=null;
+function resetTtsButton(){
+  if(activeTtsButton){
+    activeTtsButton.classList.remove('speaking');
+    activeTtsButton.textContent=activeTtsButton.dataset.label;
+    activeTtsButton=null;
+  }
+}
+function speakQuestion(event,button){
+  event.stopPropagation();
+  if(!('speechSynthesis' in window)){
+    alert('La synthèse vocale n’est pas prise en charge par ce navigateur.');
+    return;
+  }
+  if(activeTtsButton===button && speechSynthesis.speaking){
+    speechSynthesis.cancel();
+    resetTtsButton();
+    return;
+  }
+  speechSynthesis.cancel();
+  resetTtsButton();
+  const card=button.closest('.q');
+  const statement=card.querySelector('.qt-text').textContent.trim();
+  const answers=[...card.querySelectorAll('.opts li')]
+    .map(li=>li.dataset.l+'. '+li.textContent.trim())
+    .join('. ');
+  const utterance=new SpeechSynthesisUtterance(statement+'. Answers. '+answers);
+  utterance.lang='en-US';
+  utterance.onend=resetTtsButton;
+  utterance.onerror=resetTtsButton;
+  activeTtsButton=button;
+  button.classList.add('speaking');
+  button.textContent='■ Arrêter';
+  speechSynthesis.speak(utterance);
+}
 function applyFilters(){
   const d=document.getElementById('filterDomain').value;
   const m=document.getElementById('filterModule').value;

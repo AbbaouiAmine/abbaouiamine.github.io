@@ -20,6 +20,7 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 #resultCount{font-size:.85rem;color:#1a73e8;font-weight:700}
 .q{padding:16px 18px;margin-bottom:12px}
 .q.hidden{display:none}
+.q:target{border-color:#1a73e8;box-shadow:0 0 0 3px rgba(26,115,232,.14)}
 .meta-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
 .num{font-size:.76rem;font-weight:800;color:#1a73e8}
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.02em}
@@ -29,7 +30,11 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 .badge.type{background:#64748b;color:#fff;text-transform:uppercase}
 .badge.type.multi{background:#b45309}
 .sec-title{font-size:.78rem;color:#64748b}
-.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line}
+.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line;display:flex;gap:8px;align-items:flex-start}
+.qt-text{flex:1}
+.tts{flex:0 0 auto;font:inherit;font-size:.76rem;font-weight:700;color:#1a73e8;border:1px solid #bfdbfe;background:#eff6ff;border-radius:7px;padding:4px 8px;cursor:pointer}
+.tts:hover{background:#dbeafe}
+.tts.speaking{color:#b91c1c;border-color:#fecaca;background:#fef2f2}
 .opts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .opts li{position:relative;padding:8px 10px 8px 40px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:.92rem}
 .opts li:before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e2e8f0;font-size:.72rem;font-weight:800}
@@ -44,10 +49,24 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 .card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}
 .card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
 .card .n{width:32px;height:32px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.overview-card{display:flex;gap:12px;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;min-height:118px}
+.overview-card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
+.overview-card .n{flex:0 0 auto;width:34px;height:34px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800}
+.overview-card .summary{font-size:.86rem;font-weight:650;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.overview-card .labels{display:flex;gap:5px;align-items:center;margin-bottom:6px}
+.domain-progress{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:14px}
+.domain-progress h2{font-size:1rem;margin:0 0 12px}
+.progress-row{display:grid;grid-template-columns:42px minmax(100px,1fr) 82px;gap:10px;align-items:center;margin:8px 0}
+.progress-label{font-size:.78rem;font-weight:800;color:#475569}
+.progress-track{height:11px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#1a73e8,#60a5fa);border-radius:999px}
+.progress-value{text-align:right;font-size:.76rem;font-weight:700;color:#475569}
 </style>
 </head><body>
 <nav class="bar">
   <a href="../index.html">← Menu principal</a>
+  <a href="mock-06-designing-overview.html">Vue d’ensemble</a>
   <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Site original ↗</a>
   <button type="button" onclick="all(true)">Afficher les réponses</button>
   <button type="button" onclick="all(false)">Masquer les réponses</button>
@@ -70,7 +89,7 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 </div>
 
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
+<section class="q" id="question-1" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
   <div class="meta-line">
     <span class="num">Question 1 / 60</span>
     <span class="badge d">D1</span>
@@ -80,12 +99,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S4 · Choosing Appropriate Storage Types</span>
     
   </div>
-  <div class="qt">A startup is building a mobile app that will serve users globally. They expect rapid growth from 1,000 to 1 million users within 6 months. The app requires a NoSQL database with strong consistency, automatic scaling, and global distribution. Which database should you recommend?</div>
+  <div class="qt">
+    <div class="qt-text">A startup is building a mobile app that will serve users globally. They expect rapid growth from 1,000 to 1 million users within 6 months. The app requires a NoSQL database with strong consistency, automatic scaling, and global distribution. Which database should you recommend?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Cloud Spanner.</li><li data-l="B">Cloud Firestore in Native mode.</li><li data-l="C">Bigtable with replication.</li><li data-l="D">Cloud SQL with read replicas in multiple regions.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Cloud Spanner provides strong consistency, automatic horizontal scaling, and global distribution with multi-region configurations. It&#x27;s designed for applications that need the scale of NoSQL with the consistency and structure of SQL. Firestore provides eventual consistency in multi-region, Cloud SQL requires manual scaling and read replicas don&#x27;t provide strong consistency for writes, and Bigtable provides eventual consistency.</div><div class="ref"><a href="https://cloud.google.com/spanner/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-2" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 2 / 60</span>
     <span class="badge d">D1</span>
@@ -95,12 +117,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a microservices architecture for an e-commerce platform. Services need to communicate asynchronously, handle traffic spikes during sales events, and ensure messages are not lost. Which TWO services should be part of your design?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a microservices architecture for an e-commerce platform. Services need to communicate asynchronously, handle traffic spikes during sales events, and ensure messages are not lost. Which TWO services should be part of your design?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Pub/Sub for asynchronous messaging.</li><li data-l="B">Memorystore for temporary message storage.</li><li class="correct" data-l="C">Cloud Tasks for guaranteed task execution.</li><li data-l="D">HTTP REST APIs with Cloud Run.</li><li data-l="E">Cloud Storage for message passing.</li></ul>
   <div class="ans"><b>Bonne réponse : A, C</b><div>Pub/Sub provides scalable, asynchronous messaging that can handle massive traffic spikes and ensures at-least-once delivery. Cloud Tasks provides guaranteed task execution with retry logic and rate limiting. While HTTP REST APIs are useful for synchronous communication, they don&#x27;t provide the async, guaranteed delivery needed.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
+<section class="q" id="question-3" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
   <div class="meta-line">
     <span class="num">Question 3 / 60</span>
     <span class="badge d">D1</span>
@@ -110,12 +135,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S5 · Choosing Compute Resources and Platform Products</span>
     
   </div>
-  <div class="qt">A financial services company needs to process real-time stock market data streams and generate trading signals within milliseconds. The system must handle millions of events per second with sub-10ms latency. Which compute option is most appropriate?</div>
+  <div class="qt">
+    <div class="qt-text">A financial services company needs to process real-time stock market data streams and generate trading signals within milliseconds. The system must handle millions of events per second with sub-10ms latency. Which compute option is most appropriate?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">App Engine Flexible.</li><li data-l="B">Compute Engine with GPU instances.</li><li data-l="C">Cloud Run with autoscaling.</li><li class="correct" data-l="D">GKE with low-latency node pools and optimized networking.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>GKE provides the control and performance needed for ultra-low-latency requirements. You can configure low-latency node pools, use local SSDs, optimize networking, and have fine-grained control over resource allocation. Cloud Run and App Engine have cold start issues and less control over the runtime environment.</div><div class="ref"><a href="https://cloud.google.com/kubernetes-engine/docs/how-to/node-pools" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-4" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 4 / 60</span>
     <span class="badge d">D1</span>
@@ -125,12 +153,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">Your company wants to migrate a legacy monolithic application to Google Cloud. The application has tight coupling between components and uses file-based configuration. The migration timeline is 3 months. What migration strategy should you recommend?</div>
+  <div class="qt">
+    <div class="qt-text">Your company wants to migrate a legacy monolithic application to Google Cloud. The application has tight coupling between components and uses file-based configuration. The migration timeline is 3 months. What migration strategy should you recommend?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Rewrite the entire application using Cloud Run.</li><li class="correct" data-l="B">Lift and shift to Compute Engine, then gradually refactor.</li><li data-l="C">Migrate to App Engine Standard immediately.</li><li data-l="D">Refactor the application into microservices before migration.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>The lift-and-shift approach to Compute Engine allows you to meet the 3-month timeline by minimizing changes. You can then gradually refactor components into managed services or microservices. Complete refactoring would exceed the timeline significantly.</div><div class="ref"><a href="https://cloud.google.com/architecture/migration-to-gcp-getting-started" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-5" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 5 / 60</span>
     <span class="badge d">D1</span>
@@ -140,12 +171,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a data warehouse solution for a retail company. They have 10TB of historical sales data and receive 100GB of new data daily. They need to run complex analytical queries and create dashboards. Which TWO design choices are appropriate?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a data warehouse solution for a retail company. They have 10TB of historical sales data and receive 100GB of new data daily. They need to run complex analytical queries and create dashboards. Which TWO design choices are appropriate?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Partition tables by date to improve query performance and cost.</li><li data-l="B">Use Cloud SQL with materialized views.</li><li data-l="C">Use Bigtable for analytical queries.</li><li class="correct" data-l="D">Use BigQuery as the data warehouse.</li><li data-l="E">Store all data in a single denormalized table.</li></ul>
   <div class="ans"><b>Bonne réponse : A, D</b><div>BigQuery is purpose-built for data warehousing and analytical workloads, handling petabytes of data efficiently. Partitioning by date significantly improves query performance and reduces costs by scanning only relevant partitions.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/partitioned-tables" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
+<section class="q" id="question-6" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
   <div class="meta-line">
     <span class="num">Question 6 / 60</span>
     <span class="badge d">D1</span>
@@ -155,12 +189,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S5 · Choosing Compute Resources and Platform Products</span>
     
   </div>
-  <div class="qt">A media company needs to transcode thousands of video files uploaded daily. The processing can take 10 minutes to 2 hours per video. The workload is fault-tolerant and can be interrupted. What compute solution minimizes cost?</div>
+  <div class="qt">
+    <div class="qt-text">A media company needs to transcode thousands of video files uploaded daily. The processing can take 10 minutes to 2 hours per video. The workload is fault-tolerant and can be interrupted. What compute solution minimizes cost?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">App Engine Flexible with automatic scaling.</li><li data-l="B">Cloud Run with max instances set to 100.</li><li data-l="C">GKE Autopilot with standard nodes.</li><li class="correct" data-l="D">Compute Engine with Spot VMs.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Spot VMs offer 60-91% discounts and are ideal for batch, fault-tolerant workloads that can handle interruptions. Video transcoding fits perfectly as jobs can be checkpointed and resumed.</div><div class="ref"><a href="https://cloud.google.com/compute/docs/instances/spot" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S5">
+<section class="q" id="question-7" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S5">
   <div class="meta-line">
     <span class="num">Question 7 / 60</span>
     <span class="badge d">D1</span>
@@ -170,12 +207,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S5 · Buy vs Build and Design Decision Trade-offs</span>
     
   </div>
-  <div class="qt">You need to design a solution where frontend developers can deploy their web applications independently without waiting for operations team approval. The solution must enforce security policies and resource limits. What should you implement?</div>
+  <div class="qt">
+    <div class="qt-text">You need to design a solution where frontend developers can deploy their web applications independently without waiting for operations team approval. The solution must enforce security policies and resource limits. What should you implement?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Create a ticketing system for deployment requests.</li><li data-l="B">Give developers Owner role on the project.</li><li class="correct" data-l="C">Implement a self-service platform using Cloud Build triggers, Artifact Registry, and Cloud Run with Organization Policies enforcing constraints.</li><li data-l="D">Use a shared service account with admin privileges.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>A self-service platform with Cloud Build, Artifact Registry, and Cloud Run gives developers autonomy. Organization Policies enforce guardrails without operations intervention.</div><div class="ref"><a href="https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-8" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 8 / 60</span>
     <span class="badge d">D1</span>
@@ -185,12 +225,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">A SaaS company serves multiple customers (tenants) from a single application. Each customer&#x27;s data must be isolated, and you need to support per-tenant customization. Which TWO database design patterns are appropriate?</div>
+  <div class="qt">
+    <div class="qt-text">A SaaS company serves multiple customers (tenants) from a single application. Each customer&#x27;s data must be isolated, and you need to support per-tenant customization. Which TWO database design patterns are appropriate?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Hardcode tenant IDs in application code.</li><li class="correct" data-l="B">Use separate databases per tenant (Database-per-tenant).</li><li data-l="C">Use BigQuery datasets per tenant.</li><li data-l="D">Store all data in Cloud Storage with tenant prefixes.</li><li class="correct" data-l="E">Use a single shared database with a tenant_id column for row-level isolation.</li></ul>
   <div class="ans"><b>Bonne réponse : B, E</b><div>Both database-per-tenant and shared database with tenant_id are valid multi-tenancy patterns. Database-per-tenant offers stronger isolation, shared database is more cost-effective.</div><div class="ref"><a href="https://cloud.google.com/architecture/saas-multi-tenancy-patterns" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-9" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 9 / 60</span>
     <span class="badge d">D1</span>
@@ -200,12 +243,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re designing an IoT platform that will ingest telemetry from 100,000 devices sending data every second. The data needs time-series analysis and you must retain data for 1 year. Which database is most suitable?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing an IoT platform that will ingest telemetry from 100,000 devices sending data every second. The data needs time-series analysis and you must retain data for 1 year. Which database is most suitable?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud SQL with time-series extension.</li><li data-l="B">BigQuery with streaming inserts.</li><li data-l="C">Firestore in Datastore mode.</li><li class="correct" data-l="D">Bigtable with schema design optimized for time-series queries.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Bigtable excels at high-throughput writes (millions per second) and time-series data when properly designed with row keys that include reverse timestamps.</div><div class="ref"><a href="https://cloud.google.com/bigtable/docs/schema-design-time-series" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-10" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 10 / 60</span>
     <span class="badge d">D1</span>
@@ -215,12 +261,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">A company needs to implement a recommendation engine that requires low-latency access to user preferences and product data. The dataset is 50GB and queries need sub-5ms latency. Which solution meets these requirements?</div>
+  <div class="qt">
+    <div class="qt-text">A company needs to implement a recommendation engine that requires low-latency access to user preferences and product data. The dataset is 50GB and queries need sub-5ms latency. Which solution meets these requirements?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud SQL with read replicas.</li><li data-l="B">BigQuery with BI Engine.</li><li class="correct" data-l="C">Memorystore for Redis.</li><li data-l="D">Firestore.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Memorystore for Redis provides sub-millisecond latency by keeping data in memory. It&#x27;s perfect for caching and real-time use cases like recommendation engines.</div><div class="ref"><a href="https://cloud.google.com/memorystore/docs/redis/redis-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
+<section class="q" id="question-11" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
   <div class="meta-line">
     <span class="num">Question 11 / 60</span>
     <span class="badge d">D1</span>
@@ -230,12 +279,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S5 · Choosing Compute Resources and Platform Products</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a disaster recovery solution for a critical application. RTO is 1 hour and RPO is 15 minutes. The application uses Compute Engine, Cloud SQL, and Cloud Storage. Which TWO components are essential?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a disaster recovery solution for a critical application. RTO is 1 hour and RPO is 15 minutes. The application uses Compute Engine, Cloud SQL, and Cloud Storage. Which TWO components are essential?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cross-region VPN tunnel.</li><li data-l="B">Multi-region Cloud Storage bucket replication.</li><li data-l="C">Hot standby environment running in parallel.</li><li class="correct" data-l="D">Regional persistent disk snapshots scheduled every 15 minutes.</li><li class="correct" data-l="E">Cloud SQL automated backups every 15 minutes with point-in-time recovery enabled.</li></ul>
   <div class="ans"><b>Bonne réponse : D, E</b><div>To achieve 15-minute RPO, you need Cloud SQL backups/PITR every 15 minutes and persistent disk snapshots every 15 minutes. For 1-hour RTO, you can restore from these backups within the time window.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/postgres/backup-recovery/backing-up" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
+<section class="q" id="question-12" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S5">
   <div class="meta-line">
     <span class="num">Question 12 / 60</span>
     <span class="badge d">D1</span>
@@ -245,12 +297,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S5 · Choosing Compute Resources and Platform Products</span>
     
   </div>
-  <div class="qt">A company wants to build a serverless API that processes image uploads, runs ML inference, and stores results in a database. The entire workflow must complete within 60 seconds. What architecture should you design?</div>
+  <div class="qt">
+    <div class="qt-text">A company wants to build a serverless API that processes image uploads, runs ML inference, and stores results in a database. The entire workflow must complete within 60 seconds. What architecture should you design?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Cloud Storage trigger → Cloud Function → Vertex AI Prediction → Firestore.</li><li data-l="B">API Gateway → App Engine → Vertex AI Batch Prediction → Cloud SQL.</li><li data-l="C">Cloud Run → Compute Engine ML model → BigQuery.</li><li data-l="D">Pub/Sub → Dataflow → Vertex AI AutoML → Spanner.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Option A is fully serverless and can complete within 60 seconds. Cloud Storage trigger launches Cloud Function when image is uploaded, function calls Vertex AI Prediction API (online prediction, fast), and writes results to Firestore.</div><div class="ref"><a href="https://cloud.google.com/functions/docs/calling/storage" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+<section class="q" id="question-13" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
   <div class="meta-line">
     <span class="num">Question 13 / 60</span>
     <span class="badge d">D1</span>
@@ -260,12 +315,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
     
   </div>
-  <div class="qt">You need to design a data pipeline that ingests streaming clickstream data, enriches it with user profile data, performs aggregations in 5-minute windows, and writes results to BigQuery. Which service is best for the stream processing logic?</div>
+  <div class="qt">
+    <div class="qt-text">You need to design a data pipeline that ingests streaming clickstream data, enriches it with user profile data, performs aggregations in 5-minute windows, and writes results to BigQuery. Which service is best for the stream processing logic?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Dataflow with Apache Beam.</li><li data-l="B">Cloud Functions triggered by Pub/Sub.</li><li data-l="C">Cloud Run with event subscriptions.</li><li data-l="D">BigQuery streaming inserts with scheduled queries.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Dataflow is purpose-built for stream processing with complex transformations, windowing, and stateful operations. Apache Beam provides the programming model for defining pipelines with time-based windows.</div><div class="ref"><a href="https://cloud.google.com/dataflow/docs/concepts/streaming-pipelines" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
+<section class="q" id="question-14" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
   <div class="meta-line">
     <span class="num">Question 14 / 60</span>
     <span class="badge d">D1</span>
@@ -275,12 +333,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S4 · Choosing Appropriate Storage Types</span>
     
   </div>
-  <div class="qt">A gaming company needs to store player session data that expires after 24 hours. The data requires low-latency read/write access during gameplay. Which database is most appropriate?</div>
+  <div class="qt">
+    <div class="qt-text">A gaming company needs to store player session data that expires after 24 hours. The data requires low-latency read/write access during gameplay. Which database is most appropriate?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Firestore with TTL policies.</li><li class="correct" data-l="B">Memorystore for Redis with expiration.</li><li data-l="C">Bigtable with garbage collection.</li><li data-l="D">Cloud SQL with a cleanup job.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Memorystore for Redis is ideal for temporary session data with built-in TTL (time-to-live) expiration. It provides sub-millisecond latency needed for real-time gaming.</div><div class="ref"><a href="https://cloud.google.com/memorystore/docs/redis/ttl" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S5">
+<section class="q" id="question-15" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S5">
   <div class="meta-line">
     <span class="num">Question 15 / 60</span>
     <span class="badge d">D1</span>
@@ -290,12 +351,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S5 · Buy vs Build and Design Decision Trade-offs</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a CI/CD pipeline for containerized applications. The pipeline must build images, scan for vulnerabilities, and deploy only signed images to production GKE. Which THREE services should you use?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a CI/CD pipeline for containerized applications. The pipeline must build images, scan for vulnerabilities, and deploy only signed images to production GKE. Which THREE services should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud Deploy for manual deployment approvals.</li><li class="correct" data-l="B">Artifact Registry for storing and scanning images.</li><li class="correct" data-l="C">Cloud Build for building container images.</li><li class="correct" data-l="D">Binary Authorization for enforcing deployment policies.</li><li data-l="E">Container Registry (deprecated) for image storage.</li></ul>
   <div class="ans"><b>Bonne réponse : B, C, D</b><div>Cloud Build builds the images, Artifact Registry stores and scans images, and Binary Authorization enforces attestation policies ensuring only signed/approved images are deployed to GKE.</div><div class="ref"><a href="https://cloud.google.com/binary-authorization/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
+<section class="q" id="question-16" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
   <div class="meta-line">
     <span class="num">Question 16 / 60</span>
     <span class="badge d">D1</span>
@@ -305,12 +369,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S1 · Product Strategy and Success Measurements</span>
     
   </div>
-  <div class="qt">A company has a monorepo with 50 microservices. Each service should be deployed independently with different release schedules. What repository and deployment strategy should you recommend?</div>
+  <div class="qt">
+    <div class="qt-text">A company has a monorepo with 50 microservices. Each service should be deployed independently with different release schedules. What repository and deployment strategy should you recommend?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Keep monorepo, deploy all services together.</li><li data-l="B">Split into 50 separate repositories, one per service.</li><li class="correct" data-l="C">Keep monorepo, use Cloud Build with path-based triggers for each service.</li><li data-l="D">Use a single repository with manual deployment scripts.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Cloud Build supports path-based triggers that can detect changes in specific directories and trigger builds only for affected services. This maintains the benefits of a monorepo while allowing independent deployments.</div><div class="ref"><a href="https://cloud.google.com/build/docs/automating-builds/create-manage-triggers" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-17" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 17 / 60</span>
     <span class="badge d">D1</span>
@@ -320,12 +387,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You need to choose a database for a document management system that stores PDF metadata and supports full-text search across document content. Documents have varying schemas. Which database should you select?</div>
+  <div class="qt">
+    <div class="qt-text">You need to choose a database for a document management system that stores PDF metadata and supports full-text search across document content. Documents have varying schemas. Which database should you select?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Cloud SQL PostgreSQL with full-text search extensions.</li><li data-l="B">Elasticsearch on GKE.</li><li data-l="C">Firestore with composite indexes.</li><li data-l="D">BigQuery with SEARCH function.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Cloud SQL PostgreSQL has native full-text search capabilities with tsvector and tsquery, handles JSON for flexible schemas, and is fully managed.</div><div class="ref"><a href="https://cloud.google.com/sql/docs/postgres/features" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-18" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 18 / 60</span>
     <span class="badge d">D1</span>
@@ -335,12 +405,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">A retail company wants to implement an event-driven architecture where inventory updates trigger multiple downstream processes (notifications, analytics, order fulfillment). What design pattern should you use?</div>
+  <div class="qt">
+    <div class="qt-text">A retail company wants to implement an event-driven architecture where inventory updates trigger multiple downstream processes (notifications, analytics, order fulfillment). What design pattern should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Direct HTTP calls from inventory service to all downstream services.</li><li data-l="B">Single Cloud Function that calls all downstream services sequentially.</li><li class="correct" data-l="C">Pub/Sub topic with multiple subscriptions, one per downstream service.</li><li data-l="D">Shared database where services poll for changes.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Pub/Sub with multiple subscriptions implements the publish-subscribe pattern perfectly. Inventory service publishes to a topic, and each downstream service has its own subscription, allowing independent processing.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S4">
+<section class="q" id="question-19" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S4">
   <div class="meta-line">
     <span class="num">Question 19 / 60</span>
     <span class="badge d">D1</span>
@@ -350,12 +423,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M2/S4 · Performance and Latency</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a globally distributed application that needs to serve users with low latency worldwide. The application serves static assets (images, CSS, JS) and dynamic API responses. Which TWO components optimize global performance?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a globally distributed application that needs to serve users with low latency worldwide. The application serves static assets (images, CSS, JS) and dynamic API responses. Which TWO components optimize global performance?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud Storage in a single region.</li><li data-l="B">Memorystore in each region.</li><li class="correct" data-l="C">Cloud CDN for static assets.</li><li data-l="D">Regional Load Balancer in us-central1.</li><li class="correct" data-l="E">Global External Application Load Balancer for routing traffic.</li></ul>
   <div class="ans"><b>Bonne réponse : C, E</b><div>Cloud CDN caches static assets at Google&#x27;s edge locations globally. Global External Application Load Balancer routes users to the nearest backend region using anycast IP.</div><div class="ref"><a href="https://cloud.google.com/cdn/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S4">
+<section class="q" id="question-20" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S4">
   <div class="meta-line">
     <span class="num">Question 20 / 60</span>
     <span class="badge d">D1</span>
@@ -365,12 +441,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M2/S4 · Performance and Latency</span>
     
   </div>
-  <div class="qt">A company needs to implement feature flags to gradually roll out new features to users. The flags need to be evaluated with low latency (sub-10ms) and updated in real-time across all application instances. What solution minimizes operational overhead?</div>
+  <div class="qt">
+    <div class="qt-text">A company needs to implement feature flags to gradually roll out new features to users. The flags need to be evaluated with low latency (sub-10ms) and updated in real-time across all application instances. What solution minimizes operational overhead?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Store flags in Firestore and poll every second.</li><li data-l="B">Store flags in Cloud Storage and cache locally.</li><li data-l="C">Hardcode flags in environment variables.</li><li class="correct" data-l="D">Use Firebase Remote Config or a managed feature flag service.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Firebase Remote Config provides real-time feature flag management with client SDKs that cache values for low-latency access and receive real-time updates.</div><div class="ref"><a href="https://firebase.google.com/docs/remote-config" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-21" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 21 / 60</span>
     <span class="badge d">D1</span>
@@ -380,12 +459,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">You&#x27;re migrating a legacy application that uses LDAP for authentication. The application will run on GKE. You want to integrate with Google Cloud IAM while maintaining LDAP compatibility. What should you do?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re migrating a legacy application that uses LDAP for authentication. The application will run on GKE. You want to integrate with Google Cloud IAM while maintaining LDAP compatibility. What should you do?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Deploy an LDAP server on Compute Engine and use Workload Identity.</li><li data-l="B">Continue using LDAP without integration.</li><li data-l="C">Rewrite the application to use OAuth2 only.</li><li class="correct" data-l="D">Use Cloud Identity to sync LDAP users and integrate with GKE Workload Identity.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Cloud Identity can federate with existing LDAP/Active Directory systems. Once synced, users exist in Cloud Identity and can authenticate to GKE using Workload Identity.</div><div class="ref"><a href="https://cloud.google.com/identity/docs/concepts/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-22" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 22 / 60</span>
     <span class="badge d">D1</span>
@@ -395,12 +477,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">A financial application requires audit logging of all data access with tamper-proof logs that cannot be modified or deleted for 7 years. Which solution meets these compliance requirements?</div>
+  <div class="qt">
+    <div class="qt-text">A financial application requires audit logging of all data access with tamper-proof logs that cannot be modified or deleted for 7 years. Which solution meets these compliance requirements?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud Logging with log sinks to BigQuery.</li><li class="correct" data-l="B">Cloud Logging with aggregated sinks to Cloud Storage bucket with Bucket Lock retention policy.</li><li data-l="C">Third-party SIEM with log forwarding.</li><li data-l="D">Local file logging on Compute Engine instances.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Cloud Logging with sinks to Cloud Storage combined with Bucket Lock creates immutable, tamper-proof logs. Bucket Lock enforces WORM (Write Once Read Many) compliance.</div><div class="ref"><a href="https://cloud.google.com/storage/docs/bucket-lock" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-23" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 23 / 60</span>
     <span class="badge d">D1</span>
@@ -410,12 +495,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a machine learning pipeline for training models on large datasets. Training jobs run weekly and take 8-12 hours. Model inference must have sub-100ms latency. Which TWO services should you use?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a machine learning pipeline for training models on large datasets. Training jobs run weekly and take 8-12 hours. Model inference must have sub-100ms latency. Which TWO services should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Vertex AI Prediction (online) for real-time inference.</li><li data-l="B">Cloud Run for hosting the model.</li><li data-l="C">BigQuery ML for both training and inference.</li><li data-l="D">Dataflow for training.</li><li class="correct" data-l="E">Vertex AI Training for batch training jobs.</li></ul>
   <div class="ans"><b>Bonne réponse : A, E</b><div>Vertex AI Training is optimized for batch training jobs with GPUs/TPUs. Vertex AI Prediction online endpoints provide low-latency model serving with autoscaling.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/training/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-24" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 24 / 60</span>
     <span class="badge d">D1</span>
@@ -425,12 +513,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">A company processes sensitive financial transactions and wants to ensure developers can test code in dev/test environments without accessing production data. What data management strategy should you implement?</div>
+  <div class="qt">
+    <div class="qt-text">A company processes sensitive financial transactions and wants to ensure developers can test code in dev/test environments without accessing production data. What data management strategy should you implement?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Generate synthetic test data only.</li><li class="correct" data-l="B">Use Sensitive Data Protection (DLP) to de-identify production data before copying to dev/test.</li><li data-l="C">Use the same database with different schemas.</li><li data-l="D">Copy production database to dev/test weekly.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Sensitive Data Protection (Cloud DLP) can automatically detect and de-identify sensitive data while maintaining data utility for testing.</div><div class="ref"><a href="https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-25" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 25 / 60</span>
     <span class="badge d">D1</span>
@@ -440,12 +531,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You need to design an API that will be consumed by mobile apps, web apps, and third-party partners. The API must support rate limiting, authentication, and monitoring. What Google Cloud service should you use as the API gateway?</div>
+  <div class="qt">
+    <div class="qt-text">You need to design an API that will be consumed by mobile apps, web apps, and third-party partners. The API must support rate limiting, authentication, and monitoring. What Google Cloud service should you use as the API gateway?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Apigee.</li><li data-l="B">Cloud Endpoints.</li><li data-l="C">API Gateway (Serverless).</li><li data-l="D">Cloud Load Balancer with backend services.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Apigee is Google&#x27;s full-featured API management platform designed for external-facing APIs with partner ecosystems. It provides rate limiting, quotas, authentication, analytics, and developer portal.</div><div class="ref"><a href="https://cloud.google.com/apigee/docs/api-platform/get-started/what-apigee" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
+<section class="q" id="question-26" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
   <div class="meta-line">
     <span class="num">Question 26 / 60</span>
     <span class="badge d">D1</span>
@@ -455,12 +549,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S1 · Product Strategy and Success Measurements</span>
     
   </div>
-  <div class="qt">A video streaming service needs to store video files that are frequently accessed for the first 30 days, occasionally accessed for the next 90 days, and rarely accessed afterward but must be retained for 5 years. What Cloud Storage strategy minimizes cost?</div>
+  <div class="qt">
+    <div class="qt-text">A video streaming service needs to store video files that are frequently accessed for the first 30 days, occasionally accessed for the next 90 days, and rarely accessed afterward but must be retained for 5 years. What Cloud Storage strategy minimizes cost?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Store in Standard class and manually move files based on age.</li><li class="correct" data-l="B">Use Object Lifecycle Management to transition to Nearline after 30 days, Coldline after 120 days, and Archive after 1 year.</li><li data-l="C">Store everything in Archive class.</li><li data-l="D">Use separate buckets for each storage class.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Object Lifecycle Management automates transitions between storage classes based on age. The progression Standard → Nearline → Coldline → Archive matches the access patterns and minimizes cost.</div><div class="ref"><a href="https://cloud.google.com/storage/docs/lifecycle" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-27" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 27 / 60</span>
     <span class="badge d">D1</span>
@@ -470,12 +567,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a multi-tenant SaaS application where each tenant&#x27;s data must be physically isolated in different GCP projects for compliance. The shared application code needs to access tenant-specific resources. Which TWO approaches enable this architecture?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a multi-tenant SaaS application where each tenant&#x27;s data must be physically isolated in different GCP projects for compliance. The shared application code needs to access tenant-specific resources. Which TWO approaches enable this architecture?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use Shared VPC with service projects per tenant.</li><li class="correct" data-l="B">Use Workload Identity Federation to allow application identity to impersonate tenant-specific service accounts.</li><li class="correct" data-l="C">Store tenant project IDs in application configuration.</li><li data-l="D">Deploy separate application instances per tenant.</li><li data-l="E">Use a single service account with admin access to all projects.</li></ul>
   <div class="ans"><b>Bonne réponse : B, C</b><div>Workload Identity Federation allows the application to assume different identities for each tenant&#x27;s project. Storing tenant project IDs in configuration enables the application to route requests correctly.</div><div class="ref"><a href="https://cloud.google.com/iam/docs/workload-identity-federation" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-28" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 28 / 60</span>
     <span class="badge d">D1</span>
@@ -485,12 +585,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">A data science team needs a collaborative environment with Jupyter notebooks, pre-installed ML libraries, and access to GPUs for experimentation. The environment should require minimal setup. What should you provision?</div>
+  <div class="qt">
+    <div class="qt-text">A data science team needs a collaborative environment with Jupyter notebooks, pre-installed ML libraries, and access to GPUs for experimentation. The environment should require minimal setup. What should you provision?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Vertex AI Workbench managed notebooks.</li><li data-l="B">Compute Engine instances with manual setup.</li><li data-l="C">GKE cluster with JupyterHub.</li><li data-l="D">Cloud Shell with persistent disk.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Vertex AI Workbench provides managed Jupyter notebook instances with pre-installed ML frameworks, easy GPU attachment, and integration with other Vertex AI services.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/workbench/managed/introduction" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+<section class="q" id="question-29" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
   <div class="meta-line">
     <span class="num">Question 29 / 60</span>
     <span class="badge d">D1</span>
@@ -500,12 +603,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a system to process user-uploaded images: resize them to multiple dimensions, extract metadata, and generate thumbnails. The processing should start immediately after upload and handle failures gracefully. What architecture triggers the workflow?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a system to process user-uploaded images: resize them to multiple dimensions, extract metadata, and generate thumbnails. The processing should start immediately after upload and handle failures gracefully. What architecture triggers the workflow?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Manual API call to start processing.</li><li class="correct" data-l="B">Cloud Storage → Cloud Function (direct trigger) → call other services.</li><li data-l="C">Cloud Storage → Pub/Sub notification → Cloud Function → Eventarc → Cloud Run workflow.</li><li data-l="D">Daily Cloud Scheduler → Cloud Function → process all files.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Cloud Functions can be triggered directly by Cloud Storage events (object creation), providing immediate processing without extra hops. The function can orchestrate calling image processing services.</div><div class="ref"><a href="https://cloud.google.com/functions/docs/calling/storage" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-30" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 30 / 60</span>
     <span class="badge d">D1</span>
@@ -515,12 +621,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">A company wants to implement blue-green deployment for their GKE application to enable zero-downtime releases with instant rollback capability. What approach should you use?</div>
+  <div class="qt">
+    <div class="qt-text">A company wants to implement blue-green deployment for their GKE application to enable zero-downtime releases with instant rollback capability. What approach should you use?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use Rolling Update strategy with maxUnavailable=0.</li><li class="correct" data-l="B">Deploy new version alongside old version in the same namespace, then switch Service selector labels to route traffic.</li><li data-l="C">Use Canary releases with gradual traffic shifting.</li><li data-l="D">Deploy to a new GKE cluster and switch DNS.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>True blue-green deployment involves running both versions simultaneously and instantly switching traffic by updating Kubernetes Service selector labels. This provides instant rollback.</div><div class="ref"><a href="https://cloud.google.com/architecture/application-deployment-and-testing-strategies" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-31" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 31 / 60</span>
     <span class="badge d">D1</span>
@@ -530,12 +639,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You need to design a real-time leaderboard system for a mobile game with millions of concurrent users. Updates must be reflected within 100ms globally. Which combination provides the best solution?</div>
+  <div class="qt">
+    <div class="qt-text">You need to design a real-time leaderboard system for a mobile game with millions of concurrent users. Updates must be reflected within 100ms globally. Which combination provides the best solution?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Firestore with strong consistency mode.</li><li class="correct" data-l="B">Cloud Spanner with global distribution and low-latency reads.</li><li data-l="C">BigQuery with streaming inserts.</li><li data-l="D">Cloud SQL with read replicas in each region.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Cloud Spanner provides global distribution with strong consistency and low-latency reads through regional and multi-regional configurations. It&#x27;s designed for globally distributed applications requiring strong consistency.</div><div class="ref"><a href="https://cloud.google.com/spanner/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
+<section class="q" id="question-32" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
   <div class="meta-line">
     <span class="num">Question 32 / 60</span>
     <span class="badge d">D1</span>
@@ -545,12 +657,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S4 · Choosing Appropriate Storage Types</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a mobile backend that needs to support offline-first functionality, real-time synchronization when online, and automatic conflict resolution. Which TWO Google Cloud services best support this requirement?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a mobile backend that needs to support offline-first functionality, real-time synchronization when online, and automatic conflict resolution. Which TWO Google Cloud services best support this requirement?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">BigQuery with batch imports.</li><li data-l="B">Cloud SQL with custom sync logic.</li><li class="correct" data-l="C">Cloud Firestore with offline persistence.</li><li class="correct" data-l="D">Firebase Realtime Database.</li><li data-l="E">Cloud Storage with versioning.</li></ul>
   <div class="ans"><b>Bonne réponse : C, D</b><div>Both Cloud Firestore and Firebase Realtime Database provide offline persistence, real-time synchronization, and automatic conflict resolution out of the box. They&#x27;re designed specifically for mobile applications.</div><div class="ref"><a href="https://firebase.google.com/docs/firestore/manage-data/enable-offline" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-33" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 33 / 60</span>
     <span class="badge d">D1</span>
@@ -560,12 +675,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">A media company needs to process large video files (100GB+) for encoding. The processing workflow involves multiple steps with different resource requirements. Which orchestration service handles complex workflows with conditional branching and error handling?</div>
+  <div class="qt">
+    <div class="qt-text">A media company needs to process large video files (100GB+) for encoding. The processing workflow involves multiple steps with different resource requirements. Which orchestration service handles complex workflows with conditional branching and error handling?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Cloud Workflows.</li><li data-l="B">Cloud Scheduler.</li><li data-l="C">Pub/Sub only.</li><li data-l="D">Cloud Tasks only.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Cloud Workflows is designed for orchestrating complex, multi-step workflows with conditional logic, error handling, and retries. It can coordinate multiple services and APIs.</div><div class="ref"><a href="https://cloud.google.com/workflows/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+<section class="q" id="question-34" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
   <div class="meta-line">
     <span class="num">Question 34 / 60</span>
     <span class="badge d">D1</span>
@@ -575,12 +693,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a system that processes payment transactions. The system must ensure exactly-once processing even if components fail or messages are redelivered. What architectural pattern should you implement?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a system that processes payment transactions. The system must ensure exactly-once processing even if components fail or messages are redelivered. What architectural pattern should you implement?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Implement idempotency using unique transaction IDs and deduplication logic.</li><li data-l="B">Disable retry logic to avoid duplicates.</li><li data-l="C">Use at-most-once delivery.</li><li data-l="D">Process each message multiple times to ensure delivery.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Idempotency ensures that processing a message multiple times has the same effect as processing it once. Using unique transaction IDs and checking for duplicates before processing prevents double-charging.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/exactly-once-delivery" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
+<section class="q" id="question-35" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
   <div class="meta-line">
     <span class="num">Question 35 / 60</span>
     <span class="badge d">D1</span>
@@ -590,12 +711,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S4 · Choosing Appropriate Storage Types</span>
     
   </div>
-  <div class="qt">You need to design a search system for an e-commerce platform with millions of products. Users need full-text search, faceted filtering, and auto-complete. Which TWO approaches are most appropriate?</div>
+  <div class="qt">
+    <div class="qt-text">You need to design a search system for an e-commerce platform with millions of products. Users need full-text search, faceted filtering, and auto-complete. Which TWO approaches are most appropriate?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Use Cloud SQL with LIKE queries.</li><li class="correct" data-l="B">Use Elasticsearch on GKE.</li><li data-l="C">Store everything in Memorystore.</li><li class="correct" data-l="D">Use Vertex AI Search (formerly Enterprise Search) for managed search.</li><li data-l="E">Build custom search with BigQuery full-text search.</li></ul>
   <div class="ans"><b>Bonne réponse : B, D</b><div>Vertex AI Search provides managed enterprise search with AI-powered features. Elasticsearch on GKE offers powerful search capabilities with full control. Cloud SQL LIKE queries don&#x27;t scale for complex search.</div><div class="ref"><a href="https://cloud.google.com/enterprise-search/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-36" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 36 / 60</span>
     <span class="badge d">D1</span>
@@ -605,12 +729,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">A healthcare application needs to ensure that patient data never leaves the European Union due to GDPR requirements. How should you configure your GCP resources?</div>
+  <div class="qt">
+    <div class="qt-text">A healthcare application needs to ensure that patient data never leaves the European Union due to GDPR requirements. How should you configure your GCP resources?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Use only EU regions for all resources and enable Organization Policy constraints to enforce allowed locations.</li><li data-l="B">Use VPC Service Controls only.</li><li data-l="C">Just select EU regions manually for each resource.</li><li data-l="D">Data residency cannot be enforced in GCP.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Organization Policy constraints like &#x27;gcp.resourceLocations&#x27; can enforce that resources can only be created in specific locations (e.g., EU regions), preventing accidental data residency violations.</div><div class="ref"><a href="https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S2">
+<section class="q" id="question-37" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S2">
   <div class="meta-line">
     <span class="num">Question 37 / 60</span>
     <span class="badge d">D1</span>
@@ -620,12 +747,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M2/S2 · Elasticity of Cloud Resources</span>
     
   </div>
-  <div class="qt">You&#x27;re building a recommendation system that needs to find similar items based on vector embeddings. You have 10 million items with 768-dimensional embeddings. Which service provides efficient similarity search?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re building a recommendation system that needs to find similar items based on vector embeddings. You have 10 million items with 768-dimensional embeddings. Which service provides efficient similarity search?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Firestore with custom indexes.</li><li data-l="B">Cloud SQL with array operations.</li><li data-l="C">BigQuery with custom distance functions.</li><li class="correct" data-l="D">Vertex AI Vector Search (formerly Matching Engine).</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Vertex AI Vector Search is purpose-built for high-performance similarity search on large-scale vector embeddings. It uses approximate nearest neighbor algorithms for fast retrieval.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/vector-search/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-38" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 38 / 60</span>
     <span class="badge d">D1</span>
@@ -635,12 +765,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a system to handle user authentication and authorization for a multi-tenant application. Which THREE components should be part of your design?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a system to handle user authentication and authorization for a multi-tenant application. Which THREE components should be part of your design?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Storing passwords in plain text.</li><li class="correct" data-l="B">Identity Platform for user authentication (sign-up, sign-in).</li><li class="correct" data-l="C">Custom authorization logic in your application for tenant-level permissions.</li><li class="correct" data-l="D">Cloud IAM for service-to-service authorization.</li><li data-l="E">Hardcoded API keys in the frontend.</li></ul>
   <div class="ans"><b>Bonne réponse : B, C, D</b><div>Identity Platform handles user authentication, Cloud IAM manages service permissions, and application logic enforces tenant-specific authorization. Hardcoded keys and plain text passwords are security violations.</div><div class="ref"><a href="https://cloud.google.com/identity-platform/docs/concepts" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-39" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 39 / 60</span>
     <span class="badge d">D1</span>
@@ -650,12 +783,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">A logistics company needs to optimize delivery routes in real-time based on traffic conditions, vehicle locations, and delivery priorities. Which Google Cloud service provides route optimization capabilities?</div>
+  <div class="qt">
+    <div class="qt-text">A logistics company needs to optimize delivery routes in real-time based on traffic conditions, vehicle locations, and delivery priorities. Which Google Cloud service provides route optimization capabilities?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud Functions with custom algorithm.</li><li data-l="B">BigQuery for route calculations.</li><li class="correct" data-l="C">Google Maps Platform Routes API with optimization features.</li><li data-l="D">Vertex AI AutoML Tables.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Google Maps Platform Routes API provides route optimization capabilities considering real-time traffic, multiple waypoints, and optimization objectives.</div><div class="ref"><a href="https://developers.google.com/maps/documentation/routes" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-40" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 40 / 60</span>
     <span class="badge d">D1</span>
@@ -665,12 +801,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You need to implement rate limiting for your API to prevent abuse. The limit should be per user (100 requests/minute) and enforced globally across all regions. What solution provides this?</div>
+  <div class="qt">
+    <div class="qt-text">You need to implement rate limiting for your API to prevent abuse. The limit should be per user (100 requests/minute) and enforced globally across all regions. What solution provides this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Firewall rules.</li><li data-l="B">Cloud Armor security policy with rate limiting rules on the load balancer.</li><li data-l="C">Manual throttling in code.</li><li class="correct" data-l="D">Application-level rate limiting with Memorystore for Redis.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Application-level rate limiting with Memorystore for Redis allows per-user tracking using user IDs and provides global state across regions. Cloud Armor is IP-based, not user-based.</div><div class="ref"><a href="https://cloud.google.com/memorystore/docs/redis/redis-overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S4">
+<section class="q" id="question-41" data-domain="D1" data-module="D1/M2" data-label="D1/M2/S4">
   <div class="meta-line">
     <span class="num">Question 41 / 60</span>
     <span class="badge d">D1</span>
@@ -680,12 +819,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M2/S4 · Performance and Latency</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a batch processing system that needs to process 1 million records daily. Each record processing takes about 10 seconds. Which TWO approaches optimize cost and performance?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a batch processing system that needs to process 1 million records daily. Each record processing takes about 10 seconds. Which TWO approaches optimize cost and performance?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Avoid any parallelization.</li><li data-l="B">Process records sequentially on a single VM.</li><li class="correct" data-l="C">Parallelize processing across multiple workers.</li><li data-l="D">Use the most expensive VM types.</li><li class="correct" data-l="E">Use Cloud Batch with Spot VMs for compute.</li></ul>
   <div class="ans"><b>Bonne réponse : C, E</b><div>Cloud Batch manages batch job execution efficiently. Spot VMs reduce costs. Parallelization reduces total processing time significantly (10M seconds / parallelism factor).</div><div class="ref"><a href="https://cloud.google.com/batch/docs/get-started" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-42" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 42 / 60</span>
     <span class="badge d">D1</span>
@@ -695,12 +837,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">A news website experiences highly variable traffic with sudden spikes during breaking news. The application is containerized. Which deployment platform automatically scales from zero to handle traffic spikes?</div>
+  <div class="qt">
+    <div class="qt-text">A news website experiences highly variable traffic with sudden spikes during breaking news. The application is containerized. Which deployment platform automatically scales from zero to handle traffic spikes?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Cloud Run with autoscaling configured.</li><li data-l="B">GKE with manual scaling only.</li><li data-l="C">App Engine Standard (also scales to zero).</li><li data-l="D">Compute Engine with fixed instance count.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Cloud Run automatically scales from zero to N instances based on incoming requests, making it ideal for variable traffic. It scales down to zero during idle periods, saving costs.</div><div class="ref"><a href="https://cloud.google.com/run/docs/about-instance-autoscaling" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-43" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 43 / 60</span>
     <span class="badge d">D1</span>
@@ -710,12 +855,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">You&#x27;re migrating a stateful legacy application that requires session affinity (sticky sessions). Users must always connect to the same backend instance. Which load balancer feature enables this?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re migrating a stateful legacy application that requires session affinity (sticky sessions). Users must always connect to the same backend instance. Which load balancer feature enables this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Session affinity is not supported.</li><li data-l="B">Deploy a single instance without load balancing.</li><li class="correct" data-l="C">Configure session affinity on the backend service (client IP, cookie-based, or header-based).</li><li data-l="D">Use Network Load Balancer only.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>External Application Load Balancer supports session affinity using client IP, generated cookies, or header-based affinity to route users to the same backend.</div><div class="ref"><a href="https://cloud.google.com/load-balancing/docs/backend-service#session_affinity" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+<section class="q" id="question-44" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
   <div class="meta-line">
     <span class="num">Question 44 / 60</span>
     <span class="badge d">D1</span>
@@ -725,12 +873,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
     
   </div>
-  <div class="qt">You need to implement a data lake architecture that supports both structured and unstructured data, enables data discovery, and enforces governance policies. Which TWO services are key components?</div>
+  <div class="qt">
+    <div class="qt-text">You need to implement a data lake architecture that supports both structured and unstructured data, enables data discovery, and enforces governance policies. Which TWO services are key components?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Cloud Storage for raw data storage.</li><li data-l="B">Manual spreadsheets for governance.</li><li class="correct" data-l="C">Dataplex for unified data management and governance.</li><li data-l="D">Cloud SQL for all data types.</li><li data-l="E">Compute Engine for data processing only.</li></ul>
   <div class="ans"><b>Bonne réponse : A, C</b><div>Cloud Storage provides scalable object storage for data lakes. Dataplex enables unified data management, discovery, and governance across distributed data.</div><div class="ref"><a href="https://cloud.google.com/dataplex/docs/introduction" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-45" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 45 / 60</span>
     <span class="badge d">D1</span>
@@ -740,12 +891,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">A financial trading application requires guaranteed message ordering for trade events. Messages must be processed in the exact order they were published. How should you configure Pub/Sub?</div>
+  <div class="qt">
+    <div class="qt-text">A financial trading application requires guaranteed message ordering for trade events. Messages must be processed in the exact order they were published. How should you configure Pub/Sub?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Enable message ordering on the subscription and use ordering keys when publishing.</li><li data-l="B">Use multiple subscriptions.</li><li data-l="C">Pub/Sub doesn&#x27;t guarantee ordering.</li><li data-l="D">Publish messages randomly.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Pub/Sub supports message ordering when you enable it on the subscription and provide ordering keys when publishing. Messages with the same ordering key are delivered in order.</div><div class="ref"><a href="https://cloud.google.com/pubsub/docs/ordering" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-46" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 46 / 60</span>
     <span class="badge d">D1</span>
@@ -755,12 +909,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re building a social media analytics platform that needs to process billions of social media posts to identify trends. The data has high cardinality (many unique values). Which database handles high-cardinality time-series data efficiently?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re building a social media analytics platform that needs to process billions of social media posts to identify trends. The data has high cardinality (many unique values). Which database handles high-cardinality time-series data efficiently?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Bigtable with properly designed row keys.</li><li data-l="B">Memorystore.</li><li data-l="C">Cloud SQL with standard indexes.</li><li data-l="D">Firestore.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Bigtable is designed for high-throughput, high-cardinality data. Proper row key design (e.g., reverse timestamp + entity ID) enables efficient scans and queries.</div><div class="ref"><a href="https://cloud.google.com/bigtable/docs/schema-design" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S4">
+<section class="q" id="question-47" data-domain="D4" data-module="D4/M1" data-label="D4/M1/S4">
   <div class="meta-line">
     <span class="num">Question 47 / 60</span>
     <span class="badge d">D4</span>
@@ -770,12 +927,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D4/M1/S4 · Designing for Business Continuity and Disaster Recovery</span>
     
   </div>
-  <div class="qt">You need to implement disaster recovery for your application with RTO of 4 hours and RPO of 1 hour. Which TWO components are necessary?</div>
+  <div class="qt">
+    <div class="qt-text">You need to implement disaster recovery for your application with RTO of 4 hours and RPO of 1 hour. Which TWO components are necessary?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Documented and tested recovery procedures.</li><li data-l="B">Never test recovery procedures.</li><li data-l="C">Hope nothing fails.</li><li data-l="D">Ignore recovery planning.</li><li class="correct" data-l="E">Automated backups taken every hour.</li></ul>
   <div class="ans"><b>Bonne réponse : A, E</b><div>Hourly backups ensure you can recover to within 1 hour of failure (RPO). Documented and tested procedures ensure you can actually recover within 4 hours (RTO).</div><div class="ref"><a href="https://cloud.google.com/architecture/dr-scenarios-planning-guide" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
+<section class="q" id="question-48" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S3">
   <div class="meta-line">
     <span class="num">Question 48 / 60</span>
     <span class="badge d">D1</span>
@@ -785,12 +945,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S3 · Supporting the Application Design</span>
     
   </div>
-  <div class="qt">A mobile app backend needs to send push notifications to millions of devices. Which Google Cloud service provides scalable push notification delivery?</div>
+  <div class="qt">
+    <div class="qt-text">A mobile app backend needs to send push notifications to millions of devices. Which Google Cloud service provides scalable push notification delivery?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Firebase Cloud Messaging (FCM).</li><li data-l="B">Cloud Functions calling device APIs individually.</li><li data-l="C">Email service.</li><li data-l="D">Pub/Sub to directly push to devices.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Firebase Cloud Messaging is purpose-built for sending push notifications to mobile devices at scale, supporting both Android and iOS.</div><div class="ref"><a href="https://firebase.google.com/docs/cloud-messaging" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+<section class="q" id="question-49" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
   <div class="meta-line">
     <span class="num">Question 49 / 60</span>
     <span class="badge d">D1</span>
@@ -800,12 +963,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a content delivery system for a video streaming platform. Videos must be transcoded to multiple formats and resolutions. Which architecture efficiently processes videos?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a content delivery system for a video streaming platform. Videos must be transcoded to multiple formats and resolutions. Which architecture efficiently processes videos?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Process everything on a single Compute Engine instance.</li><li data-l="B">Use only BigQuery for video processing.</li><li class="correct" data-l="C">Cloud Storage upload → Pub/Sub → Cloud Functions to orchestrate Transcoder API jobs → store outputs in Cloud Storage.</li><li data-l="D">Email videos for manual processing.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Event-driven architecture with Cloud Storage triggers, Pub/Sub for reliability, and Transcoder API for video processing provides scalable, efficient transcoding.</div><div class="ref"><a href="https://cloud.google.com/transcoder/docs/how-to" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
+<section class="q" id="question-50" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S1">
   <div class="meta-line">
     <span class="num">Question 50 / 60</span>
     <span class="badge d">D1</span>
@@ -815,12 +981,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S1 · Product Strategy and Success Measurements</span>
     
   </div>
-  <div class="qt">A company needs to implement gradual rollout of new features with the ability to rollback instantly if issues are detected. Which deployment strategy provides this capability?</div>
+  <div class="qt">
+    <div class="qt-text">A company needs to implement gradual rollout of new features with the ability to rollback instantly if issues are detected. Which deployment strategy provides this capability?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Never deploy updates.</li><li data-l="B">Big bang deployment (all at once).</li><li data-l="C">Manual deployment without monitoring.</li><li class="correct" data-l="D">Canary deployment with automated monitoring and rollback triggers.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Canary deployment releases changes to a small percentage of users first, monitors metrics, and can automatically rollback if error rates increase.</div><div class="ref"><a href="https://cloud.google.com/deploy/docs/deployment-strategies/canary" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
+<section class="q" id="question-51" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S3">
   <div class="meta-line">
     <span class="num">Question 51 / 60</span>
     <span class="badge d">D1</span>
@@ -830,12 +999,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S3 · Choosing Data Processing Technologies</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a chat application that needs real-time message delivery, presence indication, and message history. Which TWO Google Cloud services support these requirements?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a chat application that needs real-time message delivery, presence indication, and message history. Which TWO Google Cloud services support these requirements?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Firestore with real-time listeners.</li><li class="correct" data-l="B">Firebase Realtime Database for real-time synchronization.</li><li data-l="C">Cloud SQL with polling.</li><li data-l="D">Batch processing only.</li><li data-l="E">BigQuery for real-time chat.</li></ul>
   <div class="ans"><b>Bonne réponse : A, B</b><div>Both Firebase Realtime Database and Firestore provide real-time data synchronization with listeners that update clients instantly when data changes.</div><div class="ref"><a href="https://firebase.google.com/docs/database/web/read-and-write" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-52" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 52 / 60</span>
     <span class="badge d">D1</span>
@@ -845,12 +1017,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You need to process sensitive data and ensure it never leaves your VPC. External API calls and internet access must be blocked. Which VPC feature enforces this?</div>
+  <div class="qt">
+    <div class="qt-text">You need to process sensitive data and ensure it never leaves your VPC. External API calls and internet access must be blocked. Which VPC feature enforces this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud Armor.</li><li class="correct" data-l="B">VPC Service Controls to create a security perimeter.</li><li data-l="C">Load balancer configuration.</li><li data-l="D">Firewall rules only.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>VPC Service Controls creates security perimeters that prevent data exfiltration by controlling access to Google Cloud services and blocking unauthorized API calls.</div><div class="ref"><a href="https://cloud.google.com/vpc-service-controls/docs/overview" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-53" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 53 / 60</span>
     <span class="badge d">D1</span>
@@ -860,12 +1035,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">A machine learning model needs to be retrained daily with new data. The training process should be automated and orchestrated. Which service provides ML pipeline orchestration?</div>
+  <div class="qt">
+    <div class="qt-text">A machine learning model needs to be retrained daily with new data. The training process should be automated and orchestrated. Which service provides ML pipeline orchestration?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Manual script execution daily.</li><li data-l="B">Cloud Storage alone.</li><li class="correct" data-l="C">Vertex AI Pipelines.</li><li data-l="D">Email reminders to retrain.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>Vertex AI Pipelines provides orchestration for ML workflows including data preparation, training, evaluation, and deployment, with support for scheduling and automation.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/pipelines/introduction" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
+<section class="q" id="question-54" data-domain="D1" data-module="D1/M3" data-label="D1/M3/S4">
   <div class="meta-line">
     <span class="num">Question 54 / 60</span>
     <span class="badge d">D1</span>
@@ -875,12 +1053,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M3/S4 · Choosing Appropriate Storage Types</span>
     
   </div>
-  <div class="qt">You&#x27;re building an application that needs to store and retrieve large binary objects (images, videos) with metadata for searching. Which combination is most appropriate?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re building an application that needs to store and retrieve large binary objects (images, videos) with metadata for searching. Which combination is most appropriate?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Store everything in BigQuery.</li><li class="correct" data-l="B">Cloud Storage for binary objects + Firestore or Cloud SQL for metadata.</li><li data-l="C">Store everything in Cloud SQL.</li><li data-l="D">Use only local filesystems.</li></ul>
   <div class="ans"><b>Bonne réponse : B</b><div>Cloud Storage is optimized for large object storage. Storing metadata separately in a database enables efficient searching while keeping storage costs low.</div><div class="ref"><a href="https://cloud.google.com/storage/docs/best-practices" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
+<section class="q" id="question-55" data-domain="D3" data-module="D3/M1" data-label="D3/M1/S3">
   <div class="meta-line">
     <span class="num">Question 55 / 60</span>
     <span class="badge d">D3</span>
@@ -890,12 +1071,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D3/M1/S3 · Enforcing Security Posture and Designing for Secure Access</span>
     
   </div>
-  <div class="qt">You&#x27;re implementing zero-trust security for your application. Which THREE principles should you apply?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re implementing zero-trust security for your application. Which THREE principles should you apply?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Verify every access request regardless of source.</li><li class="correct" data-l="B">Apply least privilege access controls.</li><li data-l="C">Disable all security monitoring.</li><li data-l="D">Trust all internal network traffic by default.</li><li class="correct" data-l="E">Assume breach and minimize blast radius.</li></ul>
   <div class="ans"><b>Bonne réponse : A, B, E</b><div>Zero-trust principles include: verify every request (never trust, always verify), least privilege, and assume breach. Trusting internal traffic and disabling monitoring violate zero-trust.</div><div class="ref"><a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-56" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 56 / 60</span>
     <span class="badge d">D1</span>
@@ -905,12 +1089,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">A data science team needs to experiment with different ML models and track experiments, parameters, and results. Which Vertex AI feature supports experiment tracking?</div>
+  <div class="qt">
+    <div class="qt-text">A data science team needs to experiment with different ML models and track experiments, parameters, and results. Which Vertex AI feature supports experiment tracking?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Vertex AI Experiments for tracking and comparing ML experiments.</li><li data-l="B">Manual spreadsheets.</li><li data-l="C">Email results to team.</li><li data-l="D">Memory only.</li></ul>
   <div class="ans"><b>Bonne réponse : A</b><div>Vertex AI Experiments provides experiment tracking, parameter logging, metric comparison, and visualization for ML experimentation.</div><div class="ref"><a href="https://cloud.google.com/vertex-ai/docs/experiments/intro-vertex-ai-experiments" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-57" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 57 / 60</span>
     <span class="badge d">D1</span>
@@ -920,12 +1107,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You need to implement API versioning for your service to support both v1 and v2 APIs simultaneously during a migration period. Which approach provides clean versioning?</div>
+  <div class="qt">
+    <div class="qt-text">You need to implement API versioning for your service to support both v1 and v2 APIs simultaneously during a migration period. Which approach provides clean versioning?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Mix v1 and v2 logic in the same endpoints.</li><li data-l="B">Never version APIs.</li><li class="correct" data-l="C">Use URL path versioning (e.g., /v1/users, /v2/users) with Cloud Load Balancer URL maps routing to different backends.</li><li data-l="D">Force immediate migration of all clients.</li></ul>
   <div class="ans"><b>Bonne réponse : C</b><div>URL path versioning with load balancer routing provides clean separation between API versions, allowing gradual migration and easy maintenance.</div><div class="ref"><a href="https://cloud.google.com/apis/design/versioning" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-58" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 58 / 60</span>
     <span class="badge d">D1</span>
@@ -935,12 +1125,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re building a fintech application that must comply with PCI-DSS for credit card processing. Which TWO security measures are required?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re building a fintech application that must comply with PCI-DSS for credit card processing. Which TWO security measures are required?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li class="correct" data-l="A">Encrypt credit card data at rest and in transit.</li><li data-l="B">Share encryption keys publicly.</li><li data-l="C">Store credit card data in plain text.</li><li data-l="D">Disable all security features.</li><li class="correct" data-l="E">Implement strong access controls and audit logging.</li></ul>
   <div class="ans"><b>Bonne réponse : A, E</b><div>PCI-DSS requires encryption of cardholder data and strong access controls with audit logging. Plain text storage and disabled security violate compliance.</div><div class="ref"><a href="https://cloud.google.com/security/compliance/pci-dss" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-59" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 59 / 60</span>
     <span class="badge d">D1</span>
@@ -950,12 +1143,15 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">A company wants to analyze customer behavior across multiple touchpoints (web, mobile, in-store). They need to unify data from various sources and create a  360-degree customer view. Which Google Cloud service facilitates this?</div>
+  <div class="qt">
+    <div class="qt-text">A company wants to analyze customer behavior across multiple touchpoints (web, mobile, in-store). They need to unify data from various sources and create a  360-degree customer view. Which Google Cloud service facilitates this?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Manual Excel analysis.</li><li data-l="B">Separate databases for each touchpoint with no integration.</li><li data-l="C">Don&#x27;t analyze customer data.</li><li class="correct" data-l="D">BigQuery for unified data analytics with data from multiple sources.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>BigQuery serves as a unified data warehouse where data from web, mobile, and in-store systems can be integrated for comprehensive customer analytics.</div><div class="ref"><a href="https://cloud.google.com/bigquery/docs/introduction" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
 
-<section class="q" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
+<section class="q" id="question-60" data-domain="D1" data-module="D1/M1" data-label="D1/M1/S4">
   <div class="meta-line">
     <span class="num">Question 60 / 60</span>
     <span class="badge d">D1</span>
@@ -965,7 +1161,10 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
     <span class="sec-title">D1/M1/S4 · Integration with External Systems and Moving Data</span>
     
   </div>
-  <div class="qt">You&#x27;re designing a system that must maintain strong consistency across multiple regions for financial transactions. Which database provides multi-region strong consistency with automatic failover?</div>
+  <div class="qt">
+    <div class="qt-text">You&#x27;re designing a system that must maintain strong consistency across multiple regions for financial transactions. Which database provides multi-region strong consistency with automatic failover?</div>
+    <button type="button" class="tts" data-label="🔊 Lire" onclick="speakQuestion(event,this)" aria-label="Lire cette question et ses réponses">🔊 Lire</button>
+  </div>
   <ul class="opts"><li data-l="A">Cloud SQL with manual failover.</li><li data-l="B">Memorystore.</li><li data-l="C">Firestore with eventual consistency.</li><li class="correct" data-l="D">Cloud Spanner with multi-region configuration.</li></ul>
   <div class="ans"><b>Bonne réponse : D</b><div>Cloud Spanner is the only database that provides external strong consistency across multiple regions with automatic failover, making it ideal for global financial applications.</div><div class="ref"><a href="https://cloud.google.com/spanner/docs/instances#available-configurations-multi-region" target="_blank" rel="noopener">Référence</a></div></div>
 </section>
@@ -973,6 +1172,41 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 </main>
 <script>
 function all(v){document.querySelectorAll('.q').forEach(q=>q.classList.toggle('show',v))}
+let activeTtsButton=null;
+function resetTtsButton(){
+  if(activeTtsButton){
+    activeTtsButton.classList.remove('speaking');
+    activeTtsButton.textContent=activeTtsButton.dataset.label;
+    activeTtsButton=null;
+  }
+}
+function speakQuestion(event,button){
+  event.stopPropagation();
+  if(!('speechSynthesis' in window)){
+    alert('La synthèse vocale n’est pas prise en charge par ce navigateur.');
+    return;
+  }
+  if(activeTtsButton===button && speechSynthesis.speaking){
+    speechSynthesis.cancel();
+    resetTtsButton();
+    return;
+  }
+  speechSynthesis.cancel();
+  resetTtsButton();
+  const card=button.closest('.q');
+  const statement=card.querySelector('.qt-text').textContent.trim();
+  const answers=[...card.querySelectorAll('.opts li')]
+    .map(li=>li.dataset.l+'. '+li.textContent.trim())
+    .join('. ');
+  const utterance=new SpeechSynthesisUtterance(statement+'. Answers. '+answers);
+  utterance.lang='en-US';
+  utterance.onend=resetTtsButton;
+  utterance.onerror=resetTtsButton;
+  activeTtsButton=button;
+  button.classList.add('speaking');
+  button.textContent='■ Arrêter';
+  speechSynthesis.speak(utterance);
+}
 function applyFilters(){
   const d=document.getElementById('filterDomain').value;
   const m=document.getElementById('filterModule').value;
