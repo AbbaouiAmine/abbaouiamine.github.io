@@ -1,0 +1,408 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GCP PCA — Mock 2 (Gaming / Mountkirk)</title>
+<style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.55}
+.wrap{max-width:900px;margin:0 auto;padding:24px 16px 80px}
+header.hd{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-bottom:20px}
+header.hd h1{margin:0 0 6px;font-size:1.5rem;color:#1a73e8}
+.meta{color:#475569;font-size:.9rem}
+.bar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar a{color:#1a73e8;text-decoration:none;font-weight:600;font-size:.85rem}
+.bar button{font:inherit;cursor:pointer;border:1px solid #cbd5e1;background:#f8fafc;border-radius:8px;padding:5px 12px;font-size:.85rem}
+.q{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.qnum{font-size:.78rem;font-weight:700;color:#1a73e8;letter-spacing:.03em}
+.qtype{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:#64748b;border-radius:999px;padding:2px 8px;margin-left:8px}
+.qtype.multi{background:#b45309}
+.qtext{font-weight:600;margin:8px 0 12px}
+ul.opts{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+ul.opts li{border:1px solid #e2e8f0;border-radius:9px;padding:8px 12px 8px 40px;position:relative;background:#f8fafc;font-size:.92rem}
+ul.opts li::before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:999px;background:#e2e8f0;color:#334155;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center}
+.reveal ul.opts li.correct{background:#e6f4ea;border-color:#34a853}
+.reveal ul.opts li.correct::before{background:#34a853;color:#fff}
+.ans{margin-top:12px;border-left:4px solid #34a853;background:#f0fdf4;border-radius:0 9px 9px 0;padding:10px 14px;display:none}
+.reveal .ans{display:block}
+.ans .lbl{font-weight:700;color:#137333;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.ans a{color:#1a73e8;word-break:break-all}
+</style></head><body>
+<nav class="bar">
+<a href="index.html">&larr; Tous les mocks</a>
+<button id="showAll">Afficher toutes les réponses</button>
+<button id="hideAll">Masquer les réponses</button>
+<span style="color:#64748b;font-size:.8rem">Astuce : cliquez une question pour révéler sa réponse</span>
+</nav>
+<div class="wrap">
+<header class="hd">
+<h1>Mock 2 — Gaming / Mountkirk</h1>
+<div class="meta">Google Cloud Professional Cloud Architect · 60 questions · Source&nbsp;: gcppcatest.com</div>
+</header>
+<div class="q" id="q1">
+<div><span class="qnum">Question 1 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Mountkirk Games is launching a new mobile FPS game globally. They expect high throughput of small UDP packets for player movement updates. They need a global load balancing solution that supports UDP and creates a single anycast IP for clients worldwide. What should you choose?</div>
+<ul class="opts"><li data-l="A">Cloud DNS with round-robin records.</li><li data-l="B">Global External Application Load Balancer.</li><li class="correct" data-l="C">Global External Proxy Network Load Balancer.</li><li data-l="D">Regional External Network Load Balancer.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Player movement in FPS games typically uses UDP. The Global External Proxy Network Load Balancer (formerly SSL Proxy/TCP Proxy, now unified) supports UDP traffic with a global Anycast IP. This allows clients to connect to a single IP and get routed to the nearest healthy region (with termination at the edge). Option B is HTTP/TCP only. Option C is regional, not global anycast.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/load-balancing/docs/network" target="_blank" rel="noopener">https://cloud.google.com/load-balancing/docs/network</a></div></div>
+</div><div class="q" id="q2">
+<div><span class="qnum">Question 2 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Altostrat Media is migrating its video transcoding pipeline to GCP. Users upload raw video files to a Cloud Storage bucket. This event should trigger a scalable pipeline to process the video using ffmpeg containerized on Cloud Run Jobs. Which TWO components are best for the orchestration and execution?</div>
+<ul class="opts"><li class="correct" data-l="A">Eventarc to capture the &#x27;storage.object.finalize&#x27; event.</li><li data-l="B">Cloud Functions to run the long-running ffmpeg process directly.</li><li class="correct" data-l="C">Cloud Run Jobs for the execution environment.</li><li data-l="D">Pub/Sub to trigger App Engine Standard.</li><li data-l="E">Google Kubernetes Engine (GKE) Autopilot for the event trigger.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
+<div style="margin-top:6px">Eventarc (A) is the modern, unified eventing service that can route GCS events (via Audit Logs or directly) to destinations. Cloud Run Jobs (C) fits the &#x27;ffmpeg processing&#x27; requirement perfectly because transcoding is a finite task (batch job) that may take longer than the HTTP request timeout of Cloud Run Services. Triggering a Job from Eventarc (often via a small workflow or function proxy, or direct integration evolved) is the pattern. Cloud Functions (B) has timeouts (9-60 mins) and isn&#x27;t ideal for heavy media processing compared to Jobs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/create-jobs" target="_blank" rel="noopener">https://cloud.google.com/run/docs/create-jobs</a></div></div>
+</div><div class="q" id="q3">
+<div><span class="qnum">Question 3 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your gaming backend uses Cloud Spanner for the player inventory database. The game is launching in Asia, Europe, and US. You need to ensure strong consistency and 99.999% availability. Writes effectively need to be committing in all regions. Which Spanner configuration should you use?</div>
+<ul class="opts"><li data-l="A">Global configuration (there is no such thing, it&#x27;s Multi-region).</li><li data-l="B">Regional configuration with Read Replicas.</li><li data-l="C">Multiple Regional instances with Dataflow replication.</li><li class="correct" data-l="D">Multi-region configuration (e.g., nam-eur-asia1).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Cloud Spanner Multi-region configurations offer 99.999% availability and global strong consistency. It places read-write replicas and witness replicas across 3+ regions (often 3 continents) to survive a regional failure.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/spanner/docs/instance-configurations#multi-region-configurations" target="_blank" rel="noopener">https://cloud.google.com/spanner/docs/instance-configurations#multi-region-configurations</a></div></div>
+</div><div class="q" id="q4">
+<div><span class="qnum">Question 4 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are designing the analytics platform for a massive multiplayer game. Events (player_kill, item_drop) are sent in JSON format. The volume is millions of events per second. You need to store this raw data for historical replay and also perform real-time leaderboards. What is the ingestion entry point?</div>
+<ul class="opts"><li class="correct" data-l="A">Pub/Sub.</li><li data-l="B">Cloud Storage.</li><li data-l="C">BigQuery Streaming Insert.</li><li data-l="D">Cloud SQL.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Pub/Sub is the only service designed to ingest &#x27;millions of events per second&#x27; as a global buffer. It decouples the producers (game servers) from the consumers (Dataflow for leaderboards, BigQuery for storage). Direct insert to BQ (D) is possible but at that scale, Pub/Sub is the architectural buffer best practice.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/pubsub/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/pubsub/docs/overview</a></div></div>
+</div><div class="q" id="q5">
+<div><span class="qnum">Question 5 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">The media team wants to use GenAI to automatically generate subtitles and translations for uploaded videos. They want to use the Gemini 1.5 Pro model. The process must be automated. Which TWO steps are part of the solution?</div>
+<ul class="opts"><li data-l="A">Use Vertex AI Model Garden to deploy a Llama 2 model.</li><li class="correct" data-l="B">Call the Vertex AI Gemini API with a multimodal prompt (video + text instruction).</li><li data-l="C">Use portions of the Video Intelligence API.</li><li class="correct" data-l="D">Store the video in a bucket and pass the URI to the model.</li><li data-l="E">Train a custom model from scratch.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, D</span></div>
+<div style="margin-top:6px">Gemini 1.5 Pro is a multimodal model that can natively understand video content. You upload the video to GCS (D) and pass the URI to the Vertex AI Gemini API (B) with a prompt like &#x27;Generate subtitles for this video&#x27;. No need to train from scratch (E) or use older specialized APIs (C) unless cost/feature parity dictates, but Gemini is the requested tool.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/generative-ai/multimodal/overview" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/generative-ai/multimodal/overview</a></div></div>
+</div><div class="q" id="q6">
+<div><span class="qnum">Question 6 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Mountkirk Games detects a DDoS attack targeting their login server. The server is behind an External Application Load Balancer. You want to block traffic from a specific country where the attack is originating. What should you configure?</div>
+<ul class="opts"><li class="correct" data-l="A">Cloud Armor Security Policy with a geo-match rule.</li><li data-l="B">VPC Firewall Rules denying the country&#x27;s IP ranges.</li><li data-l="C">Cloud IDS.</li><li data-l="D">Cloud NAT.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Cloud Armor acts as the WAF at the edge (Load Balancer). Its security policies support logic like `origin.region_code == &#x27;XX&#x27;`, which is the standard way to block geo-based attacks. VPC Firewall rules (B) work on IP ranges (L3/L4) and managing a list of all IPs for a country is impractical and lacks the &#x27;Geo&#x27; abstraction.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/armor/docs/configure-security-policies#match-conditions" target="_blank" rel="noopener">https://cloud.google.com/armor/docs/configure-security-policies#match-conditions</a></div></div>
+</div><div class="q" id="q7">
+<div><span class="qnum">Question 7 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You run a dedicated game server fleet on Compute Engine. The game state is in-memory. When a scale-down event occurs, you need to ensure the instance is not terminated if a game session is currently active. What should you use?</div>
+<ul class="opts"><li data-l="A">MIG with Autoscaler scale-in controls (instances to stabilize).</li><li data-l="B">MIG with Stateful Policy.</li><li class="correct" data-l="C">Managed Instance Group (MIG) with connection draining.</li><li data-l="D">Explicitly call `abandonInstance` on the MIG API when a game finishes.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Connection Draining sends a signal to the Load Balancer to stop sending new requests to an instance that is being removed, while allowing existing connections to complete (up to a timeout). This is the standard mechanism to ensure active game sessions are not forcefully terminated during scale-in events.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances#connection_draining" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances#connection_draining</a></div></div>
+</div><div class="q" id="q8">
+<div><span class="qnum">Question 8 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Your media app serves static assets (images, JS) and dynamic content (API). You want to improve performance for global users. Which TWO features of Cloud CDN should you use?</div>
+<ul class="opts"><li class="correct" data-l="A">Cache Modes (switching to &#x27;Force Cache all&#x27; for static assets).</li><li data-l="B">Dynamic Route Action to cache API responses.</li><li data-l="C">CDN Interconnect.</li><li data-l="D">Negative caching.</li><li class="correct" data-l="E">Cache Key customization (to include/exclude query params).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, E</span></div>
+<div style="margin-top:6px">For static assets, &#x27;Force Cache&#x27; (A) allows you to override origin headers that might accidentally prevent caching. Customizing the Cache Key (C) is crucial for correct hit ratios (e.g., ignoring tracking parameters in the URL). Dynamic API content is usually *not* cached (so B is wrong context).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/cdn/docs/caching" target="_blank" rel="noopener">https://cloud.google.com/cdn/docs/caching</a></div></div>
+</div><div class="q" id="q9">
+<div><span class="qnum">Question 9 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You need to store 5 PB of archival footage (Media/Gaming replays). You have a strict budget. The data must be available instantly if requested (no thaw time), but is accessed less than once a quarter. Which Storage Class is best?</div>
+<ul class="opts"><li data-l="A">Nearline Class.</li><li data-l="B">Archive Class.</li><li class="correct" data-l="C">Coldline Class.</li><li data-l="D">Standard Class.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Archive class offers the lowest storage cost and is designed for data accessed less than once a year. Coldline is for data accessed less than once a quarter. Since the requirement specifies access is &#x27;less than once a quarter&#x27; (but implies more frequent than once a year), Coldline is the correct tier. If the access pattern was strictly &#x27;once a year&#x27;, Archive would be better.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/storage-classes" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/storage-classes</a></div></div>
+</div><div class="q" id="q10">
+<div><span class="qnum">Question 10 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Mountkirk Games wants to analyze player sentiment from chat logs (text). The logs contain slang and gaming jargon. They want to classify messages as &#x27;Toxic&#x27; or &#x27;Friendly&#x27; using a custom-trained model. Which Vertex AI service allows training a model on their specific labeled dataset with minimal code?</div>
+<ul class="opts"><li class="correct" data-l="A">Vertex AI AutoML (Text Classification).</li><li data-l="B">Vertex AI Vision.</li><li data-l="C">Translation API.</li><li data-l="D">Natural Language API (pretrained).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Vertex AI AutoML for Text allows you to upload a CSV of text samples and labels (&#x27;Toxic&#x27;, &#x27;Friendly&#x27;) and trains a high-quality custom model automatically. The standard Natural Language API (D) has sentiment analysis but might fail on specific &#x27;gaming jargon&#x27; without custom training.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/training-overview#automl_2" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/training-overview#automl_2</a></div></div>
+</div><div class="q" id="q11">
+<div><span class="qnum">Question 11 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You are building a CI/CD pipeline for the gaming backend (Microservices on GKE). You need to store the built container images securely and scan them for OS vulnerabilities. Which TWO services should you use?</div>
+<ul class="opts"><li class="correct" data-l="A">Artifact Registry (Docker format).</li><li data-l="B">Container Registry (GCR).</li><li data-l="C">Cloud Build.</li><li class="correct" data-l="D">Artifact Registry Analysis (Vulnerability Scanning).</li><li data-l="E">Binary Authorization.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, D</span></div>
+<div style="margin-top:6px">Artifact Registry (A) is the successor to Container Registry and the standard service for storing container images. Enabling Vulnerability Scanning (D) ensures that images are automatically scanned for OS vulnerabilities upon push.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/artifact-registry/docs/analysis" target="_blank" rel="noopener">https://cloud.google.com/artifact-registry/docs/analysis</a></div></div>
+</div><div class="q" id="q12">
+<div><span class="qnum">Question 12 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">The game client uploads large crash dump files (100MB+) to Google Cloud. The upload is often interrupted due to poor mobile connectivity. You want to ensure the upload can be resumed without restarting. What should you implement?</div>
+<ul class="opts"><li class="correct" data-l="A">Use Cloud Storage Resumable Uploads via Signed URLs.</li><li data-l="B">Use Transfer Appliance.</li><li data-l="C">Upload to a Compute Engine instance first.</li><li data-l="D">Use the XML API.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Resumable uploads are a mechanism in the GCS JSON API where you initiate an upload, get a session URI, and can append chunks. If interrupted, you check the offset and resume. Using Signed URLs allows the client to do this directly to GCS securely.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/resumable-uploads" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/resumable-uploads</a></div></div>
+</div><div class="q" id="q13">
+<div><span class="qnum">Question 13 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your media company needs to transfer 1 PB of video data from an on-premises NAS to Cloud Storage. You have a 1 Gbps Dedicated Interconnect. Calculations show this will take too long (approx 100 days). You need it done in 3 weeks. What do you do?</div>
+<ul class="opts"><li data-l="A">Upgrade Interconnect to 10 Gbps.</li><li class="correct" data-l="B">Order a Transfer Appliance.</li><li data-l="C">Use `gsutil -m cp` with heavy parallelization.</li><li data-l="D">Compress the files.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">1 PB is huge. On 1 Gbps = ~100 days. To meet &#x27;3 weeks&#x27; (21 days), you need ~5-10 Gbps effective throughput 24/7. While upgrading to 10Gbps (B) is a valid network option, it takes time to provision and install (months sometimes). Transfer Appliance (A) is the standard &#x27;offline&#x27; bulk transfer solution for PB-scale data when network is limiting.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/transfer-appliance/docs/4.0" target="_blank" rel="noopener">https://cloud.google.com/transfer-appliance/docs/4.0</a></div></div>
+</div><div class="q" id="q14">
+<div><span class="qnum">Question 14 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">A real-time leaderboard requires sub-millisecond read latency for millions of users. The data is simple key-value (UserID -&gt; Score). Which TWO database options support this performance profile?</div>
+<ul class="opts"><li class="correct" data-l="A">Cloud Bigtable.</li><li class="correct" data-l="B">Memorystore for Redis.</li><li data-l="C">Cloud SQL for MySQL.</li><li data-l="D">Firestore in Datastore Mode.</li><li data-l="E">BigQuery.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, B</span></div>
+<div style="margin-top:6px">Memorystore for Redis (C) provides in-memory sub-millisecond latency, perfect for leaderboards (sorted sets). Cloud Bigtable (B) is also designed for high throughput and low latency (single-digit ms) at massive scale (petabytes). Firestore (A) is fast but usually 10-20ms range. SQL (D) and BQ (E) are not for sub-ms KV lookups.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/memorystore/docs/redis/redis-overview" target="_blank" rel="noopener">https://cloud.google.com/memorystore/docs/redis/redis-overview</a></div></div>
+</div><div class="q" id="q15">
+<div><span class="qnum">Question 15 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are deploying a GKE cluster for a game backend. The nodes need to access Google Cloud APIs (like Pub/Sub) but should not have public IP addresses for security. You have configured Private Google Access on the subnet. What else is required?</div>
+<ul class="opts"><li data-l="A">Nothing, Private Google Access is sufficient.</li><li data-l="B">Configure Cloud NAT.</li><li class="correct" data-l="C">Create a Service Account for the nodes with appropriate permissions.</li><li data-l="D">VPC Peering to the Google Services VPC.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">For the application on the node to actually *authenticate* and *authorize* against the API, it needs an identity. The Node Service Account (or Workload Identity) must have the IAM roles (e.g. Pub/Sub Publisher). Network reachability (PGA) is step 1; Identity (IAM) is step 2.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/service-accounts" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/how-to/service-accounts</a></div></div>
+</div><div class="q" id="q16">
+<div><span class="qnum">Question 16 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You need to reduce the cold start time of your Java-based Cloud Run service which processes image uploads. It currently takes 5 seconds to start. Which feature provides the most significant improvement with no code changes?</div>
+<ul class="opts"><li data-l="A">Convert Java to Go.</li><li class="correct" data-l="B">Startup CPU Boost.</li><li data-l="C">Increase memory allocation.</li><li data-l="D">Use a larger container image.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Startup CPU Boost acts as a &#x27;turbo mode&#x27; during the container initialization phase, providing more CPU than the limit to speed up class loading (JVM) or other init tasks. It is a config toggle.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/configuring/cpu-boost" target="_blank" rel="noopener">https://cloud.google.com/run/docs/configuring/cpu-boost</a></div></div>
+</div><div class="q" id="q17">
+<div><span class="qnum">Question 17 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Mountkirk Games wants to minimize the cost of their developer environments. Developers leave instances running overnight. They want an automated solution to stop these instances at 7 PM and start them at 8 AM. Which TWO tools could implement this?</div>
+<ul class="opts"><li data-l="A">Cloud Scheduler triggering a Cloud Function.</li><li data-l="B">Cloud Scheduler triggering a Workflows execution.</li><li class="correct" data-l="C">Using the &#x27;Instance Schedule&#x27; feature in Compute Engine.</li><li data-l="D">An implementation of cron on a single &#x27;master&#x27; VM.</li><li data-l="E">Telling developers to remember to stop them.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">The &#x27;Instance Schedule&#x27; feature allows you to create start and stop schedules for VM instances directly within Compute Engine. This is the simplest native method to manage developer environments based on time of day.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/schedule-instance-start-stop" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/schedule-instance-start-stop</a></div></div>
+</div><div class="q" id="q18">
+<div><span class="qnum">Question 18 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your media decoding fleet runs on Spot VMs to save cost. The application handles preemption signals well. However, you notice that sometimes the instance is preempted just 10 minutes after starting, wasting the startup work. You want to ensure an instance runs for at least 30 minutes. What feature should you look at?</div>
+<ul class="opts"><li class="correct" data-l="A">There is no such guarantee for Spot/Preemptible VMs.</li><li data-l="B">Use Defined Duration (or Run duration) for Spot VMs? No, that limits max time.</li><li data-l="C">Use Standard VMs.</li><li data-l="D">Use &#x27;Compact Placement Policies&#x27;. (Distractor).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Spot VMs (and Preemptible VMs) can be reclaimed by Google at any time with a 30-second warning. There is no minimum guaranteed runtime. If a guaranteed runtime of at least 30 minutes is required, you must use Standard VMs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/spot" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/spot</a></div></div>
+</div><div class="q" id="q19">
+<div><span class="qnum">Question 19 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are designing a solution to ingest clickstream data from a gaming website. The data is valuable. You need to ensure that no data is lost even if the ingestion application crashes or regions fail. The data must be ordered by session. What service provides global availability and ordered delivery?</div>
+<ul class="opts"><li class="correct" data-l="A">Pub/Sub with ordering keys.</li><li data-l="B">Pub/Sub Lite.</li><li data-l="C">Kafka on GKE.</li><li data-l="D">Cloud Tasks.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Pub/Sub is global. By using &#x27;Ordering Keys&#x27; (e.g., SessionID), Pub/Sub ensures messages for that key are delivered in order. It is highly durable and available.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/pubsub/docs/ordering" target="_blank" rel="noopener">https://cloud.google.com/pubsub/docs/ordering</a></div></div>
+</div><div class="q" id="q20">
+<div><span class="qnum">Question 20 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Altostrat Media wants to securely manage the private keys used for signing their media content (DRM). The keys should be rotated automatically every 30 days. Which TWO services work together for this?</div>
+<ul class="opts"><li class="correct" data-l="A">Cloud Key Management Service (KMS).</li><li data-l="B">Secret Manager.</li><li class="correct" data-l="C">Automatic Rotation configuration on the Key Ring?</li><li data-l="D">Cloud IAM.</li><li data-l="E">Cloud Storage.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
+<div style="margin-top:6px">Cloud KMS (A) is used to generate and manage cryptographic keys. It supports automatic rotation schedules (C) (e.g., every 30 days), which generates a new key version automatically. Secret Manager is for storing secrets like passwords, not for managing cryptographic signing keys.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kms/docs/rotating-keys" target="_blank" rel="noopener">https://cloud.google.com/kms/docs/rotating-keys</a></div></div>
+</div><div class="q" id="q21">
+<div><span class="qnum">Question 21 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a fleet of 1000 VMs. You need to verify that none of them have public IP addresses configured. You want to see the compliance status in a dashboard. What should you use?</div>
+<ul class="opts"><li class="correct" data-l="A">Security Command Center (SCC) - Security Health Analytics.</li><li data-l="B">VPC Flow Logs.</li><li data-l="C">Cloud Monitoring custom dashboard.</li><li data-l="D">Network Intelligence Center.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Security Command Center (specifically the Security Health Analytics component) automatically scans your assets and reports configurations that violate best practices, such as &#x27;Instance with public IP&#x27;. It provides a compliance dashboard.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/security-command-center/docs/concepts-security-health-analytics-overview" target="_blank" rel="noopener">https://cloud.google.com/security-command-center/docs/concepts-security-health-analytics-overview</a></div></div>
+</div><div class="q" id="q22">
+<div><span class="qnum">Question 22 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Your gaming app allows users to upload profile pictures. You want to automatically resize these images to 100x100 thumbnails upon upload and save them to a different bucket. Which TWO architectures are valid serverless approaches?</div>
+<ul class="opts"><li class="correct" data-l="A">Cloud Functions (2nd gen) triggered by Eventarc (Storage event).</li><li data-l="B">Dataflow streaming job watching the bucket.</li><li class="correct" data-l="C">Cloud Run service receiving a Pub/Sub push notification from GCS.</li><li data-l="D">Compute Engine Instance Group with a startup script.</li><li data-l="E">App Engine Standard with a cron job.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
+<div style="margin-top:6px">Cloud Functions (A) is the canonical &#x27;trigger on upload, process, save&#x27; pattern. Cloud Run (C) receiving events (via Pub/Sub or Eventarc) is the same pattern but executing in a container (better for libraries like ImageMagick). Dataflow (B) is overkill for single-file event processing (high latency start).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/functions/docs/tutorials/storage" target="_blank" rel="noopener">https://cloud.google.com/functions/docs/tutorials/storage</a></div></div>
+</div><div class="q" id="q23">
+<div><span class="qnum">Question 23 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are deploying a multiplayer game server on Agones (GKE). You need to expose the game server pods directly to the internet on a specific UDP port range. Which Kubernetes Network object does Agones typically manage for you to achieve this per-pod addressing?</div>
+<ul class="opts"><li data-l="A">Ingress.</li><li class="correct" data-l="B">NodePort or HostPort.</li><li data-l="C">ClusterIP.</li><li data-l="D">Internal Load Balancer.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Agones manages the allocation of game servers. Since UDP game protocols are stateful and direct, they typically use a &#x27;HostPort&#x27; or &#x27;NodePort&#x27; strategy to map a public port on the Node directly to the container, bypassing complex L7 Ingress logic which often doesn&#x27;t handle UDP well or adds latency.</div><div><span class="lbl">Référence</span> <a href="https://agones.dev/site/docs/getting-started/" target="_blank" rel="noopener">https://agones.dev/site/docs/getting-started/</a></div></div>
+</div><div class="q" id="q24">
+<div><span class="qnum">Question 24 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Mountkirk Games needs to comply with GDPR. They need to delete all player data (spread across BigQuery, Cloud SQL, and Cloud Storage) when a player requests deletion. What is the most reliable architectural pattern?</div>
+<ul class="opts"><li class="correct" data-l="A">Use a &#x27;Data Mapper&#x27; service to track where UserID X data lives, and separate deletion workflows for each system.</li><li data-l="B">Store everything in one Bigtable database.</li><li data-l="C">Manually search each system.</li><li data-l="D">Rely on TTLs.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">The &#x27;Right to be Forgotten&#x27; requires comprehensive deletion. Since data is spread (Polyglot persistence), you need a central tracking system (metadata store) that knows &#x27;User X has data in BQ Table Y, SQL Row Z, GCS File A&#x27;. Then an orchestrator triggers deletion in all those places. There is no magic &#x27;global delete&#x27; button.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/architecture/handling-right-to-be-forgotten" target="_blank" rel="noopener">https://cloud.google.com/architecture/handling-right-to-be-forgotten</a></div></div>
+</div><div class="q" id="q25">
+<div><span class="qnum">Question 25 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You want to deploy an internal admin tool for the game Ops team. It handles sensitive user lookups. You want to serve it on Cloud Run but only allow access to users on the corporate VPN (on-prem). Cloud Run currently has a default URL. What TWO controls are needed?</div>
+<ul class="opts"><li class="correct" data-l="A">Set &#x27;Ingress&#x27; to &#x27;Internal and Cloud Load Balancing&#x27;.</li><li data-l="B">Use Cloud Armor to block all IPs.</li><li data-l="C">Set &#x27;Internal&#x27; ingress only.</li><li data-l="D">Remove IAM permissions for allusers.</li><li class="correct" data-l="E">Deploy an Internal Application Load Balancer in front of Cloud Run.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, E</span></div>
+<div style="margin-top:6px">To make Cloud Run private but accessible via VPN, you restrict Ingress to &#x27;Internal and Load Balancing&#x27;. Then, you deploy an Internal Application Load Balancer (IALB) with a specific IP in the VPC. VPN users can route to this private IP to access the service.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/securing/ingress#internal-load-balancing" target="_blank" rel="noopener">https://cloud.google.com/run/docs/securing/ingress#internal-load-balancing</a></div></div>
+</div><div class="q" id="q26">
+<div><span class="qnum">Question 26 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a Cloud SQL database that is reaching the storage limit. You want to enable automatic storage increases to prevent downtime. What parameter do you configure?</div>
+<ul class="opts"><li data-l="A">`tier` = db-n1-standard-4.</li><li data-l="B">`maintenance_window`.</li><li class="correct" data-l="C">`automatic_storage_increase` = true.</li><li data-l="D">`high_availability` = true.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">The `automatic storage increase` setting allows Cloud SQL to grow its disk size automatically when it runs low, preventing &#x27;disk full&#x27; outages.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/sql/docs/postgres/instance-settings#automatic-storage-increase" target="_blank" rel="noopener">https://cloud.google.com/sql/docs/postgres/instance-settings#automatic-storage-increase</a></div></div>
+</div><div class="q" id="q27">
+<div><span class="qnum">Question 27 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your media application uses a specialized high-performance customized Linux kernel. You need to run this on Compute Engine. What should you use?</div>
+<ul class="opts"><li class="correct" data-l="A">Custom Image imported from your on-premise VHD.</li><li data-l="B">Use a standard Ubuntu image and run a startup script.</li><li data-l="C">Container-Optimized OS.</li><li data-l="D">App Engine Flexible.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">If you need a specific *kernel* or deep OS customization, you build the image on-prem (or using packer) and import it as a Custom Image. Startup scripts (B) run *on top* of the vendor kernel. COS (C) is locked down.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/images/import-existing-image" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/images/import-existing-image</a></div></div>
+</div><div class="q" id="q28">
+<div><span class="qnum">Question 28 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Mountkirk Games wants to predict player churn. They have a dataset in BigQuery. They want to use the simplest possible method to train a model to predict a boolean label &#x27;will_churn&#x27;. Which TWO SQL keywords/functions in BigQuery ML are used?</div>
+<ul class="opts"><li data-l="A">`SELECT PREDICTION FROM ...`</li><li data-l="B">`CREATE MODEL ... OPTIONS(model_type=&#x27;LINEAR_REG&#x27;)`.</li><li class="correct" data-l="C">`ML.PREDICT`.</li><li data-l="D">`ML.EVALUATE`.</li><li class="correct" data-l="E">`CREATE MODEL ... OPTIONS(model_type=&#x27;LOGISTIC_REG&#x27;)`.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C, E</span></div>
+<div style="margin-top:6px">To predict a boolean (classification 0/1), you use Logistic Regression (`model_type=&#x27;LOGISTIC_REG&#x27;`) (A). To use the model for inference, you use the `ML.PREDICT` function (B). Linear regression (C) is for continuous values.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/bigqueryml-syntax-create-glm" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/reference/standard-sql/bigqueryml-syntax-create-glm</a></div></div>
+</div><div class="q" id="q29">
+<div><span class="qnum">Question 29 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are setting up an Organization Policy to secure your hierarchy. You want to disable the creation of Service Account Keys across the entire organization to prevent key leakage. Which constraint do you enforce?</div>
+<ul class="opts"><li class="correct" data-l="A">`iam.disableServiceAccountKeyCreation`.</li><li data-l="B">`iam.disableServiceAccountCreation`.</li><li data-l="C">`storage.uniformBucketLevelAccess`.</li><li data-l="D">`compute.skipDefaultNetworkCreation`.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">`iam.disableServiceAccountKeyCreation` is the specific boolean constraint that prevents users from creating new external keys (JSON/P12) for service accounts, forcing the use of safer alternatives like Workload Identity.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints" target="_blank" rel="noopener">https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints</a></div></div>
+</div><div class="q" id="q30">
+<div><span class="qnum">Question 30 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your game frontend (React SPA) is hosted in a Storage Bucket. You use Cloud Load Balancing with Cloud CDN. You just deployed a new version of `index.html`, but users are still seeing the old version. What should you do?</div>
+<ul class="opts"><li data-l="A">Delete the bucket and recreate it.</li><li data-l="B">Change the Load Balancer IP.</li><li data-l="C">Wait 24 hours for the cache to expire.</li><li class="correct" data-l="D">Invalidate the Cache for the path `/index.html`.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">When you update content at the origin that is cached by CDN, you must explicitly &#x27;Invalidate&#x27; the cache for those paths to force CDN to fetch the new version immediately. Otherwise, it waits for the TTL.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/cdn/docs/invalidating-cached-content" target="_blank" rel="noopener">https://cloud.google.com/cdn/docs/invalidating-cached-content</a></div></div>
+</div><div class="q" id="q31">
+<div><span class="qnum">Question 31 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">A game server running in a container needs access to a specific persistent disk to save replay files. The disk must be retained even if the pod crashes or is rescheduled to another node. What volume type should you use in GKE?</div>
+<ul class="opts"><li data-l="A">emptyDir.</li><li class="correct" data-l="B">PersistentVolumeClaim (PVC) with a Google Compute Engine Persistent Disk StorageClass.</li><li data-l="C">hostPath.</li><li data-l="D">local SSD.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">PVCs backed by Persistent Disks are network-attached and can be detached/reattached to different nodes, ensuring data persistence across pod restarts or rescheduling. `emptyDir` (A) and `local SSD` (D) are ephemeral (lost on pod/node loss). `hostPath` (C) ties you to a specific node.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/concepts/persistent-volumes" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/concepts/persistent-volumes</a></div></div>
+</div><div class="q" id="q32">
+<div><span class="qnum">Question 32 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You want to automate the deployment of your infrastructure using Terraform. You need to store the Terraform state file securely and enable locking to prevent concurrent modifications. Which TWO steps are correct?</div>
+<ul class="opts"><li class="correct" data-l="A">Enable Object Versioning on the bucket.</li><li class="correct" data-l="B">Use a Cloud Storage bucket as the backend.</li><li data-l="C">Use Cloud SQL as the backend.</li><li data-l="D">Terraform locking is not supported on GCA.</li><li data-l="E">Use a local file committed to Git.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, B</span></div>
+<div style="margin-top:6px">The standard GCS backend for Terraform supports state locking (via the bucket generation API) naturally. Enabling Object Versioning (B) is a critical best practice to allow rolling back the state file if it gets corrupted or an accidental bad apply happens.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/docs/terraform/resource-management/store-state" target="_blank" rel="noopener">https://cloud.google.com/docs/terraform/resource-management/store-state</a></div></div>
+</div><div class="q" id="q33">
+<div><span class="qnum">Question 33 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Mountkirk Games receives a court order to hold all logs related to a specific player&#x27;s IP address for potential litigation. The logs are in Cloud Logging. You need to ensure these logs are not deleted by the standard retention policy. What feature should you use?</div>
+<ul class="opts"><li data-l="A">Export to BigQuery.</li><li data-l="B">There is no way to hold logs in Cloud Logging.</li><li class="correct" data-l="C">Create a Log Sink to a locked Bucket.</li><li data-l="D">Apply a Tag to the logs.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Standard Cloud Logging buckets have a set retention. To &#x27;Hold&#x27; logs indefinitely or for a legal hold, you Export (Sink) them to Cloud Storage and apply a Bucket Lock (Retention Policy) or just keep them there. You cannot &#x27;freeze&#x27; specific log entries inside the ephemeral Logging buffer itself easily without moving them.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/logging/docs/export" target="_blank" rel="noopener">https://cloud.google.com/logging/docs/export</a></div></div>
+</div><div class="q" id="q34">
+<div><span class="qnum">Question 34 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are designing the multiplayer matching system. You need a key-value store to hold &#x27;Game Session to Server IP&#x27; mappings. The read/write ratio is 50/50. Availability is more important than consistency (AP system). Which service fits best?</div>
+<ul class="opts"><li class="correct" data-l="A">Cloud Bigtable.</li><li data-l="B">Firestore.</li><li data-l="C">Cloud SQL.</li><li data-l="D">Cloud Spanner.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Cloud Bigtable is a wide-column NoSQL store capable of massive throughput at low latency, making it ideal for high-velocity matchmaking or state data. While Spanner offers strong consistency (CP), Bigtable is often preferred for scenarios where availability and write throughput are the primary drivers (AP characteristics).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigtable/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/bigtable/docs/overview</a></div></div>
+</div><div class="q" id="q35">
+<div><span class="qnum">Question 35 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your media transcoding job needs to mount a shared file system that can be accessed by 100 Compute Engine instances simultaneously for read/write. Throughput is critical. What service should you use?</div>
+<ul class="opts"><li data-l="A">Cloud Storage FUSE.</li><li data-l="B">Persistent Disk (Read-Only).</li><li data-l="C">Local SSD.</li><li class="correct" data-l="D">Filestore (High Scale or Enterprise).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Filestore (managed NFS) is designed for concurrent R/W access from multiple instances. The High Scale/Enterprise tiers offer high IOPS/throughput for media rendering farms. PD (B) is R/O for multi-writer (mostly). GCS FUSE (C) has higher latency.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/filestore/docs/service-tiers" target="_blank" rel="noopener">https://cloud.google.com/filestore/docs/service-tiers</a></div></div>
+</div><div class="q" id="q36">
+<div><span class="qnum">Question 36 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You are performing a &#x27;Lift and Shift&#x27; of a legacy game server farm to Google Cloud. The servers rely on multicast UDP for discovery. You know GCP networks do not support multicast. Which TWO workarounds are valid?</div>
+<ul class="opts"><li class="correct" data-l="A">Use an overlay network (like Weave or flannel) that encapsulates multicast.</li><li class="correct" data-l="B">Rewrite the application to use a sidecar proxy (like Envoy) or service discovery.</li><li data-l="C">Enable &#x27;Multicast&#x27; in the VPC settings.</li><li data-l="D">Use Broadcast instead.</li><li data-l="E">Use IPv6.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, B</span></div>
+<div style="margin-top:6px">Since VPC doesn&#x27;t support multicast, you must either tunnel it (Overlay network A) or re-architect the discovery mechanism (B) to use a central registry/service discovery (like Consul/Zookeeper/Agones K8s API) instead of shouting to the network.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vpc/docs/vpc#specifications" target="_blank" rel="noopener">https://cloud.google.com/vpc/docs/vpc#specifications</a></div></div>
+</div><div class="q" id="q37">
+<div><span class="qnum">Question 37 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">A developer accidentally committed a service account private key to a public GitHub repository. You receive an alert from the &#x27;Event Threat Detection&#x27; service. What is the valid immediate remediation?</div>
+<ul class="opts"><li class="correct" data-l="A">Revoke/Delete the compromised key in the Cloud Console IAM.</li><li data-l="B">Delete the GitHub repo.</li><li data-l="C">Delete the Service Account.</li><li data-l="D">Nothing, the key is encrypted.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">The immediate action is to invalidate the credential. Revoking/Deleting the specific Key ID ensures that anyone holding it cannot access the project. Deleting the entire Service Account (C) might break production apps; rotating the *Key* is sufficiently surgical.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/iam/docs/understanding-service-accounts#managing_service_account_keys" target="_blank" rel="noopener">https://cloud.google.com/iam/docs/understanding-service-accounts#managing_service_account_keys</a></div></div>
+</div><div class="q" id="q38">
+<div><span class="qnum">Question 38 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to run a global marketing campaign website. You expect huge spikes in traffic. You want a serverless platform that scales to zero and charges only for request processing time. Which service is best?</div>
+<ul class="opts"><li data-l="A">Kubernetes Engine Standard.</li><li data-l="B">App Engine Flexible.</li><li class="correct" data-l="C">Cloud Run.</li><li data-l="D">Compute Engine Autoscaling.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Cloud Run is the container-based serverless platform that scales to zero and charges by the millisecond (request processing). App Engine Flex (B) always has at least 1 instance running (no scale to zero) and slower startup. GKE Regular (D) is cluster-based.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/run/docs/overview</a></div></div>
+</div><div class="q" id="q39">
+<div><span class="qnum">Question 39 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Your team needs to connect to a partner&#x27;s VPC in a different Organization. The CIDR ranges overlap, so VPC Peering is not possible. Which TWO options allow private connectivity?</div>
+<ul class="opts"><li data-l="A">VPC Peering with route exchange.</li><li class="correct" data-l="B">Cloud VPN (with NAT).</li><li class="correct" data-l="C">Private Service Connect (PSC).</li><li data-l="D">Shared VPC.</li><li data-l="E">Cloud Interconnect.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, C</span></div>
+<div style="margin-top:6px">Private Service Connect (A) allows you to expose a service (behind a load balancer) to another VPC (consumer) without peering and without caring about IP overlap (the consumer sees a local IP endpoint). Cloud VPN (B) can also connect networks, and if IPs overlap, you can apply NAT on the VPN gateway traffic.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vpc/docs/private-service-connect" target="_blank" rel="noopener">https://cloud.google.com/vpc/docs/private-service-connect</a></div></div>
+</div><div class="q" id="q40">
+<div><span class="qnum">Question 40 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">EHR Healthcare&#x27;s media arm wants to verify that their disaster recovery plan works. They want to simulate a zonal failure for their instance group. What is the recommended way to &#x27;chaos test&#x27; this?</div>
+<ul class="opts"><li class="correct" data-l="A">Use the &#x27;Simulate Maintenance Event&#x27; CLI command.</li><li data-l="B">Manually delete the instances.</li><li data-l="C">Use Fault Injection Service (if available) or simply stop the instances in that zone.</li><li data-l="D">Call Google Support.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Compute Engine lets you simulate a host maintenance event (`gcloud compute instances simulate-maintenance-event`) to verify that your application handles live migration or restart policies correctly. This is the &#x27;safe&#x27; native testing tool.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/simulating-host-maintenance" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/simulating-host-maintenance</a></div></div>
+</div><div class="q" id="q41">
+<div><span class="qnum">Question 41 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a large amount of cold data in Amazon S3. You want to transfer it to Google Cloud Storage Archive class. You want a managed, serverless solution that handles retries and checksums. What tool do you use?</div>
+<ul class="opts"><li class="correct" data-l="A">Storage Transfer Service.</li><li data-l="B">`gsutil rsync` on a VM.</li><li data-l="C">Transfer Appliance.</li><li data-l="D">Dedicated Interconnect.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Storage Transfer Service is designed solely for cloud-to-cloud (S3 to GCS) or on-prem-to-cloud transfers. It is managed, serverless, and handles large scale syncs efficiently.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage-transfer/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/storage-transfer/docs/overview</a></div></div>
+</div><div class="q" id="q42">
+<div><span class="qnum">Question 42 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Which TWO metrics are most critical to monitor for a Cloud Spanner instance to ensure it scales correctly before hitting limits?</div>
+<ul class="opts"><li class="correct" data-l="A">CPU Utilization (High Importance).</li><li class="correct" data-l="B">Storage Utilization.</li><li data-l="C">Disk I/O.</li><li data-l="D">Network Ingress.</li><li data-l="E">Memory Usage.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, B</span></div>
+<div style="margin-top:6px">Spanner scaling is driven by CPU (recommended &lt; 65% for regional high priority) and Storage (limit per node). CPU is the primary signal for adding more nodes.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/spanner/docs/cpu-utilization" target="_blank" rel="noopener">https://cloud.google.com/spanner/docs/cpu-utilization</a></div></div>
+</div><div class="q" id="q43">
+<div><span class="qnum">Question 43 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to deploy a Windows container application. GKE supports Windows Server nodes. What network model must the GKE cluster use?</div>
+<ul class="opts"><li class="correct" data-l="A">VPC-native (Alias IPs).</li><li data-l="B">Routes-based.</li><li data-l="C">Legacy mode.</li><li data-l="D">Standard Docker networking.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Windows Server node pools in GKE require the cluster to be VPC-native (using Alias IPs). Routes-based clusters do not support Windows nodes.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster-windows" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster-windows</a></div></div>
+</div><div class="q" id="q44">
+<div><span class="qnum">Question 44 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your team needs to collaboratively query a 10TB dataset in BigQuery using Python and Visualize results. You want a managed environment where you can share notebooks. What should you use?</div>
+<ul class="opts"><li data-l="A">Colab (Consumer version).</li><li class="correct" data-l="B">Vertex AI Workbench (Managed/Instances).</li><li data-l="C">Cloud Shell Editor.</li><li data-l="D">Local Jupyter Lab.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Vertex AI Workbench is the enterprise-ready managed Jupyter notebook service deep-integrated with BigQuery and IAM, allowing secure sharing and collaboration within the organization.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/workbench/introduction" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/workbench/introduction</a></div></div>
+</div><div class="q" id="q45">
+<div><span class="qnum">Question 45 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You are designing the IP addressing plan for a new VPC. You want to ensure you have enough IPs for GKE clusters. GKE clusters use a lot of IPs for Pods. Which TWO concepts help conserve or manage IP space?</div>
+<ul class="opts"><li class="correct" data-l="A">Secondary IP Ranges (Alias IPs) for Pods.</li><li class="correct" data-l="B">Use RFC 1918 Private ranges.</li><li data-l="C">Reuse the same subnet in multiple regions.</li><li data-l="D">VPC Peering.</li><li data-l="E">NAT.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, B</span></div>
+<div style="margin-top:6px">Using Secondary Ranges (A) isolates Pod IPs from the main Node IPs, keeping your primary range clean for VMs. Using RFC 1918 (B) (10.x.x.x) is just the standard way to define private space. The key GKE concept is Allocation Policies using Secondary Ranges.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/concepts/alias-ips" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/concepts/alias-ips</a></div></div>
+</div><div class="q" id="q46">
+<div><span class="qnum">Question 46 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Mountkirk Games needs a globally distributed database for player profiles. It needs relational semantics (SQL), global consistency, and automatic sharding. What is the only option?</div>
+<ul class="opts"><li class="correct" data-l="A">Cloud Spanner.</li><li data-l="B">Cloud SQL.</li><li data-l="C">Firestore.</li><li data-l="D">Bigtable.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Cloud Spanner is the *only* service that combines Relational (SQL) with Global Consistency and Horizontal Scalability. Cloud SQL is regional (mostly). Bigtable is NoSQL.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/spanner/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/spanner/docs/overview</a></div></div>
+</div><div class="q" id="q47">
+<div><span class="qnum">Question 47 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are hosting a static website on a Cloud Storage bucket. You want to serve it via HTTPS with a custom domain `www.example-game.com`. What must you add?</div>
+<ul class="opts"><li data-l="A">It works by default.</li><li class="correct" data-l="B">A Cloud Load Balancer (HTTP/S) in front of the bucket.</li><li data-l="C">Use App Engine.</li><li data-l="D">Directly configure SSL on the bucket settings.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Cloud Storage buckets can serve HTTP directly (CNAME), but *not* HTTPS with a custom domain directly. To get HTTPS + Custom Domain, you *must* place a Load Balancer (with an SSL certificate) in front of the bucket backend.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/hosting-static-website#https" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/hosting-static-website#https</a></div></div>
+</div><div class="q" id="q48">
+<div><span class="qnum">Question 48 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You suspect a cryptocurrency miner has compromised one of your instances. You want to investigate the disk (forensics) without stopping the instance or alerting the attacker. What TWO steps can you take?</div>
+<ul class="opts"><li class="correct" data-l="A">Create a Snapshot of the running disk.</li><li data-l="B">Create a new Disk from that Snapshot.</li><li class="correct" data-l="C">Attach the new disk to a Forensic VM for analysis.</li><li data-l="D">SSH into the compromised instance immediately.</li><li data-l="E">Suspend the instance.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
+<div style="margin-top:6px">The standard forensic procedure is: Snapshot the live disk (A) (which can be done while running), Create a new disk from it, and attach it to an isolated forensic VM (C) to analyze. Touching the live machine (SSH) changes timestamps/evidence.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/architecture/forensic-analysis-procedure" target="_blank" rel="noopener">https://cloud.google.com/architecture/forensic-analysis-procedure</a></div></div>
+</div><div class="q" id="q49">
+<div><span class="qnum">Question 49 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your application publishes messages to Pub/Sub. You have a subscriber that is slow, causing the subscription backlog to grow. You want to make sure the backlog doesn&#x27;t expire (messages are kept for 7 days). What do you configure?</div>
+<ul class="opts"><li class="correct" data-l="A">Message Retention Duration on the Subscription.</li><li data-l="B">Message Retention Duration on the Topic.</li><li data-l="C">Dead Letter Queue.</li><li data-l="D">Flow Control.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Message retention is configured on the Subscription. By default, this is 7 days. This ensures that unacknowledged messages are retained in the backlog for that duration.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/pubsub/docs/replay-overview" target="_blank" rel="noopener">https://cloud.google.com/pubsub/docs/replay-overview</a></div></div>
+</div><div class="q" id="q50">
+<div><span class="qnum">Question 50 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to run a scheduled task every 5 minutes to call an HTTPS endpoint. What is the simplest fully managed serverless scheduler?</div>
+<ul class="opts"><li class="correct" data-l="A">Cloud Scheduler.</li><li data-l="B">Cron on Compute Engine.</li><li data-l="C">App Engine Cron.</li><li data-l="D">Kubernetes CronJob.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Cloud Scheduler is the fully managed cron-as-a-service. It invokes HTTP/PubSub/AppEngine targets on a schedule.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/scheduler/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/scheduler/docs/overview</a></div></div>
+</div><div class="q" id="q51">
+<div><span class="qnum">Question 51 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">EHR Healthcare&#x27;s security team asks you to ensure that no data is exfiltrated from your BigQuery dataset to external consumers. You want to restrict the `bq` command line tool and UI from copying data to outside the perimeter. What feature do you use?</div>
+<ul class="opts"><li data-l="A">IAM Roles.</li><li data-l="B">Organization Policies.</li><li class="correct" data-l="C">VPC Service Controls.</li><li data-l="D">Private Google Access.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">VPC Service Controls (VPC-SC) is the perimeter security solution that prevents data exfiltration. It blocks operations (like Copy to GCS bucket outside perimeter) even if the user has IAM permission. It serves as the &#x27;Network&#x27; layer logic for API calls.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vpc-service-controls/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/vpc-service-controls/docs/overview</a></div></div>
+</div><div class="q" id="q52">
+<div><span class="qnum">Question 52 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You are deploying a machine learning model on GKE. You need access to NVIDIA GPUs (A100). What TWO things must you configure?</div>
+<ul class="opts"><li class="correct" data-l="A">Use a Node Pool with Accelerator-optimized machine types (e.g., a2-highgpu).</li><li class="correct" data-l="B">Install the NVIDIA GPU drivers (usually via a DaemonSet).</li><li data-l="C">Just enabling the GPU API is enough.</li><li data-l="D">Use Preemptible instances.</li><li data-l="E">Use Local SSD.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, B</span></div>
+<div style="margin-top:6px">To use GPUs in GKE, you need hardware (A) - nodes with GPUs attached. And software (B) - the drivers. GKE can install drivers automatically now (manage drivers), but conceptually you need the drivers present for the Pods to see the device.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/gpus" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/how-to/gpus</a></div></div>
+</div><div class="q" id="q53">
+<div><span class="qnum">Question 53 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a Cloud Function that needs to access a SQL database password. You stored the password in Secret Manager. How do you expose it to the function securely?</div>
+<ul class="opts"><li class="correct" data-l="A">Mount the secret as a volume or environment variable using the run-time integration.</li><li data-l="B">Call the Secret Manager API inside the function code only.</li><li data-l="C">Hardcode it.</li><li data-l="D">Pass it in the deployment command.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Cloud Functions (2nd gen) and Cloud Run support native integration with Secret Manager. You can map a secret version to an Environment Variable or Volume. This is cleaner than writing API call code (B), though B is possible. A is platform-managed.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/functions/docs/configuring/secrets" target="_blank" rel="noopener">https://cloud.google.com/functions/docs/configuring/secrets</a></div></div>
+</div><div class="q" id="q54">
+<div><span class="qnum">Question 54 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">A developer asks for &#x27;Owner&#x27; permission on a production project to debug an issue. You want to follow Least Privilege. What should you offer instead?</div>
+<ul class="opts"><li data-l="A">Grant Editor.</li><li class="correct" data-l="B">Grant specific roles (e.g., Log Viewer, Error Reporter, Debugger User) required for the task.</li><li data-l="C">Ask them to debug in Dev.</li><li data-l="D">Grant Owner for 1 hour.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Always tailor the roles to the task. If they need to debug, they need visibility roles (Logs, Errors, Trace, Debugger) but not &#x27;Editor&#x27; or &#x27;Owner&#x27; which allows resource deletion.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/iam/docs/using-iam-securely#least_privilege" target="_blank" rel="noopener">https://cloud.google.com/iam/docs/using-iam-securely#least_privilege</a></div></div>
+</div><div class="q" id="q55">
+<div><span class="qnum">Question 55 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You are designing a solution to archive 10 years of audit logs. You need to ensure the logs cannot be modified or deleted by anyone (including admins) for the retention period. Which TWO settings are required?</div>
+<ul class="opts"><li data-l="A">Use IAM Deny rules.</li><li data-l="B">Use Cloud KMS.</li><li class="correct" data-l="C">Use a Bucket Lock (Retention Policy).</li><li data-l="D">Use Object Versioning.</li><li class="correct" data-l="E">Lock the Retention Policy.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C, E</span></div>
+<div style="margin-top:6px">Bucket Lock (A) sets the policy. Crucially, you must &#x27;Lock&#x27; the policy (B) to make it permanent and irreversible. Without locking the policy, an admin could remove the policy.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/bucket-lock" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/bucket-lock</a></div></div>
+</div><div class="q" id="q56">
+<div><span class="qnum">Question 56 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a high-traffic static website on Cloud Storage. Users report random 404 errors. You check the logs and see &#x27;Eventual Consistency&#x27; artifacts. What is the likely cause in the old legacy model (irrelevant for 2026)?</div>
+<ul class="opts"><li data-l="A">Listing objects is eventually consistent.</li><li class="correct" data-l="B">GCS is now strongly consistent globally, so this shouldn&#x27;t happen for new objects.</li><li data-l="C">404s mean the file is missing.</li><li data-l="D">Overwriting objects is eventually consistent.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Cloud Storage provides strong consistency for all operations, including read-after-write, read-after-update, and list operations. The 404 error indicates the file is genuinely missing or the user lacks permissions, not an eventual consistency artifact.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/consistency" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/consistency</a></div></div>
+</div><div class="q" id="q57">
+<div><span class="qnum">Question 57 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to ensure that your GKE cluster upgrades its control plane and nodes automatically during a specific time window on weekends. What do you configure?</div>
+<ul class="opts"><li class="correct" data-l="A">Maintenance Windows and Exclusions.</li><li data-l="B">Release Channels.</li><li data-l="C">Manual Upgrades.</li><li data-l="D">Pod Disruption Budgets.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Maintenance Windows allow you to specify broad windows (e.g., logical recurring window) when upgrades can happen. Exclusions allow you to block specific dates (black friday). Release Channels (B) control the version velocity, not the exact wall-clock timing.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/concepts/maintenance-windows-and-exclusions" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/concepts/maintenance-windows-and-exclusions</a></div></div>
+</div><div class="q" id="q58">
+<div><span class="qnum">Question 58 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You have a legacy monolithic application that cannot be containerized yet. You want to maximize reliability on Compute Engine. Which TWO features should you use?</div>
+<ul class="opts"><li data-l="A">Preemptible instances.</li><li data-l="B">Global Load Balancer.</li><li class="correct" data-l="C">Managed Instance Group (MIG) with Autohealing.</li><li data-l="D">Sole-tenant nodes.</li><li class="correct" data-l="E">Regional Persistent Disks.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C, E</span></div>
+<div style="margin-top:6px">For a VM-based monolith, Autohealing (A) ensures the VM is restarted if the app freezes (health check fails). Regional PD (B) ensures that if a Zone fails, the data is safe in another zone and can be force-attached to a new instance in that zone (HA storage).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instance-groups/autohealing-instances-in-migs" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instance-groups/autohealing-instances-in-migs</a></div></div>
+</div><div class="q" id="q59">
+<div><span class="qnum">Question 59 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Mountkirk Games wants to minimize latency for their First Person Shooter. They found that traversing the public internet to reach the GCP region is adding jitter. They want to use Google&#x27;s backbone. What load balancer / network tier is default and recommended?</div>
+<ul class="opts"><li class="correct" data-l="A">Premium Tier (passes traffic to Google edge PoP).</li><li data-l="B">Standard Tier.</li><li data-l="C">Carrier Peering.</li><li data-l="D">Direct Peering.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Premium Tier is the default. It on-ramps traffic at the nearest PoP to the user and carries it on Google&#x27;s private low-jitter backbone. This is ideal for gaming.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/network-tiers/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/network-tiers/docs/overview</a></div></div>
+</div><div class="q" id="q60">
+<div><span class="qnum">Question 60 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You need to run a quick one-off data analysis script on a 500GB CSV file in Cloud Storage. You don&#x27;t want to spin up a server. You accept the processing might take 10 minutes. What is the most cost-effective serverless way?</div>
+<ul class="opts"><li data-l="A">Cloud Function (Gen 2).</li><li class="correct" data-l="B">Cloud Run Job.</li><li data-l="C">Dataflow.</li><li data-l="D">Compute Engine.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Cloud Run Jobs are designed for finite, run-to-completion tasks like data processing scripts. This is more cost-effective and appropriate than spinning up a dedicated VM or using Dataflow for a simple script, and avoids the timeout limitations of Cloud Functions.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/create-jobs" target="_blank" rel="noopener">https://cloud.google.com/run/docs/create-jobs</a></div></div>
+</div>
+</div>
+<script>
+function toggleAll(show){document.querySelectorAll('.q').forEach(function(q){q.classList.toggle('reveal',show);});}
+document.addEventListener('DOMContentLoaded',function(){
+ document.getElementById('showAll').addEventListener('click',function(){toggleAll(true);});
+ document.getElementById('hideAll').addEventListener('click',function(){toggleAll(false);});
+ document.querySelectorAll('.q').forEach(function(q){q.addEventListener('click',function(e){if(e.target.closest('a'))return;q.classList.toggle('reveal');});});
+});
+</script>
+</body></html>

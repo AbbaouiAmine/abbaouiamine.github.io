@@ -1,0 +1,408 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GCP PCA — Mock 9 (Cost Optimization)</title>
+<style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.55}
+.wrap{max-width:900px;margin:0 auto;padding:24px 16px 80px}
+header.hd{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-bottom:20px}
+header.hd h1{margin:0 0 6px;font-size:1.5rem;color:#1a73e8}
+.meta{color:#475569;font-size:.9rem}
+.bar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar a{color:#1a73e8;text-decoration:none;font-weight:600;font-size:.85rem}
+.bar button{font:inherit;cursor:pointer;border:1px solid #cbd5e1;background:#f8fafc;border-radius:8px;padding:5px 12px;font-size:.85rem}
+.q{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.qnum{font-size:.78rem;font-weight:700;color:#1a73e8;letter-spacing:.03em}
+.qtype{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:#64748b;border-radius:999px;padding:2px 8px;margin-left:8px}
+.qtype.multi{background:#b45309}
+.qtext{font-weight:600;margin:8px 0 12px}
+ul.opts{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+ul.opts li{border:1px solid #e2e8f0;border-radius:9px;padding:8px 12px 8px 40px;position:relative;background:#f8fafc;font-size:.92rem}
+ul.opts li::before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:999px;background:#e2e8f0;color:#334155;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center}
+.reveal ul.opts li.correct{background:#e6f4ea;border-color:#34a853}
+.reveal ul.opts li.correct::before{background:#34a853;color:#fff}
+.ans{margin-top:12px;border-left:4px solid #34a853;background:#f0fdf4;border-radius:0 9px 9px 0;padding:10px 14px;display:none}
+.reveal .ans{display:block}
+.ans .lbl{font-weight:700;color:#137333;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.ans a{color:#1a73e8;word-break:break-all}
+</style></head><body>
+<nav class="bar">
+<a href="index.html">&larr; Tous les mocks</a>
+<button id="showAll">Afficher toutes les réponses</button>
+<button id="hideAll">Masquer les réponses</button>
+<span style="color:#64748b;font-size:.8rem">Astuce : cliquez une question pour révéler sa réponse</span>
+</nav>
+<div class="wrap">
+<header class="hd">
+<h1>Mock 9 — Cost Optimization</h1>
+<div class="meta">Google Cloud Professional Cloud Architect · 60 questions · Source&nbsp;: gcppcatest.com</div>
+</header>
+<div class="q" id="q1">
+<div><span class="qnum">Question 1 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your organization has multiple GCP projects across different departments. Finance wants to track costs per department and per project. What&#x27;s the most effective way to enable granular cost attribution?</div>
+<ul class="opts"><li data-l="A">Manually track costs in spreadsheets.</li><li data-l="B">Use Cloud Logging to estimate costs.</li><li data-l="C">Create separate billing accounts for each department.</li><li class="correct" data-l="D">Apply labels to all resources (e.g., department=marketing) and export billing data to BigQuery for analysis.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Labels are the primary mechanism for cost attribution within GCP. Exporting billing data to BigQuery allows SQL-based analysis and custom reports grouped by labels. Separate billing accounts (B) create management overhead and lose consolidated billing benefits. Spreadsheets (C) are error-prone and not scalable. Logging (D) doesn&#x27;t provide cost data.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/how-to/export-data-bigquery" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/how-to/export-data-bigquery</a></div></div>
+</div><div class="q" id="q2">
+<div><span class="qnum">Question 2 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Your Compute Engine costs are higher than expected. You want to reduce costs for non-production workloads. Which TWO strategies are most effective?</div>
+<ul class="opts"><li data-l="A">Deploy more instances.</li><li data-l="B">Upgrade all instances to larger machine types.</li><li class="correct" data-l="C">Schedule instances to shut down during off-hours using instance schedules.</li><li class="correct" data-l="D">Use Spot VMs for fault-tolerant batch and dev/test workloads.</li><li data-l="E">Ignore the cost increase.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C, D</span></div>
+<div style="margin-top:6px">Spot VMs provide 60-91% discounts for interruptible workloads, ideal for dev/test. Instance scheduling (B) automatically stops instances during non-business hours, saving costs. Upgrading (C) and adding instances (D) increase costs. Ignoring (E) is not cost management.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/spot" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/spot</a></div></div>
+</div><div class="q" id="q3">
+<div><span class="qnum">Question 3 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a VM running 24/7 for a production database. The workload is predictable and will run for 3 years. What pricing model minimizes costs?</div>
+<ul class="opts"><li data-l="A">Pay only for storage.</li><li class="correct" data-l="B">Committed Use Discount (CUD) with 3-year commitment.</li><li data-l="C">Spot VMs.</li><li data-l="D">On-demand pricing.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Committed Use Discounts provide up to 57% discount for 1- or 3-year commitments on predictable workloads. For a 3-year production database, this is ideal. On-demand (B) has no discount. Spot VMs (C) can be preempted, unsuitable for databases. Storage-only (D) ignores compute costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/committed-use-discounts-overview" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/committed-use-discounts-overview</a></div></div>
+</div><div class="q" id="q4">
+<div><span class="qnum">Question 4 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your BigQuery costs are escalating due to ad-hoc queries scanning entire tables. What&#x27;s the most cost-effective optimization?</div>
+<ul class="opts"><li class="correct" data-l="A">Partition tables by date and require WHERE clauses on partition columns. Cluster frequently filtered columns.</li><li data-l="B">Delete the dataset.</li><li data-l="C">Increase the dataset size.</li><li data-l="D">Run queries more frequently.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Partitioning reduces the amount of data scanned (BigQuery charges per byte scanned). Clustering further optimizes queries on specific columns. Requiring WHERE on partition columns enforces partition pruning. Increasing size (B) or frequency (C) increases costs. Deleting (D) loses data.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/partitioned-tables" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/partitioned-tables</a></div></div>
+</div><div class="q" id="q5">
+<div><span class="qnum">Question 5 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You need to set up budget alerts for a GCP project to prevent unexpected costs. Which TWO actions should you take?</div>
+<ul class="opts"><li class="correct" data-l="A">Configure notification channels (email, Pub/Sub) to receive alerts.</li><li data-l="B">Delete all resources immediately.</li><li data-l="C">Manually check costs daily.</li><li class="correct" data-l="D">Create a budget in Cloud Billing with threshold alerts (e.g., 50%, 90%, 100%).</li><li data-l="E">Wait for the bill at the end of the month.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, D</span></div>
+<div style="margin-top:6px">Cloud Billing budgets (A) allow setting spending limits with alerts at percentage thresholds. Notifications (B) via email or Pub/Sub enable proactive responses. Waiting (C) and manual checks (D) are reactive. Immediate deletion (E) is extreme and disruptive.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/how-to/budgets" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/how-to/budgets</a></div></div>
+</div><div class="q" id="q6">
+<div><span class="qnum">Question 6 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You&#x27;re storing 100TB of log data in Cloud Storage that&#x27;s accessed once a year for compliance. What storage class minimizes cost?</div>
+<ul class="opts"><li data-l="A">Coldline Storage.</li><li class="correct" data-l="B">Archive Storage with minimum 365-day storage duration.</li><li data-l="C">Standard Storage.</li><li data-l="D">Nearline Storage.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Archive Storage is the lowest-cost option for data accessed less than once a year, with retrieval costs but minimal storage costs. Standard (B) is most expensive. Nearline (C) is for monthly access. Coldline (D) is for quarterly access. For yearly access, Archive is optimal.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/storage-classes" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/storage-classes</a></div></div>
+</div><div class="q" id="q7">
+<div><span class="qnum">Question 7 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your application uses Cloud SQL, and you notice high costs for storage even though only 30% of provisioned disk is used. What optimization reduces costs?</div>
+<ul class="opts"><li data-l="A">Use a smaller machine type.</li><li class="correct" data-l="B">Enable automatic storage increase but start with a smaller initial disk size.</li><li data-l="C">Reduce the disk size to match actual usage (note: you can only increase, not decrease disk size in Cloud SQL).</li><li data-l="D">Delete the database.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Cloud SQL doesn&#x27;t allow decreasing disk size, but you can enable automatic storage increases starting with a smaller disk that grows as needed. This prevents over-provisioning. Reduction (A) isn&#x27;t possible post-creation. Machine type (C) affects compute, not storage. Deletion (D) loses data.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/sql/docs/mysql/instance-settings#automatic-storage-increase-2ndgen" target="_blank" rel="noopener">https://cloud.google.com/sql/docs/mysql/instance-settings#automatic-storage-increase-2ndgen</a></div></div>
+</div><div class="q" id="q8">
+<div><span class="qnum">Question 8 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Network egress costs from your GCP environment to the internet are high. Which TWO strategies reduce egress costs?</div>
+<ul class="opts"><li data-l="A">Send more data over the internet.</li><li class="correct" data-l="B">Compress data before sending over the network.</li><li data-l="C">Increase bandwidth usage.</li><li class="correct" data-l="D">Use Cloud CDN to cache content at Google&#x27;s edge, reducing origin egress.</li><li data-l="E">Use Premium Tier networking for all traffic.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, D</span></div>
+<div style="margin-top:6px">Cloud CDN (A) caches frequently accessed content at edge locations, reducing repeated egress from origin. Compression (B) reduces bytes transferred. Increasing bandwidth (C) and sending more data (E) increase costs. Premium Tier (D) improves performance but doesn&#x27;t reduce egress costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/cdn/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/cdn/docs/overview</a></div></div>
+</div><div class="q" id="q9">
+<div><span class="qnum">Question 9 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a development environment that runs 8 hours/day, 5 days/week. Instances currently run 24/7. What&#x27;s the simplest cost-saving measure?</div>
+<ul class="opts"><li data-l="A">Use larger instances.</li><li data-l="B">Keep instances running to avoid startup delays.</li><li data-l="C">Manually start/stop instances daily.</li><li class="correct" data-l="D">Create instance schedules to start instances at 9 AM and stop at 5 PM on weekdays.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Instance schedules automate start/stop based on time schedules, eliminating manual work and ensuring consistency. This reduces costs by 76% (8h/day * 5days / 168h/week). Manual (B) is error-prone. Continuous running (C) wastes money. Larger instances (D) increase costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/schedule-instance-start-stop" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/schedule-instance-start-stop</a></div></div>
+</div><div class="q" id="q10">
+<div><span class="qnum">Question 10 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Finance wants a detailed breakdown of costs by service, project, and SKU for the past year. What&#x27;s the best data source for custom cost analysis?</div>
+<ul class="opts"><li data-l="A">Estimate costs manually.</li><li class="correct" data-l="B">Export billing data to BigQuery and write SQL queries for custom reports.</li><li data-l="C">Request invoices from Google.</li><li data-l="D">Use the Cloud Console billing page only.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Billing export to BigQuery provides granular, queryable data including every line item, SKU, label, and cost. SQL enables custom analysis, dashboards, and reports. Console (B) has limited analysis capabilities. Invoices (C) are summaries. Manual estimation (D) is inaccurate.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/how-to/export-data-bigquery" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/how-to/export-data-bigquery</a></div></div>
+</div><div class="q" id="q11">
+<div><span class="qnum">Question 11 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You&#x27;re analyzing Cloud Storage costs and notice high retrieval charges from Coldline storage. Which TWO actions optimize costs?</div>
+<ul class="opts"><li data-l="A">Access the data more often to justify the retrieval costs.</li><li class="correct" data-l="B">Implement caching to reduce repeated retrievals of the same data.</li><li data-l="C">Upgrade to Archive storage.</li><li class="correct" data-l="D">Move frequently accessed data back to Standard or Nearline storage classes.</li><li data-l="E">Delete all data immediately.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, D</span></div>
+<div style="margin-top:6px">Coldline has lower storage costs but high retrieval fees. If data is accessed frequently, Standard/Nearline (A) is cheaper overall. Caching (B) reduces repeated retrievals. Accessing more (C) increases costs further. Deletion (D) loses data. Archive (E) has even higher retrieval costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/storage-classes#coldline" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/storage-classes#coldline</a></div></div>
+</div><div class="q" id="q12">
+<div><span class="qnum">Question 12 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your team provisions e2-medium VMs for most workloads, but monitoring shows average CPU utilization is only 10%. What action reduces costs while maintaining performance?</div>
+<ul class="opts"><li data-l="A">Upgrade to e2-standard instances.</li><li class="correct" data-l="B">Downsize to e2-small instances or use Compute Engine rightsizing recommendations.</li><li data-l="C">Add more instances.</li><li data-l="D">Do nothing.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Rightsizing recommendations analyze usage patterns and suggest appropriate machine types. With 10% CPU, smaller instances would suffice, cutting costs in half or more. Upgrading (B) and adding instances (C) increase costs. Doing nothing (D) wastes money.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/apply-machine-type-recommendations-for-instances" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/apply-machine-type-recommendations-for-instances</a></div></div>
+</div><div class="q" id="q13">
+<div><span class="qnum">Question 13 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to ensure BigQuery queries don&#x27;t exceed a specific cost threshold. What control prevents runaway query costs?</div>
+<ul class="opts"><li class="correct" data-l="A">Set a custom quota for query bytes billed (maximum bytes billed) at project or user level.</li><li data-l="B">Only run queries at night.</li><li data-l="C">BigQuery has no cost controls.</li><li data-l="D">Delete the dataset.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">BigQuery allows setting maximum bytes billed per query or per day at project/user level. Queries exceeding this limit fail before processing, preventing cost overruns. Deletion (B) loses data. Time-based access (C) doesn&#x27;t limit costs. Cost controls do exist (D is false).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/custom-quotas" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/custom-quotas</a></div></div>
+</div><div class="q" id="q14">
+<div><span class="qnum">Question 14 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your organization has consistent Compute Engine usage across 50 VMs. You want to reduce costs without changing VM types or usage patterns. What pricing mechanism should you use?</div>
+<ul class="opts"><li data-l="A">Only use on-demand pricing.</li><li data-l="B">Switch to Spot VMs for production workloads.</li><li class="correct" data-l="C">Purchase Committed Use Discounts (CUDs) for the baseline usage.</li><li data-l="D">Increase VM sizes.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">CUDs provide discounts for committed spend on predictable usage. For consistent usage across 50 VMs, this offers significant savings without operational changes. Spot VMs (B) can be preempted, unsuitable for many production workloads. On-demand (C) has no discount. Increasing size (D) increases costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/committed-use-discounts-overview" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/committed-use-discounts-overview</a></div></div>
+</div><div class="q" id="q15">
+<div><span class="qnum">Question 15 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You notice that some VMs have been running idle (near-zero CPU/network) for weeks. Which TWO actions help identify and address these idle resources?</div>
+<ul class="opts"><li class="correct" data-l="A">Review Active Assist recommendations in the Cloud Console.</li><li data-l="B">Delete all VMs immediately without investigation.</li><li data-l="C">Assume all VMs are necessary.</li><li class="correct" data-l="D">Use Recommender API to identify idle VM recommendations.</li><li data-l="E">Increase VM sizes.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, D</span></div>
+<div style="margin-top:6px">Recommender API and Active Assist provide automated recommendations including idle resource detection. They analyze metrics and suggest deletion or downsizing. Assuming necessity (C) wastes money. Immediate deletion (D) is reckless. Increasing size (E) wastes more money.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/recommender/docs/recommenders" target="_blank" rel="noopener">https://cloud.google.com/recommender/docs/recommenders</a></div></div>
+</div><div class="q" id="q16">
+<div><span class="qnum">Question 16 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your data team runs many BigQuery queries that join large tables. Costs are high due to repeated processing of the same base data. What optimization reduces costs?</div>
+<ul class="opts"><li data-l="A">Use smaller tables.</li><li data-l="B">Disable query optimization.</li><li class="correct" data-l="C">Create materialized views of commonly joined data.</li><li data-l="D">Run queries more frequently.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Materialized views pre-compute and cache query results, reducing repeated processing of complex joins and aggregations. Queries against materialized views are faster and cheaper. More frequent queries (B) increase costs. Smaller tables (C) may not be feasible. Disabling optimization (D) increases costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/materialized-views-intro" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/materialized-views-intro</a></div></div>
+</div><div class="q" id="q17">
+<div><span class="qnum">Question 17 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You&#x27;re using Cloud Load Balancer with backend instances in multiple regions. You notice high inter-region data transfer costs. What configuration reduces costs?</div>
+<ul class="opts"><li data-l="A">Disable load balancing.</li><li data-l="B">Send all traffic across regions intentionally.</li><li class="correct" data-l="C">Configure the load balancer with session affinity and locality-based routing to prefer backends in the same region as users.</li><li data-l="D">Use only one region for all backends.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Locality-based routing and session affinity minimize cross-region traffic by directing users to nearby backends. This reduces inter-region egress charges. Intentional cross-region traffic (B) increases costs. Disabling LB (C) affects availability. Single region (D) impacts performance for distant users.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/load-balancing/docs/backend-service#traffic_management" target="_blank" rel="noopener">https://cloud.google.com/load-balancing/docs/backend-service#traffic_management</a></div></div>
+</div><div class="q" id="q18">
+<div><span class="qnum">Question 18 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your Cloud Storage bucket contains 10TB of data with object versions enabled. Most versions are never accessed. What reduces storage costs?</div>
+<ul class="opts"><li data-l="A">Manually delete versions weekly.</li><li class="correct" data-l="B">Implement Object Lifecycle Management to delete old object versions after 30 days.</li><li data-l="C">Disable versioning and lose version history.</li><li data-l="D">Keep all versions forever.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Lifecycle policies can automatically delete older object versions after a specified period, reducing storage costs while maintaining recent versions. Keeping all versions (B) wastes money. Manual deletion (C) doesn&#x27;t scale. Disabling versioning (D) loses an important safety feature.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/lifecycle#delete" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/lifecycle#delete</a></div></div>
+</div><div class="q" id="q19">
+<div><span class="qnum">Question 19 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You want to implement cost accountability across teams sharing a GCP project. Which TWO practices enforce cost visibility and responsibility?</div>
+<ul class="opts"><li data-l="A">Ignore cost attribution.</li><li class="correct" data-l="B">Require all resources to have labels indicating team, environment, and cost center.</li><li data-l="C">Delete all resources at month-end.</li><li class="correct" data-l="D">Create separate projects per team for cleaner cost separation.</li><li data-l="E">Give all teams unlimited budgets.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, D</span></div>
+<div style="margin-top:6px">Labels (A) enable granular cost tracking within shared projects. Separate projects (B) provide natural cost boundaries and clearer attribution. Unlimited budgets (C) encourage waste. Ignoring attribution (D) prevents accountability. Deletion (E) is disruptive and loses work.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/how-to/bq-examples#cost-breakdown-by-project" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/how-to/bq-examples#cost-breakdown-by-project</a></div></div>
+</div><div class="q" id="q20">
+<div><span class="qnum">Question 20 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your application stores user uploads in Cloud Storage. Files are frequently accessed for 7 days, then rarely accessed. What lifecycle policy optimizes costs?</div>
+<ul class="opts"><li data-l="A">Move to Archive immediately.</li><li class="correct" data-l="B">Transition objects to Nearline storage after 7 days, then to Coldline after 90 days.</li><li data-l="C">Keep everything in Standard storage.</li><li data-l="D">Delete all files after 7 days.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Object lifecycle policies can automatically transition objects between storage classes based on age. Standard→Nearline (7d)→Coldline (90d) matches the access pattern and optimizes costs. Standard-only (B) is expensive. Deletion (C) loses data. Immediate Archive (D) has high retrieval costs for 7-day access period.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/lifecycle" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/lifecycle</a></div></div>
+</div><div class="q" id="q21">
+<div><span class="qnum">Question 21 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a BigQuery dataset that hasn&#x27;t been modified in 120 days. What happens to storage pricing automatically?</div>
+<ul class="opts"><li data-l="A">Costs increase after 90 days.</li><li data-l="B">Data is automatically deleted.</li><li data-l="C">No change occurs.</li><li class="correct" data-l="D">BigQuery automatically classifies it as Long-Term Storage with a 50% discount after 90 days of no modification.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">BigQuery automatically applies Long-Term Storage pricing (50% discount) to tables/partitions not modified for 90 consecutive days. This requires no configuration. Costs don&#x27;t increase (B), data isn&#x27;t deleted (C), and there is a change (D is false).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/pricing#long-term-storage" target="_blank" rel="noopener">https://cloud.google.com/bigquery/pricing#long-term-storage</a></div></div>
+</div><div class="q" id="q22">
+<div><span class="qnum">Question 22 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Your GKE cluster has nodes running 24/7 but pod utilization varies significantly. Which TWO autoscaling mechanisms reduce costs?</div>
+<ul class="opts"><li class="correct" data-l="A">Vertical Pod Autoscaler to resize pod resource requests based on usage.</li><li data-l="B">Manually resize cluster weekly.</li><li class="correct" data-l="C">Cluster Autoscaler to add/remove nodes based on pod resource requests.</li><li data-l="D">Never scale down.</li><li data-l="E">Keep cluster at maximum size always.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
+<div style="margin-top:6px">Cluster Autoscaler (A) scales nodes based on pending pods, removing underutilized nodes to save costs. Vertical Pod Autoscaler (B) right-sizes pod requests, preventing over-provisioning. Maximum size (C) and never scaling down (D) waste money. Manual resizing (E) is inefficient.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-autoscaler" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-autoscaler</a></div></div>
+</div><div class="q" id="q23">
+<div><span class="qnum">Question 23 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You&#x27;re using Cloud Functions that are invoked rarely (a few times per day) but have 2GB memory allocated. Billing shows high GB-seconds charges. What reduces costs?</div>
+<ul class="opts"><li data-l="A">Call the function more frequently.</li><li class="correct" data-l="B">Reduce the memory allocation to the minimum required by the function.</li><li data-l="C">Increase memory allocation.</li><li data-l="D">Memory allocation doesn&#x27;t affect costs.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Cloud Functions bill based on GB-seconds (memory × duration). Reducing memory allocation reduces cost per invocation. Increasing memory (B) increases costs. More invocations (C) increase total costs. Memory absolutely affects costs (D is false).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/functions/pricing" target="_blank" rel="noopener">https://cloud.google.com/functions/pricing</a></div></div>
+</div><div class="q" id="q24">
+<div><span class="qnum">Question 24 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your organization uses Cloud Pub/Sub extensively. You notice costs for message storage. What causes this charge and how do you reduce it?</div>
+<ul class="opts"><li class="correct" data-l="A">Unacknowledged messages accumulate in subscriptions. Ensure subscribers process messages promptly or adjust acknowledgment deadlines and retention policies.</li><li data-l="B">Publishing messages causes storage charges.</li><li data-l="C">Delete the topic.</li><li data-l="D">Pub/Sub has no storage costs.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Pub/Sub stores unacknowledged messages and retains acknowledged messages based on retention policy. Large backlogs or long retention increase costs. Improving subscriber performance and adjusting retention reduces storage. Publishing (B) has separate charges. Storage costs do exist (C is false). Deletion (D) loses messaging capability.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/pubsub/pricing" target="_blank" rel="noopener">https://cloud.google.com/pubsub/pricing</a></div></div>
+</div><div class="q" id="q25">
+<div><span class="qnum">Question 25 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to forecast future GCP costs based on current usage trends. What tool provides cost projections?</div>
+<ul class="opts"><li class="correct" data-l="A">Cloud Billing reports with trend analysis and forecasting features.</li><li data-l="B">Manual spreadsheet calculations.</li><li data-l="C">Cloud Logging.</li><li data-l="D">Cloud Trace.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Cloud Billing reports include cost trends and forecasting based on historical usage patterns. This helps with budget planning. Logging (B) and Trace (C) aren&#x27;t cost tools. Manual forecasting (D) is error-prone and time-consuming.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/how-to/reports" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/how-to/reports</a></div></div>
+</div><div class="q" id="q26">
+<div><span class="qnum">Question 26 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Your data pipeline uses Dataflow jobs that run daily for 2 hours. Which TWO optimizations reduce costs?</div>
+<ul class="opts"><li data-l="A">Disable autoscaling.</li><li data-l="B">Run jobs continuously 24/7.</li><li class="correct" data-l="C">Use Spot VMs (formerly Preemptible VMs) for Dataflow workers.</li><li data-l="D">Use the largest machine types available.</li><li class="correct" data-l="E">Right-size worker machine types based on job requirements.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C, E</span></div>
+<div style="margin-top:6px">Spot VMs (A) provide significant discounts for Dataflow batch jobs. Right-sizing workers (B) prevents over-provisioning. Continuous running (C) wastes resources. Largest machines (D) are expensive and often unnecessary. Autoscaling (E helps optimize costs, disabling it is counterproductive.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/dataflow/docs/guides/using-spot-vms" target="_blank" rel="noopener">https://cloud.google.com/dataflow/docs/guides/using-spot-vms</a></div></div>
+</div><div class="q" id="q27">
+<div><span class="qnum">Question 27 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have persistent disks attached to stopped VMs. You&#x27;re being charged for these disks despite VMs being off. What explains this and how do you reduce costs?</div>
+<ul class="opts"><li data-l="A">This is a billing error.</li><li class="correct" data-l="B">Persistent disks are billed independently of VM state. Create snapshots and delete unused disks, or resize disks to match actual usage.</li><li data-l="C">Stopped VMs don&#x27;t incur any charges.</li><li data-l="D">Persistent disk charges stop when VMs stop.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Persistent disks are billed separately from VMs, whether attached to running or stopped instances. Snapshots provide backups while deleting disks reduces costs. Stopped VMs still incur disk storage charges (B and C are false). This is normal billing, not an error (D).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/disks-image-pricing" target="_blank" rel="noopener">https://cloud.google.com/compute/disks-image-pricing</a></div></div>
+</div><div class="q" id="q28">
+<div><span class="qnum">Question 28 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your team frequently creates and deletes GKE clusters for testing. You notice charges for persistent disks that remain after cluster deletion. What prevents this?</div>
+<ul class="opts"><li class="correct" data-l="A">Ensure PersistentVolumes have reclaimPolicy: Delete so disks are removed when PVCs are deleted.</li><li data-l="B">Manually delete disks after every cluster deletion.</li><li data-l="C">Ignore the orphaned disks.</li><li data-l="D">Persistent disks always delete with clusters.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">PersistentVolumes with reclaimPolicy: Retain keep disks after PVC deletion; Delete policy removes them automatically. This prevents orphaned disks. Manual deletion (B) is error-prone. Disks don&#x27;t always auto-delete (C is false). Ignoring (D) wastes money.</div><div><span class="lbl">Référence</span> <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaim-policy" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaim-policy</a></div></div>
+</div><div class="q" id="q29">
+<div><span class="qnum">Question 29 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You&#x27;re evaluating whether to use Cloud Run or GKE for a new service. The workload has unpredictable traffic with long idle periods. Which option is more cost-effective?</div>
+<ul class="opts"><li data-l="A">Always use the most expensive option.</li><li class="correct" data-l="B">Cloud Run with scale-to-zero capability charges only during request processing.</li><li data-l="C">Both cost the same.</li><li data-l="D">GKE with minimum 3 nodes running 24/7.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Cloud Run can scale to zero during idle periods, charging only for actual request processing time and memory. GKE requires nodes running even when idle. For unpredictable traffic with idle periods, Cloud Run is more cost-effective. Costs differ significantly (C is false). Expensive isn&#x27;t always better (D).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/pricing" target="_blank" rel="noopener">https://cloud.google.com/run/pricing</a></div></div>
+</div><div class="q" id="q30">
+<div><span class="qnum">Question 30 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your organization wants to implement FinOps practices for cloud cost management. What&#x27;s the first foundational step?</div>
+<ul class="opts"><li data-l="A">Increase spending without tracking.</li><li data-l="B">Delete all resources immediately.</li><li class="correct" data-l="C">Enable detailed billing export to BigQuery and establish visibility into all costs with proper tagging and labeling.</li><li data-l="D">Ignore cloud costs entirely.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">FinOps starts with visibility. Billing export to BigQuery combined with comprehensive labeling provides the data foundation for analysis, optimization, and accountability. Deletion (B) is reactive, increased spending (C) is wasteful, and ignoring costs (D) prevents optimization.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/blog/topics/cloud-first/how-to-implement-finops-for-google-cloud" target="_blank" rel="noopener">https://cloud.google.com/blog/topics/cloud-first/how-to-implement-finops-for-google-cloud</a></div></div>
+</div><div class="q" id="q31">
+<div><span class="qnum">Question 31 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your organization uses Cloud Spanner with provisioned compute capacity. Usage is high during business hours but minimal overnight. What optimization reduces costs?</div>
+<ul class="opts"><li data-l="A">Shut down Spanner overnight.</li><li data-l="B">Use Cloud SQL instead.</li><li data-l="C">Keep maximum capacity 24/7.</li><li class="correct" data-l="D">Use Spanner autoscaling to adjust compute capacity based on actual demand.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Spanner autoscaling automatically adjusts compute capacity based on load, reducing costs during low-demand periods while maintaining performance during peaks.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/spanner/docs/autoscaling-overview" target="_blank" rel="noopener">https://cloud.google.com/spanner/docs/autoscaling-overview</a></div></div>
+</div><div class="q" id="q32">
+<div><span class="qnum">Question 32 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You&#x27;re implementing cost controls for a shared GCP environment. Which TWO organization policy constraints help prevent unexpected costs?</div>
+<ul class="opts"><li data-l="A">Disable all organization policies.</li><li class="correct" data-l="B">Restrict VM creation to specific machine type families.</li><li data-l="C">Allow all users to create any resources.</li><li data-l="D">Grant Owner role to everyone.</li><li class="correct" data-l="E">Require labels on all resources.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, E</span></div>
+<div style="margin-top:6px">Machine type restrictions (A) prevent users from creating expensive instances. Required labels (B) enable cost attribution and tracking. Unrestricted access and disabled policies increase risk.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/resource-manager/docs/organization-policy/overview" target="_blank" rel="noopener">https://cloud.google.com/resource-manager/docs/organization-policy/overview</a></div></div>
+</div><div class="q" id="q33">
+<div><span class="qnum">Question 33 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your BigQuery slot usage spikes unpredictably, causing on-demand costs to exceed budget. What pricing model provides more predictable costs while handling variable workloads?</div>
+<ul class="opts"><li class="correct" data-l="A">BigQuery Editions with autoscaling between baseline and max slots.</li><li data-l="B">Fixed flat-rate without flexibility.</li><li data-l="C">On-demand pricing only.</li><li data-l="D">Stop using BigQuery.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">BigQuery Editions allow setting baseline slots with autoscaling to handle bursts, providing cost predictability while maintaining query performance during peaks.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/editions-intro" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/editions-intro</a></div></div>
+</div><div class="q" id="q34">
+<div><span class="qnum">Question 34 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have 100TB in a Cloud Storage bucket. 80% of data is rarely accessed but you don&#x27;t know which objects. How do you identify access patterns for cost optimization?</div>
+<ul class="opts"><li data-l="A">Move everything to Archive immediately.</li><li data-l="B">Keep everything in Standard storage.</li><li data-l="C">Delete all data.</li><li class="correct" data-l="D">Enable Access Logs or use Object Lifecycle recommendations based on age patterns.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Access logs track object-level access patterns. Lifecycle recommendations analyze age and access to suggest storage class transitions.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/access-logs" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/access-logs</a></div></div>
+</div><div class="q" id="q35">
+<div><span class="qnum">Question 35 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Your data science team runs expensive ML training jobs on Vertex AI. Which TWO practices reduce training costs?</div>
+<ul class="opts"><li data-l="A">Always use the largest GPU available.</li><li data-l="B">Disable early stopping.</li><li class="correct" data-l="C">Right-size GPU selections based on model requirements.</li><li data-l="D">Train for longer than necessary.</li><li class="correct" data-l="E">Use Spot VMs for training jobs that can handle preemption.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C, E</span></div>
+<div style="margin-top:6px">Spot VMs provide discounts for interruptible workloads. Right-sizing GPUs prevents paying for unnecessary compute. Larger GPUs and longer training increase costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/training/using-spot-vms" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/training/using-spot-vms</a></div></div>
+</div><div class="q" id="q36">
+<div><span class="qnum">Question 36 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You&#x27;re running Cloud Run services that have minimum instances always on for low latency. This adds cost. What alternative reduces costs while maintaining acceptable latency?</div>
+<ul class="opts"><li data-l="A">Increase minimum instances.</li><li data-l="B">Use maximum instances only.</li><li class="correct" data-l="C">Use CPU allocation &#x27;always allocated&#x27; with fewer minimum instances and rely on fast cold starts.</li><li data-l="D">Disable autoscaling.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Optimizing container startup time and using &#x27;always allocated&#x27; CPU can reduce the need for always-on instances while maintaining response times.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/configuring/min-instances" target="_blank" rel="noopener">https://cloud.google.com/run/docs/configuring/min-instances</a></div></div>
+</div><div class="q" id="q37">
+<div><span class="qnum">Question 37 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your application generates 1TB of logs daily in Cloud Logging. Default retention is 30 days. Log storage costs are high. What reduces costs?</div>
+<ul class="opts"><li data-l="A">Logging costs cannot be reduced.</li><li data-l="B">Keep all logs forever.</li><li class="correct" data-l="C">Create exclusion filters to prevent ingesting non-essential logs, and reduce retention for remaining logs.</li><li data-l="D">Increase log verbosity.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Exclusion filters prevent unnecessary logs from being ingested (and charged). Custom retention periods reduce storage duration for remaining logs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/logging/docs/exclusions" target="_blank" rel="noopener">https://cloud.google.com/logging/docs/exclusions</a></div></div>
+</div><div class="q" id="q38">
+<div><span class="qnum">Question 38 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You&#x27;re evaluating Committed Use Discounts (CUDs). Which TWO workload characteristics make CUDs appropriate?</div>
+<ul class="opts"><li data-l="A">Short-term projects lasting weeks.</li><li class="correct" data-l="B">Predictable, stable resource usage over 1-3 years.</li><li class="correct" data-l="C">Resources that will run continuously.</li><li data-l="D">Highly variable, unpredictable workloads.</li><li data-l="E">Resources that can be terminated at any time.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, C</span></div>
+<div style="margin-top:6px">CUDs are ideal for predictable, continuous usage. Variable workloads, short terms, and interruptible resources don&#x27;t benefit from commitments.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/committed-use-discounts-overview" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/committed-use-discounts-overview</a></div></div>
+</div><div class="q" id="q39">
+<div><span class="qnum">Question 39 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your Cloud SQL instance has high availability (HA) enabled but runs a non-critical development database. What change reduces costs while maintaining functionality?</div>
+<ul class="opts"><li data-l="A">HA configuration cannot be changed.</li><li data-l="B">Increase instance size.</li><li class="correct" data-l="C">Disable High Availability for non-production environments.</li><li data-l="D">Enable more replicas.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">HA doubles compute costs by maintaining a standby. For non-critical environments, disabling HA reduces costs significantly.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/sql/docs/mysql/high-availability" target="_blank" rel="noopener">https://cloud.google.com/sql/docs/mysql/high-availability</a></div></div>
+</div><div class="q" id="q40">
+<div><span class="qnum">Question 40 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to automatically shut down expensive resources in a development project at the end of each day. What&#x27;s the simplest approach?</div>
+<ul class="opts"><li data-l="A">Manually stop resources daily.</li><li data-l="B">Delete the project each evening.</li><li data-l="C">Resources cannot be scheduled.</li><li class="correct" data-l="D">Use Cloud Scheduler to trigger a Cloud Function that stops Compute Engine instances.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Cloud Scheduler triggers automated actions (via Cloud Functions or Cloud Run) on a schedule, enabling automated resource scheduling without manual effort.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/scheduler/docs/start-and-stop-compute-engine-instances-on-a-schedule" target="_blank" rel="noopener">https://cloud.google.com/scheduler/docs/start-and-stop-compute-engine-instances-on-a-schedule</a></div></div>
+</div><div class="q" id="q41">
+<div><span class="qnum">Question 41 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your GKE pods are requesting 4GB memory but using only 500MB. This wastes node resources and increases costs. What helps right-size requests?</div>
+<ul class="opts"><li class="correct" data-l="A">Enable Vertical Pod Autoscaler (VPA) to automatically adjust resource requests based on usage.</li><li data-l="B">Increase all requests to 8GB.</li><li data-l="C">Request sizing cannot be automated.</li><li data-l="D">Remove all resource requests.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">VPA analyzes actual usage and recommends or auto-adjusts resource requests, preventing over-provisioning and improving bin-packing efficiency.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/concepts/verticalpodautoscaler" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/concepts/verticalpodautoscaler</a></div></div>
+</div><div class="q" id="q42">
+<div><span class="qnum">Question 42 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You&#x27;re analyzing network costs in your GCP bill. Which TWO factors typically drive high network egress charges?</div>
+<ul class="opts"><li class="correct" data-l="A">Data transfer between regions.</li><li data-l="B">Data transfer within the same zone.</li><li data-l="C">Reading data from Cloud Storage within the same region.</li><li class="correct" data-l="D">Data transfer from GCP to the internet.</li><li data-l="E">Internal VPC communication in the same region.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, D</span></div>
+<div style="margin-top:6px">Internet egress (A) and inter-region transfer (B) incur significant charges. Same-zone (C), same-region storage reads (D), and same-region VPC traffic (E) are free or low cost.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vpc/network-pricing" target="_blank" rel="noopener">https://cloud.google.com/vpc/network-pricing</a></div></div>
+</div><div class="q" id="q43">
+<div><span class="qnum">Question 43 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your Compute Engine VMs use Premium Tier networking but don&#x27;t require global load balancing or optimal routing. What change reduces network costs?</div>
+<ul class="opts"><li class="correct" data-l="A">Switch to Standard Tier networking for internet-facing workloads where latency isn&#x27;t critical.</li><li data-l="B">Network tier cannot be changed.</li><li data-l="C">Standard Tier is more expensive.</li><li data-l="D">Increase to Premium Tier Plus.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Standard Tier routes traffic through public internet (higher latency but lower cost). For non-latency-sensitive workloads, this reduces egress charges.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/network-tiers/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/network-tiers/docs/overview</a></div></div>
+</div><div class="q" id="q44">
+<div><span class="qnum">Question 44 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You&#x27;re running batch jobs that can tolerate preemption. Currently using on-demand instances. What change provides maximum cost savings?</div>
+<ul class="opts"><li data-l="A">Run jobs 24/7.</li><li class="correct" data-l="B">Switch to Spot VMs (up to 91% discount) and implement checkpointing for job recovery.</li><li data-l="C">Use larger on-demand instances.</li><li data-l="D">Spot VMs don&#x27;t provide savings.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Spot VMs offer 60-91% discounts. For batch jobs that can handle interruption, implementing checkpointing enables recovery and massive cost savings.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/spot" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/spot</a></div></div>
+</div><div class="q" id="q45">
+<div><span class="qnum">Question 45 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You want to implement cost allocation for a multi-team organization. Which TWO billing features support this?</div>
+<ul class="opts"><li data-l="A">Deleting cost data.</li><li class="correct" data-l="B">Cost allocation using resource labels.</li><li class="correct" data-l="C">Billing subaccounts for cost separation.</li><li data-l="D">Single billing account without any organization.</li><li data-l="E">Ignoring cost attribution.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, C</span></div>
+<div style="margin-top:6px">Labels enable granular cost tracking within projects. Subaccounts can separate billing for different organizational units while maintaining consolidated visibility.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/concepts#organizations" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/concepts#organizations</a></div></div>
+</div><div class="q" id="q46">
+<div><span class="qnum">Question 46 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your application uses Cloud Memorystore (Redis). The instance is sized for peak load but runs at 20% capacity most of the time. What optimization reduces costs?</div>
+<ul class="opts"><li data-l="A">Memorystore cannot be resized.</li><li class="correct" data-l="B">Use Memorystore with read replicas for peak load and resize primary for normal load, or use auto-scaling capable tiers.</li><li data-l="C">Delete Memorystore entirely.</li><li data-l="D">Keep maximum size always.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Memorystore supports scaling through resizing or read replicas. Right-sizing for normal load with replica capacity for peaks optimizes costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/memorystore/docs/redis/scaling-instances" target="_blank" rel="noopener">https://cloud.google.com/memorystore/docs/redis/scaling-instances</a></div></div>
+</div><div class="q" id="q47">
+<div><span class="qnum">Question 47 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have multiple GCP projects with similar resource quotas. Requesting quota increases for each project individually is time-consuming. What simplifies this?</div>
+<ul class="opts"><li data-l="A">Request quotas for each project individually.</li><li data-l="B">Don&#x27;t use quotas.</li><li class="correct" data-l="C">Create a shared VPC with centrally managed quotas, or use organization-level quota policies.</li><li data-l="D">Quotas cannot be managed centrally.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Shared VPC and organization policies can help manage quotas more centrally, reducing per-project administration overhead.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/docs/quota" target="_blank" rel="noopener">https://cloud.google.com/docs/quota</a></div></div>
+</div><div class="q" id="q48">
+<div><span class="qnum">Question 48 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your Cloud Composer (Airflow) environment is over-provisioned. Most DAGs run for 2 hours daily but the environment runs 24/7. What reduces costs?</div>
+<ul class="opts"><li data-l="A">Run DAGs manually.</li><li data-l="B">Composer environments cannot be resized.</li><li data-l="C">Keep maximum resources allocated.</li><li class="correct" data-l="D">Right-size the Composer environment (workers, scheduler) and consider Cloud Composer 2 with autoscaling.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Cloud Composer 2 supports autoscaling workers. Right-sizing the environment based on actual DAG requirements reduces unnecessary compute costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/composer/docs/composer-2/optimize-environments" target="_blank" rel="noopener">https://cloud.google.com/composer/docs/composer-2/optimize-environments</a></div></div>
+</div><div class="q" id="q49">
+<div><span class="qnum">Question 49 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You&#x27;re building a cost-aware culture in your engineering team. Which TWO practices help?</div>
+<ul class="opts"><li data-l="A">Blame developers for all overages.</li><li class="correct" data-l="B">Include cloud costs in performance reviews and project planning.</li><li data-l="C">Hide costs from developers.</li><li class="correct" data-l="D">Share cost dashboards with all teams regularly.</li><li data-l="E">Give unlimited budgets with no visibility.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, D</span></div>
+<div style="margin-top:6px">Making costs visible and including them in planning creates awareness and accountability. Hiding costs or blaming individuals discourages cost-conscious behavior.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/blog/topics/cloud-first/how-to-implement-finops-for-google-cloud" target="_blank" rel="noopener">https://cloud.google.com/blog/topics/cloud-first/how-to-implement-finops-for-google-cloud</a></div></div>
+</div><div class="q" id="q50">
+<div><span class="qnum">Question 50 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You notice Cloud Build runs are costing more than expected. Builds are using n1-highcpu-32 machines but most builds finish in under 5 minutes. What optimization helps?</div>
+<ul class="opts"><li data-l="A">Machine type doesn&#x27;t affect Cloud Build costs.</li><li class="correct" data-l="B">Use smaller machine types for simple builds; reserve large machines for intensive builds only.</li><li data-l="C">Use larger machines for all builds.</li><li data-l="D">Build locally only.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Cloud Build charges based on build minutes and machine type. Using appropriately sized machines for each build type reduces costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/build/pricing" target="_blank" rel="noopener">https://cloud.google.com/build/pricing</a></div></div>
+</div><div class="q" id="q51">
+<div><span class="qnum">Question 51 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your organization uses flex slots for BigQuery. Slot usage varies significantly by day. What pricing model provides better cost optimization?</div>
+<ul class="opts"><li data-l="A">Use on-demand for everything.</li><li data-l="B">Purchase maximum flat-rate slots.</li><li data-l="C">Slot pricing options don&#x27;t exist.</li><li class="correct" data-l="D">BigQuery Editions with autoscaling to pay for slots only when needed.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">BigQuery Editions with autoscaling automatically adjusts slot allocation based on demand, paying only for compute used while maintaining performance.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/editions-intro" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/editions-intro</a></div></div>
+</div><div class="q" id="q52">
+<div><span class="qnum">Question 52 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You&#x27;re using Filestore for shared storage. The premium tier is provisioned at 2.5TB minimum but you only use 500GB. What reduces costs?</div>
+<ul class="opts"><li data-l="A">Keep Premium tier with unused capacity.</li><li class="correct" data-l="B">Evaluate if Basic HDD or Basic SSD tier meets requirements, as they have lower minimum sizes.</li><li data-l="C">Delete all files.</li><li data-l="D">Filestore tiers cannot be changed.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Different Filestore tiers have different minimum capacities and performance. Selecting the appropriate tier for your needs prevents paying for unused capacity.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/filestore/docs/service-tiers" target="_blank" rel="noopener">https://cloud.google.com/filestore/docs/service-tiers</a></div></div>
+</div><div class="q" id="q53">
+<div><span class="qnum">Question 53 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You want to receive alerts when spending exceeds thresholds. Which TWO configurations enable proactive cost management?</div>
+<ul class="opts"><li data-l="A">Wait for monthly invoice surprise.</li><li class="correct" data-l="B">Budget alerts set at 50%, 75%, 90%, and 100% of budget.</li><li class="correct" data-l="C">Pub/Sub notifications to trigger automated cost-reduction actions.</li><li data-l="D">Check billing once a year.</li><li data-l="E">Disable all spend notifications.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, C</span></div>
+<div style="margin-top:6px">Budget alerts at multiple thresholds provide early warning. Pub/Sub can trigger automation (like instance shutdown) when thresholds are exceeded.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/how-to/budgets" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/how-to/budgets</a></div></div>
+</div><div class="q" id="q54">
+<div><span class="qnum">Question 54 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have GKE pods with both Guaranteed (resource limits = requests) and Burstable QoS classes. During resource pressure, which pods are evicted first?</div>
+<ul class="opts"><li data-l="A">QoS doesn&#x27;t affect eviction.</li><li data-l="B">Guaranteed pods are evicted first.</li><li data-l="C">Both are treated equally.</li><li class="correct" data-l="D">Burstable pods using resources beyond their requests are evicted before Guaranteed pods.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Kubernetes evicts pods based on QoS class: BestEffort first, then Burstable (especially those exceeding requests), and Guaranteed last.</div><div><span class="lbl">Référence</span> <a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-qos/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/workloads/pods/pod-qos/</a></div></div>
+</div><div class="q" id="q55">
+<div><span class="qnum">Question 55 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your data engineering team creates temp tables in BigQuery that aren&#x27;t deleted. What feature automatically removes old temp data?</div>
+<ul class="opts"><li data-l="A">BigQuery doesn&#x27;t support table expiration.</li><li class="correct" data-l="B">Set table expiration times on temp tables to auto-delete after a specified period.</li><li data-l="C">Manual deletion only.</li><li data-l="D">Temp tables never expire.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Table expiration automatically deletes tables after a specified time, preventing accumulation of unused temp tables and reducing storage costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/managing-tables#table_expiration" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/managing-tables#table_expiration</a></div></div>
+</div><div class="q" id="q56">
+<div><span class="qnum">Question 56 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You&#x27;re using Cloud Load Balancer with SSL certificates. You notice certificate management costs. What&#x27;s the most cost-effective approach for SSL/TLS?</div>
+<ul class="opts"><li data-l="A">Purchase expensive third-party certificates.</li><li data-l="B">Disable HTTPS entirely.</li><li data-l="C">Renew certificates manually every month.</li><li class="correct" data-l="D">Use Google-managed SSL certificates (free) instead of self-managed certificates.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Google-managed certificates are free and auto-renewing. They simplify certificate management while eliminating purchase and renewal costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/load-balancing/docs/ssl-certificates/google-managed-certs" target="_blank" rel="noopener">https://cloud.google.com/load-balancing/docs/ssl-certificates/google-managed-certs</a></div></div>
+</div><div class="q" id="q57">
+<div><span class="qnum">Question 57 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Your GKE cluster uses the rapid release channel. You want to reduce operational overhead and potentially save costs. Which TWO changes help?</div>
+<ul class="opts"><li class="correct" data-l="A">Enable node auto-provisioning to automatically select optimal machine types.</li><li data-l="B">Disable all node pools.</li><li data-l="C">Use the most expensive machine types.</li><li class="correct" data-l="D">Switch to the stable release channel for less frequent updates.</li><li data-l="E">Upgrade multiple times per week.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, D</span></div>
+<div style="margin-top:6px">Stable channel reduces update frequency and operational overhead. Node auto-provisioning selects cost-effective machine types based on pod requirements.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/concepts/node-auto-provisioning" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/concepts/node-auto-provisioning</a></div></div>
+</div><div class="q" id="q58">
+<div><span class="qnum">Question 58 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You&#x27;re paying for Cloud Interconnect capacity that&#x27;s underutilized. Traffic uses only 20% of provisioned bandwidth. What optimization reduces costs?</div>
+<ul class="opts"><li class="correct" data-l="A">Downsize the Interconnect capacity or consider Partner Interconnect for lower bandwidth needs.</li><li data-l="B">Add more Interconnect attachments.</li><li data-l="C">Increase Interconnect capacity.</li><li data-l="D">Interconnect capacity cannot be changed.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Partner Interconnect offers smaller capacity increments than Dedicated Interconnect. Right-sizing to actual usage reduces fixed infrastructure costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/network-connectivity/docs/interconnect/concepts/partner-overview" target="_blank" rel="noopener">https://cloud.google.com/network-connectivity/docs/interconnect/concepts/partner-overview</a></div></div>
+</div><div class="q" id="q59">
+<div><span class="qnum">Question 59 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to implement chargebacks to departments based on their cloud usage. What&#x27;s the recommended data source?</div>
+<ul class="opts"><li data-l="A">Single monthly invoice split equally.</li><li data-l="B">Don&#x27;t implement chargebacks.</li><li data-l="C">Estimated costs from developers.</li><li class="correct" data-l="D">Billing export to BigQuery with resource labels indicating department ownership.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Billing export provides detailed, accurate usage data. Labels enable grouping by department for precise chargeback calculations.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/how-to/export-data-bigquery" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/how-to/export-data-bigquery</a></div></div>
+</div><div class="q" id="q60">
+<div><span class="qnum">Question 60 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your organization has unused Committed Use Discounts (CUDs) in one project but high on-demand usage in another. What enables CUD sharing?</div>
+<ul class="opts"><li data-l="A">CUDs only apply to the purchasing project.</li><li data-l="B">Contact Google to transfer CUDs.</li><li data-l="C">CUDs cannot be shared.</li><li class="correct" data-l="D">CUDs automatically apply across all projects under the same billing account.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">CUDs purchased under a billing account automatically apply to matching usage across all projects linked to that billing account, maximizing discount utilization.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/committed-use-discounts-overview#how_commitments_apply" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/committed-use-discounts-overview#how_commitments_apply</a></div></div>
+</div>
+</div>
+<script>
+function toggleAll(show){document.querySelectorAll('.q').forEach(function(q){q.classList.toggle('reveal',show);});}
+document.addEventListener('DOMContentLoaded',function(){
+ document.getElementById('showAll').addEventListener('click',function(){toggleAll(true);});
+ document.getElementById('hideAll').addEventListener('click',function(){toggleAll(false);});
+ document.querySelectorAll('.q').forEach(function(q){q.addEventListener('click',function(e){if(e.target.closest('a'))return;q.classList.toggle('reveal');});});
+});
+</script>
+</body></html>

@@ -1,0 +1,408 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GCP PCA — Mock 5 (Reliability / DR)</title>
+<style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.55}
+.wrap{max-width:900px;margin:0 auto;padding:24px 16px 80px}
+header.hd{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-bottom:20px}
+header.hd h1{margin:0 0 6px;font-size:1.5rem;color:#1a73e8}
+.meta{color:#475569;font-size:.9rem}
+.bar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar a{color:#1a73e8;text-decoration:none;font-weight:600;font-size:.85rem}
+.bar button{font:inherit;cursor:pointer;border:1px solid #cbd5e1;background:#f8fafc;border-radius:8px;padding:5px 12px;font-size:.85rem}
+.q{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.qnum{font-size:.78rem;font-weight:700;color:#1a73e8;letter-spacing:.03em}
+.qtype{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:#64748b;border-radius:999px;padding:2px 8px;margin-left:8px}
+.qtype.multi{background:#b45309}
+.qtext{font-weight:600;margin:8px 0 12px}
+ul.opts{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+ul.opts li{border:1px solid #e2e8f0;border-radius:9px;padding:8px 12px 8px 40px;position:relative;background:#f8fafc;font-size:.92rem}
+ul.opts li::before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:999px;background:#e2e8f0;color:#334155;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center}
+.reveal ul.opts li.correct{background:#e6f4ea;border-color:#34a853}
+.reveal ul.opts li.correct::before{background:#34a853;color:#fff}
+.ans{margin-top:12px;border-left:4px solid #34a853;background:#f0fdf4;border-radius:0 9px 9px 0;padding:10px 14px;display:none}
+.reveal .ans{display:block}
+.ans .lbl{font-weight:700;color:#137333;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.ans a{color:#1a73e8;word-break:break-all}
+</style></head><body>
+<nav class="bar">
+<a href="index.html">&larr; Tous les mocks</a>
+<button id="showAll">Afficher toutes les réponses</button>
+<button id="hideAll">Masquer les réponses</button>
+<span style="color:#64748b;font-size:.8rem">Astuce : cliquez une question pour révéler sa réponse</span>
+</nav>
+<div class="wrap">
+<header class="hd">
+<h1>Mock 5 — Reliability / DR</h1>
+<div class="meta">Google Cloud Professional Cloud Architect · 60 questions · Source&nbsp;: gcppcatest.com</div>
+</header>
+<div class="q" id="q1">
+<div><span class="qnum">Question 1 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are designing a high-traffic web application. You want to ensure that if a single zone fails, the application remains available with no downtime. You also want to minimize latency for global users. Which Load Balancer configuration is best?</div>
+<ul class="opts"><li data-l="A">DNS-based Round Robin.</li><li class="correct" data-l="B">Global External Application Load Balancer with backends in multiple regions.</li><li data-l="C">Regional External Application Load Balancer.</li><li data-l="D">Network Load Balancer with backends in a single zone.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">A Global External Application Load Balancer distributes traffic to the backend instance group closest to the user (minimizing latency). By having backends in multiple regions (and multiple zones within those regions), you achieve high availability and resilience against zonal or even regional failures.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/load-balancing/docs/https" target="_blank" rel="noopener">https://cloud.google.com/load-balancing/docs/https</a></div></div>
+</div><div class="q" id="q2">
+<div><span class="qnum">Question 2 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your finance team wants to prevent any project in the &#x27;Development&#x27; folder from provisioning expensive GPU instances (A2, A3 machine types). They want to allow Standard N2 instances. How do you enforce this?</div>
+<ul class="opts"><li class="correct" data-l="A">Use Quotas to set the GPU quota to 0 for the Development folder projects.</li><li data-l="B">Use Organization Policy `compute.restrictMachineTypes`.</li><li data-l="C">Use IAM to deny `compute.instances.create`.</li><li data-l="D">Use Organization Policy `compute.restrictSharedVpcSubnetworks`.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">While `restrictMachineTypes` (C) can work, the most direct way to strict *capacity* cost control for specific hardware like GPUs is setting the Quota to 0. This gives a clear &#x27;Quota Exceeded&#x27; error. However, `restrictMachineTypes` is also a valid policy constraint. Since Quotas are per-project, and the requirement is for a Folder, Organization Policy `compute.restrictMachineTypes` allowing only `n2-*` is the correct hierarchical enforcement tool.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints" target="_blank" rel="noopener">https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints</a></div></div>
+</div><div class="q" id="q3">
+<div><span class="qnum">Question 3 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a batch workload that runs overnight. It is fault-tolerant and can withstand interruptions. You want to run this at the absolute lowest cost. What Compute Engine modification should you make?</div>
+<ul class="opts"><li data-l="A">Use Committed Use Discounts (CUDs).</li><li class="correct" data-l="B">Use Spot VMs.</li><li data-l="C">Use Custom Machine Types.</li><li data-l="D">Use Shielded VMs.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Spot VMs (formerly Preemptible) offer the steepest discounts (60-91%) for fault-tolerant workloads that can handle being preempted by Google at any time.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/spot" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/spot</a></div></div>
+</div><div class="q" id="q4">
+<div><span class="qnum">Question 4 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You are adopting Site Reliability Engineering (SRE) practices. You need to define a Service Level Objective (SLO) for your API latency. Which TWO components do you need first?</div>
+<ul class="opts"><li class="correct" data-l="A">An Error Budget policy.</li><li data-l="B">A Service Level Agreement (SLA) with your customers.</li><li class="correct" data-l="C">A Service Level Indicator (SLI), such as &#x27;Latency &lt; 300ms&#x27;.</li><li data-l="D">A PagerDuty account.</li><li data-l="E">A Root Cause Analysis (RCA) template.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, C</span></div>
+<div style="margin-top:6px">To have an SLO (target), you first need an SLI (metric to measure). Once you have the Target (SLO), the difference between 100% and your SLO is your Error Budget (C). You cannot have an SLO without an SLI.</div><div><span class="lbl">Référence</span> <a href="https://sre.google/workbook/implementing-slos/" target="_blank" rel="noopener">https://sre.google/workbook/implementing-slos/</a></div></div>
+</div><div class="q" id="q5">
+<div><span class="qnum">Question 5 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are building a GenAI Chatbot using Vertex AI PaLM API. You want to ensure the model answers questions based *strictly* on your own corporate documents stored in Cloud Storage, and citations are provided. What feature should you implement?</div>
+<ul class="opts"><li data-l="A">Function Calling.</li><li data-l="B">Prompt Engineering with &#x27;Temperature = 1.0&#x27;.</li><li data-l="C">Fine-tuning the foundation model.</li><li class="correct" data-l="D">Vertex AI Grounding with Enterprise Search (RAG).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Grounding (Retrieval Augmented Generation - RAG) connects the model to your data sources (Enterprise Search). The model retrieves relevant chunks, generates an answer, and provides citations. Fine-tuning (A) teaches style/format but isn&#x27;t great for factual retrieval of changing docs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/generative-ai/grounding/overview" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/generative-ai/grounding/overview</a></div></div>
+</div><div class="q" id="q6">
+<div><span class="qnum">Question 6 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a large BigQuery dataset. You noticed high storage costs for data that is rarely accessed (older than 1 year). You want to optimize costs automatically without managing partitions manually. What should you check?</div>
+<ul class="opts"><li data-l="A">Enable BigQuery Physical Storage Billing.</li><li data-l="B">Export data to GCS Archive.</li><li data-l="C">Move data to Cloud Bigtable.</li><li class="correct" data-l="D">Ensure the &#x27;Long-term storage&#x27; pricing is applied (it is automatic).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">BigQuery automatically drops the price of storage by ~50% for any table partition not modified in 90 days (Long-term storage). This is the &#x27;do nothing&#x27; optimization. For &#x27;Active vs Logical&#x27; billing (C), that optimizes for compression, but A is the primary mechanism.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/pricing#storage" target="_blank" rel="noopener">https://cloud.google.com/bigquery/pricing#storage</a></div></div>
+</div><div class="q" id="q7">
+<div><span class="qnum">Question 7 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to receive a notification in Slack whenever your monthly Google Cloud spend is forecasted to exceed your defined budget. What should you configure?</div>
+<ul class="opts"><li data-l="A">Cost Breakdown Report.</li><li data-l="B">Quota adjustments.</li><li data-l="C">Billing Export to BigQuery.</li><li class="correct" data-l="D">Cloud Billing Budgets and Alerts connected to a Pub/Sub topic and Cloud Function (or notification channel).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Cloud Billing Budgets allow you to set thresholds. When crossed (or forecasted to cross), it sends an alert. To get it to Slack, you send the alert to a Pub/Sub topic, which triggers a Cloud Function to post to the Slack webhook.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/how-to/notify" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/how-to/notify</a></div></div>
+</div><div class="q" id="q8">
+<div><span class="qnum">Question 8 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You are deploying a GKE cluster. You want to optimize for cost. The workload varies wildly during the day. You are willing to accept potential restarts of some nodes. Which TWO settings help?</div>
+<ul class="opts"><li data-l="A">Use n1-standard-1 instances everywhere.</li><li class="correct" data-l="B">Use a Node Pool with Spot VMs.</li><li data-l="C">Disable Horizontal Pod Autoscaler.</li><li data-l="D">Use Static Node Pools.</li><li class="correct" data-l="E">Enable Cluster Autoscaler.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, E</span></div>
+<div style="margin-top:6px">Cluster Autoscaler (A) adds/removes nodes based on demand, preventing over-provisioning. Spot VMs (B) drastically reduce the cost of the nodes themselves, suitable for stateless/fault-tolerant parts of the workload.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-autoscaler" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-autoscaler</a></div></div>
+</div><div class="q" id="q9">
+<div><span class="qnum">Question 9 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your application is experiencing intermittent 500 errors. You need to identify if a specific version of the code is causing the issue and see the exact line of code in the stack trace for the failed requests. What tool should you use?</div>
+<ul class="opts"><li data-l="A">Cloud Profiler.</li><li data-l="B">Cloud Trace.</li><li class="correct" data-l="C">Error Reporting.</li><li data-l="D">Cloud Monitoring Uptime Checks.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Error Reporting aggregates application crashes and errors. It groups them by root cause and displays the stack trace, allowing you to click through to the source code (if linked). Trace (A) is for latency.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/error-reporting/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/error-reporting/docs/overview</a></div></div>
+</div><div class="q" id="q10">
+<div><span class="qnum">Question 10 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are training a large custom model on Vertex AI. You want to ensure that if the training job crashes after 2 days, you don&#x27;t lose the progress. What should you implement in your training code?</div>
+<ul class="opts"><li data-l="A">Use TPUs instead of GPUs.</li><li class="correct" data-l="B">Checkpointing (saving model artifacts to GCS periodically).</li><li data-l="C">Use a larger machine type.</li><li data-l="D">Increase the `max_run_duration`.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Checkpointing is the standard ML practice for fault tolerance. By saving the model state to persistent storage (GCS) every epoch/hour, you can resume training from the last checkpoint rather than starting over.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/training/exporting-model-artifacts" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/training/exporting-model-artifacts</a></div></div>
+</div><div class="q" id="q11">
+<div><span class="qnum">Question 11 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">Your CFO wants to commit to a 3-year usage contract to save money, but your engineering team is planning to switch from N2 instances to C3 instances next year. Which discount type offers this flexibility?</div>
+<ul class="opts"><li data-l="A">Resource-based Committed Use Discounts (CUDs).</li><li data-l="B">Sustained Use Discounts (SUDs).</li><li data-l="C">Spot VMs.</li><li class="correct" data-l="D">Flexible Committed Use Discounts (Spend-based CUDs).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Flexible (Spend-based) CUDs commit to a dollar amount of spend per hour (e.g., $100/hr) rather than specific resources. This applies across families (N2 to C3) and even across services (Compute, GKE, Cloud Run). Resource-based (A) is tied to the family/region.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/signing-up-committed-use-discounts#spend_based" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/signing-up-committed-use-discounts#spend_based</a></div></div>
+</div><div class="q" id="q12">
+<div><span class="qnum">Question 12 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You are deploying a Cloud SQL database. You need an RPO (Recovery Point Objective) of almost zero (near real-time data loss prevention) in case of a zonal failure. Which TWO features work together for this?</div>
+<ul class="opts"><li data-l="A">Point-in-Time Recovery (PITR).</li><li class="correct" data-l="B">High Availability (HA) configuration.</li><li class="correct" data-l="C">Synchronous Replication.</li><li data-l="D">Read Replicas.</li><li data-l="E">Daily Backups.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, C</span></div>
+<div style="margin-top:6px">Cloud SQL HA (A) uses Synchronous Replication (C) to a standby instance in another zone. Every write is confirmed in both zones before success is returned. This ensures that if the primary zone dies, the standby has all the data (RPO=0).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/sql/docs/postgres/high-availability" target="_blank" rel="noopener">https://cloud.google.com/sql/docs/postgres/high-availability</a></div></div>
+</div><div class="q" id="q13">
+<div><span class="qnum">Question 13 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are using Cloud Tasks to buffer requests to a Cloud Run backend. The backend is being overwhelmed by too many concurrent requests. What configuration in Cloud Tasks can control this?</div>
+<ul class="opts"><li data-l="A">Service Account permissions.</li><li data-l="B">Use a larger queue.</li><li class="correct" data-l="C">Max concurrent dispatches.</li><li data-l="D">Retry configuration: Max attempts.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">`max_concurrent_dispatches` limits the number of tasks the queue can send to the handler simultaneously. This effectively acts as a rate-limiting throttle to protect the downstream backend.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/tasks/docs/reference/rest/v2/projects.locations.queues#RateLimits" target="_blank" rel="noopener">https://cloud.google.com/tasks/docs/reference/rest/v2/projects.locations.queues#RateLimits</a></div></div>
+</div><div class="q" id="q14">
+<div><span class="qnum">Question 14 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to improve the availability of your Google Cloud Storage objects. You currently use &#x27;Standard&#x27; storage in &#x27;us-central1&#x27;. What change increases availability SLA?</div>
+<ul class="opts"><li data-l="A">Switch to &#x27;Dual-Region&#x27; (e.g., &#x27;nam4&#x27;).</li><li class="correct" data-l="B">Switch to &#x27;Multi-Region&#x27; (e.g., &#x27;us&#x27;).</li><li data-l="C">Enable Versioning.</li><li data-l="D">Use &#x27;Nearline&#x27; storage.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Multi-Region (or Dual-Region) buckets replicate data across geographically separated areas. The SLA for availability is higher (99.95%) compared to Regional (99.9%). Dual-region is increasingly the standard for high-availability active-active setups.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/storage-classes" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/storage-classes</a></div></div>
+</div><div class="q" id="q15">
+<div><span class="qnum">Question 15 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are using Vertex AI Search (Gen App Builder). You want to ensure that the search results only include documents that the specific signed-in user has permission to see (ACLs). What pattern do you use?</div>
+<ul class="opts"><li data-l="A">Create a separate search app for each user.</li><li data-l="B">Prompt Engineering.</li><li data-l="C">Filter the results in the frontend code.</li><li class="correct" data-l="D">Access Control List (ACL) sync with the data source connection.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Enterprise Search supports ACL awareness. When you ingest data (e.g., from Drive or SharePoint), it ingests the ACLs. At query time, you pass the user&#x27;s identity, and the search engine filters results to match their permissions securely.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/generative-ai-app-builder/docs/access-control" target="_blank" rel="noopener">https://cloud.google.com/generative-ai-app-builder/docs/access-control</a></div></div>
+</div><div class="q" id="q16">
+<div><span class="qnum">Question 16 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a fleet of VMs that run a stateless web server. CPU utilization fluctuates. You want to maintain CPU at 60%. What scaling signal should you use for the Managed Instance Group (MIG)?</div>
+<ul class="opts"><li class="correct" data-l="A">Average CPU utilization.</li><li data-l="B">Load Balancing Serving Capacity.</li><li data-l="C">Cloud Monitoring Metric: `disk/write_bytes_count`.</li><li data-l="D">Schedule-based autoscaling.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">For CPU-bound applications, the target utilization metric scale signal is the standard and most direct way to maintain performance. If CPU &gt; 60%, add nodes.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/autoscaler/scaling-cpu" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/autoscaler/scaling-cpu</a></div></div>
+</div><div class="q" id="q17">
+<div><span class="qnum">Question 17 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">Your Cloud Run service connects to Firestore. You are seeing high latency on the &#x27;Cold Start&#x27;. Which TWO GenAI/App optimizations can reduce perceived latency for the user?</div>
+<ul class="opts"><li data-l="A">Use a larger container image.</li><li class="correct" data-l="B">Use Min-Instances &gt; 0.</li><li data-l="C">Increase the timeout.</li><li data-l="D">Turn on &#x27;CPU Boost&#x27; in Cloud Run.</li><li class="correct" data-l="E">Streaming responses (stream=True) for LLM output.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, E</span></div>
+<div style="margin-top:6px">Min-instances (B) keeps the container warm, eliminating the infrastructure cold start. Streaming responses (C) begins sending text tokens to the user immediately as they generate, rather than waiting for the full completion, drastically improving &#x27;Time to First Token&#x27; (perceived latency).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/configuring/min-instances" target="_blank" rel="noopener">https://cloud.google.com/run/docs/configuring/min-instances</a></div></div>
+</div><div class="q" id="q18">
+<div><span class="qnum">Question 18 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You need to investigate why your bill spiked yesterday. You want to see exactly which SKU (specific resource type) drove the cost increase in the &#x27;Production&#x27; project. Which tool is best?</div>
+<ul class="opts"><li data-l="A">Pricing Calculator.</li><li data-l="B">Cost Table.</li><li class="correct" data-l="C">Cloud Billing Reports (in Console) grouped by SKU.</li><li data-l="D">Budgets.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Cloud Billing Reports allow you to filter by Project and Time Range, and Group By &#x27;SKU&#x27;. This visualizes exactly which line item (e.g., &#x27;N2 Instance Ram running in Americas&#x27;) caused the spike.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/how-to/reports" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/how-to/reports</a></div></div>
+</div><div class="q" id="q19">
+<div><span class="qnum">Question 19 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are designing a disaster recovery plan. You have an on-premise Oracle database. You want a low-cost solution where you replicate data to Google Cloud, but only spin up the compute instance to run the DB during a disaster test or actual disaster. What is this pattern called?</div>
+<ul class="opts"><li data-l="A">Multi-site Active-Active.</li><li data-l="B">Warm Standby.</li><li data-l="C">Hot Catch-up.</li><li class="correct" data-l="D">Pilot Light.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Pilot Light involves keeping the critical data (the &#x27;pilot light&#x27;) synced (e.g., via log shipping or replication) but the application/compute servers off. They are only turned on during a disaster. This minimizes compute costs.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/architecture/disaster-recovery#pilot-light" target="_blank" rel="noopener">https://cloud.google.com/architecture/disaster-recovery#pilot-light</a></div></div>
+</div><div class="q" id="q20">
+<div><span class="qnum">Question 20 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to automate the labeling of your resources (e.g., adding `cost-center: 123` label to all VMs created by Team A). Which tool can enforce or apply this automatically?</div>
+<ul class="opts"><li class="correct" data-l="A">Terraform (Infrastructure as Code).</li><li data-l="B">TagKeys/TagValues (Resource Manager Tags) with IAM Conditions.</li><li data-l="C">Cloud Monitoring.</li><li data-l="D">Organization Policy.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">While Tags (A) are powerful for policy, &#x27;Labels&#x27; (key-value pairs) are crucial for billing breakdown. The best practice to ensure consistency is to define them in your Terraform modules. Google doesn&#x27;t have a native &#x27;Auto-Labeler&#x27; service that watches and patches resources (though you could write a function), but strictly speaking, IaC is the governance point.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/resource-manager/docs/creating-managing-labels#best_practices" target="_blank" rel="noopener">https://cloud.google.com/resource-manager/docs/creating-managing-labels#best_practices</a></div></div>
+</div><div class="q" id="q21">
+<div><span class="qnum">Question 21 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are using Spot VMs for a batch processing cluster. You want your application to gracefully handle the preemption signal (shutdown notice) to save its state before the VM is killed. How much time do you have after the signal?</div>
+<ul class="opts"><li data-l="A">5 minutes.</li><li data-l="B">10 minutes.</li><li data-l="C">60 seconds.</li><li class="correct" data-l="D">30 seconds.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">When Compute Engine preempts a Spot/Preemptible VM, it sends a shutdown signal (ACPI G2 Soft Off) to the OS. The instance has 30 seconds to run cleanup scripts/shutdown before the kill signal is sent.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instances/spot#preemption_process" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instances/spot#preemption_process</a></div></div>
+</div><div class="q" id="q22">
+<div><span class="qnum">Question 22 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You have a Cloud Spanner instance. You need to increase the read throughput significantly for a marketing event. What TWO actions can you take?</div>
+<ul class="opts"><li data-l="A">Change the schema to use interleaving.</li><li class="correct" data-l="B">Use Stale Reads (exact staleness or max staleness).</li><li data-l="C">Create indexes.</li><li data-l="D">Switch to Regional configuration.</li><li class="correct" data-l="E">Increase the number of Nodes (or Processing Units).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B, E</span></div>
+<div style="margin-top:6px">Spanner scales linearly. Adding nodes (A) increases CPU/Storage capacity for reads/writes. Using Stale Reads (B) (e.g., 15s stale) allows Spanner to serve the read from any replica (globally) without needing a Paxos consensus check, drastically increasing potential throughput and reducing latency.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/spanner/docs/reads" target="_blank" rel="noopener">https://cloud.google.com/spanner/docs/reads</a></div></div>
+</div><div class="q" id="q23">
+<div><span class="qnum">Question 23 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You need to store objects that are accessed frequently for the first 30 days, then rarely for the next 90 days, and then almost never. You want to automate the cost savings. What feature do you enable?</div>
+<ul class="opts"><li data-l="A">Storage Transfer Service.</li><li class="correct" data-l="B">Autoclass.</li><li data-l="C">Object Lifecycle Management.</li><li data-l="D">Cloud Function to move objects.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Autoclass is the new feature (managed OLM) that automatically moves objects to colder storage classes based on last access time, and moves them back to warmer classes if accessed. It simplifies the rule management.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/autoclass" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/autoclass</a></div></div>
+</div><div class="q" id="q24">
+<div><span class="qnum">Question 24 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are deploying a global game backend. You want to use a database that offers global consistency, horizontal scalability, and relational semantics (SQL). Which database do you choose?</div>
+<ul class="opts"><li data-l="A">Firestore.</li><li data-l="B">Cloud SQL.</li><li data-l="C">Bigtable.</li><li class="correct" data-l="D">Cloud Spanner.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Cloud Spanner is the only database that provides Global Strong Consistency with horizontal scaling and SQL (ANSI 2011) Application. Cloud SQL is regional. Firestore is NoSQL. Bigtable is NoSQL.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/spanner" target="_blank" rel="noopener">https://cloud.google.com/spanner</a></div></div>
+</div><div class="q" id="q25">
+<div><span class="qnum">Question 25 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to run a chaos engineering experiment where you intentionally inject latency into your service mesh to test resiliency. Which Google Cloud service supports this?</div>
+<ul class="opts"><li data-l="A">Cloud Armor.</li><li data-l="B">Cloud Chaos Monkey.</li><li data-l="C">Cloud Trace.</li><li class="correct" data-l="D">Cloud Service Mesh (Traffic Director/Istio) Fault Injection.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Service Mesh (Anthos Service Mesh/Traffic Director) allows you to define VirtualServices with &#x27;fault&#x27; configurations, injecting delays or aborts (errors) for a percentage of traffic to test client resiliency.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/service-mesh/docs/fault-injection" target="_blank" rel="noopener">https://cloud.google.com/service-mesh/docs/fault-injection</a></div></div>
+</div><div class="q" id="q26">
+<div><span class="qnum">Question 26 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You need to decide between Cloud Bigtable and DynamoDB (migrating to GCP). Your workload is time-series data from 10 million IoT devices, with extremely high write throughput requirements (&gt;100k QPS). You need single-digit ms latency. Which service is appropriate?</div>
+<ul class="opts"><li data-l="A">Cloud Spanner.</li><li class="correct" data-l="B">Cloud Bigtable.</li><li data-l="C">Firestore.</li><li data-l="D">Cloud SQL.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Cloud Bigtable is designed for wide-column, high-throughput writer workloads like IoT time-series or ad-tech. It scales linearly to millions of QPS.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigtable/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/bigtable/docs/overview</a></div></div>
+</div><div class="q" id="q27">
+<div><span class="qnum">Question 27 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are responsible for a GKE cluster. You notice that many pods are requesting 4GB of RAM but only using 500MB. This is wasting money. What Recommender should you look at?</div>
+<ul class="opts"><li data-l="A">Committed Use Discount Recommender.</li><li class="correct" data-l="B">GKE Cost Optimization (Rightsizing) Recommender.</li><li data-l="C">Security Command Center.</li><li data-l="D">Idle VM Recommender.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">GKE provides specific Workload Rightsizing recommendations. It analyzes actual usage vs. requests and suggests more efficient request values.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/concepts/cost-optimization-monitoring" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/concepts/cost-optimization-monitoring</a></div></div>
+</div><div class="q" id="q28">
+<div><span class="qnum">Question 28 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You want to reduce the cost of your BigQuery analysis. You have many queries that run `SELECT *` on large tables but only need a few columns. What TWO best practices improve performance and cost?</div>
+<ul class="opts"><li class="correct" data-l="A">Select only the necessary columns.</li><li data-l="B">Use Clustered tables.</li><li data-l="C">Use ORDER BY.</li><li data-l="D">Use LIMIT 10.</li><li class="correct" data-l="E">Use Partitioned tables.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A, E</span></div>
+<div style="margin-top:6px">BigQuery charges by bytes scanned. Selecting specific columns (A) reduces column scan. Partitioning (B) reduces row scan (pruning). LIMIT (C) does NOT reduce cost (full table is still scanned first).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/docs/best-practices-performance-output" target="_blank" rel="noopener">https://cloud.google.com/bigquery/docs/best-practices-performance-output</a></div></div>
+</div><div class="q" id="q29">
+<div><span class="qnum">Question 29 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are using Vertex AI to deploy a model endpoint. You noticed the endpoint stays running 24/7 even when no requests are coming in, costing money. How do you fix this?</div>
+<ul class="opts"><li data-l="A">Use Cloud Run.</li><li data-l="B">Use Batch Prediction.</li><li data-l="C">Set `trafficSplit` to 0.</li><li class="correct" data-l="D">Set the `minReplicaCount` to 0.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">If `minReplicaCount` is set to 1 (default for some), you pay for at least 1 node. Setting it to 0 allows the endpoint to scale to zero when idle (though this introduces cold start latency).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/predictions/configure-compute" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/predictions/configure-compute</a></div></div>
+</div><div class="q" id="q30">
+<div><span class="qnum">Question 30 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are building a resilient VPN connection. You want 99.99% availability. How many Cloud VPN tunnels and gateways do you need?</div>
+<ul class="opts"><li data-l="A">2 HA VPN Gateways, 2 tunnels.</li><li data-l="B">1 HA VPN Gateway, 2 tunnels.</li><li class="correct" data-l="C">2 HA VPN Gateways (one in each region), 4 tunnels total.</li><li data-l="D">1 Classic VPN Gateway.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">For 99.99% SLA, you need an HA VPN setup with redundancy. Specifically, if connecting to AWS/On-prem, you generally need 2 tunnels on the GCP side (from the 2 interfaces of the HA Gateway) to 2 peer interfaces. The standard 99.99% topology requires 4 tunnels if connecting to another cloud, or 2 tunnels to two on-prem devices.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/network-connectivity/docs/vpn/concepts/topologies" target="_blank" rel="noopener">https://cloud.google.com/network-connectivity/docs/vpn/concepts/topologies</a></div></div>
+</div><div class="q" id="q31">
+<div><span class="qnum">Question 31 / 60</span><span class="qtype multi">multi</span></div>
+<div class="qtext">You are monitoring your application using SRE practices. You have set an SLO of 99.9% availability. You want to be alerted if the current error rate is high enough that you will exhaust your error budget in the next 1 hour (Fast Burn). What should you configure?</div>
+<ul class="opts"><li data-l="A">An Alerting Policy based on the Error Budget remaining &lt; 10%.</li><li class="correct" data-l="B">An Alerting Policy based on specific Burn Rate threshold (e.g., 14.4x) over a short window.</li><li data-l="C">An Alerting Policy based on &#x27;Any Error&#x27; &gt; 0.</li><li data-l="D">An Uptime Check.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Effective SRE alerting uses Burn Rates. High burn rates (e.g., spending the monthly budget in an hour) indicate urgent problems. Alerting solely on &#x27;Budget Remaining&#x27; acts too late (when you&#x27;ve already failed). Alerting on any error is too noisy.</div><div><span class="lbl">Référence</span> <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">https://sre.google/workbook/alerting-on-slos/</a></div></div>
+</div><div class="q" id="q32">
+<div><span class="qnum">Question 32 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You operate a Shared VPC. The Service Project Admins are deploying VMs that transfer huge amounts of data to the internet (Egress). This is costing the Host Project money. You want to simplify the billing so that the Service Projects pay for their own egress usage directly. What should you do?</div>
+<ul class="opts"><li data-l="A">Use a Proxy.</li><li data-l="B">This is not possible; Host Project always pays for Egress in Shared VPC.</li><li class="correct" data-l="C">Enable Shared VPC Service Project Billing (Billing Export).</li><li data-l="D">Peer the VPCs instead of Shared VPC.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Google Cloud allows you to attribute the network usage (egress) cost to the Service Project that generated it, rather than the Host Project that owns the network. This is a configuration in the Shared VPC setup.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vpc/docs/shared-vpc#billing" target="_blank" rel="noopener">https://cloud.google.com/vpc/docs/shared-vpc#billing</a></div></div>
+</div><div class="q" id="q33">
+<div><span class="qnum">Question 33 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are deploying a Generative AI application using Vertex AI Studio. You want to ensure that the model does not generate hate speech or sexually explicit content. What control do you use?</div>
+<ul class="opts"><li data-l="A">VPC Service Controls.</li><li data-l="B">IAM Roles.</li><li class="correct" data-l="C">Safety Filter Settings (Safety Attributes).</li><li data-l="D">Prompt Engineering &#x27;Do not be rude&#x27;.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Vertex AI has built-in Safety Filters for Hate Speech, Harassment, Sexually Explicit, and Dangerous Content. You can adjust the threshold (Block few / Block some / Block most) in the configuration.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/generative-ai/learn/responsible-ai" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/generative-ai/learn/responsible-ai</a></div></div>
+</div><div class="q" id="q34">
+<div><span class="qnum">Question 34 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are storing critical banking transaction logs in Cloud Storage Multi-Region. You need a Recovery Point Objective (RPO) of 15 minutes for asynchronous geo-replication. What feature ensures this?</div>
+<ul class="opts"><li class="correct" data-l="A">Turbo Replication.</li><li data-l="B">Dual-Region Bucket.</li><li data-l="C">Object Versioning.</li><li data-l="D">Standard Replication.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Standard geo-replication RPO is undefined (target is minutes/hours). Turbo Replication is a premium feature that guarantees (backed by SLA) that objects are replicated to the other region within 15 minutes of upload.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/turbo-replication" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/turbo-replication</a></div></div>
+</div><div class="q" id="q35">
+<div><span class="qnum">Question 35 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have hundreds of VMs. You want to find instances that are oversized (idle) and resize them to save money. You want to do this programmatically. Which API do you query?</div>
+<ul class="opts"><li data-l="A">Cloud Monitoring API.</li><li data-l="B">Cloud Billing API.</li><li class="correct" data-l="C">Recommender API.</li><li data-l="D">Compute Engine API (List Instances).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">The Recommender API exposes the &#x27;Rightsizing&#x27; recommendations generated by Google&#x27;s algorithms. You can write a script to list these recommendations and then apply them.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/recommender/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/recommender/docs/overview</a></div></div>
+</div><div class="q" id="q36">
+<div><span class="qnum">Question 36 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are building a semantic search engine. You have generated Embeddings for 1 million documents. You need to perform similarity search (Nearest Neighbor) on these embeddings with low latency. What service do you use?</div>
+<ul class="opts"><li class="correct" data-l="A">Vertex AI Vector Search (Matching Engine).</li><li data-l="B">Cloud Spanner.</li><li data-l="C">Datastore.</li><li data-l="D">BigQuery Search Index.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Vertex AI Vector Search (formerly Matching Engine) is the scalable, high-QPS service for conducting Approximate Nearest Neighbor (ANN) search on high-dimensional vectors (embeddings).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/vector-search/overview" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/vector-search/overview</a></div></div>
+</div><div class="q" id="q37">
+<div><span class="qnum">Question 37 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a global user base. You want users in Europe to be directed to the Load Balancer IP in Frankfurt, and users in Asia to the IP in Tokyo, using DNS resolution. Which Cloud DNS feature is this?</div>
+<ul class="opts"><li data-l="A">Anycast IP.</li><li class="correct" data-l="B">Geo-weighted Load Balancing (Routing Policies).</li><li data-l="C">Forwarding Zones.</li><li data-l="D">DNSSEC.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Cloud DNS Routing Policies allow you to define rules based on the client&#x27;s geo-location (Geo-weighted). This resolves the same A-record to different IPs based on where the query comes from.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/dns/docs/zones/routing-policies-overview" target="_blank" rel="noopener">https://cloud.google.com/dns/docs/zones/routing-policies-overview</a></div></div>
+</div><div class="q" id="q38">
+<div><span class="qnum">Question 38 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are migrating a critical Data Warehouse from Teradata to BigQuery. You need high reliability (99.99% SLA) and advanced disaster recovery features like cross-region dataset replication with failover. Which BigQuery Edition should you choose?</div>
+<ul class="opts"><li class="correct" data-l="A">BigQuery Enterprise Plus.</li><li data-l="B">BigQuery Enterprise.</li><li data-l="C">BigQuery On-Demand.</li><li data-l="D">BigQuery Standard.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">BigQuery Enterprise Plus is the top tier that includes advanced features like Cross-Region Replication (CRR) for DR and higher SLA guarantees tailored for mission-critical workloads.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/bigquery/pricing#editions" target="_blank" rel="noopener">https://cloud.google.com/bigquery/pricing#editions</a></div></div>
+</div><div class="q" id="q39">
+<div><span class="qnum">Question 39 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have deployed a machine learning model to production. You are concerned that the distribution of live data is drifting away from the training data (Training-Serving Skew), causing accuracy loss. What Vertex AI service detects this?</div>
+<ul class="opts"><li data-l="A">Vertex AI Evaluation Service.</li><li data-l="B">Vertex AI Experiments.</li><li data-l="C">Cloud Monitoring.</li><li class="correct" data-l="D">Vertex AI Model Monitoring.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Model Monitoring continuously samples the prediction inputs and outputs. It compares them against the training dataset stats (baseline) and alerts you if there is significant drift or skew.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/model-monitoring/overview" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/model-monitoring/overview</a></div></div>
+</div><div class="q" id="q40">
+<div><span class="qnum">Question 40 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a Managed Instance Group (MIG). The application freezes occasionally but the process stays running (TCP port 80 is open). The Load Balancer Health Check passes (TCP check), but the user gets no response. How do you ensure the MIG recreates these frozen instances?</div>
+<ul class="opts"><li class="correct" data-l="A">Configure an Application-based Health Check (HTTP) that verifies a response, and attach it as an Autohealing Policy to the MIG.</li><li data-l="B">Use TCP Health Check on port 81.</li><li data-l="C">Use a Liveness Probe in Kubernetes.</li><li data-l="D">Use Uptime Checks.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">A TCP check only verifies the socket is open. If the app is deadlocked, TCP might still work. You need an application-level (HTTP) health check that expects a &#x27;200 OK&#x27; from a specific endpoint. Attaching this to the MIG &#x27;Autohealing&#x27; policy ensures the MIG kills and recreates the node if the app check fails.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/instance-groups/autohealing-instances" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/instance-groups/autohealing-instances</a></div></div>
+</div><div class="q" id="q41">
+<div><span class="qnum">Question 41 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You serve heavy media assets (images/video) to global users effectively. You want to reduce the egress cost from your Cloud Storage bucket and improve load times. What should you enable?</div>
+<ul class="opts"><li data-l="A">Transcoding API.</li><li data-l="B">Multi-Regional Storage.</li><li class="correct" data-l="C">Cloud CDN.</li><li data-l="D">Media CDN (for very high throughput).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Cloud CDN caches content at the edge (Google&#x27;s Points of Presence). Serving from cache is cheaper (CDN egress rates) than reading from GCS every time, and much faster for the user.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/cdn/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/cdn/docs/overview</a></div></div>
+</div><div class="q" id="q42">
+<div><span class="qnum">Question 42 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are training a Large Language Model (LLM). You want to align the model&#x27;s responses to human preference (e.g., &#x27;Make it more helpful&#x27;). You have a dataset of human rankings of model outputs. What technique do you use in Vertex AI?</div>
+<ul class="opts"><li data-l="A">Distillation.</li><li data-l="B">Prompt Engineering.</li><li data-l="C">Supervised Fine-Tuning.</li><li class="correct" data-l="D">Reinforcement Learning from Human Feedback (RLHF).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">RLHF is the specific technique used to align models with complex human values (helpfulness, safety) by training a Reward Model on human preference data and then optimizing the policy using Reinforcement Learning.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/generative-ai/models/tune-models" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/generative-ai/models/tune-models</a></div></div>
+</div><div class="q" id="q43">
+<div><span class="qnum">Question 43 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You need high availability for your SQL Server database running on Compute Engine. You want to use Always On Availability Groups. This requires the disk to be available in two zones simultaneously? No, that&#x27;s not how it works. Actually, for HA SQL on GCE, you often use synchronous replication. But wait - what is &#x27;Regional Persistent Disk&#x27;?</div>
+<ul class="opts"><li class="correct" data-l="A">A disk that is synchronously replicated between two zones in the same region.</li><li data-l="B">A disk that is replicated across regions.</li><li data-l="C">A snapshot.</li><li data-l="D">A local SSD.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Regional Persistent Disks (RePD) provide synchronous replication of block storage between two zones. If one zone fails, you can force-attach the disk to a VM in the secondary zone without data loss (RPO=0), which is ideal for HA database setups like SQL Server Failover Cluster Instances.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/disks/regional-persistent-disk" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/disks/regional-persistent-disk</a></div></div>
+</div><div class="q" id="q44">
+<div><span class="qnum">Question 44 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are archiving regulatory data. It must be kept for 7 years. It will likely never be accessed again unless there is an audit. Which storage class offers the lowest price for this use case?</div>
+<ul class="opts"><li class="correct" data-l="A">Archive Storage.</li><li data-l="B">Standard Storage.</li><li data-l="C">Coldline Storage.</li><li data-l="D">Nearline Storage.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Archive Storage is the lowest cost tier for storage ($0.0012/GB/month), designed for data accessed less than once a year. It has the highest retrieval cost, but for &#x27;likely never accessed&#x27;, it is the cheapest choice.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/storage/docs/storage-classes" target="_blank" rel="noopener">https://cloud.google.com/storage/docs/storage-classes</a></div></div>
+</div><div class="q" id="q45">
+<div><span class="qnum">Question 45 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are using Gemini Code Assist (Duet AI) in your IDE. You are concerned that your proprietary code might be used by Google to train their foundation models. What is Google&#x27;s policy on this for Enterprise users?</div>
+<ul class="opts"><li data-l="A">Only comments are used.</li><li class="correct" data-l="B">Google does NOT use Enterprise customers&#x27; private code/data to train the base foundation models.</li><li data-l="C">Google anonymizes the code and uses it.</li><li data-l="D">You must opt-out via a support ticket.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Google&#x27;s Generative AI data governance policy states that for Enterprise customers (paying users), customer data (prompts, inputs, code) is *not* used to train the general foundation models (like PaLM/Gemini Global). Your data stays within your tenant scope (or is used to train *your* adapters if configured).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/generative-ai/data-governance" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/generative-ai/data-governance</a></div></div>
+</div><div class="q" id="q46">
+<div><span class="qnum">Question 46 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are using an External HTTP(S) Load Balancer. You have a backend service with a `max-rate-per-instance` set to 100 RPS. You notice that even when traffic is low (50 RPS per instance), the Load Balancer is spinning up new instances. The `Capacity Scaler` is set to 1.0. What triggered this?</div>
+<ul class="opts"><li data-l="A">Cloud CDN is enabled.</li><li class="correct" data-l="B">The target CPU utilization of the MIG (Autoscaler) was exceeded, triggering scale out.</li><li data-l="C">The Load Balancer balancing mode is misconfigured.</li><li data-l="D">You are using Spot VMs.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Capacity Scaler in Load Balancing controls how much of the *configured* capacity (RPS) is used effectively for routing. But instance creation is driven by the *Autoscaler* attached to the Instance Group. The Autoscaler has its own signal (usually CPU). If CPU is high (complex requests) even if RPS is low, the Autoscaler adds nodes.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/autoscaler" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/autoscaler</a></div></div>
+</div><div class="q" id="q47">
+<div><span class="qnum">Question 47 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are running a steady-state workload on GKE using General Purpose (Pro) pricing (N2 instances). You did not purchase Committed Use Discounts. What discount do you get automatically for running the instances more than 25% of the month?</div>
+<ul class="opts"><li data-l="A">Spot Discount.</li><li data-l="B">Free Tier.</li><li class="correct" data-l="C">There are no automatic discounts for N2/N2D (unless specifically GCE Suds apply, but on GKE standard it depends on the node image family). Actually, N2 only gets CUDs. N1 gets SUDs.</li><li data-l="D">Sustained Use Discounts (SUDs).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Careful here. Sustained Use Discounts (SUDs) – the automatic discount that kicks in as you use more of the month – apply mainly to older generations (N1, M1). Newer generations (N2, N2D, C2, etc.) do NOT get SUDs. They only get Committed Use Discounts (CUDs). If you run N2 steady-state without a CUD commit, you pay on-demand full price.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/compute/docs/sustained-use-discounts" target="_blank" rel="noopener">https://cloud.google.com/compute/docs/sustained-use-discounts</a></div></div>
+</div><div class="q" id="q48">
+<div><span class="qnum">Question 48 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are generating images for a marketing campaign using Imagen on Vertex AI. You want to ensure that if these images are shared publicly, they can be identified as AI-generated to support responsible AI labeling. What feature is automatically applied?</div>
+<ul class="opts"><li data-l="A">Metadata tag &#x27;Made by Google&#x27;.</li><li data-l="B">Visible watermark logo.</li><li data-l="C">No marking is applied.</li><li class="correct" data-l="D">SynthID watermarking.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">SynthID is Google&#x27;s technology for embedding imperceptible digital watermarks into AI-generated images (and audio/text). Imagen on Vertex AI applies this to output images to allow detection tools to identify them as AI-generated.</div><div><span class="lbl">Référence</span> <a href="https://deepmind.google/technologies/synthid/" target="_blank" rel="noopener">https://deepmind.google/technologies/synthid/</a></div></div>
+</div><div class="q" id="q49">
+<div><span class="qnum">Question 49 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have workloads across Compute Engine, VMware Engine, and Cloud SQL. You want a centralized backup and disaster recovery management plane that lets you define policies (e.g., &#x27;Retain for 30 days, Cross-region copy&#x27;) across all these assets. What service is this?</div>
+<ul class="opts"><li data-l="A">Snapshot Schedules.</li><li data-l="B">Cloud Storage Lifecycle Management.</li><li class="correct" data-l="C">Google Cloud Backup and DR Service.</li><li data-l="D">Kubernetes Backup.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : C</span></div>
+<div style="margin-top:6px">Google Cloud Backup and DR Service (formerly Actifio) is a centralized managed service for protecting workloads (VMs, DBs, VMWare) across Google Cloud and on-prem. It provides a unified policy engine for backup and recovery.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/backup-disaster-recovery/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/backup-disaster-recovery/docs/overview</a></div></div>
+</div><div class="q" id="q50">
+<div><span class="qnum">Question 50 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are running a background processing service on Cloud Run. It polls a Pub/Sub Lite partition. You need the CPU to be available even when no HTTP request is actively being processed (background polling). What setting must you enable?</div>
+<ul class="opts"><li data-l="A">Min-instances.</li><li data-l="B">Max-instances.</li><li data-l="C">Concurrency = 1.</li><li class="correct" data-l="D">CPU &#x27;Always allocated&#x27;.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">By default, Cloud Run throttles CPU to nearly zero when no request is in-flight. To run background threads (listeners/pollers) outside of a request context, you must configure CPU allocation to be &#x27;CPU is always allocated&#x27;.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/run/docs/configuring/cpu-allocation" target="_blank" rel="noopener">https://cloud.google.com/run/docs/configuring/cpu-allocation</a></div></div>
+</div><div class="q" id="q51">
+<div><span class="qnum">Question 51 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You want to customize a large foundation model for a specific medical terminology task. You have a small dataset (500 examples). You want to minimize the training cost and storage. You do not need to change the model&#x27;s core weights. What method is most efficient?</div>
+<ul class="opts"><li class="correct" data-l="A">Adapter Tuning (Parameter-Efficient Tuning).</li><li data-l="B">Full Fine-Tuning.</li><li data-l="C">Reinforcement Learning.</li><li data-l="D">Pre-training from scratch.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Adapter tuning freezes the base model weights and only trains a small set of &#x27;adapter&#x27; layers. This is much faster and cheaper (Parameter-Efficient) than full fine-tuning, and effective for small datasets.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/generative-ai/models/tune-models" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/generative-ai/models/tune-models</a></div></div>
+</div><div class="q" id="q52">
+<div><span class="qnum">Question 52 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You require 99.999% (5 nines) availability for your global database. Which Cloud Spanner configuration provides this SLA?</div>
+<ul class="opts"><li data-l="A">Regional Configuration.</li><li data-l="B">Zonal Configuration.</li><li data-l="C">Dual-Zone Configuration.</li><li class="correct" data-l="D">Multi-Region Configuration.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Cloud Spanner Regional config offers 99.99% (4 nines). Cloud Spanner Multi-Region config (spanning 3+ regions/continents) offers the industry-leading 99.999% (5 nines) availability SLA.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/spanner/docs/instance-configurations" target="_blank" rel="noopener">https://cloud.google.com/spanner/docs/instance-configurations</a></div></div>
+</div><div class="q" id="q53">
+<div><span class="qnum">Question 53 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are hosting a simple static microsite for an internal tool. You want to minimize network egress costs. Latency is not a priority. Which Network Service Tier should you select?</div>
+<ul class="opts"><li data-l="A">Global Tier.</li><li class="correct" data-l="B">Standard Tier.</li><li data-l="C">Premium Tier.</li><li data-l="D">Direct Peering.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Standard Tier routes traffic over the public internet (cold potato routing) as much as possible, entering Google&#x27;s network only near the destination region. It is cheaper than Premium Tier (which uses Google&#x27;s global backbone). Ideally suited for non-critical/internal cost-sensitive apps.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/network-tiers/docs/overview" target="_blank" rel="noopener">https://cloud.google.com/network-tiers/docs/overview</a></div></div>
+</div><div class="q" id="q54">
+<div><span class="qnum">Question 54 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You need to orchestrate a complex ML workflow: Data Extraction -&gt; Validation -&gt; Training -&gt; Evaluation -&gt; Deployment. You want a managed, serverless way to define this as a DAG (Directed Acyclic Graph). What tool works natively with Vertex AI?</div>
+<ul class="opts"><li data-l="A">Workflows.</li><li data-l="B">Cloud Composer (Airflow).</li><li data-l="C">Cloud Batch.</li><li class="correct" data-l="D">Vertex AI Pipelines (Kubeflow Pipelines SDK).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Vertex AI Pipelines is the managed service for running ML pipelines. It is serverless and specifically designed for ML ops (tracking artifacts, metadata, lineage_ associated with steps like Training and Eval). Cloud Composer is also a DAG runner (Airflow) but Vertex Pipelines is the specialized ML solution.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/pipelines/introduction" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/pipelines/introduction</a></div></div>
+</div><div class="q" id="q55">
+<div><span class="qnum">Question 55 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have high Cloud Logging ingestion costs. You realize 80% of the logs are &#x27;debug&#x27; statements from a specific development project that you don&#x27;t need to keep. How do you stop paying for them?</div>
+<ul class="opts"><li class="correct" data-l="A">Create an Exclusion Filter on the `_Default` sink.</li><li data-l="B">Disable the Logging API.</li><li data-l="C">Create a Sampling rule.</li><li data-l="D">Delete the logs manually.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : A</span></div>
+<div style="margin-top:6px">Exclusion filters allow you to discard log entries that match a query *before* they are stored (and billed). Excluding them from the `_Default` sink means they are not ingested into the log bucket.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/logging/docs/routing/exclusions" target="_blank" rel="noopener">https://cloud.google.com/logging/docs/routing/exclusions</a></div></div>
+</div><div class="q" id="q56">
+<div><span class="qnum">Question 56 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are using GKE Autopilot. How are you billed for the nodes?</div>
+<ul class="opts"><li data-l="A">You are billed a flat fee per cluster.</li><li data-l="B">You are billed for the underlying Compute Engine instances (VMs).</li><li data-l="C">You are billed by the number of Nodes.</li><li class="correct" data-l="D">You are billed for the CPU, Memory, and Storage *requested* by your Pods.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">In GKE Autopilot, you don&#x27;t manage (or pay specifically for) the Nodes/VMs. You pay for the resources (vCPU, Memory, Disk) defined in your pod specs (requests). This eliminates the cost of &#x27;bin packing&#x27; waste (unused space on VMs).</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/kubernetes-engine/docs/autopilot-pricing" target="_blank" rel="noopener">https://cloud.google.com/kubernetes-engine/docs/autopilot-pricing</a></div></div>
+</div><div class="q" id="q57">
+<div><span class="qnum">Question 57 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You have a team of Data Scientists who need to share vetted, high-quality ML features (e.g., &#x27;customer_clt_last_30_days&#x27;) so they don&#x27;t re-engineer them for every model. What component of Vertex AI serves this?</div>
+<ul class="opts"><li data-l="A">Analytic Hub.</li><li data-l="B">Metadata Store.</li><li data-l="C">Model Garden.</li><li class="correct" data-l="D">Vertex AI Feature Store.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">Vertex AI Feature Store provides a centralized repository for serving, sharing, and managing ML features. It solves the training-serving skew and reusability problems.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/vertex-ai/docs/featurestore/overview" target="_blank" rel="noopener">https://cloud.google.com/vertex-ai/docs/featurestore/overview</a></div></div>
+</div><div class="q" id="q58">
+<div><span class="qnum">Question 58 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are load balancing a legacy application that stores the user&#x27;s shopping cart state locally in the web server&#x27;s memory. Users are complaining that their cart empties randomly. What Load Balancing setting fixes this?</div>
+<ul class="opts"><li data-l="A">Use HTTPS.</li><li data-l="B">Enable Global Load Balancing.</li><li data-l="C">Increase Connection Draining timeout.</li><li class="correct" data-l="D">Enable Session Affinity (Client IP or Generated Cookie).</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : D</span></div>
+<div style="margin-top:6px">If the app is stateful (local memory), requests from the same user must go to the same backend instance. Session Affinity (Sticky Sessions) ensures subsequent requests from the same client are routed to the same node.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/load-balancing/docs/backend-service#session_affinity" target="_blank" rel="noopener">https://cloud.google.com/load-balancing/docs/backend-service#session_affinity</a></div></div>
+</div><div class="q" id="q59">
+<div><span class="qnum">Question 59 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You need to allocate cloud costs to different internal departments (Marketing, Engineering). They share the same projects in some cases. What is the most granular level of cost tracking?</div>
+<ul class="opts"><li data-l="A">Services.</li><li class="correct" data-l="B">Labels on Resources.</li><li data-l="C">Project-level allocation.</li><li data-l="D">Folder-level allocation.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">Labels (key:value pairs attached to specific resources like a VM or Bucket) allow the finest granularity. You can label one VM `dept:marketing` and another `dept:engineering` within the same project and filter the billing report by these labels.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/billing/docs/how-to/export-data-bigquery#labels" target="_blank" rel="noopener">https://cloud.google.com/billing/docs/how-to/export-data-bigquery#labels</a></div></div>
+</div><div class="q" id="q60">
+<div><span class="qnum">Question 60 / 60</span><span class="qtype single">single</span></div>
+<div class="qtext">You are building a customer support bot using Vertex AI Search. You want to control the &#x27;persona&#x27; of the bot (e.g., &#x27;You are a polite banking assistant&#x27;) and restrict it from answering off-topic questions. What do you provide?</div>
+<ul class="opts"><li data-l="A">Data Store setup.</li><li class="correct" data-l="B">System Instructions (preamble) in the conversation data.</li><li data-l="C">Widget configuration.</li><li data-l="D">Integration config.</li></ul>
+<div class="ans"><div><span class="lbl">Bonne réponse : B</span></div>
+<div style="margin-top:6px">In Gen App Builder (Vertex AI Agent Builder), you configure the &#x27;Instructions&#x27; (System Prompt) to define the agent&#x27;s behavior, tone, and boundaries.</div><div><span class="lbl">Référence</span> <a href="https://cloud.google.com/generative-ai-app-builder/docs/agent-usage" target="_blank" rel="noopener">https://cloud.google.com/generative-ai-app-builder/docs/agent-usage</a></div></div>
+</div>
+</div>
+<script>
+function toggleAll(show){document.querySelectorAll('.q').forEach(function(q){q.classList.toggle('reveal',show);});}
+document.addEventListener('DOMContentLoaded',function(){
+ document.getElementById('showAll').addEventListener('click',function(){toggleAll(true);});
+ document.getElementById('hideAll').addEventListener('click',function(){toggleAll(false);});
+ document.querySelectorAll('.q').forEach(function(q){q.addEventListener('click',function(e){if(e.target.closest('a'))return;q.classList.toggle('reveal');});});
+});
+</script>
+</body></html>
