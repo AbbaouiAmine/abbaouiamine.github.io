@@ -3,66 +3,258 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GCP PCA — Portail des Mock Exams</title>
+  <title>GCP PCA — Mock Exams</title>
   <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f1f5f9; color: #0f172a; }
-    main { max-width: 900px; margin: auto; padding: 36px 16px 80px; }
-    h1 { margin: 0 0 6px; color: #1a73e8; }
-    .lead { margin: 0 0 26px; color: #64748b; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-    .card { padding: 20px; border: 1px solid #e2e8f0; border-radius: 14px; background: white; }
-    .card:hover { border-color: #1a73e8; box-shadow: 0 8px 24px -14px #1a73e8; }
-    .card h2 { margin: 0 0 6px; font-size: 1.1rem; }
-    .count { color: #137333; font-weight: 700; }
-    .meta { margin-top: 8px; color: #64748b; font-size: .88rem; }
-    .external { color: #b45309; }
-    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-    .button { display: inline-block; padding: 7px 11px; border-radius: 8px; background: #1a73e8; color: white; font-size: .82rem; font-weight: 700; text-decoration: none; }
-    .button.secondary { background: #eef4ff; color: #1a73e8; }
-  </style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.5}
+.bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar a{color:#1a73e8;text-decoration:none;font-weight:700;font-size:.88rem}
+.bar button{font:inherit;border:1px solid #cbd5e1;background:#f8fafc;border-radius:7px;padding:5px 10px;cursor:pointer}
+.lang-switch{display:inline-flex;border:1px solid #cbd5e1;border-radius:8px;overflow:hidden;margin-left:auto}
+.lang-switch button{border:0;border-radius:0;background:#f8fafc;padding:5px 10px;font-weight:800;color:#64748b}
+.lang-switch button.active{background:#1a73e8;color:#fff}
+.wrap{max-width:960px;margin:auto;padding:24px 16px 80px}
+.head,.q,.filters{background:#fff;border:1px solid #e2e8f0;border-radius:12px}
+.head{padding:20px;margin-bottom:14px}
+.head h1{margin:0 0 6px;color:#1a73e8;font-size:1.35rem}
+.muted{color:#64748b;font-size:.9rem}
+.filters{padding:14px 16px;margin-bottom:14px;display:grid;gap:10px}
+.filters .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.filters label{font-size:.8rem;font-weight:700;color:#475569;min-width:70px}
+.filters select{font:inherit;border:1px solid #cbd5e1;border-radius:8px;padding:6px 10px;min-width:220px;background:#fff}
+#resultCount{font-size:.85rem;color:#1a73e8;font-weight:700}
+.q{padding:16px 18px;margin-bottom:12px}
+.q.hidden{display:none}
+.q:target{border-color:#1a73e8;box-shadow:0 0 0 3px rgba(26,115,232,.14)}
+.meta-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
+.num{font-size:.76rem;font-weight:800;color:#1a73e8}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.02em}
+.badge.d{background:#e8f0fe;color:#1a73e8}
+.badge.m{background:#f3e8ff;color:#7c3aed}
+.badge.s{background:#ecfdf5;color:#047857}
+.badge.type{background:#64748b;color:#fff;text-transform:uppercase}
+.badge.type.multi{background:#b45309}
+.sec-title{font-size:.78rem;color:#64748b}
+.qt{font-weight:650;margin:6px 0 12px;white-space:pre-line;display:flex;gap:8px;align-items:flex-start}
+.qt-text{flex:1}
+.tts{flex:0 0 auto;font:inherit;font-size:.76rem;font-weight:700;color:#1a73e8;border:1px solid #bfdbfe;background:#eff6ff;border-radius:7px;padding:4px 8px;cursor:pointer}
+.tts:hover{background:#dbeafe}
+.tts.speaking{color:#b91c1c;border-color:#fecaca;background:#fef2f2}
+.opts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.opts li{position:relative;padding:8px 10px 8px 40px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:.92rem}
+.opts li:before{content:attr(data-l);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e2e8f0;font-size:.72rem;font-weight:800}
+.show .correct{background:#e6f4ea;border-color:#34a853}
+.show .correct:before{background:#34a853;color:#fff}
+.ans{display:none;margin-top:10px;padding:9px 12px;border-left:4px solid #34a853;background:#f0fdf4}
+.show .ans{display:block}
+.ans b{color:#137333}
+.ref{margin-top:5px;font-size:.8rem}
+.ref a{color:#1a73e8;word-break:break-all}
+.grid-mocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px}
+.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}
+.card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
+.card .n{width:32px;height:32px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.overview-card{display:flex;gap:12px;text-decoration:none;color:inherit;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;min-height:118px}
+.overview-card:hover{border-color:#1a73e8;box-shadow:0 6px 18px -10px rgba(26,115,232,.45)}
+.overview-card .n{flex:0 0 auto;width:34px;height:34px;border-radius:999px;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800}
+.overview-card .summary{font-size:.86rem;font-weight:650;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.overview-card .labels{display:flex;gap:5px;align-items:center;margin-bottom:6px}
+.domain-progress{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:14px}
+.domain-progress h2{font-size:1rem;margin:0 0 12px}
+.progress-row{display:grid;grid-template-columns:42px minmax(100px,1fr) 82px;gap:10px;align-items:center;margin:8px 0}
+.progress-label{font-size:.78rem;font-weight:800;color:#475569}
+.progress-track{height:11px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#1a73e8,#60a5fa);border-radius:999px}
+.progress-value{text-align:right;font-size:.76rem;font-weight:700;color:#475569}
+.i18n{display:none}
+body.lang-fr .i18n.fr,body.lang-en .i18n.en{display:inline}
+body.lang-fr .i18n-block.fr,body.lang-en .i18n-block.en{display:block}
+body.lang-fr .i18n-block.en,body.lang-en .i18n-block.fr{display:none}
+.qt-text .i18n-block{white-space:pre-line}
+.portal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.portal-card{padding:20px;border:1px solid #e2e8f0;border-radius:14px;background:#fff}
+.portal-card:hover{border-color:#1a73e8;box-shadow:0 8px 24px -14px #1a73e8}
+.portal-card h2{margin:0 0 6px;font-size:1.1rem}
+.count{color:#137333;font-weight:700}
+.external{color:#b45309}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.button{display:inline-block;padding:7px 11px;border-radius:8px;background:#1a73e8;color:#fff;font-size:.82rem;font-weight:700;text-decoration:none}
+.button.secondary{background:#eef4ff;color:#1a73e8}
+</style>
 </head>
-<body>
-  <main>
-    <h1>GCP PCA — Portail des Mock Exams</h1>
-    <p class="lead">Choisissez une banque locale ou ouvrez directement son site d’origine. Chaque question est labellisée Domaine / Module / Section (ex. D1/M3/S1) avec filtres dans les quizzes.</p>
-    <div class="grid">
-      <article class="card">
+<body class="lang-fr">
+  <nav class="bar">
+    <div class="lang-switch" role="group" aria-label="Language"><button type="button" data-lang="fr" onclick="setLang('fr')">FR</button><button type="button" data-lang="en" onclick="setLang('en')">EN</button></div>
+  </nav>
+  <main class="wrap">
+    <header class="head">
+      <h1><span class="i18n fr">GCP PCA — Portail des Mock Exams</span><span class="i18n en">GCP PCA — Mock Exam Portal</span></h1>
+      <p class="muted"><span class="i18n-block fr">Choisissez une banque locale ou ouvrez directement son site d’origine. Chaque question est labellisée Domaine / Module / Section (ex. D1/M3/S1) avec filtres dans les quizzes.</span><span class="i18n-block en">Choose a local bank or open its original site. Every question is labeled Domain / Module / Section (e.g. D1/M3/S1) with filters in the quizzes.</span></p>
+    </header>
+    <div class="portal-grid">
+      <article class="portal-card">
         <h2>GCP PCA Test</h2>
         <div class="count">720 questions · 12 mocks</div>
-        <div class="meta">Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data et Migration.</div>
+        <div class="meta muted"><span class="i18n-block fr">Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data et Migration.</span><span class="i18n-block en">Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data and Migration.</span></div>
         <div class="actions">
-          <a class="button" href="gcppcatest/index.html">Ouvrir les mocks</a>
-          <a class="button secondary" href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Site original</a>
+          <a class="button" href="gcppcatest/index.html"><span class="i18n fr">Ouvrir les mocks</span><span class="i18n en">Open mocks</span></a>
+          <a class="button secondary" href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener"><span class="i18n fr">Site original</span><span class="i18n en">Original site</span></a>
         </div>
       </article>
-      <article class="card">
+      <article class="portal-card">
         <h2>CloudJobs</h2>
         <div class="count">200 questions</div>
-        <div class="meta">Choix, bonne réponse et explication.</div>
+        <div class="meta muted"><span class="i18n-block fr">Choix, bonne réponse et explication.</span><span class="i18n-block en">Choices, correct answer and explanation.</span></div>
         <div class="actions">
-          <a class="button" href="cloudjobs/index.html">Ouvrir le quiz</a>
-          <a class="button secondary" href="https://cloudjobs.io/study/quizzes/gcppca" target="_blank" rel="noopener">Site original</a>
+          <a class="button" href="cloudjobs/index.html"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a>
+          <a class="button secondary" href="https://cloudjobs.io/study/quizzes/gcppca" target="_blank" rel="noopener"><span class="i18n fr">Site original</span><span class="i18n en">Original site</span></a>
         </div>
       </article>
-      <article class="card">
+      <article class="portal-card">
         <h2>Mastery Exam Prep</h2>
         <div class="count">50 questions</div>
-        <div class="meta">Examen gratuit complet avec explications détaillées.</div>
+        <div class="meta muted"><span class="i18n-block fr">Examen gratuit complet avec explications détaillées.</span><span class="i18n-block en">Complete free exam with detailed explanations.</span></div>
         <div class="actions">
-          <a class="button" href="mastery/index.html">Ouvrir le quiz</a>
-          <a class="button secondary" href="https://masteryexamprep.com/exams/gcp/professional-cloud-architect/free-practice-exam/" target="_blank" rel="noopener">Site original</a>
+          <a class="button" href="mastery/index.html"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a>
+          <a class="button secondary" href="https://masteryexamprep.com/exams/gcp/professional-cloud-architect/free-practice-exam/" target="_blank" rel="noopener"><span class="i18n fr">Site original</span><span class="i18n en">Original site</span></a>
         </div>
       </article>
-      <article class="card">
+      <article class="portal-card">
         <h2>ExamCert</h2>
-        <div class="count external">Application externe</div>
-        <div class="meta">Les questions complètes sont servies par l’application/mobile et ne figurent pas dans la page publique.</div>
+        <div class="count external"><span class="i18n fr">Application externe</span><span class="i18n en">External application</span></div>
+        <div class="meta muted"><span class="i18n-block fr">Les questions complètes sont servies par l’application/mobile et ne figurent pas dans la page publique.</span><span class="i18n-block en">Full questions are served by the app/mobile and are not available on the public page.</span></div>
         <div class="actions">
-          <a class="button secondary" href="https://www.examcert.app/exams/gcp-pca/free-practice-test/" target="_blank" rel="noopener">Ouvrir le site</a>
+          <a class="button secondary" href="https://www.examcert.app/exams/gcp-pca/free-practice-test/" target="_blank" rel="noopener"><span class="i18n fr">Ouvrir le site</span><span class="i18n en">Open site</span></a>
         </div>
       </article>
     </div>
   </main>
+  <script>
+const UI_I18N = {"en": {"home": "← Main menu", "mocks_home": "← Mock list", "original": "Original site ↗", "show_answers": "Show answers", "hide_answers": "Hide answers", "overview": "Overview", "open_quiz": "Open quiz", "open_mocks": "Open mocks", "source": "Source", "domain": "Domain", "module": "Module", "all_domains": "All domains", "all_modules": "All modules", "reset": "Reset", "question": "Question", "correct": "Correct answer", "reference": "Reference", "read": "🔊 Read", "stop": "■ Stop", "tts_unsupported": "Speech synthesis is not supported in this browser.", "answers_word": "Answers", "result_one": "question", "result_many": "questions", "distribution": "Question distribution by domain", "overview_hint": "questions · click a card to open it in the quiz", "labels_hint": "D/M/S labels", "lang_fr": "FR", "lang_en": "EN", "portal_title": "GCP PCA — Mock Exam Portal", "portal_lead": "Choose a local bank or open its original site. Every question is labeled Domain / Module / Section (e.g. D1/M3/S1) with filters in the quizzes.", "gcppca_meta": "Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data and Migration.", "cloudjobs_meta": "Choices, correct answer and explanation.", "mastery_meta": "Complete free exam with detailed explanations.", "examcert_count": "External application", "examcert_meta": "Full questions are served by the app/mobile and are not available on the public page.", "open_site": "Open site", "gcppca_index_sub": "720 questions · each mock can be filtered by Domain / Module", "filtered_by": "each mock is filtered by Domain / Module"}, "fr": {"home": "← Menu principal", "mocks_home": "← Liste des mocks", "original": "Site original ↗", "show_answers": "Afficher les réponses", "hide_answers": "Masquer les réponses", "overview": "Vue d’ensemble", "open_quiz": "Ouvrir le quiz", "open_mocks": "Ouvrir les mocks", "source": "Source", "domain": "Domaine", "module": "Module", "all_domains": "Tous les domaines", "all_modules": "Tous les modules", "reset": "Réinitialiser", "question": "Question", "correct": "Bonne réponse", "reference": "Référence", "read": "🔊 Lire", "stop": "■ Arrêter", "tts_unsupported": "La synthèse vocale n’est pas prise en charge par ce navigateur.", "answers_word": "Réponses", "result_one": "question", "result_many": "questions", "distribution": "Répartition des questions par domaine", "overview_hint": "questions · cliquez sur une question pour l’ouvrir dans le quiz", "labels_hint": "labels D/M/S", "lang_fr": "FR", "lang_en": "EN", "portal_title": "GCP PCA — Portail des Mock Exams", "portal_lead": "Choisissez une banque locale ou ouvrez directement son site d’origine. Chaque question est labellisée Domaine / Module / Section (ex. D1/M3/S1) avec filtres dans les quizzes.", "gcppca_meta": "Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data et Migration.", "cloudjobs_meta": "Choix, bonne réponse et explication.", "mastery_meta": "Examen gratuit complet avec explications détaillées.", "examcert_count": "Application externe", "examcert_meta": "Les questions complètes sont servies par l’application/mobile et ne figurent pas dans la page publique.", "open_site": "Ouvrir le site", "gcppca_index_sub": "720 questions · chaque mock est filtré par Domaine / Module", "filtered_by": "chaque mock est filtré par Domaine / Module"}};
+const LANG_KEY = 'pcaQuizLang';
+function currentLang(){
+  const stored = localStorage.getItem(LANG_KEY);
+  if(stored==='en'||stored==='fr') return stored;
+  return (navigator.language||'').toLowerCase().startsWith('fr') ? 'fr' : 'en';
+}
+function t(key){
+  const lang = document.body.classList.contains('lang-en') ? 'en' : 'fr';
+  return (UI_I18N[lang]&&UI_I18N[lang][key]) || (UI_I18N.fr&&UI_I18N.fr[key]) || key;
+}
+function refreshSelectLabels(lang){
+  document.querySelectorAll('select option[data-fr][data-en]').forEach(opt=>{
+    opt.textContent = opt.getAttribute('data-'+lang) || opt.textContent;
+  });
+}
+function setLang(lang){
+  if(lang!=='en'&&lang!=='fr') lang='fr';
+  document.body.classList.remove('lang-fr','lang-en');
+  document.body.classList.add('lang-'+lang);
+  document.documentElement.lang = lang;
+  localStorage.setItem(LANG_KEY, lang);
+  document.querySelectorAll('.lang-switch button').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.lang===lang);
+  });
+  refreshSelectLabels(lang);
+  document.querySelectorAll('.tts').forEach(btn=>{
+    if(!btn.classList.contains('speaking')){
+      btn.dataset.label = t('read');
+      btn.textContent = t('read');
+    }
+  });
+  applyFilters();
+  if(window.speechSynthesis) speechSynthesis.cancel();
+  resetTtsButton();
+}
+function all(v){document.querySelectorAll('.q').forEach(q=>q.classList.toggle('show',v))}
+let activeTtsButton=null;
+function resetTtsButton(){
+  if(activeTtsButton){
+    activeTtsButton.classList.remove('speaking');
+    activeTtsButton.textContent=activeTtsButton.dataset.label || t('read');
+    activeTtsButton=null;
+  }
+}
+function speakQuestion(event,button){
+  event.stopPropagation();
+  if(!('speechSynthesis' in window)){
+    alert(t('tts_unsupported'));
+    return;
+  }
+  if(activeTtsButton===button && speechSynthesis.speaking){
+    speechSynthesis.cancel();
+    resetTtsButton();
+    return;
+  }
+  speechSynthesis.cancel();
+  resetTtsButton();
+  const lang = document.body.classList.contains('lang-en') ? 'en' : 'fr';
+  const card=button.closest('.q');
+  const statementNode = card.querySelector('.qt-text .i18n-block.'+lang) || card.querySelector('.qt-text');
+  const statement=(statementNode?statementNode.textContent:'').trim();
+  const answers=[...card.querySelectorAll('.opts li')].map(li=>{
+    const txtNode = li.querySelector('.i18n-block.'+lang) || li;
+    return li.dataset.l+'. '+txtNode.textContent.trim();
+  }).join('. ');
+  const utterance=new SpeechSynthesisUtterance(statement+'. '+t('answers_word')+'. '+answers);
+  utterance.lang = lang==='fr' ? 'fr-FR' : 'en-US';
+  utterance.onend=resetTtsButton;
+  utterance.onerror=resetTtsButton;
+  activeTtsButton=button;
+  button.classList.add('speaking');
+  button.dataset.label = t('read');
+  button.textContent=t('stop');
+  speechSynthesis.speak(utterance);
+}
+function applyFilters(){
+  const d=document.getElementById('filterDomain');
+  const m=document.getElementById('filterModule');
+  if(!d||!m) return;
+  const dv=d.value;
+  const mv=m.value;
+  let n=0;
+  document.querySelectorAll('.q').forEach(q=>{
+    const okD=!dv||q.dataset.domain===dv;
+    const okM=!mv||q.dataset.module===mv;
+    const show=okD&&okM;
+    q.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  const el=document.getElementById('resultCount');
+  if(el) el.textContent=n+' '+(n>1?t('result_many'):t('result_one'));
+}
+function syncModules(){
+  const d=document.getElementById('filterDomain');
+  const sel=document.getElementById('filterModule');
+  if(!d||!sel) return;
+  const cur=sel.value;
+  [...sel.options].forEach((o,i)=>{
+    if(i===0){o.hidden=false;return;}
+    o.hidden=!!(d.value&&o.dataset.domain!==d.value);
+  });
+  if(cur && sel.selectedOptions[0] && sel.selectedOptions[0].hidden) sel.value='';
+  applyFilters();
+}
+function resetFilters(){
+  const d=document.getElementById('filterDomain');
+  const m=document.getElementById('filterModule');
+  if(d) d.value='';
+  if(m) m.value='';
+  syncModules();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  setLang(currentLang());
+  document.querySelectorAll('.q').forEach(q=>q.addEventListener('click',e=>{
+    if(e.target.closest('a,select,button,label'))return;
+    q.classList.toggle('show');
+  }));
+  const fd=document.getElementById('filterDomain');
+  const fm=document.getElementById('filterModule');
+  if(fd) fd.addEventListener('change',syncModules);
+  if(fm) fm.addEventListener('change',applyFilters);
+  applyFilters();
+});
+</script>
 </body>
 </html>

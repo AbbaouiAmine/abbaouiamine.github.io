@@ -8,6 +8,9 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 .bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .bar a{color:#1a73e8;text-decoration:none;font-weight:700;font-size:.88rem}
 .bar button{font:inherit;border:1px solid #cbd5e1;background:#f8fafc;border-radius:7px;padding:5px 10px;cursor:pointer}
+.lang-switch{display:inline-flex;border:1px solid #cbd5e1;border-radius:8px;overflow:hidden;margin-left:auto}
+.lang-switch button{border:0;border-radius:0;background:#f8fafc;padding:5px 10px;font-weight:800;color:#64748b}
+.lang-switch button.active{background:#1a73e8;color:#fff}
 .wrap{max-width:960px;margin:auto;padding:24px 16px 80px}
 .head,.q,.filters{background:#fff;border:1px solid #e2e8f0;border-radius:12px}
 .head{padding:20px;margin-bottom:14px}
@@ -62,17 +65,158 @@ body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;backgro
 .progress-track{height:11px;background:#e2e8f0;border-radius:999px;overflow:hidden}
 .progress-fill{height:100%;background:linear-gradient(90deg,#1a73e8,#60a5fa);border-radius:999px}
 .progress-value{text-align:right;font-size:.76rem;font-weight:700;color:#475569}
+.i18n{display:none}
+body.lang-fr .i18n.fr,body.lang-en .i18n.en{display:inline}
+body.lang-fr .i18n-block.fr,body.lang-en .i18n-block.en{display:block}
+body.lang-fr .i18n-block.en,body.lang-en .i18n-block.fr{display:none}
+.qt-text .i18n-block{white-space:pre-line}
+.portal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.portal-card{padding:20px;border:1px solid #e2e8f0;border-radius:14px;background:#fff}
+.portal-card:hover{border-color:#1a73e8;box-shadow:0 8px 24px -14px #1a73e8}
+.portal-card h2{margin:0 0 6px;font-size:1.1rem}
+.count{color:#137333;font-weight:700}
+.external{color:#b45309}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.button{display:inline-block;padding:7px 11px;border-radius:8px;background:#1a73e8;color:#fff;font-size:.82rem;font-weight:700;text-decoration:none}
+.button.secondary{background:#eef4ff;color:#1a73e8}
 </style>
-</head><body>
+</head><body class="lang-fr">
 <nav class="bar">
-  <a href="../index.html">← Menu principal</a>
-  <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">Site original ↗</a>
+  <a href="../index.html"><span class="i18n fr">← Menu principal</span><span class="i18n en">← Main menu</span></a>
+  <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener"><span class="i18n fr">Site original ↗</span><span class="i18n en">Original site ↗</span></a>
+  <div class="lang-switch" role="group" aria-label="Language"><button type="button" data-lang="fr" onclick="setLang('fr')">FR</button><button type="button" data-lang="en" onclick="setLang('en')">EN</button></div>
 </nav>
 <main class="wrap">
 <header class="head">
   <h1>GCP PCA Test — 12 Mock Exams</h1>
-  <div class="muted">720 questions · chaque mock est filtré par Domaine / Module</div>
+  <div class="muted"><span class="i18n fr">720 questions · chaque mock est filtré par Domaine / Module</span><span class="i18n en">720 questions · each mock can be filtered by Domain / Module</span></div>
 </header>
-<div class="grid-mocks"><div class="card"><div class="n">01</div><div style="font-weight:700;margin-top:8px">Mock 1</div><div class="muted">Healthcare / EHR</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-01-healthcare.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-01-healthcare-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div><div class="card"><div class="n">02</div><div style="font-weight:700;margin-top:8px">Mock 2</div><div class="muted">Gaming / Mountkirk</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-02-gaming.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-02-gaming-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div><div class="card"><div class="n">03</div><div style="font-weight:700;margin-top:8px">Mock 3</div><div class="muted">Networking</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-03-networking.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-03-networking-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div><div class="card"><div class="n">04</div><div style="font-weight:700;margin-top:8px">Mock 4</div><div class="muted">Security</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-04-security.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-04-security-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div><div class="card"><div class="n">05</div><div style="font-weight:700;margin-top:8px">Mock 5</div><div class="muted">Reliability / DR</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-05-reliability.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-05-reliability-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div><div class="card"><div class="n">06</div><div style="font-weight:700;margin-top:8px">Mock 6</div><div class="muted">Designing</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-06-designing.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-06-designing-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div><div class="card"><div class="n">07</div><div style="font-weight:700;margin-top:8px">Mock 7</div><div class="muted">Managing / Ops</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-07-managing.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-07-managing-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div><div class="card"><div class="n">08</div><div style="font-weight:700;margin-top:8px">Mock 8</div><div class="muted">Analyzing</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-08-analyzing.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-08-analyzing-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div><div class="card"><div class="n">09</div><div style="font-weight:700;margin-top:8px">Mock 9</div><div class="muted">Cost Optimization</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-09-cost.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-09-cost-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div><div class="card"><div class="n">10</div><div style="font-weight:700;margin-top:8px">Mock 10</div><div class="muted">Generative AI</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-10-genai.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-10-genai-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div><div class="card"><div class="n">11</div><div style="font-weight:700;margin-top:8px">Mock 11</div><div class="muted">Data</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-11-data.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-11-data-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div><div class="card"><div class="n">12</div><div style="font-weight:700;margin-top:8px">Mock 12</div><div class="muted">Migration</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-12-migration.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Ouvrir le quiz</a> · <a href="mock-12-migration-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700">Vue d’ensemble</a></div></div></div>
+<div class="grid-mocks"><div class="card"><div class="n">01</div><div style="font-weight:700;margin-top:8px">Mock 1</div><div class="muted">Healthcare / EHR</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-01-healthcare.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-01-healthcare-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div><div class="card"><div class="n">02</div><div style="font-weight:700;margin-top:8px">Mock 2</div><div class="muted">Gaming / Mountkirk</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-02-gaming.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-02-gaming-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div><div class="card"><div class="n">03</div><div style="font-weight:700;margin-top:8px">Mock 3</div><div class="muted">Networking</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-03-networking.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-03-networking-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div><div class="card"><div class="n">04</div><div style="font-weight:700;margin-top:8px">Mock 4</div><div class="muted">Security</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-04-security.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-04-security-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div><div class="card"><div class="n">05</div><div style="font-weight:700;margin-top:8px">Mock 5</div><div class="muted">Reliability / DR</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-05-reliability.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-05-reliability-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div><div class="card"><div class="n">06</div><div style="font-weight:700;margin-top:8px">Mock 6</div><div class="muted">Designing</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-06-designing.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-06-designing-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div><div class="card"><div class="n">07</div><div style="font-weight:700;margin-top:8px">Mock 7</div><div class="muted">Managing / Ops</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-07-managing.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-07-managing-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div><div class="card"><div class="n">08</div><div style="font-weight:700;margin-top:8px">Mock 8</div><div class="muted">Analyzing</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-08-analyzing.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-08-analyzing-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div><div class="card"><div class="n">09</div><div style="font-weight:700;margin-top:8px">Mock 9</div><div class="muted">Cost Optimization</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-09-cost.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-09-cost-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div><div class="card"><div class="n">10</div><div style="font-weight:700;margin-top:8px">Mock 10</div><div class="muted">Generative AI</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-10-genai.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-10-genai-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div><div class="card"><div class="n">11</div><div style="font-weight:700;margin-top:8px">Mock 11</div><div class="muted">Data</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-11-data.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-11-data-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div><div class="card"><div class="n">12</div><div style="font-weight:700;margin-top:8px">Mock 12</div><div class="muted">Migration</div><div class="muted" style="margin-top:6px">60 questions</div><div style="margin-top:8px"><a href="mock-12-migration.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a> · <a href="mock-12-migration-overview.html" style="color:#1a73e8;font-size:.8rem;font-weight:700"><span class="i18n fr">Vue d’ensemble</span><span class="i18n en">Overview</span></a></div></div></div>
 </main>
+<script>
+const UI_I18N = {"en": {"home": "← Main menu", "mocks_home": "← Mock list", "original": "Original site ↗", "show_answers": "Show answers", "hide_answers": "Hide answers", "overview": "Overview", "open_quiz": "Open quiz", "open_mocks": "Open mocks", "source": "Source", "domain": "Domain", "module": "Module", "all_domains": "All domains", "all_modules": "All modules", "reset": "Reset", "question": "Question", "correct": "Correct answer", "reference": "Reference", "read": "🔊 Read", "stop": "■ Stop", "tts_unsupported": "Speech synthesis is not supported in this browser.", "answers_word": "Answers", "result_one": "question", "result_many": "questions", "distribution": "Question distribution by domain", "overview_hint": "questions · click a card to open it in the quiz", "labels_hint": "D/M/S labels", "lang_fr": "FR", "lang_en": "EN", "portal_title": "GCP PCA — Mock Exam Portal", "portal_lead": "Choose a local bank or open its original site. Every question is labeled Domain / Module / Section (e.g. D1/M3/S1) with filters in the quizzes.", "gcppca_meta": "Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data and Migration.", "cloudjobs_meta": "Choices, correct answer and explanation.", "mastery_meta": "Complete free exam with detailed explanations.", "examcert_count": "External application", "examcert_meta": "Full questions are served by the app/mobile and are not available on the public page.", "open_site": "Open site", "gcppca_index_sub": "720 questions · each mock can be filtered by Domain / Module", "filtered_by": "each mock is filtered by Domain / Module"}, "fr": {"home": "← Menu principal", "mocks_home": "← Liste des mocks", "original": "Site original ↗", "show_answers": "Afficher les réponses", "hide_answers": "Masquer les réponses", "overview": "Vue d’ensemble", "open_quiz": "Ouvrir le quiz", "open_mocks": "Ouvrir les mocks", "source": "Source", "domain": "Domaine", "module": "Module", "all_domains": "Tous les domaines", "all_modules": "Tous les modules", "reset": "Réinitialiser", "question": "Question", "correct": "Bonne réponse", "reference": "Référence", "read": "🔊 Lire", "stop": "■ Arrêter", "tts_unsupported": "La synthèse vocale n’est pas prise en charge par ce navigateur.", "answers_word": "Réponses", "result_one": "question", "result_many": "questions", "distribution": "Répartition des questions par domaine", "overview_hint": "questions · cliquez sur une question pour l’ouvrir dans le quiz", "labels_hint": "labels D/M/S", "lang_fr": "FR", "lang_en": "EN", "portal_title": "GCP PCA — Portail des Mock Exams", "portal_lead": "Choisissez une banque locale ou ouvrez directement son site d’origine. Chaque question est labellisée Domaine / Module / Section (ex. D1/M3/S1) avec filtres dans les quizzes.", "gcppca_meta": "Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data et Migration.", "cloudjobs_meta": "Choix, bonne réponse et explication.", "mastery_meta": "Examen gratuit complet avec explications détaillées.", "examcert_count": "Application externe", "examcert_meta": "Les questions complètes sont servies par l’application/mobile et ne figurent pas dans la page publique.", "open_site": "Ouvrir le site", "gcppca_index_sub": "720 questions · chaque mock est filtré par Domaine / Module", "filtered_by": "chaque mock est filtré par Domaine / Module"}};
+const LANG_KEY = 'pcaQuizLang';
+function currentLang(){
+  const stored = localStorage.getItem(LANG_KEY);
+  if(stored==='en'||stored==='fr') return stored;
+  return (navigator.language||'').toLowerCase().startsWith('fr') ? 'fr' : 'en';
+}
+function t(key){
+  const lang = document.body.classList.contains('lang-en') ? 'en' : 'fr';
+  return (UI_I18N[lang]&&UI_I18N[lang][key]) || (UI_I18N.fr&&UI_I18N.fr[key]) || key;
+}
+function refreshSelectLabels(lang){
+  document.querySelectorAll('select option[data-fr][data-en]').forEach(opt=>{
+    opt.textContent = opt.getAttribute('data-'+lang) || opt.textContent;
+  });
+}
+function setLang(lang){
+  if(lang!=='en'&&lang!=='fr') lang='fr';
+  document.body.classList.remove('lang-fr','lang-en');
+  document.body.classList.add('lang-'+lang);
+  document.documentElement.lang = lang;
+  localStorage.setItem(LANG_KEY, lang);
+  document.querySelectorAll('.lang-switch button').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.lang===lang);
+  });
+  refreshSelectLabels(lang);
+  document.querySelectorAll('.tts').forEach(btn=>{
+    if(!btn.classList.contains('speaking')){
+      btn.dataset.label = t('read');
+      btn.textContent = t('read');
+    }
+  });
+  applyFilters();
+  if(window.speechSynthesis) speechSynthesis.cancel();
+  resetTtsButton();
+}
+function all(v){document.querySelectorAll('.q').forEach(q=>q.classList.toggle('show',v))}
+let activeTtsButton=null;
+function resetTtsButton(){
+  if(activeTtsButton){
+    activeTtsButton.classList.remove('speaking');
+    activeTtsButton.textContent=activeTtsButton.dataset.label || t('read');
+    activeTtsButton=null;
+  }
+}
+function speakQuestion(event,button){
+  event.stopPropagation();
+  if(!('speechSynthesis' in window)){
+    alert(t('tts_unsupported'));
+    return;
+  }
+  if(activeTtsButton===button && speechSynthesis.speaking){
+    speechSynthesis.cancel();
+    resetTtsButton();
+    return;
+  }
+  speechSynthesis.cancel();
+  resetTtsButton();
+  const lang = document.body.classList.contains('lang-en') ? 'en' : 'fr';
+  const card=button.closest('.q');
+  const statementNode = card.querySelector('.qt-text .i18n-block.'+lang) || card.querySelector('.qt-text');
+  const statement=(statementNode?statementNode.textContent:'').trim();
+  const answers=[...card.querySelectorAll('.opts li')].map(li=>{
+    const txtNode = li.querySelector('.i18n-block.'+lang) || li;
+    return li.dataset.l+'. '+txtNode.textContent.trim();
+  }).join('. ');
+  const utterance=new SpeechSynthesisUtterance(statement+'. '+t('answers_word')+'. '+answers);
+  utterance.lang = lang==='fr' ? 'fr-FR' : 'en-US';
+  utterance.onend=resetTtsButton;
+  utterance.onerror=resetTtsButton;
+  activeTtsButton=button;
+  button.classList.add('speaking');
+  button.dataset.label = t('read');
+  button.textContent=t('stop');
+  speechSynthesis.speak(utterance);
+}
+function applyFilters(){
+  const d=document.getElementById('filterDomain');
+  const m=document.getElementById('filterModule');
+  if(!d||!m) return;
+  const dv=d.value;
+  const mv=m.value;
+  let n=0;
+  document.querySelectorAll('.q').forEach(q=>{
+    const okD=!dv||q.dataset.domain===dv;
+    const okM=!mv||q.dataset.module===mv;
+    const show=okD&&okM;
+    q.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  const el=document.getElementById('resultCount');
+  if(el) el.textContent=n+' '+(n>1?t('result_many'):t('result_one'));
+}
+function syncModules(){
+  const d=document.getElementById('filterDomain');
+  const sel=document.getElementById('filterModule');
+  if(!d||!sel) return;
+  const cur=sel.value;
+  [...sel.options].forEach((o,i)=>{
+    if(i===0){o.hidden=false;return;}
+    o.hidden=!!(d.value&&o.dataset.domain!==d.value);
+  });
+  if(cur && sel.selectedOptions[0] && sel.selectedOptions[0].hidden) sel.value='';
+  applyFilters();
+}
+function resetFilters(){
+  const d=document.getElementById('filterDomain');
+  const m=document.getElementById('filterModule');
+  if(d) d.value='';
+  if(m) m.value='';
+  syncModules();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  setLang(currentLang());
+  document.querySelectorAll('.q').forEach(q=>q.addEventListener('click',e=>{
+    if(e.target.closest('a,select,button,label'))return;
+    q.classList.toggle('show');
+  }));
+  const fd=document.getElementById('filterDomain');
+  const fm=document.getElementById('filterModule');
+  if(fd) fd.addEventListener('change',syncModules);
+  if(fm) fm.addEventListener('change',applyFilters);
+  applyFilters();
+});
+</script>
 </body></html>

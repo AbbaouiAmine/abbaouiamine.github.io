@@ -30,7 +30,8 @@
                 "strategy",
                 "success",
                 "success metric"
-              ]
+              ],
+              "titleFr": "Stratégie produit et mesures de réussite"
             },
             {
               "id": "S2",
@@ -50,7 +51,8 @@
                 "optimization",
                 "pricing",
                 "sustained use"
-              ]
+              ],
+              "titleFr": "Optimisation des coûts"
             },
             {
               "id": "S3",
@@ -72,7 +74,8 @@
                 "supporting",
                 "twelve-factor",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Prise en charge de la conception d'applications"
             },
             {
               "id": "S4",
@@ -101,7 +104,8 @@
                 "transfer appliance",
                 "vpc",
                 "with"
-              ]
+              ],
+              "titleFr": "Intégration avec des systèmes externes et déplacement de données"
             },
             {
               "id": "S5",
@@ -119,7 +123,8 @@
                 "third-party",
                 "trade",
                 "trade-off"
-              ]
+              ],
+              "titleFr": "Compromis entre les décisions d'achat et de construction et de conception"
             },
             {
               "id": "S6",
@@ -141,9 +146,11 @@
                 "pci",
                 "regulatory",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Conformité et observabilité"
             }
-          ]
+          ],
+          "titleFr": "Conception axée sur les résultats commerciaux"
         },
         {
           "id": "M2",
@@ -169,7 +176,8 @@
                 "multi-zone",
                 "redundancy",
                 "sla"
-              ]
+              ],
+              "titleFr": "Haute disponibilité et conception de basculement"
             },
             {
               "id": "S2",
@@ -196,7 +204,8 @@
                 "resources",
                 "scale to zero",
                 "serverless"
-              ]
+              ],
+              "titleFr": "Elasticité des ressources cloud"
             },
             {
               "id": "S3",
@@ -214,7 +223,8 @@
                 "scalability",
                 "sharding",
                 "spanner"
-              ]
+              ],
+              "titleFr": "Évolutivité pour répondre à la croissance"
             },
             {
               "id": "S4",
@@ -231,9 +241,11 @@
                 "global load balancer",
                 "latency",
                 "performance"
-              ]
+              ],
+              "titleFr": "Performances et latence"
             }
-          ]
+          ],
+          "titleFr": "Concevoir des infrastructures cloud robustes"
         },
         {
           "id": "M3",
@@ -264,7 +276,8 @@
                 "on-prem",
                 "premises",
                 "with"
-              ]
+              ],
+              "titleFr": "Intégration avec les environnements sur site et multicloud"
             },
             {
               "id": "S2",
@@ -286,7 +299,8 @@
                 "vpc",
                 "vpc service controls",
                 "vpc-sc"
-              ]
+              ],
+              "titleFr": "Réseautage cloud natif"
             },
             {
               "id": "S3",
@@ -309,7 +323,8 @@
                 "pubsub",
                 "streaming",
                 "technologies"
-              ]
+              ],
+              "titleFr": "Choisir les technologies de traitement des données"
             },
             {
               "id": "S4",
@@ -333,7 +348,8 @@
                 "spanner",
                 "storage",
                 "types"
-              ]
+              ],
+              "titleFr": "Choisir les types de stockage appropriés"
             },
             {
               "id": "S5",
@@ -357,9 +373,11 @@
                 "resources",
                 "serverless",
                 "vm"
-              ]
+              ],
+              "titleFr": "Choisir des ressources de calcul et des produits de plateforme"
             }
-          ]
+          ],
+          "titleFr": "Concevoir un réseau, un stockage et un calcul"
         },
         {
           "id": "M4",
@@ -384,7 +402,8 @@
                 "systems",
                 "with",
                 "workload identity federation"
-              ]
+              ],
+              "titleFr": "Intégration avec les systèmes existants"
             },
             {
               "id": "S2",
@@ -403,7 +422,8 @@
                 "rehost",
                 "replatform",
                 "wave"
-              ]
+              ],
+              "titleFr": "Planifier une migration"
             },
             {
               "id": "S3",
@@ -425,7 +445,8 @@
                 "systems",
                 "terraform",
                 "transfer appliance"
-              ]
+              ],
+              "titleFr": "Migration de systèmes et de données"
             },
             {
               "id": "S4",
@@ -440,9 +461,11 @@
                 "proofs",
                 "testing",
                 "validation test"
-              ]
+              ],
+              "titleFr": "Tests et preuves de concept"
             }
-          ]
+          ],
+          "titleFr": "Planifier les migrations vers le cloud"
         },
         {
           "id": "M5",
@@ -470,7 +493,8 @@
                 "stay",
                 "training",
                 "updated"
-              ]
+              ],
+              "titleFr": "Restez à jour et favorisez l'adoption"
             },
             {
               "id": "S2",
@@ -485,7 +509,8 @@
                 "modernization after migration",
                 "needs",
                 "solutions"
-              ]
+              ],
+              "titleFr": "Adapter les solutions à l’évolution des besoins"
             },
             {
               "id": "S3",
@@ -503,7 +528,8 @@
                 "native",
                 "principles",
                 "service mesh"
-              ]
+              ],
+              "titleFr": "Principes du cloud natif"
             },
             {
               "id": "S4",
@@ -517,9 +543,11 @@
                 "refactor legacy",
                 "strangler",
                 "strategies"
-              ]
+              ],
+              "titleFr": "Stratégies d'évolution héritées"
             }
-          ]
+          ],
+          "titleFr": "Faire évoluer et adapter les solutions"
         },
         {
           "id": "M6",
@@ -545,7 +573,8 @@
                 "kubernetes",
                 "outcomes",
                 "prep"
-              ]
+              ],
+              "titleFr": "Préparation aux examens : conception axée sur les résultats commerciaux"
             },
             {
               "id": "S2",
@@ -569,7 +598,8 @@
                 "infrastructures",
                 "prep",
                 "robust"
-              ]
+              ],
+              "titleFr": "Préparation aux examens : concevoir des infrastructures cloud robustes"
             },
             {
               "id": "S3",
@@ -603,7 +633,8 @@
                 "prep",
                 "storage",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Préparation à l'examen : conception d'un réseau, d'un stockage et d'un calcul"
             },
             {
               "id": "S4",
@@ -624,7 +655,8 @@
                 "migrations",
                 "plan",
                 "prep"
-              ]
+              ],
+              "titleFr": "Préparation à l'examen : planifier les migrations vers le cloud"
             },
             {
               "id": "S5",
@@ -645,9 +677,11 @@
                 "prep",
                 "solutions",
                 "spanner"
-              ]
+              ],
+              "titleFr": "Préparation aux examens : évoluer et adapter les solutions"
             }
-          ]
+          ],
+          "titleFr": "Examen des questions d'examen"
         }
       ]
     },
@@ -684,7 +718,8 @@
                 "interconnect",
                 "partner interconnect",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Configuration de Cloud VPN et de l'interconnexion"
             },
             {
               "id": "S2",
@@ -702,7 +737,8 @@
                 "peering",
                 "vpc",
                 "vpc peering"
-              ]
+              ],
+              "titleFr": "Configuration de l'appairage de VPC"
             },
             {
               "id": "S3",
@@ -720,7 +756,8 @@
                 "securing",
                 "vpc",
                 "with"
-              ]
+              ],
+              "titleFr": "Sécuriser les réseaux avec NGFW"
             },
             {
               "id": "S4",
@@ -742,9 +779,11 @@
                 "vpc",
                 "waf",
                 "with"
-              ]
+              ],
+              "titleFr": "Sécuriser les réseaux avec IAP, Cloud Armor et Cloud IDS"
             }
-          ]
+          ],
+          "titleFr": "Configurer et sécuriser les réseaux"
         },
         {
           "id": "M2",
@@ -767,7 +806,8 @@
                 "relational",
                 "spanner",
                 "warehouse"
-              ]
+              ],
+              "titleFr": "Configuration de Cloud SQL, AlloyDB, Spanner et BigQuery"
             },
             {
               "id": "S2",
@@ -784,7 +824,8 @@
                 "memorystore",
                 "redis",
                 "wide-column"
-              ]
+              ],
+              "titleFr": "Configuration de Firestore, Bigtable et Memorystore"
             },
             {
               "id": "S3",
@@ -806,7 +847,8 @@
                 "persistent disk",
                 "posix",
                 "storage"
-              ]
+              ],
+              "titleFr": "Configuration du stockage cloud, du magasin de fichiers et des disques persistants"
             },
             {
               "id": "S4",
@@ -832,9 +874,11 @@
                 "storage transfer",
                 "transfer",
                 "transfer appliance"
-              ]
+              ],
+              "titleFr": "Optimisation du transfert et de la latence des données et planification de la croissance des données"
             }
-          ]
+          ],
+          "titleFr": "Configurer les ressources de stockage"
         },
         {
           "id": "M3",
@@ -862,7 +906,8 @@
                 "mig",
                 "preemptible",
                 "spot"
-              ]
+              ],
+              "titleFr": "Configurer des VM Compute Engine et des groupes d'instances gérés"
             },
             {
               "id": "S2",
@@ -880,7 +925,8 @@
                 "flexible environment",
                 "standard environment",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Configuration de Cloud Run et d'App Engine"
             },
             {
               "id": "S3",
@@ -897,7 +943,8 @@
                 "provisioning",
                 "vpc",
                 "workload identity"
-              ]
+              ],
+              "titleFr": "Provisionner des clusters GKE pour l'orchestration de conteneurs"
             },
             {
               "id": "S4",
@@ -918,7 +965,8 @@
                 "kubernetes",
                 "networking",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Configuration du réseau pour le calcul"
             },
             {
               "id": "S5",
@@ -937,9 +985,11 @@
                 "tools",
                 "with",
                 "working"
-              ]
+              ],
+              "titleFr": "Travailler avec des outils d'orchestration et de gestion"
             }
-          ]
+          ],
+          "titleFr": "Configurer les ressources de calcul"
         },
         {
           "id": "M4",
@@ -965,7 +1015,8 @@
                 "prep",
                 "secure",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Préparation à l'examen : configurer et sécuriser les réseaux"
             },
             {
               "id": "S2",
@@ -983,7 +1034,8 @@
                 "prep",
                 "resources",
                 "storage"
-              ]
+              ],
+              "titleFr": "Préparation à l'examen : configurer les ressources de stockage"
             },
             {
               "id": "S3",
@@ -1008,9 +1060,11 @@
                 "prep",
                 "resources",
                 "terraform"
-              ]
+              ],
+              "titleFr": "Préparation à l'examen : configurer les ressources de calcul"
             }
-          ]
+          ],
+          "titleFr": "Examen des questions d'examen"
         }
       ]
     },
@@ -1045,7 +1099,8 @@
                 "resource",
                 "resource hierarchy",
                 "service account"
-              ]
+              ],
+              "titleFr": "Conception de la hiérarchie des identités et des ressources"
             },
             {
               "id": "S2",
@@ -1072,7 +1127,8 @@
                 "secret manager",
                 "secrets",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Protection des données et gestion des secrets dans Google Cloud"
             },
             {
               "id": "S3",
@@ -1094,9 +1150,11 @@
                 "security",
                 "security command center",
                 "vpc service controls"
-              ]
+              ],
+              "titleFr": "Appliquer la posture de sécurité et concevoir un accès sécurisé"
             }
-          ]
+          ],
+          "titleFr": "Concevoir des solutions Google Cloud sécurisées"
         },
         {
           "id": "M2",
@@ -1122,7 +1180,8 @@
                 "shared",
                 "shared responsibility",
                 "soc 2"
-              ]
+              ],
+              "titleFr": "Naviguer dans les cadres de conformité et la responsabilité Shared"
             },
             {
               "id": "S2",
@@ -1141,7 +1200,8 @@
                 "residency",
                 "sovereignty",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Concevoir pour la confidentialité, la résidence et la souveraineté des données"
             },
             {
               "id": "S3",
@@ -1161,9 +1221,11 @@
                 "iam",
                 "logging",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Conception pour l'auditabilité et la journalisation"
             }
-          ]
+          ],
+          "titleFr": "Concevoir pour la conformité"
         },
         {
           "id": "M3",
@@ -1195,7 +1257,8 @@
                 "secure",
                 "solutions",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Préparation à l'examen : concevoir des solutions sécurisées Google Cloud"
             },
             {
               "id": "S2",
@@ -1213,9 +1276,11 @@
                 "exam",
                 "iam",
                 "prep"
-              ]
+              ],
+              "titleFr": "Préparation aux examens : concevoir pour la conformité"
             }
-          ]
+          ],
+          "titleFr": "Examen des questions d'examen"
         }
       ]
     },
@@ -1251,7 +1316,8 @@
                 "pipeline",
                 "sdlc",
                 "with"
-              ]
+              ],
+              "titleFr": "Moderniser le SDLC avec CI/CD"
             },
             {
               "id": "S2",
@@ -1271,7 +1337,8 @@
                 "root",
                 "root cause",
                 "troubleshooting"
-              ]
+              ],
+              "titleFr": "Dépannage et analyse des causes profondes"
             },
             {
               "id": "S3",
@@ -1287,7 +1354,8 @@
                 "terraform",
                 "testing",
                 "validation"
-              ]
+              ],
+              "titleFr": "Tests, validation et fourniture de services"
             },
             {
               "id": "S4",
@@ -1311,9 +1379,11 @@
                 "rpo",
                 "rto",
                 "spanner"
-              ]
+              ],
+              "titleFr": "Concevoir pour la continuité des activités et la reprise après sinistre"
             }
-          ]
+          ],
+          "titleFr": "Optimisation des processus techniques et du cycle de vie de développement"
         },
         {
           "id": "M2",
@@ -1342,7 +1412,8 @@
                 "team readiness",
                 "training",
                 "vpc"
-              ]
+              ],
+              "titleFr": "Gestion des parties prenantes, du Change et de la préparation des équipes"
             },
             {
               "id": "S2",
@@ -1361,7 +1432,8 @@
                 "governance board",
                 "making",
                 "success"
-              ]
+              ],
+              "titleFr": "Création de cadres de prise de décision et de réussite client"
             },
             {
               "id": "S3",
@@ -1382,9 +1454,11 @@
                 "governance",
                 "optimization",
                 "recommender"
-              ]
+              ],
+              "titleFr": "Cost Optimisation et Gouvernance Financière"
             }
-          ]
+          ],
+          "titleFr": "Aligner les processus métier avec la stratégie cloud"
         },
         {
           "id": "M3",
@@ -1407,7 +1481,8 @@
                 "slo",
                 "sre",
                 "toil"
-              ]
+              ],
+              "titleFr": "Principes d'ingénierie de fiabilité des sites (SRE)"
             },
             {
               "id": "S2",
@@ -1423,7 +1498,8 @@
                 "gke",
                 "reliability",
                 "with"
-              ]
+              ],
+              "titleFr": "Assurer la fiabilité avec l'ingénierie Chaos"
             },
             {
               "id": "S3",
@@ -1445,9 +1521,11 @@
                 "validating",
                 "vulnerability scan",
                 "with"
-              ]
+              ],
+              "titleFr": "Valider la sécurité avec des tests d'intrusion"
             }
-          ]
+          ],
+          "titleFr": "Assurer la fiabilité de la production"
         },
         {
           "id": "M4",
@@ -1471,7 +1549,8 @@
                 "prep",
                 "processes",
                 "technical"
-              ]
+              ],
+              "titleFr": "Préparation aux examens : optimisation des processus techniques et du cycle de vie de développement"
             },
             {
               "id": "S2",
@@ -1493,7 +1572,8 @@
                 "processes",
                 "strategy",
                 "with"
-              ]
+              ],
+              "titleFr": "Préparation aux examens : aligner les processus métier sur la stratégie cloud"
             },
             {
               "id": "S3",
@@ -1507,9 +1587,11 @@
                 "prep",
                 "production",
                 "reliability"
-              ]
+              ],
+              "titleFr": "Préparation aux examens : garantir la fiabilité de la production"
             }
-          ]
+          ],
+          "titleFr": "Examen des questions d'examen"
         }
       ]
     },
@@ -1545,7 +1627,8 @@
                 "development",
                 "iam",
                 "sdk advice"
-              ]
+              ],
+              "titleFr": "Conseil en développement d'applications et APIs"
             },
             {
               "id": "S2",
@@ -1565,7 +1648,8 @@
                 "testing",
                 "testing framework",
                 "unit test"
-              ]
+              ],
+              "titleFr": "Implémentation de cadres de test"
             },
             {
               "id": "S3",
@@ -1587,9 +1671,11 @@
                 "migration",
                 "migration tooling",
                 "tooling"
-              ]
+              ],
+              "titleFr": "Niveauraging Migration Outillage"
             }
-          ]
+          ],
+          "titleFr": "Guider les équipes de développement et d’exploitation"
         },
         {
           "id": "M2",
@@ -1616,7 +1702,8 @@
                 "mastering",
                 "programmatic",
                 "shell"
-              ]
+              ],
+              "titleFr": "Maîtriser Cloud Shell et le SDK Google Cloud"
             },
             {
               "id": "S2",
@@ -1637,9 +1724,11 @@
                 "spanner",
                 "with",
                 "working"
-              ]
+              ],
+              "titleFr": "Travailler avec des émulateurs cloud pour le développement local"
             }
-          ]
+          ],
+          "titleFr": "Interagir avec Google Cloud par programmation"
         },
         {
           "id": "M3",
@@ -1665,7 +1754,8 @@
                 "operations",
                 "prep",
                 "teams"
-              ]
+              ],
+              "titleFr": "Préparation aux examens : guider les équipes de développement et d'exploitation"
             },
             {
               "id": "S2",
@@ -1687,9 +1777,11 @@
                 "prep",
                 "programmatically",
                 "with"
-              ]
+              ],
+              "titleFr": "Préparation à l'examen : interagir avec Google Cloud par programmation"
             }
-          ]
+          ],
+          "titleFr": "Examen des questions d'examen"
         }
       ]
     },
@@ -1723,7 +1815,8 @@
                 "operations",
                 "operations suite",
                 "suite"
-              ]
+              ],
+              "titleFr": "Introduction à la suite opérationnelle de Google Cloud"
             },
             {
               "id": "S2",
@@ -1739,7 +1832,8 @@
                 "metric",
                 "monitoring",
                 "uptime check"
-              ]
+              ],
+              "titleFr": "Configuration des tableaux de bord et des alertes de surveillance"
             },
             {
               "id": "S3",
@@ -1761,9 +1855,11 @@
                 "log-based metric",
                 "logging",
                 "with"
-              ]
+              ],
+              "titleFr": "Implémentation de la journalisation centralisée avec Cloud Logging"
             }
-          ]
+          ],
+          "titleFr": "Surveillance, journalisation et alertes pour plus de fiabilité"
         },
         {
           "id": "M2",
@@ -1790,7 +1886,8 @@
                 "implementing",
                 "rolling update",
                 "traffic splitting"
-              ]
+              ],
+              "titleFr": "Implémentation des déploiements Blue/Green et Canary"
             },
             {
               "id": "S2",
@@ -1805,9 +1902,11 @@
                 "quality",
                 "quality control",
                 "release quality"
-              ]
+              ],
+              "titleFr": "Contrôle qualité et amélioration continue"
             }
-          ]
+          ],
+          "titleFr": "Gérer les déploiements et garantir la qualité"
         },
         {
           "id": "M3",
@@ -1829,7 +1928,8 @@
                 "plans",
                 "playbook",
                 "response"
-              ]
+              ],
+              "titleFr": "Élaboration de plans de réponse aux incidents"
             },
             {
               "id": "S2",
@@ -1847,7 +1947,8 @@
                 "root cause analysis",
                 "troubleshooting",
                 "troubleshooting production"
-              ]
+              ],
+              "titleFr": "Dépannage et analyse des causes profondes (RCA)"
             },
             {
               "id": "S3",
@@ -1862,9 +1963,11 @@
                 "management",
                 "practices",
                 "severity"
-              ]
+              ],
+              "titleFr": "Meilleures pratiques de gestion des incidents"
             }
-          ]
+          ],
+          "titleFr": "Dépannage et réponse aux incidents"
         },
         {
           "id": "M4",
@@ -1889,7 +1992,8 @@
                 "prep",
                 "reliability",
                 "spanner"
-              ]
+              ],
+              "titleFr": "Préparation aux examens : surveillance, journalisation et alertes pour plus de fiabilité"
             },
             {
               "id": "S2",
@@ -1907,7 +2011,8 @@
                 "managing",
                 "prep",
                 "quality"
-              ]
+              ],
+              "titleFr": "Préparation aux examens : gérer les déploiements et garantir la qualité"
             },
             {
               "id": "S3",
@@ -1921,9 +2026,11 @@
                 "prep",
                 "response",
                 "troubleshooting"
-              ]
+              ],
+              "titleFr": "Préparation à l'examen : dépannage et réponse aux incidents"
             }
-          ]
+          ],
+          "titleFr": "Examen des questions d'examen"
         }
       ]
     }

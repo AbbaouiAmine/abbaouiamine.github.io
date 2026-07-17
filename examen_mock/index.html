@@ -7,6 +7,18 @@
   <title>GCP PCA — Mock Exams</title>
 </head>
 <body>
-  <p><a href="site_web/index.html">Ouvrir le portail des mock exams GCP PCA</a></p>
+  <p>
+    <a href="site_web/index.html"><span class="i18n fr">Ouvrir le portail des mock exams GCP PCA</span><span class="i18n en">Open the GCP PCA mock exam portal</span></a>
+  </p>
+  <script>
+  const LANG_KEY='pcaQuizLang';
+  const lang=(localStorage.getItem(LANG_KEY)==='en'||localStorage.getItem(LANG_KEY)==='fr')
+    ? localStorage.getItem(LANG_KEY)
+    : ((navigator.language||'').toLowerCase().startsWith('fr')?'fr':'en');
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.i18n').forEach(el=>{
+    el.style.display = el.classList.contains(lang) ? 'inline' : 'none';
+  });
+  </script>
 </body>
 </html>

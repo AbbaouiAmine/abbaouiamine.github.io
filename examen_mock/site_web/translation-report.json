@@ -1,0 +1,35 @@
+{
+  "backend": "deep",
+  "banks": [
+    {
+      "path": "gcppcatest/questions-bank.json",
+      "count": 720,
+      "missingFrenchQuestion": 0,
+      "withFrench": 720
+    },
+    {
+      "path": "cloudjobs/questions.json",
+      "count": 200,
+      "missingFrenchQuestion": 0,
+      "withFrench": 200
+    },
+    {
+      "path": "mastery/questions.json",
+      "count": 50,
+      "missingFrenchQuestion": 0,
+      "withFrench": 50
+    }
+  ],
+  "cacheEntries": 5891,
+  "totals": {
+    "questions": 970,
+    "withFr": 970,
+    "optionMismatches": 0,
+    "emptyFr": []
+  },
+  "notes": [
+    "Primary backend is Google Cloud Translation API v3 when ADC is available.",
+    "This run used deep-translator Google endpoint because Application Default Credentials were missing.",
+    "UI language preference is stored in localStorage key pcaQuizLang."
+  ]
+}
