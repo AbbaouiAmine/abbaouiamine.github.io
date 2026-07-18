@@ -284,16 +284,66 @@ body{
 }
 .card-link{color:var(--gcp-blue-dark);font-size:.8rem;font-weight:700;text-decoration:none}
 .card-link:hover{text-decoration:underline}
-.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
-.overview-card{display:flex;gap:12px;text-decoration:none;color:inherit;padding:16px;min-height:118px;transition:border-color .15s,box-shadow .15s}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;overflow:visible}
+.overview-card{display:flex;gap:12px;text-decoration:none;color:inherit;padding:16px;min-height:118px;transition:border-color .15s,box-shadow .15s;overflow:visible;position:relative}
 .overview-card:hover{border-color:var(--gcp-blue);box-shadow:var(--shadow-hover)}
 .overview-card .n{flex:0 0 auto}
 .overview-card .summary{
   font-family:var(--font-read);
-  font-size:.9rem;font-weight:500;line-height:1.45;
-  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
+  font-size:.9rem;font-weight:500;line-height:1.55;
+  display:block;
 }
 .overview-card .labels{display:flex;gap:5px;align-items:center;margin-bottom:8px}
+.svc{
+  position:relative;
+  display:inline;
+  color:var(--gcp-blue-dark);
+  border-bottom:1px dotted rgba(26,115,232,.45);
+  cursor:help;
+  outline:none;
+}
+.svc:hover,.svc:focus{border-bottom-color:var(--gcp-blue)}
+.svc::after,.svc::before{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .12s ease;
+  z-index:40;
+}
+.svc::after{
+  bottom:calc(100% + 8px);
+  content:none;
+  width:max-content;
+  max-width:240px;
+  padding:8px 10px;
+  border-radius:8px;
+  background:#202124;
+  color:#fff;
+  font-family:var(--font-ui);
+  font-size:.72rem;
+  font-weight:400;
+  line-height:1.45;
+  text-align:left;
+  white-space:normal;
+  box-shadow:0 4px 14px rgba(32,33,36,.28);
+}
+.svc::before{
+  bottom:calc(100% + 2px);
+  content:"";
+  border:6px solid transparent;
+  border-top-color:#202124;
+}
+body.lang-en .svc[data-tip-en]:hover::after,
+body.lang-en .svc[data-tip-en]:focus::after{content:attr(data-tip-en);opacity:1;visibility:visible}
+body.lang-fr .svc[data-tip-fr]:hover::after,
+body.lang-fr .svc[data-tip-fr]:focus::after{content:attr(data-tip-fr);opacity:1;visibility:visible}
+body.lang-en .svc[data-tip-en]:hover::before,
+body.lang-en .svc[data-tip-en]:focus::before,
+body.lang-fr .svc[data-tip-fr]:hover::before,
+body.lang-fr .svc[data-tip-fr]:focus::before{opacity:1;visibility:visible}
 .domain-progress{padding:18px 20px;margin-bottom:16px}
 .domain-progress h2{font-size:1.02rem;margin:0 0 14px;font-weight:700;color:var(--gcp-grey-900);font-family:var(--font-ui)}
 .progress-row{display:grid;grid-template-columns:42px minmax(100px,1fr) 88px;gap:10px;align-items:center;margin:10px 0}
@@ -650,9 +700,236 @@ CONCEPT_FR = {
     "Cost optimization": "Optimisation des coûts",
 }
 
+SERVICE_DEFS = {
+    "VPC Service Controls": {
+        "en": "Security perimeter that restricts data exfiltration from Google Cloud resources.",
+        "fr": "Périmètre de sécurité qui limite l’exfiltration de données depuis les ressources Google Cloud.",
+    },
+    "Shared VPC": {
+        "en": "Lets multiple projects share one host VPC network and centralize network admin.",
+        "fr": "Permet à plusieurs projets de partager un VPC hôte et de centraliser l’administration réseau.",
+    },
+    "Cloud Load Balancing": {
+        "en": "Global or regional load balancing for distributing traffic across backends.",
+        "fr": "Équilibrage de charge mondial ou régional pour répartir le trafic entre backends.",
+    },
+    "Cloud Interconnect": {
+        "en": "Dedicated or partner private connectivity between on-premises and Google Cloud.",
+        "fr": "Connectivité privée dédiée ou partenaire entre l’on-prem et Google Cloud.",
+    },
+    "Cloud VPN": {
+        "en": "IPsec VPN tunnels (often HA VPN) to securely connect networks over the internet.",
+        "fr": "Tunnels VPN IPsec (souvent HA VPN) pour connecter des réseaux de façon sécurisée via Internet.",
+    },
+    "Cloud Armor": {
+        "en": "DDoS protection and WAF policies for applications behind HTTP(S) load balancers.",
+        "fr": "Protection DDoS et règles WAF pour les applications derrière un load balancer HTTP(S).",
+    },
+    "Cloud NAT": {
+        "en": "Managed NAT so private VMs can reach the internet without public IPs.",
+        "fr": "NAT managé permettant aux VM privées d’accéder à Internet sans IP publique.",
+    },
+    "Cloud DNS": {
+        "en": "Scalable, reliable managed DNS for public and private zones.",
+        "fr": "DNS managé évolutif et fiable pour zones publiques et privées.",
+    },
+    "Cloud CDN": {
+        "en": "Content delivery network that caches HTTP(S) content close to users.",
+        "fr": "Réseau de diffusion de contenu qui met en cache le contenu HTTP(S) près des utilisateurs.",
+    },
+    "Cloud SQL": {
+        "en": "Fully managed relational database for MySQL, PostgreSQL, and SQL Server.",
+        "fr": "Base de données relationnelle entièrement gérée (MySQL, PostgreSQL, SQL Server).",
+    },
+    "Cloud Spanner": {
+        "en": "Globally distributed relational database with strong consistency and horizontal scale.",
+        "fr": "Base relationnelle distribuée mondialement, cohérence forte et scale horizontal.",
+    },
+    "Cloud Storage": {
+        "en": "Object storage for unstructured data with classes for cost and access patterns.",
+        "fr": "Stockage d’objets pour données non structurées, avec classes selon coût et accès.",
+    },
+    "BigQuery": {
+        "en": "Serverless data warehouse for large-scale analytics with SQL.",
+        "fr": "Entrepôt de données serverless pour l’analytique à grande échelle en SQL.",
+    },
+    "Bigtable": {
+        "en": "Fully managed wide-column NoSQL database for high-throughput, low-latency workloads.",
+        "fr": "Base NoSQL colonnaire managée pour charges à haut débit et faible latence.",
+    },
+    "Firestore": {
+        "en": "Serverless document database for mobile and web apps with realtime sync options.",
+        "fr": "Base documentaire serverless pour apps web/mobile, avec options de sync temps réel.",
+    },
+    "Memorystore": {
+        "en": "Fully managed in-memory data store for Redis or Memcached.",
+        "fr": "Store en mémoire entièrement géré pour Redis ou Memcached.",
+    },
+    "AlloyDB": {
+        "en": "PostgreSQL-compatible database optimized for demanding enterprise workloads.",
+        "fr": "Base compatible PostgreSQL optimisée pour charges d’entreprise exigeantes.",
+    },
+    "GKE": {
+        "en": "Managed Kubernetes service to run and orchestrate containers at scale.",
+        "fr": "Service Kubernetes managé pour exécuter et orchestrer des conteneurs à l’échelle.",
+    },
+    "Compute Engine": {
+        "en": "Infrastructure-as-a-service VMs with custom machine types and disks.",
+        "fr": "Machines virtuelles IaaS avec types personnalisés et disques.",
+    },
+    "Cloud Run": {
+        "en": "Serverless platform to run containers that scale to zero.",
+        "fr": "Plateforme serverless pour exécuter des conteneurs avec scale to zero.",
+    },
+    "App Engine": {
+        "en": "Fully managed platform-as-a-service for web apps and backends.",
+        "fr": "PaaS entièrement géré pour applications web et backends.",
+    },
+    "Cloud Functions": {
+        "en": "Event-driven serverless functions without managing servers.",
+        "fr": "Fonctions serverless déclenchées par des événements, sans gérer de serveurs.",
+    },
+    "Pub/Sub": {
+        "en": "Global messaging service for event-driven and streaming architectures.",
+        "fr": "Service de messagerie global pour architectures événementielles et streaming.",
+    },
+    "Dataflow": {
+        "en": "Managed Apache Beam service for batch and stream data processing.",
+        "fr": "Service managé Apache Beam pour traitement batch et streaming.",
+    },
+    "Dataproc": {
+        "en": "Managed Apache Spark and Hadoop clusters for big data processing.",
+        "fr": "Clusters managés Spark/Hadoop pour le traitement big data.",
+    },
+    "Cloud Composer": {
+        "en": "Managed Apache Airflow for authoring and scheduling workflows.",
+        "fr": "Apache Airflow managé pour créer et planifier des workflows.",
+    },
+    "Vertex AI": {
+        "en": "Unified ML platform for training, deploying, and managing models.",
+        "fr": "Plateforme ML unifiée pour entraîner, déployer et gérer des modèles.",
+    },
+    "Gemini": {
+        "en": "Google’s generative AI models and APIs for multimodal applications.",
+        "fr": "Modèles et API d’IA générative Google pour applications multimodales.",
+    },
+    "IAM": {
+        "en": "Identity and Access Management: who can do what on which resource.",
+        "fr": "Gestion des identités et des accès : qui peut faire quoi sur quelle ressource.",
+    },
+    "Cloud KMS": {
+        "en": "Managed key management for creating and controlling encryption keys.",
+        "fr": "Gestion managée des clés de chiffrement (création et contrôle).",
+    },
+    "Secret Manager": {
+        "en": "Stores API keys, passwords, and certificates with versioning and IAM.",
+        "fr": "Stocke clés API, mots de passe et certificats avec versions et IAM.",
+    },
+    "Cloud Monitoring": {
+        "en": "Metrics, dashboards, and alerting for Google Cloud and apps.",
+        "fr": "Métriques, tableaux de bord et alertes pour Google Cloud et les apps.",
+    },
+    "Cloud Logging": {
+        "en": "Centralized log storage, search, and export for cloud resources.",
+        "fr": "Stockage, recherche et export centralisés des journaux cloud.",
+    },
+    "Cloud Trace": {
+        "en": "Distributed tracing to analyze latency across services.",
+        "fr": "Traçage distribué pour analyser la latence entre services.",
+    },
+    "Cloud Build": {
+        "en": "CI/CD service to build, test, and deploy from source in the cloud.",
+        "fr": "Service CI/CD pour build, tests et déploiements depuis le cloud.",
+    },
+    "Artifact Registry": {
+        "en": "Managed repository for container images and language packages.",
+        "fr": "Dépôt managé pour images de conteneurs et packages de langages.",
+    },
+    "Terraform": {
+        "en": "Infrastructure as code tool widely used to provision Google Cloud.",
+        "fr": "Outil d’infrastructure as code très utilisé pour provisionner Google Cloud.",
+    },
+    "Anthos": {
+        "en": "Hybrid/multi-cloud platform to run Kubernetes and services consistently.",
+        "fr": "Plateforme hybride/multicloud pour exécuter Kubernetes et services de façon cohérente.",
+    },
+    "Apigee": {
+        "en": "Full-lifecycle API management platform for design, security, and analytics.",
+        "fr": "Plateforme de gestion d’API (conception, sécurité, analytique).",
+    },
+    "HA": {
+        "en": "High availability: design that stays up despite zone or component failures.",
+        "fr": "Haute disponibilité : conception qui reste disponible malgré pannes de zone ou de composant.",
+    },
+    "Autoscaling": {
+        "en": "Automatically adds or removes capacity based on demand.",
+        "fr": "Ajoute ou retire automatiquement de la capacité selon la demande.",
+    },
+    "Disaster recovery": {
+        "en": "Plan and tech to recover systems after a major outage or disaster.",
+        "fr": "Plan et technologies pour rétablir les systèmes après une panne majeure.",
+    },
+    "Backup and restore": {
+        "en": "Copying data so it can be restored after loss or corruption.",
+        "fr": "Copie des données pour pouvoir les restaurer après perte ou corruption.",
+    },
+    "Migration": {
+        "en": "Moving applications and data to Google Cloud with assessment and waves.",
+        "fr": "Déplacement d’applications et de données vers Google Cloud (assessment et vagues).",
+    },
+    "CMEK": {
+        "en": "Customer-Managed Encryption Keys: you control keys used by Google Cloud.",
+        "fr": "Clés de chiffrement gérées par le client : vous contrôlez les clés utilisées par Google Cloud.",
+    },
+    "Encryption": {
+        "en": "Protecting data at rest and in transit so only authorized parties can read it.",
+        "fr": "Protection des données au repos et en transit pour que seuls les autorisés puissent les lire.",
+    },
+    "Least privilege": {
+        "en": "Grant only the minimum permissions required for a role or workload.",
+        "fr": "N’accorder que les permissions minimales nécessaires à un rôle ou une charge.",
+    },
+    "Multi-region": {
+        "en": "Deploy across multiple regions for geographic resilience and latency.",
+        "fr": "Déploiement sur plusieurs régions pour résilience géographique et latence.",
+    },
+    "Multi-zone": {
+        "en": "Spread resources across zones in a region to survive a zone outage.",
+        "fr": "Répartir les ressources sur plusieurs zones d’une région pour survivre à une panne de zone.",
+    },
+    "RPO/RTO": {
+        "en": "RPO is max acceptable data loss; RTO is max acceptable downtime.",
+        "fr": "RPO = perte de données max acceptable ; RTO = temps d’indisponibilité max acceptable.",
+    },
+    "SLA/SLO": {
+        "en": "SLA is the contractual availability target; SLO is the internal reliability goal.",
+        "fr": "SLA = engagement contractuel de disponibilité ; SLO = objectif interne de fiabilité.",
+    },
+    "Cost optimization": {
+        "en": "Design and operate to reduce spend while meeting performance needs.",
+        "fr": "Concevoir et opérer pour réduire les coûts tout en respectant les besoins de perf.",
+    },
+    "VPC": {
+        "en": "Virtual Private Cloud: isolated virtual network for your Google Cloud resources.",
+        "fr": "Virtual Private Cloud : réseau virtuel isolé pour vos ressources Google Cloud.",
+    },
+    "VPC Peering": {
+        "en": "Private connectivity between two VPC networks without using the public internet.",
+        "fr": "Connexion privée entre deux VPC sans passer par Internet public.",
+    },
+    "Spot VMs": {
+        "en": "Low-cost, preemptible Compute Engine capacity for fault-tolerant workloads.",
+        "fr": "Capacité Compute Engine à bas coût, préemptible, pour charges tolérantes aux interruptions.",
+    },
+    "Spot / Preemptible VMs": {
+        "en": "Low-cost, preemptible Compute Engine capacity for fault-tolerant workloads.",
+        "fr": "Capacité Compute Engine à bas coût, préemptible, pour charges tolérantes aux interruptions.",
+    },
+}
 
-def question_concept(q: dict) -> tuple[str, str, str, str]:
-    """Return concept_en, concept_fr, section_en, section_fr."""
+
+def extract_concepts(q: dict) -> list[str]:
+    """Return ordered concept labels for a question (max 4)."""
     options = q.get("options") or []
     correct_texts = q.get("correctAnswers") or [
         option
@@ -668,7 +945,7 @@ def question_concept(q: dict) -> tuple[str, str, str, str]:
         if match:
             found.append((match.start(), label))
     found.sort()
-    concepts = []
+    concepts: list[str] = []
     for _, label in found:
         if label not in concepts:
             concepts.append(label)
@@ -697,6 +974,43 @@ def question_concept(q: dict) -> tuple[str, str, str, str]:
                 concepts.append(label)
             if len(concepts) == 3:
                 break
+    return concepts
+
+
+def render_concept_summary(concepts: list[str], section_en: str, section_fr: str, module_en: str, module_fr: str) -> str:
+    """Render bilingual concept chips with service tooltips when definitions exist."""
+    if not concepts:
+        concept_en = section_en or module_en or "Architecture concept"
+        concept_fr = section_fr or module_fr or "Concept d’architecture"
+        return bi(concept_fr, concept_en, block=True)
+
+    parts_fr: list[str] = []
+    parts_en: list[str] = []
+    for key in concepts:
+        label_en = key
+        label_fr = CONCEPT_FR.get(key, key)
+        defs = SERVICE_DEFS.get(key)
+        if defs:
+            attrs = (
+                f' class="svc" tabindex="0"'
+                f' data-tip-en="{esc(defs["en"])}"'
+                f' data-tip-fr="{esc(defs["fr"])}"'
+            )
+            parts_en.append(f"<span{attrs}>{esc(label_en)}</span>")
+            parts_fr.append(f"<span{attrs}>{esc(label_fr)}</span>")
+        else:
+            parts_en.append(esc(label_en))
+            parts_fr.append(esc(label_fr))
+    sep = " · "
+    return (
+        f'<span class="i18n-block fr">{sep.join(parts_fr)}</span>'
+        f'<span class="i18n-block en">{sep.join(parts_en)}</span>'
+    )
+
+
+def question_concept(q: dict) -> tuple[str, str, str, str]:
+    """Return concept_en, concept_fr, section_en, section_fr."""
+    concepts = extract_concepts(q)
     section_en = q.get("sectionTitle") or ""
     section_fr = fr_of(q, "sectionTitle") or section_en
     module_en = q.get("moduleTitle") or ""
@@ -830,7 +1144,16 @@ def overview_page(title_fr: str, title_en: str, questions: list, quiz_url: str, 
             f'<div class="progress-value">{percentage:.1f}% · {count}</div></div>'
         )
     for i, q in enumerate(questions, 1):
-        concept_en, concept_fr, section_en, section_fr = question_concept(q)
+        concepts = extract_concepts(q)
+        section_en = q.get("sectionTitle") or ""
+        section_fr = fr_of(q, "sectionTitle") or section_en
+        module_en = q.get("moduleTitle") or ""
+        module_fr = fr_of(q, "moduleTitle") or module_en
+        summary_html = render_concept_summary(
+            concepts, section_en, section_fr, module_en, module_fr
+        )
+        subtitle_en = section_en if concepts else module_en
+        subtitle_fr = section_fr if concepts else module_fr
         cards.append(
             f'<a class="overview-card" href="{esc(quiz_url)}#question-{i}">'
             f'<div class="n">{i}</div><div>'
@@ -839,8 +1162,8 @@ def overview_page(title_fr: str, title_en: str, questions: list, quiz_url: str, 
             f'<span class="badge m">{esc(q.get("module") or "")}</span>'
             f'<span class="badge s">{esc(q.get("section") or "")}</span>'
             f'</div>'
-            f'<div class="summary">{bi(concept_fr, concept_en, block=True)}</div>'
-            f'<div class="muted" style="margin-top:5px">{bi(section_fr, section_en)}</div>'
+            f'<div class="summary">{summary_html}</div>'
+            f'<div class="muted" style="margin-top:5px">{bi(subtitle_fr, subtitle_en)}</div>'
             f'</div></a>'
         )
     return f"""<!doctype html>
