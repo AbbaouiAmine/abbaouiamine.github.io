@@ -1,0 +1,5 @@
+.venv/
+.translation-cache.json
+translation.log
+__pycache__/
+*.pyc

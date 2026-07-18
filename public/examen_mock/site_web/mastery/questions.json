@@ -25,7 +25,23 @@
   ],
   "domainTitle": "Managing and Provisioning a Solution Infrastructure",
   "moduleTitle": "Configure Compute Resources",
-  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration"
+  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de soins de santé souhaite remplacer son portail de recherche d'assistance interne par un assistant conversationnel. L'examen de l'architecture a produit cette note :\nQuelle prochaine action réduit le mieux les efforts de mise en œuvre tout en préservant les exigences de gouvernance et de sécurité ?",
+    "explanation": "Les exigences privilégient une approche de recherche d'agents et d'entreprise prédéfinie au lieu d'un flux de travail de modèle personnalisé. Agent Builder dans Gemini Enterprise est conçu pour assembler des agents ancrés sur des sources de données d'entreprise approuvées avec moins d'infrastructure personnalisée que la création d'une logique de récupération, d'orchestration et de discussion à partir de zéro. La gouvernance peut être préservée en utilisant un accès géré prenant en compte l'identité, la journalisation d'audit et des couches de sécurité telles que Model Armor et Sensitive Data Protection pour le filtrage des invites/réponses et la gestion des PHI/PII. L'implication clé de la conception est de configurer d'abord un agent géré et gouverné, puis de le personnaliser uniquement là où les exigences ne sont pas satisfaites.",
+    "options": [
+     "Créez un service RAG personnalisé sur GKE avec une base de données vectorielles autogérée.",
+     "Affinez un modèle Model Garden sur tous les documents sources.",
+     "Appelez Gemini APIs via un compte de service partagé lors d'une exportation de document fusionné.",
+     "Configurez Agent Builder dans Gemini Enterprise avec des connecteurs gouvernés et des contrôles de sécurité AI."
+    ],
+    "topic": "Gestion et provisionnement d'une infrastructure de solution",
+    "domainTitle": "Gestion et provisionnement d'une infrastructure de solution",
+    "moduleTitle": "Configurer les ressources de calcul",
+    "sectionTitle": "Provisionnement de clusters GKE pour l'orchestration de conteneurs"
+   }
+  }
  },
  {
   "id": 2,
@@ -53,7 +69,23 @@
   ],
   "domainTitle": "Managing and Provisioning a Solution Infrastructure",
   "moduleTitle": "Configure Compute Resources",
-  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration"
+  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise souhaite lancer dans six semaines une assistante RH interne. Il doit répondre à partir des documents de politique existants dans Google Workspace et Cloud Storage, respecter les autorisations de document de chaque employé, enregistrer l'utilisation pour l'audit et minimiser les opérations ML personnalisées. Quelle recommandation équilibre le mieux les efforts de mise en œuvre avec la gouvernance et la sécurité ?",
+    "explanation": "Pour un assistant interne chargé du contenu d'entreprise, la meilleure solution est un agent prédéfini ou une intégration de type recherche d'entreprise qui peut se connecter aux sources existantes, ancrer les réponses dans des documents autorisés et prendre en charge les contrôles de gouvernance. Gemini Enterprise ou Agent Builder réduit les efforts de mise en œuvre par rapport à la création de composants de récupération, d'orchestration et de diffusion de modèles à partir de zéro. Il répond également mieux aux exigences de sécurité, car les connecteurs sensibles à l'accès et la journalisation centralisée peuvent aligner les réponses sur les autorisations de chaque utilisateur. Affiner ou créer une plate-forme RAG personnalisée peut être utile dans certains cas, mais cela augmente la charge de livraison et d'exploitation et oblige l'équipe à recréer des contrôles de gouvernance.",
+    "options": [
+     "Créez une pile RAG personnalisée sur GKE avec un index vectoriel partagé",
+     "Utilisez un langage naturel prédéfini API pour classer chaque question",
+     "Affiner un modèle Model Garden sur tous les documents RH",
+     "Utilisez Gemini Enterprise ou Agent Builder avec des connecteurs gouvernés et une mise à la terre"
+    ],
+    "topic": "Gestion et provisionnement d'une infrastructure de solution",
+    "domainTitle": "Gestion et provisionnement d'une infrastructure de solution",
+    "moduleTitle": "Configurer les ressources de calcul",
+    "sectionTitle": "Provisionnement de clusters GKE pour l'orchestration de conteneurs"
+   }
+  }
  },
  {
   "id": 3,
@@ -81,7 +113,23 @@
   ],
   "domainTitle": "Ensuring Solution and Operations Reliability",
   "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
-  "sectionTitle": "Introduction to Google Cloud's Operations Suite"
+  "sectionTitle": "Introduction to Google Cloud's Operations Suite",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de vente au détail lancera une commande destinée aux clients API sur Google Cloud dans six semaines. Les objectifs de l'architecture incluent une latence p95 inférieure à 300 ms, un RTO de 15 minutes, aucun test visible par le client pendant les heures de pointe et des preuves de conformité pour les contrôles de résilience. L'équipe dispose d'un budget pour un environnement de test temporaire de type production, et le propriétaire du produit peut approuver une fenêtre de production à faible trafic. Quel plan de validation équilibre le mieux ces contraintes ?",
+    "explanation": "Un plan de validation de résilience solide relie les tests aux objectifs d'architecture déclarés et les exécute suffisamment tôt pour résoudre les problèmes avant le lancement. Ici, des tests temporaires de type production valident la latence et le basculement sans payer pour un environnement dupliqué permanent. Une journée de jeu en production contrôlée pendant une fenêtre approuvée à faible trafic ajoute du réalisme tout en protégeant la disponibilité. La propriété SRE garantit que les alertes, les runbooks, les escalades et les comportements de restauration sont exercés, tandis que les parties prenantes du produit et de la conformité fournissent l'approbation et l'examen des preuves. Le compromis clé n’est pas un réalisme maximum à tout prix ; c'est suffisamment de réalisme pour valider la reprise et les opérations sans violer les contraintes d'impact client et de conformité.",
+    "options": [
+     "Utilisez uniquement des évaluations sur table dirigées par des architectes et évitez les tests en direct pour réduire les coûts.",
+     "Différez les tests de résilience après le lancement et comptez sur les alertes de surveillance.",
+     "Mettez temporairement en miroir la production pour les tests de charge et de basculement avant le lancement, puis exécutez une journée de jeu approuvée à faible trafic avec une réponse dirigée par SRE et une capture de preuves.",
+     "Exécutez tous les tests de basculement et de chaos en production pendant les pics de trafic pour maximiser le réalisme."
+    ],
+    "topic": "Assurer l’excellence des solutions et des opérations",
+    "domainTitle": "Assurer la fiabilité des solutions et des opérations",
+    "moduleTitle": "Surveillance, journalisation et alertes pour plus de fiabilité",
+    "sectionTitle": "Introduction à la suite opérationnelle de Google Cloud"
+   }
+  }
  },
  {
   "id": 4,
@@ -108,7 +156,23 @@
   ],
   "domainTitle": "Designing for Security and Compliance",
   "moduleTitle": "Architecting Secure Google Cloud Solutions",
-  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access",
+  "translations": {
+   "fr": {
+    "question": "Une société de logiciels de soins de santé lance un assistant d'assistance basé sur Gemini sur Cloud Run. Les clients peuvent saisir des questions de forme libre et l'application récupère les réponses d'une base de connaissances approuvée. Les exigences sont de réduire les risques d'injection rapide et de jailbreak, d'empêcher l'acceptation ou le renvoi de données sensibles, de maintenir la première version à faible latence et de fournir des preuves de l'application de la politique. Quelle décision d’architecture répond le mieux à ces exigences ?",
+    "explanation": "Model Armor est le contrôle approprié lorsque le risque concerne les entrées, les sorties ou le comportement de l'application AI génératif. Dans ce scénario, l'assistant accepte les invites de forme libre non fiables et renvoie les réponses générées. L'architecture a donc besoin de garde-fous dans le chemin de requête et de réponse. Model Armor peut appliquer des politiques pour des risques tels que l'injection rapide, les tentatives de jailbreak, le contenu nuisible et la gestion des données sensibles, et leur application peut étayer les preuves d'audit. Cela correspond mieux à la première version à faible latence qu’au recyclage ou à la révision manuelle.",
+    "options": [
+     "Affiner le modèle avec des exemples de réponses interdites",
+     "Ajouter des vérifications Model Armor sur les invites et les réponses",
+     "Acheminer chaque réponse vers un examen manuel avant la livraison",
+     "Mettez Cloud Armor devant le service Cloud Run"
+    ],
+    "topic": "Concevoir pour la sécurité et la conformité",
+    "domainTitle": "Concevoir pour la sécurité et la conformité",
+    "moduleTitle": "Concevoir des solutions sécurisées Google Cloud",
+    "sectionTitle": "Appliquer la posture de sécurité et concevoir un accès sécurisé"
+   }
+  }
  },
  {
   "id": 5,
@@ -136,7 +200,23 @@
   ],
   "domainTitle": "Managing and Provisioning a Solution Infrastructure",
   "moduleTitle": "Configure Storage Resources",
-  "sectionTitle": "Optimizing Data Transfer and Latency and Planning for Data Growth"
+  "sectionTitle": "Optimizing Data Transfer and Latency and Planning for Data Growth",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de vente au détail recycle chaque semaine un modèle de détection des fraudes à l'aide des données de BigQuery. Des incidents récents impliquaient un extrait de fonctionnalité obsolète et une version de modèle promue avant la fin de l'évaluation.\nObjet : note de flux de travail AI actuelle\nQuelle est la meilleure implication de conception de l’exposition ?",
+    "explanation": "Le problème principal est le risque manuel tout au long d'un cycle de vie ML en plusieurs étapes, et non le service de modèle ou les frictions d'accès. Vertex AI Pipelines est conçu pour orchestrer des flux de travail AI reproductibles tels que l'extraction de données, la formation, l'évaluation, l'enregistrement et le déploiement. Les composants du pipeline peuvent transmettre explicitement des artefacts, capturer des métadonnées et un lignage, paramétrer des exécutions et ajouter un contrôle de qualité afin qu'un modèle ne soit pas promu à moins que l'évaluation ne se termine avec succès. Cela réduit le risque d'utiliser des fichiers obsolètes, de perdre les paramètres d'exécution ou de sauter des étapes d'approbation. Une liste de contrôle peut contribuer à la discipline du processus, mais elle n'offre pas la même reproductibilité ni le même contrôle automatisé.",
+    "options": [
+     "Créez un pipeline Vertex AI avec des artefacts suivis et des portes d'évaluation.",
+     "Conservez les blocs-notes et ajoutez une liste de contrôle de déploiement requise.",
+     "Déplacez la diffusion de prédictions en ligne vers Cloud Run.",
+     "Accordez aux analystes des rôles IAM plus larges pour l’exécution du flux de travail."
+    ],
+    "topic": "Gestion et provisionnement d'une infrastructure de solution",
+    "domainTitle": "Gestion et provisionnement d'une infrastructure de solution",
+    "moduleTitle": "Configurer les ressources de stockage",
+    "sectionTitle": "Optimisation du transfert et de la latence des données et planification de la croissance des données"
+   }
+  }
  },
  {
   "id": 6,
@@ -164,7 +244,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design Network, Storage, and Compute",
-  "sectionTitle": "Integration with On-premises and Multicloud Environments"
+  "sectionTitle": "Integration with On-premises and Multicloud Environments",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise exécute des analyses sur Google Cloud et traite les commandes sur un autre fournisseur de cloud. Les plateformes doivent échanger plusieurs To de données par jour et prendre en charge les appels API sensibles à la latence. La conformité nécessite un transport sur réseau privé, des chemins redondants et un contrôle centralisé des itinéraires. L'équipe réseau peut gérer BGP mais souhaite éviter de créer des appareils de transit. Quelle recommandation de connectivité multicloud équilibre le mieux les contraintes ?",
+    "explanation": "Pour un échange multicloud soutenu et sensible à la latence avec transport privé et chemins redondants, un modèle d’interconnexion multicloud dédié est la meilleure solution. Cross-Cloud Interconnect connecte Google Cloud aux fournisseurs de cloud pris en charge via des liens dédiés, tandis que Cloud Router utilise BGP pour le contrôle de route dynamique et le basculement. Les liens redondants améliorent la disponibilité et évitent la variabilité du chemin Internet. Cela coûte plus cher et nécessite une planification, mais les exigences en matière de volume de données, de conformité, de latence et de contrôle opérationnel de la tige justifient ce compromis. HA VPN peut être utile pour une connectivité plus petite, moins sensible à la latence ou provisoire.",
+    "options": [
+     "Utilisez une interconnexion cross-cloud redondante avec Cloud Router/BGP.",
+     "Exposez le APIs public avec TLS et les listes autorisées IP.",
+     "Acheminez tout le trafic via le centre de données de l’entreprise.",
+     "Utilisez les tunnels HA VPN sur Internet."
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Concevoir un réseau, un stockage et un calcul",
+    "sectionTitle": "Intégration avec les environnements sur site et multicloud"
+   }
+  }
  },
  {
   "id": 7,
@@ -192,7 +288,23 @@
   ],
   "domainTitle": "Managing Implementation",
   "moduleTitle": "Guiding Development and Operations Teams",
-  "sectionTitle": "Advising on Application Development and APIs"
+  "sectionTitle": "Advising on Application Development and APIs",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise gère une commande destinée aux partenaires API avec Apigee. Un nouveau backend conserve le même contrat externe mais modifie les caractéristiques de validation et de latence. L'entreprise souhaite une version rapide, sans modification requise du code partenaire, une détection précoce des erreurs spécifiques au consommateur, une restauration en quelques minutes et une surcharge opérationnelle minimale à long terme. Quelle recommandation de déploiement équilibre le mieux ces contraintes ?",
+    "explanation": "Un plan de déploiement API doit valider la compatibilité avant la production, contrôler l'exposition pendant la sortie de production et mesurer l'impact réel sur le consommateur. Pour ce scénario, les tests de contrat et de charge réduisent le risque de rupture du contrat API inchangé ou de manque de régressions de latence. Un déploiement de trafic canari ou pondéré dans Apigee limite le rayon d'explosion tout en exerçant un trafic partenaire réel. La surveillance par produit API, application de développeur, code d'état et latence permet de détecter rapidement les pannes spécifiques au consommateur. Une restauration préparée vers la révision précédente ou le chemin back-end répond aux exigences de récupération au niveau des minutes. Cette approche est plus rapide et plus légère qu’une longue plateforme parallèle, mais plus sûre qu’un basculement complet.",
+    "options": [
+     "Exécutez les deux backends en permanence et laissez les partenaires choisir l’un ou l’autre point de terminaison.",
+     "Réduisez tout le trafic après les tests unitaires backend pour minimiser les délais de livraison.",
+     "Lancez une nouvelle version API et demandez à tous les partenaires de migrer avant la sortie.",
+     "Testez les contrats et chargez-les, puis utilisez le trafic Canary Apigee avec surveillance et restauration par consommateur."
+    ],
+    "topic": "Gestion de la mise en œuvre",
+    "domainTitle": "Gestion de la mise en œuvre",
+    "moduleTitle": "Guider les équipes de développement et d’exploitation",
+    "sectionTitle": "Conseil en développement d'applications et APIs"
+   }
+  }
  },
  {
   "id": 8,
@@ -219,7 +331,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design for Business Outcomes",
-  "sectionTitle": "Compliance and Observability"
+  "sectionTitle": "Compliance and Observability",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de vente au détail modernise ses services de paiement sur Cloud Run et GKE. La plupart des incidents sont découverts à partir de plaintes de clients, mais le budget de latence est serré, l'équipe SRE est petite et la conformité interdit de stocker les données brutes de paiement ou de client dans des journaux. Les dirigeants financeront des dépenses modérées en matière de télémétrie si cela réduit le risque de production. Quelle recommandation équilibre le mieux ces contraintes ?",
+    "explanation": "La meilleure conception réduit le risque opérationnel en rendant le comportement de production mesurable sans créer de nouveaux risques. L'observabilité basée sur SLO concentre la télémétrie sur les résultats destinés aux utilisateurs, tels que la latence de paiement, le taux d'erreur et la disponibilité. L'utilisation de Google Cloud Observability avec des métriques ciblées, des alertes, des traces distribuées échantillonnées et des champs de journaux sensibles expurgés ou exclus donne aux équipes suffisamment de signal pour détecter et diagnostiquer les incidents. L'échantillonnage et l'instrumentation ciblée aident à contrôler la latence et les coûts, tandis que la rédaction répond aux exigences de conformité. Cela est également réaliste pour une petite équipe SRE, car les alertes peuvent être liées aux objectifs de niveau de service plutôt qu'à chaque métrique de bas niveau.",
+    "options": [
+     "Augmentez la marge de mise à l'échelle automatique avant d'ajouter l'observabilité",
+     "S'appuyer sur des tests de préparation et maintenir la télémétrie de production au minimum",
+     "Adoptez l'observabilité basée sur SLO avec des traces échantillonnées et des journaux rédigés",
+     "Activer la journalisation complète du débogage et le traçage non échantillonné pour chaque requête"
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Conception axée sur les résultats commerciaux",
+    "sectionTitle": "Conformité et observabilité"
+   }
+  }
  },
  {
   "id": 9,
@@ -246,7 +374,23 @@
   ],
   "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
   "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
-  "sectionTitle": "Modernizing the SDLC with CI/CD"
+  "sectionTitle": "Modernizing the SDLC with CI/CD",
+  "translations": {
+   "fr": {
+    "question": "Un détaillant exécute un service de paiement Web sans état sur des instances Compute Engine dans un managed instance group derrière un équilibreur de charge d'application externe. Les instances utilisent en moyenne 15 % de CPU la plupart de la semaine, mais atteignent 80 à 90 % de CPU lors de courts événements marketing. L'entreprise souhaite réduire les coûts de calcul, préserver la latence de paiement lors des événements et éviter les modifications du code d'application ou du package ce trimestre.\nQuelle décision d’optimisation répond le mieux à ces exigences ?",
+    "explanation": "L'optimisation des ressources doit correspondre au modèle de ressources et aux contraintes. Un service sans état avec une utilisation moyenne faible mais des pics courts et élevés convient parfaitement à l'autoscaling : conservez une capacité de base suffisante pour le trafic normal et évoluez pendant les événements pour protéger la latence. Le redimensionnement est préférable lorsqu'une charge de travail est constamment surprovisionnée, et non lorsque la demande de pointe nécessite encore de la capacité. Les services gérés ou la refonte peuvent être utiles, mais ils sont moins adaptés ici, car l'entreprise souhaite explicitement éviter les modifications d'application ou de packaging ce trimestre.",
+    "options": [
+     "Migrez immédiatement le service vers Cloud Run pour utiliser une plateforme entièrement gérée.",
+     "Redimensionnez toutes les instances vers des types de machines plus petits en fonction de l'utilisation moyenne du processeur.",
+     "Ajoutez des règles de cycle de vie Cloud Storage pour les journaux de paiement et conservez la flotte de calcul inchangée.",
+     "Configurez la mise à l'échelle automatique managed instance group avec une capacité minimale de base et une capacité maximale compatible avec les événements."
+    ],
+    "topic": "Analyser et optimiser les processus techniques et commerciaux",
+    "domainTitle": "Analyser et optimiser les processus techniques et commerciaux",
+    "moduleTitle": "Optimisation des processus techniques et du cycle de vie de développement",
+    "sectionTitle": "Moderniser le SDLC avec CI/CD"
+   }
+  }
  },
  {
   "id": 10,
@@ -275,7 +419,23 @@
   ],
   "domainTitle": "Ensuring Solution and Operations Reliability",
   "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
-  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise gère des services de paiement sur Cloud Run et GKE. Les équipes opérationnelles reçoivent actuellement des pages sur les pics de processeur et les redémarrages de pods, mais les examens des incidents montrent que de nombreuses pannes ayant un impact sur les clients sont d'abord détectées via les tickets d'assistance. Les exigences sont d'alerter uniquement sur l'impact visible par l'utilisateur, d'indiquer quelle version du service consomme le budget d'erreur et de conserver des journaux détaillés pour l'audit sans augmenter le bruit du pager. Quelle amélioration de l’observabilité l’architecte doit-il recommander ?",
+    "explanation": "Les équipes opérationnelles ont besoin de signaux qui correspondent à l’expérience utilisateur, et pas seulement aux symptômes de l’infrastructure. Pour les services sur Cloud Run et GKE, les tableaux de bord Cloud Monitoring et les alertes de taux d'utilisation basées sur SLO, créées à partir des mesures de latence des demandes et de taux d'erreur, aident à identifier le moment où le budget d'erreur est consommé. L’ajout d’étiquettes de service et de version permet un tri rapide au niveau des versions. Les journaux détaillés peuvent toujours être conservés à des fins d'audit et d'enquête, mais ils ne doivent pas constituer le principal signal de pagination à moins d'être convertis en métriques basées sur les journaux soigneusement définies et liées à l'impact sur l'utilisateur. La clé est de réduire le bruit tout en rendant visibles rapidement les dégradations ayant un impact sur les clients.",
+    "options": [
+     "Créez des tableaux de bord SLO avec des alertes de taux de combustion à l'aide de mesures de latence et d'erreur étiquetées par version.",
+     "Exportez tous les journaux vers BigQuery et pagez sur chaque journal d'erreurs.",
+     "Activez le traçage et l'alerte à 100 % à chaque période lente.",
+     "Page sur les alertes de CPU, de mémoire et de redémarrage pour chaque service."
+    ],
+    "topic": "Assurer l’excellence des solutions et des opérations",
+    "domainTitle": "Assurer la fiabilité des solutions et des opérations",
+    "moduleTitle": "Surveillance, journalisation et alertes pour plus de fiabilité",
+    "sectionTitle": "Implémentation de la journalisation centralisée avec Cloud Logging"
+   }
+  }
  },
  {
   "id": 11,
@@ -305,7 +465,23 @@
   ],
   "domainTitle": "Designing for Security and Compliance",
   "moduleTitle": "Architecting Secure Google Cloud Solutions",
-  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access",
+  "translations": {
+   "fr": {
+    "question": "Une équipe d'analyse des soins de santé stocke les ensembles de données réglementés dans Google Cloud. L'architecte examine les résultats de sécurité ci-dessous et doit choisir le contrôle suivant pour réduire le chemin de mouvement des données le plus risqué.\nQuelle action suivante répond le mieux au problème ?",
+    "explanation": "Le principal risque est l'exfiltration via Google APIs de projets réglementés vers un projet Google Cloud non approuvé. IAM contrôle qui peut accéder aux données, mais il ne crée pas en soi une limite de service qui empêche une identité autorisée ou compromise de déplacer des données vers un autre projet. VPC Service Controls peut créer un périmètre autour des projets d'analyse et utiliser des règles d'entrée et de sortie pour autoriser les tâches internes approuvées tout en limitant les mouvements vers des projets ou des services non fiables.",
+    "options": [
+     "Appliquez une stratégie de pare-feu hiérarchique qui refuse la sortie Internet.",
+     "Créez un périmètre VPC Service Controls avec des règles d'entrée et de sortie explicites.",
+     "Exigez un accès contextuel pour les sessions de console d’analyste.",
+     "Activez des journaux d’audit et des alertes supplémentaires sur l’accès aux données."
+    ],
+    "topic": "Concevoir pour la sécurité et la conformité",
+    "domainTitle": "Concevoir pour la sécurité et la conformité",
+    "moduleTitle": "Concevoir des solutions sécurisées Google Cloud",
+    "sectionTitle": "Appliquer la posture de sécurité et concevoir un accès sécurisé"
+   }
+  }
  },
  {
   "id": 12,
@@ -333,7 +509,23 @@
   ],
   "domainTitle": "Managing Implementation",
   "moduleTitle": "Interacting with Google Cloud Programmatically",
-  "sectionTitle": "Working with Cloud Emulators for Local Development"
+  "sectionTitle": "Working with Cloud Emulators for Local Development",
+  "translations": {
+   "fr": {
+    "question": "Une société d'analyse financière standardise de nouveaux projets Google Cloud. Les ingénieurs créent actuellement des ressources avec la console et gcloud. La conformité nécessite un examen par les pairs et une piste d'audit pour les modifications du réseau et des changements IAM, mais l'équipe de la plate-forme ne compte que deux ingénieurs et une expérience Terraform limitée. Quelle recommandation équilibre le mieux le changement contrôlé, la répétabilité et l’effort opérationnel ?",
+    "explanation": "L'infrastructure en tant que code doit rendre les modifications de l'infrastructure reproductibles, révisables et contrôlées sans créer de charge opérationnelle inutile. Une approche pratique Google Cloud consiste à conserver la configuration Terraform et les modules réutilisables dans le contrôle de source, à exiger un examen des demandes d'extraction, à exécuter le plan terraform dans CI et à appliquer les modifications uniquement via un pipeline approuvé avec un état distant. Cela donne aux auditeurs un historique des modifications, réduit la dérive due aux modifications manuelles et permet à une petite équipe de démarrer avec un flux de travail gérable. Les modules réutilisables aident également les équipes moins expérimentées à standardiser les configurations de projet, de réseau, de IAM et de service au fil du temps.",
+    "options": [
+     "Utilisez les modules Terraform basés sur Git avec l'examen du plan CI et les applications approuvées",
+     "Exécutez Terraform manuellement à partir d'un poste de travail administrateur avec l'état local",
+     "Continuez à utiliser la console et documentez chaque changement dans les tickets",
+     "Créez un portail de provisionnement personnalisé avant d'adopter Terraform"
+    ],
+    "topic": "Gestion de la mise en œuvre",
+    "domainTitle": "Gestion de la mise en œuvre",
+    "moduleTitle": "Interagir avec Google Cloud par programmation",
+    "sectionTitle": "Travailler avec des émulateurs cloud pour le développement local"
+   }
+  }
  },
  {
   "id": 13,
@@ -362,7 +554,23 @@
   ],
   "domainTitle": "Ensuring Solution and Operations Reliability",
   "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
-  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de vente au détail gère sa caisse API sur Cloud Run. Le responsable des opérations souhaite une amélioration du support qui résout directement les problèmes de production récurrents et puisse montrer une amélioration mesurable au prochain trimestre.\nPièce : Examen des incidents sur 30 jours\nQuelle prochaine action l’architecte devrait-il recommander ?",
+    "explanation": "Les améliorations de l’excellence opérationnelle doivent être liées à des preuves visibles d’incidents et à des résultats mesurables. L'exposition montre un modèle récurrent lié aux versions, une observabilité existante par révision, un diagnostic manuel lent et un chemin de décision de restauration manquant. Un runbook qui relie l'alerte aux tableaux de bord filtrés par révision, définit les critères de restauration et d'escalade, et suit le MTTR et les incidents répétés, comble directement le manque de support. Cela montre également aux dirigeants que le soutien à la production s’améliore avec le temps.",
+    "options": [
+     "Augmentez le nombre maximum d'instances Cloud Run après chaque déploiement",
+     "Créez un runbook de restauration des révisions avec des tableaux de bord, des critères, une escalade et un suivi MTTR.",
+     "Migrez le service vers GKE pour plus de contrôle de déploiement",
+     "Exiger des analyses post-mortem avant les décisions de restauration de la production"
+    ],
+    "topic": "Assurer l’excellence des solutions et des opérations",
+    "domainTitle": "Assurer la fiabilité des solutions et des opérations",
+    "moduleTitle": "Surveillance, journalisation et alertes pour plus de fiabilité",
+    "sectionTitle": "Implémentation de la journalisation centralisée avec Cloud Logging"
+   }
+  }
  },
  {
   "id": 14,
@@ -391,7 +599,23 @@
   ],
   "domainTitle": "Ensuring Solution and Operations Reliability",
   "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
-  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging",
+  "translations": {
+   "fr": {
+    "question": "Un détaillant gère une plate-forme de commande orientée client sur GKE et Cloud SQL. Les versions hebdomadaires provoquent souvent des incidents visibles par les clients ; les alertes sont bruyantes, les décisions de restauration sont ponctuelles et les correctifs post-incident ne sont pas suivis. Les dirigeants souhaitent moins d’incidents avant les fêtes de fin d’année tout en préservant la vitesse de publication et en évitant une refonte majeure. Quelle décision d’architecture améliore le mieux l’excellence opérationnelle ?",
+    "explanation": "L'excellence opérationnelle est un système de pratiques, pas une seule fonctionnalité. Dans ce scénario, les échecs couvrent la détection, la sécurité des versions, la prise de décision et l’apprentissage des incidents. Une décision solide combine des SLO et des budgets d'erreur, des télémétries exploitables Cloud Monitoring et Cloud Logging, des versions Canary ou bleu-vert automatisées avec des critères de restauration et une propriété claire sur appel, runbook et post-mortem. Cela préserve la vitesse de publication tout en réduisant l’impact sur le client et évite le risque d’une refonte précipitée. Un outil peut aider, mais il ne peut pas remplacer les objectifs de fiabilité convenus, les modèles de livraison sécurisés et les pratiques d'équipe responsables.",
+    "options": [
+     "Activer les recommandations Gemini Cloud Assist et conserver les pratiques de publication actuelles",
+     "Adopter les SLO, la livraison progressive, les normes d'observabilité et l'appropriation post-incident",
+     "Augmentez la taille des nœuds GKE, ajoutez des réplicas en lecture et créez des contrôles de disponibilité",
+     "Migrez la plateforme vers Cloud Run et AlloyDB avant les fêtes de fin d'année"
+    ],
+    "topic": "Assurer l’excellence des solutions et des opérations",
+    "domainTitle": "Assurer la fiabilité des solutions et des opérations",
+    "moduleTitle": "Surveillance, journalisation et alertes pour plus de fiabilité",
+    "sectionTitle": "Implémentation de la journalisation centralisée avec Cloud Logging"
+   }
+  }
  },
  {
   "id": 15,
@@ -421,7 +645,23 @@
   ],
   "domainTitle": "Ensuring Solution and Operations Reliability",
   "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
-  "sectionTitle": "Implementing Centralized Logging with Cloud Logging"
+  "sectionTitle": "Implementing Centralized Logging with Cloud Logging",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise décide de promouvoir ou non un nouveau Cloud Run API authentifié en production. Le API écrit des enregistrements réglementés dans BigQuery. La conformité nécessite des preuves indiquant qui a modifié la configuration du service/IAM et qui a accédé à l'ensemble de données réglementées pendant le pilote. Les SRE ont également besoin de suffisamment de preuves pour enquêter sur les pics 5xx. L'équipe doit contrôler les coûts de journalisation et éviter les modifications de code avant le lancement. Que devriez-vous recommander ?",
+    "explanation": "Les journaux d'audit Cloud constituent la bonne source de preuves pour les modifications administratives et les activités d'accès aux données, tandis que les journaux de requêtes Cloud Run fournissent un contexte opérationnel pour les requêtes ayant échoué. Un compartiment ou un récepteur de journaux centralisé avec des filtres étendus, une rétention appropriée et des exclusions pour les journaux bruyants non essentiels équilibre les preuves de conformité, les besoins de dépannage, le contrôle des coûts et les efforts opérationnels. Cela évite également d'ajouter de la latence, car la collecte des journaux ne fait pas partie du chemin de requête de l'application et évite les modifications de code de dernière minute.",
+    "options": [
+     "Centralisez les journaux d'audit cloud filtrés et les journaux de requêtes Cloud Run avec des contrôles de rétention",
+     "Activer les journaux de flux VPC et la capture de paquets pour tous les sous-réseaux de production",
+     "Utilisez les métriques Cloud Monitoring et les contrôles de disponibilité comme preuve d'approbation",
+     "Exportez indéfiniment tous les journaux du projet avec la gravité DEBUG vers BigQuery"
+    ],
+    "topic": "Assurer l’excellence des solutions et des opérations",
+    "domainTitle": "Assurer la fiabilité des solutions et des opérations",
+    "moduleTitle": "Surveillance, journalisation et alertes pour plus de fiabilité",
+    "sectionTitle": "Implémentation de la journalisation centralisée avec Cloud Logging"
+   }
+  }
  },
  {
   "id": 16,
@@ -452,7 +692,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design for Business Outcomes",
-  "sectionTitle": "Integration with External Systems and Moving Data"
+  "sectionTitle": "Integration with External Systems and Moving Data",
+  "translations": {
+   "fr": {
+    "question": "Une société de services financiers exécute des analyses de fraude dans Google Cloud et le règlement des transactions chez un autre fournisseur de cloud. Passez en revue les exigences et choisissez la meilleure conception de connectivité.\nQuelle conception répond le mieux à ces exigences ?",
+    "explanation": "L'interconnexion cross-cloud est la meilleure solution lorsqu'un environnement Google Cloud doit échanger des données en privé avec un autre fournisseur de cloud avec une bande passante prévisible et évolutive. Cloud Router utilise BGP pour échanger des routes de manière dynamique, ce qui donne à l'équipe réseau centrale un contrôle opérationnel sur les préfixes annoncés et l'état des liens. Des connexions redondantes et des attachements VLAN doivent être utilisés pour assurer la disponibilité, avec des règles de pare-feu et des contrôles de routage limitant les systèmes pouvant échanger des données. Si le chiffrement de la charge utile est requis par la politique, ajoutez le chiffrement au niveau de la couche application ou dans un tunnel approuvé, mais le modèle de connectivité principal reste une interconnexion multicloud privée plutôt qu'un accès Internet.",
+    "options": [
+     "Exposer les points de terminaison HTTPS externes et mettre sur liste verte les adresses IP du cloud homologue",
+     "Utilisez les tunnels HA VPN sur l'Internet public",
+     "Créez un VPC peering direct entre les deux fournisseurs de cloud",
+     "Utiliser une interconnexion cross-cloud redondante avec Cloud Router BGP"
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Conception axée sur les résultats commerciaux",
+    "sectionTitle": "Intégration avec des systèmes externes et déplacement de données"
+   }
+  }
  },
  {
   "id": 17,
@@ -482,7 +738,23 @@
   ],
   "domainTitle": "Designing for Security and Compliance",
   "moduleTitle": "Architecting Secure Google Cloud Solutions",
-  "sectionTitle": "Data Protection and Secrets Management in Google Cloud"
+  "sectionTitle": "Data Protection and Secrets Management in Google Cloud",
+  "translations": {
+   "fr": {
+    "question": "Une société de services financiers migre une plate-forme de détection des fraudes aux paiements vers Google Cloud. Le service reçoit les données des titulaires de carte des systèmes partenaires via une connectivité privée, évalue les transactions en temps quasi réel, stocke les résultats pendant 7 ans et transmet les données masquées à BigQuery. Les exigences incluent le contrôle du client sur l'utilisation des clés, la protection sur le réseau, une exposition réduite pendant le traitement des données, l'absence de points de terminaison publics, une faible latence et une surcharge opérationnelle limitée. Quelle recommandation équilibre le mieux ces exigences ?",
+    "explanation": "L'exigence appelle à une protection des données à plusieurs niveaux dans les états rest, en transit et en cours d'utilisation. Les services gérés soutenus par CMEK donnent aux équipes de sécurité le contrôle et la possibilité d'audit des données stockées réglementées sans insérer d'éléments clés dans le code de l'application. La connectivité privée avec TLS appliqué protège le trafic des partenaires et de service à service tout en évitant l'exposition publique et en préservant une faible latence. Les nœuds confidentiels GKE réduisent l'exposition pendant le traitement en utilisant Confidential Computing pour l'exécution de notation. Cela équilibre la conformité et la sécurité avec la disponibilité des services gérés, la prise en charge de la rotation et un effort opérationnel réduit.",
+    "options": [
+     "Utilisez le stockage sauvegardé par CMEK, les chemins privés TLS et les nœuds confidentiels GKE",
+     "Utiliser un service HSM autogéré et un standard isolé VMs",
+     "Utilisez les clés de chiffrement gérées par l'application et décryptez sur les nœuds GKE standard",
+     "Utiliser le chiffrement par défaut, les contrôles publics HTTPS APIs et IAM uniquement"
+    ],
+    "topic": "Concevoir pour la sécurité et la conformité",
+    "domainTitle": "Concevoir pour la sécurité et la conformité",
+    "moduleTitle": "Concevoir des solutions sécurisées Google Cloud",
+    "sectionTitle": "Protection des données et gestion des secrets dans Google Cloud"
+   }
+  }
  },
  {
   "id": 18,
@@ -510,7 +782,23 @@
   ],
   "domainTitle": "Designing for Security and Compliance",
   "moduleTitle": "Architecting Secure Google Cloud Solutions",
-  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de soins de santé déploie un assistant de réclamation interne utilisant des modèles Gemini via Vertex AI. Le service récupère les documents de réclamation de Cloud Storage et de BigQuery. L'architecture doit minimiser l'exposition PHI, réduire les risques d'injection rapide et de réponse dangereuse, fournir des preuves de conformité et autoriser les modifications de production uniquement via un processus de publication approuvé. Quelle décision d’architecture répond le mieux à ces risques ?",
+    "explanation": "Les workflows AI ajoutent des risques au-delà de la sécurité ordinaire des applications, car les invites utilisateur, le contexte récupéré, les sorties du modèle, les journaux et les pipelines de déploiement peuvent tous exposer des données sensibles ou créer un comportement dangereux. Pour ce scénario, la décision la plus forte est un modèle de contrôle à plusieurs niveaux : utilisez Sensitive Data Protection pour découvrir et rédiger PHI avant l'interaction du modèle lorsque cela est possible, utilisez Model Armor pour aider à inspecter les invites et les réponses en cas de contenu dangereux ou violant la politique, conserver les journaux d'audit comme preuve de conformité et exiger des portes CI/CD approuvées avant la sortie de production. Ces contrôles correspondent directement aux risques déclarés sans s'appuyer sur un seul paramètre de modèle ou une seule limite de réseau.",
+    "options": [
+     "Exécutez l'assistant sur des nœuds privés GKE sans invite ni inspection de réponse",
+     "Utilisez la rédaction Model Armor, Sensitive Data Protection, les journaux d'audit et les déploiements sécurisés",
+     "S'appuyer sur les paramètres de sécurité du modèle et conserver le processus de déploiement manuel actuel",
+     "Stockez les invites et les réponses complètes, puis rédigez-les après inférence"
+    ],
+    "topic": "Concevoir pour la sécurité et la conformité",
+    "domainTitle": "Concevoir pour la sécurité et la conformité",
+    "moduleTitle": "Concevoir des solutions sécurisées Google Cloud",
+    "sectionTitle": "Appliquer la posture de sécurité et concevoir un accès sécurisé"
+   }
+  }
  },
  {
   "id": 19,
@@ -537,7 +825,23 @@
   ],
   "domainTitle": "Managing Implementation",
   "moduleTitle": "Interacting with Google Cloud Programmatically",
-  "sectionTitle": "Mastering Cloud Shell and the Google Cloud SDK"
+  "sectionTitle": "Mastering Cloud Shell and the Google Cloud SDK",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise migre ses applications vers Google Cloud par vagues. La prochaine vague comprend un service de paiement avec un objectif de disponibilité strict et une exigence de latence p95 de 200 ms. Discovery montre que le service effectue des appels synchrones vers une appliance de licence sur site qui n'a pas été testée sur Cloud Interconnect, et que l'équipe d'application n'a pas validé le comportement d'échec dans Google Cloud. L'entreprise souhaite respecter le calendrier de migration. Que doit recommander l’architecte ?",
+    "explanation": "Une vague de migration doit s'arrêter lorsqu'une dépendance critique non résolue pourrait violer les exigences de disponibilité, de latence ou de support lors du basculement. Ici, le service de paiement dépend d'une appliance synchrone sur site et n'a pas été testé dans l'environnement cible. Une preuve de concept ciblée peut valider la connectivité, la latence, le comportement de basculement et les options de correction sans arrêter l'ensemble du programme de migration. La poursuite des vagues à faible risque préserve les progrès tout en évitant une panne à fort impact dans un service destiné aux clients.",
+    "options": [
+     "Migrez comme prévu et surveillez la latence pendant le basculement de la production.",
+     "Suspendez cette vague pour un POC et une remédiation des dépendances, tout en poursuivant les vagues à faible risque.",
+     "Réécrivez le service de paiement avant de migrer toute autre charge de travail.",
+     "Déplacez l’appliance de licence en dernier pour minimiser le travail opérationnel à court terme."
+    ],
+    "topic": "Gestion de la mise en œuvre",
+    "domainTitle": "Gestion de la mise en œuvre",
+    "moduleTitle": "Interagir avec Google Cloud par programmation",
+    "sectionTitle": "Maîtriser Cloud Shell et le SDK Google Cloud"
+   }
+  }
  },
  {
   "id": 20,
@@ -565,7 +869,23 @@
   ],
   "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
   "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
-  "sectionTitle": "Modernizing the SDLC with CI/CD"
+  "sectionTitle": "Modernizing the SDLC with CI/CD",
+  "translations": {
+   "fr": {
+    "question": "Le service Cloud Run d'une équipe a provoqué trois incidents de production au cours du mois dernier après des déploiements CI/CD par ailleurs réussis. Les restaurations ont restauré le service à chaque fois, mais la même classe d'échec est revenue. L'entreprise a besoin de versions hebdomadaires, de rapports de fiabilité basés sur les SLO et de mesures correctives vérifiables. Quelle action corrective de processus l’architecte cloud doit-il recommander en premier ?",
+    "explanation": "Les échecs de déploiement récurrents sont un signal de processus, et pas seulement un problème de plate-forme. La première action corrective doit être un processus d'analyse irréprochable des causes profondes qui documente les facteurs contributifs, attribue les propriétaires de remédiation et les dates d'échéance, et vérifie l'achèvement par la validation de la version ou la preuve SLO. Cela répond au besoin de mesures correctives vérifiables tout en préservant les exigences commerciales en matière de versions hebdomadaires. Cela permet également de distinguer si le correctif appartient aux tests, aux étapes de déploiement, à la surveillance, aux critères de restauration ou à la conception du service. Un gel général ou un effort de refonte de la plate-forme ne pourra être envisagé ultérieurement que si l’analyse prouve que cela est nécessaire.",
+    "options": [
+     "Geler les versions jusqu'à ce que le service soit remplacé par GKE",
+     "Exiger l’approbation de la direction pour chaque déploiement",
+     "Augmentez les seuils d’alerte pour réduire le bruit incident",
+     "Exécutez des examens RCA irréprochables avec un suivi des mesures correctives détenu"
+    ],
+    "topic": "Analyser et optimiser les processus techniques et commerciaux",
+    "domainTitle": "Analyser et optimiser les processus techniques et commerciaux",
+    "moduleTitle": "Optimisation des processus techniques et du cycle de vie de développement",
+    "sectionTitle": "Moderniser le SDLC avec CI/CD"
+   }
+  }
  },
  {
   "id": 21,
@@ -592,7 +912,23 @@
   ],
   "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
   "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
-  "sectionTitle": "Modernizing the SDLC with CI/CD"
+  "sectionTitle": "Modernizing the SDLC with CI/CD",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de logiciels passe de 2 à 14 équipes d'application Google Cloud. L’équipe plateforme doit réduire les délais d’exécution de l’environnement tout en évitant les incidents de production répétés.\nExposition : Évaluation des processus\nQuelle est la prochaine action que l’architecte devrait recommander ?",
+    "explanation": "Le processus nécessite un libre-service contrôlé, et non une délégation non gérée ou davantage de portes manuelles. Les modules d'infrastructure approuvés en tant que code peuvent encoder une fois les lignes de base Shared VPC, la journalisation d'audit, IAM et organization policy requises, puis permettre aux équipes de provisionner rapidement les environnements standard. Les pipelines CI/CD ajoutent des plans reproductibles, une validation automatisée, des tests, des portes d'approbation de production et des pistes d'audit. Cela améliore la vitesse de mise en œuvre en réduisant les files d'attente de tickets et améliore la sécurité opérationnelle en faisant en sorte que chaque environnement et chaque version suivent le même chemin régi. Un accès rapide mais non géré augmenterait les risques de dérive et d’incident.",
+    "options": [
+     "Conservez le provisionnement central et ajoutez des fenêtres de publication hebdomadaires",
+     "Équipes de candidature aux subventions Propriétaire du projet dans les dossiers de développement/test",
+     "Créez des modules IaC approuvés avec des pipelines sécurisés en libre-service",
+     "Autoriser les déploiements d'ordinateurs portables et réconcilier la dérive chaque trimestre"
+    ],
+    "topic": "Analyser et optimiser les processus techniques et commerciaux",
+    "domainTitle": "Analyser et optimiser les processus techniques et commerciaux",
+    "moduleTitle": "Optimisation des processus techniques et du cycle de vie de développement",
+    "sectionTitle": "Moderniser le SDLC avec CI/CD"
+   }
+  }
  },
  {
   "id": 22,
@@ -619,7 +955,23 @@
   ],
   "domainTitle": "Ensuring Solution and Operations Reliability",
   "moduleTitle": "Monitoring, Logging, and Alerting for Reliability",
-  "sectionTitle": "Introduction to Google Cloud's Operations Suite"
+  "sectionTitle": "Introduction to Google Cloud's Operations Suite",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de vente au détail gère une caisse API sur Cloud Run. Deux campagnes marketing planifiées ont provoqué des incidents de latence visibles par les clients. L’équipe de la plateforme souhaite séparer le véritable travail d’excellence opérationnelle des solutions de contournement des incidents.\nPièce : Extrait de l'examen de l'incident\nQuelle action suivante représente le mieux une amélioration de l’excellence opérationnelle plutôt qu’une autre solution de contournement à court terme ?",
+    "explanation": "Les améliorations de l'excellence opérationnelle réduisent les risques opérationnels récurrents en améliorant l'observabilité, la préparation, l'automatisation et l'apprentissage des incidents. Dans l'exposition, l'équipe utilise à plusieurs reprises le réglage manuel d'un ingénieur senior une fois que les clients sont déjà concernés. L'ajout d'alertes basées sur les SLO, de tests de charge de campagne et de contrôles automatisés de mise à l'échelle ou de capacité modifie le modèle opérationnel : l'équipe peut détecter l'impact plus tôt, valider l'état de préparation avant le lancement et éviter de compter sur une personne pour répéter une action d'urgence. La distinction clé est l’amélioration du système par rapport à la récupération temporaire. Une solution de contournement peut restaurer le service pour un incident, mais elle ne rend pas les campagnes futures plus sûres ou plus prévisibles.",
+    "options": [
+     "Effectuez une pré-mise à l'échelle manuellement avant chaque campagne.",
+     "Ajoutez des alertes SLO, des tests de charge et une automatisation de la mise à l'échelle.",
+     "Maintenez les limites de mise à l’échelle maximales en permanence à un niveau élevé.",
+     "Attribuez le SRE senior à toutes les campagnes."
+    ],
+    "topic": "Assurer l’excellence des solutions et des opérations",
+    "domainTitle": "Assurer la fiabilité des solutions et des opérations",
+    "moduleTitle": "Surveillance, journalisation et alertes pour plus de fiabilité",
+    "sectionTitle": "Introduction à la suite opérationnelle de Google Cloud"
+   }
+  }
  },
  {
   "id": 23,
@@ -646,7 +998,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design for Business Outcomes",
-  "sectionTitle": "Integration with External Systems and Moving Data"
+  "sectionTitle": "Integration with External Systems and Moving Data",
+  "translations": {
+   "fr": {
+    "question": "Une société de médias en streaming décide comment déplacer sa plate-forme de recommandation et de lecture vers Google Cloud. L'équipe produit souhaite augmenter les conversions payantes et réduire le taux de désabonnement avant le lancement des vacances. Le marketing souhaite réduire la latence globale pour la personnalisation, les finances ont plafonné les dépenses de la première année, les aspects juridiques exigent des contrôles des données des clients de l'UE et les opérations disposent d'une expertise Kubernetes limitée. Quelle recommandation doit guider la décision d’architecture ?",
+    "explanation": "Les décisions d'architecture doivent commencer par les cas d'utilisation métier et les résultats mesurables les plus importants, et non par un produit préféré ou un modèle de migration. Dans ce scénario, les objectifs décisifs sont l’augmentation des conversions, la réduction du taux de désabonnement, le respect de la fenêtre de lancement, la réduction de la latence de personnalisation, le contrôle des dépenses, la protection des données des clients de l’UE et l’adaptation des compétences opérationnelles de l’équipe. La définition de mesures de résultats telles que la latence p95, la réduction du taux de désabonnement, l'augmentation des conversions, le coût par utilisateur et les exigences de contrôle des données donne à l'architecte une base pour sélectionner les services Google Cloud et séquencer la migration. La meilleure recommandation équilibre l'impact du produit avec les contraintes au lieu d'optimiser uniquement la flexibilité de la plate-forme, le coût d'infrastructure le plus bas ou l'intégralité de la migration.",
+    "options": [
+     "Standardisez sur une plateforme mondiale GKE pour maximiser la flexibilité d’ingénierie à long terme.",
+     "Retardez la migration jusqu’à ce que toutes les charges de travail et toutes les données puissent être déplacées ensemble.",
+     "Prioriser les parcours de conversion et de rétention ; fixez des objectifs de latence p95, de désabonnement, de coût par utilisateur et de contrôle des données dans l'UE avant de choisir des services gérés et échelonnés.",
+     "Réhébergez d’abord la plate-forme complète dans la région la moins coûteuse."
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Conception axée sur les résultats commerciaux",
+    "sectionTitle": "Intégration avec des systèmes externes et déplacement de données"
+   }
+  }
  },
  {
   "id": 24,
@@ -676,7 +1044,23 @@
   ],
   "domainTitle": "Managing and Provisioning a Solution Infrastructure",
   "moduleTitle": "Configure Storage Resources",
-  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks",
+  "translations": {
+   "fr": {
+    "question": "Un détaillant stocke 40 To de fichiers de flux de clics quotidiens dans un compartiment Cloud Storage dans us-central1. Un pipeline nocturne doit analyser, enrichir et regrouper les fichiers en objets organisés. Le pipeline doit se terminer dans les 4 heures lorsque le volume double pendant les promotions, continuer le traitement dans la même région et éviter de copier l'ensemble de données complet sur les disques VM avant le traitement.\nQuelle architecture recommander ?",
+    "explanation": "Les charges de travail par lots basées sur le stockage goulot d'étranglement lorsque le calcul est sérialisé, loin des données ou forcé via un disque intermédiaire. Ici, la charge de travail est ETL basée sur des fichiers et agrégation sur Cloud Storage avec un volume variable et une fenêtre d'achèvement stricte. Un pipeline par lots Dataflow peut lire des objets en parallèle, mettre à l'échelle automatiquement des nœuds de calcul dans la même région que le compartiment et gérer l'agrégation sans nécessiter de gestion de cluster. Vous devrez toujours évaluer et définir les limites de travail et les types de machines appropriés, mais l'architecture de base évite les goulots d'étranglement liés aux nœuds uniques, au stockage intermédiaire sur disque et aux transferts entre régions.",
+    "options": [
+     "Copiez le compartiment tous les soirs sur un disque persistant et traitez-le sur un pool de nœuds fixe GKE.",
+     "Utilisez Storage Transfer Service pour déplacer les fichiers vers un compartiment multirégion avant de les traiter sur les VM ponctuelles.",
+     "Exécutez un Compute Engine VM à mémoire élevée qui monte le seau avec Cloud Storage FUSE.",
+     "Utilisez les travailleurs de mise à l'échelle automatique Dataflow dans us-central1 pour traiter les objets Cloud Storage en parallèle."
+    ],
+    "topic": "Gestion et provisionnement d'une infrastructure de solution",
+    "domainTitle": "Gestion et provisionnement d'une infrastructure de solution",
+    "moduleTitle": "Configurer les ressources de stockage",
+    "sectionTitle": "Configuration de Cloud Storage, Filestore et des disques persistants"
+   }
+  }
  },
  {
   "id": 25,
@@ -705,7 +1089,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design for Business Outcomes",
-  "sectionTitle": "Integration with External Systems and Moving Data"
+  "sectionTitle": "Integration with External Systems and Moving Data",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise manufacturière souhaite moderniser sa plate-forme de gestion des commandes sur site sur Google Cloud. Exigences : améliorer la vitesse de publication des nouvelles fonctionnalités client, conserver les preuves d'audit SOX et les contrôles de localisation des données, prendre en charge quelques années de connectivité hybride pour les systèmes soumis à des contraintes de licence et éviter une migration big-bang. Quelle approche de conception axée sur le cloud répond le mieux à ces exigences ?",
+    "explanation": "Une approche axée sur le cloud ne signifie pas tout déplacer immédiatement ou abandonner la gouvernance. La meilleure conception commence par une zone d'atterrissage Google Cloud : organisation et structure des dossiers, normes du projet, Shared VPC, IAM, politiques d'organisation telles que les contraintes d'emplacement, la journalisation centralisée et l'approvisionnement basé sur IaC. Les charges de travail peuvent alors évoluer par vagues en fonction du risque, des dépendances et de la valeur métier. Les fonctionnalités nouvelles ou refactorisées peuvent utiliser des services gérés Google Cloud tandis que les systèmes existants continuent de fonctionner via une connectivité hybride sécurisée jusqu'à ce qu'ils soient prêts à migrer ou à être retirés. Cela équilibre une livraison plus rapide avec l’auditabilité, la sécurité et le réalisme de la migration.",
+    "options": [
+     "Soulevez et déplacez d'abord tout dans un seul projet",
+     "Créez une zone d'atterrissage gouvernée et migrez par vagues",
+     "Conservez les systèmes de base sur site et créez uniquement des prototypes AI",
+     "Réécrivez toutes les charges de travail avant le début de toute migration"
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Conception axée sur les résultats commerciaux",
+    "sectionTitle": "Intégration avec des systèmes externes et déplacement de données"
+   }
+  }
  },
  {
   "id": 26,
@@ -733,7 +1133,23 @@
   ],
   "domainTitle": "Managing Implementation",
   "moduleTitle": "Guiding Development and Operations Teams",
-  "sectionTitle": "Leveraging Migration Tooling"
+  "sectionTitle": "Leveraging Migration Tooling",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de commerce électronique migre un service de traitement des commandes de VMs sur site avec PostgreSQL vers Cloud Run et Cloud SQL pour PostgreSQL. Le basculement est prévu dans 6 semaines. L'entreprise n'autorise pas plus de 15 minutes de temps d'arrêt en écriture, a besoin de preuves que la latence p95 respectera le SLO et ne peut pas financer un environnement de production complet en double de longue durée. La base de données sur site doit rester le système d’enregistrement jusqu’au basculement. Quelle étape de mise en œuvre réduit le mieux le risque de migration avant le basculement ?",
+    "explanation": "Avant le basculement, le risque de migration doit être réduit grâce à une répétition de type production qui valide l’architecture cible et le processus de basculement. La réplication continue Database Migration Service peut maintenir Cloud SQL proche de la source PostgreSQL sur site, réduisant ainsi le temps d'arrêt d'écriture final. Un environnement de test de courte durée limite les coûts tout en permettant des tests de fumée, la validation des données, des tests de charge et la pratique opérationnelle du runbook pour Cloud Run. La répétition du rollback améliore également la préparation de l’équipe. Cette approche équilibre la disponibilité, le mouvement des données, la validation de la latence, les coûts et les efforts opérationnels au lieu de pousser la découverte dans la fenêtre de basculement.",
+    "options": [
+     "Soulevez et déplacez d'abord le VMs vers Compute Engine, puis reconcevez-le après le basculement.",
+     "Exécutez deux piles de production complètes pendant 6 semaines et répartissez les écritures entre elles.",
+     "Effectuez une dernière exportation/importation complète pendant le basculement et comptez sur la surveillance post-transfert.",
+     "Utilisez la réplication continue, la préparation de courte durée, la validation des données, les tests de charge et une répétition de restauration de basculement."
+    ],
+    "topic": "Gestion de la mise en œuvre",
+    "domainTitle": "Gestion de la mise en œuvre",
+    "moduleTitle": "Guider les équipes de développement et d’exploitation",
+    "sectionTitle": "Niveauraging Migration Outillage"
+   }
+  }
  },
  {
   "id": 27,
@@ -762,7 +1178,23 @@
   ],
   "domainTitle": "Designing for Security and Compliance",
   "moduleTitle": "Architecting Secure Google Cloud Solutions",
-  "sectionTitle": "Designing Identity and Resource Hierarchy"
+  "sectionTitle": "Designing Identity and Resource Hierarchy",
+  "translations": {
+   "fr": {
+    "question": "Une équipe de sécurité examine les contrôles réseau pour une organisation Google Cloud.\nExposition : Note d'architecture\nQuelle conception répond le mieux à cette exigence ?",
+    "explanation": "Les politiques de pare-feu hiérarchiques constituent le contrôle approprié lorsque les règles de pare-feu doivent être héritées de manière cohérente entre les projets ou les dossiers. Attacher les règles de refus aux dossiers Prod et Regulated les applique aux projets descendants et aux réseaux VPC, y compris les futurs projets dans ces dossiers, tout en laissant le dossier Sandbox en dehors de la portée. Étant donné que ces politiques sont gérées et évaluées de manière centralisée au-dessus des règles de pare-feu locales VPC, les équipes de projet peuvent toujours gérer les règles spécifiques aux applications mais ne peuvent pas ignorer le refus centralisé pour SSH et RDP depuis Internet. Les politiques de pare-feu réseau et les règles de pare-feu VPC peuvent être utiles, mais elles ne fournissent pas le même héritage de hiérarchie de ressources pour cette exigence de portée de dossier.",
+    "options": [
+     "Attachez des stratégies de pare-feu hiérarchiques au niveau du dossier.",
+     "Associez une stratégie de pare-feu réseau globale à chaque VPC.",
+     "Copiez les règles de pare-feu VPC dans chaque projet.",
+     "Utilisez un organization policy pour restreindre les adresses IP externes."
+    ],
+    "topic": "Concevoir pour la sécurité et la conformité",
+    "domainTitle": "Concevoir pour la sécurité et la conformité",
+    "moduleTitle": "Concevoir des solutions sécurisées Google Cloud",
+    "sectionTitle": "Conception de la hiérarchie des identités et des ressources"
+   }
+  }
  },
  {
   "id": 28,
@@ -792,7 +1224,23 @@
   ],
   "domainTitle": "Managing Implementation",
   "moduleTitle": "Interacting with Google Cloud Programmatically",
-  "sectionTitle": "Working with Cloud Emulators for Local Development"
+  "sectionTitle": "Working with Cloud Emulators for Local Development",
+  "translations": {
+   "fr": {
+    "question": "Une équipe financière réglementée doit implémenter un nouveau service Java qui appelle les API Google Cloud. La politique de sécurité exige que le code source et les données de test restent sur les ordinateurs portables des développeurs gérés, et les espaces de travail de développement basés sur un navigateur ne sont pas autorisés. Les développeurs doivent exécuter des tests unitaires hors ligne en utilisant des émulateurs locaux avant de s'engager dans CI/CD. La gestion des appareils peut installer des outils de ligne de commande et des packages de langage approuvés, mais les nouvelles extensions IDE ne seront pas approuvées avant la date limite. Quelle recommandation d’outillage équilibre le mieux ces contraintes ?",
+    "explanation": "Les outils locaux constituent la meilleure solution lorsque la conformité, les tests hors ligne et les environnements de développement personnalisés sont décisifs. L'équipe peut installer la CLI Google Cloud, les bibliothèques clientes de langage et les émulateurs locaux via des contrôles de périphériques gérés, en conservant le code source et les données de test sur des ordinateurs portables approuvés tout en prenant en charge les tests unitaires hors ligne. Cela demande plus d'efforts de configuration que Cloud Shell, mais il satisfait aux contraintes obligatoires. Cloud Code serait intéressant pour le développement intégré à l'EDI, mais la tige indique que les nouvelles extensions de l'IDE ne sont pas approuvées avant la date limite.",
+    "options": [
+     "Utiliser Cloud Code dans les IDE des développeurs",
+     "Utiliser l'éditeur Cloud Shell dans le navigateur",
+     "Utiliser Cloud Shell Terminal pour les commandes d'implémentation",
+     "Utilisez des outils locaux avec la CLI, les bibliothèques clientes et les émulateurs"
+    ],
+    "topic": "Gestion de la mise en œuvre",
+    "domainTitle": "Gestion de la mise en œuvre",
+    "moduleTitle": "Interagir avec Google Cloud par programmation",
+    "sectionTitle": "Travailler avec des émulateurs cloud pour le développement local"
+   }
+  }
  },
  {
   "id": 29,
@@ -821,7 +1269,23 @@
   ],
   "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
   "moduleTitle": "Aligning Business Processes with Cloud Strategy",
-  "sectionTitle": "Managing Stakeholders, Change, and Team Readiness"
+  "sectionTitle": "Managing Stakeholders, Change, and Team Readiness",
+  "translations": {
+   "fr": {
+    "question": "Un détaillant en ligne déplace un service de commande client de son centre de données vers Google Cloud. Le service peut fonctionner comme un conteneur avec des modifications minimes, mais sa base de données doit rester sur site pendant 9 mois en raison des licences. Les parties prenantes souhaitent une version destinée aux clients dans un délai de 3 mois, aucune réécriture majeure au cours de cet exercice, une connectivité privée avec des preuves d'audit centralisées et une plate-forme que la petite équipe opérationnelle peut prendre en charge. Quelle recommandation d’architecture répond le mieux à ces préoccupations ?",
+    "explanation": "La décision principale est une modernisation progressive alignée sur les parties prenantes. Étant donné que l'application peut s'exécuter en tant que conteneur, Cloud Run peut fournir un environnement d'exécution géré sans nécessiter que la petite équipe d'exploitation exploite les clusters Kubernetes. La connectivité hybride privée maintient la base de données sur site requise accessible sans l'exposer publiquement, tandis que les journaux centralisés de journalisation, de surveillance et d'audit prennent en charge les preuves de sécurité. Les processus de création et de déploiement automatisés aident l'équipe produit à publier plus rapidement dans le délai de 3 mois. Cette approche reporte la migration de la base de données et une refactorisation plus approfondie jusqu'à ce que les contraintes de licence et de calendrier le permettent.",
+    "options": [
+     "Passez à Compute Engine avec un accès à la base de données publique et des déploiements manuels.",
+     "Créez un multicloud actif-actif Kubernetes avec une réplication de base de données autogérée.",
+     "Refactorisez en microservices sur GKE Standard et migrez la base de données avant le lancement.",
+     "Déployez sur Cloud Run avec une connectivité hybride privée, une observabilité centralisée et des versions automatisées."
+    ],
+    "topic": "Analyser et optimiser les processus techniques et commerciaux",
+    "domainTitle": "Analyser et optimiser les processus techniques et commerciaux",
+    "moduleTitle": "Aligner les processus métier avec la stratégie cloud",
+    "sectionTitle": "Gestion des parties prenantes, du Change et de la préparation des équipes"
+   }
+  }
  },
  {
   "id": 30,
@@ -851,7 +1315,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design for Business Outcomes",
-  "sectionTitle": "Supporting the Application Design"
+  "sectionTitle": "Supporting the Application Design",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise manufacturière est en train de repenser un système de traitement des commandes sur Google Cloud. Le trafic est très saisonnier et le domaine actuel VM reste inactif la majeure partie de l'année. Conditions requises : tolérer une défaillance de zone avec RPO sous 5 minutes et RTO sous 1 heure ; garder les données clients réglementées hors des réseaux publics avec un accès audité au moindre privilège ; réduisez le travail opérationnel, les coûts et la consommation d’énergie inutilisée. Quelle conception applique le mieux les principes Google Cloud bien architecturés ?",
+    "explanation": "Une conception bien architecturée équilibre les piliers au lieu d’en optimiser un seul. La meilleure solution utilise des services gérés et de mise à l'échelle automatique pour réduire le travail, les coûts et la consommation d'énergie inutilisée ; Pub/Sub pour découpler les salves et améliorer la fiabilité ; une base de données régionale gérée HA pour tolérer une défaillance de zone ; et une connectivité privée plus le moindre privilège IAM pour les données réglementées. La surveillance et l'infrastructure SLO en tant que code soutiennent l'excellence opérationnelle en rendant les objectifs de fiabilité visibles et les déploiements reproductibles. Le compromis clé consiste à utiliser suffisamment de résilience pour répondre aux exigences énoncées en matière de défaillance de zone sans créer une plate-forme multirégionale inutilement complexe et toujours active.",
+    "options": [
+     "Déployez un cluster et une base de données standard GKE à zone unique, puis comptez sur les sauvegardes pour la récupération.",
+     "Utilisez Cloud Run, Pub/Sub et une base de données gérée régionale HA avec une connectivité privée, une surveillance de moindre privilège IAM, SLO et IaC.",
+     "Créez des clusters actifs-actifs dans deux régions avec une capacité maximale toujours active et des bases de données autogérées.",
+     "Passez à des instances Compute Engine de taille fixe dans toutes les zones avec des points de terminaison publics HTTPS et des correctifs manuels."
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Conception axée sur les résultats commerciaux",
+    "sectionTitle": "Prise en charge de la conception d'applications"
+   }
+  }
  },
  {
   "id": 31,
@@ -880,7 +1360,23 @@
   ],
   "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
   "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
-  "sectionTitle": "Modernizing the SDLC with CI/CD"
+  "sectionTitle": "Modernizing the SDLC with CI/CD",
+  "translations": {
+   "fr": {
+    "question": "Un détaillant migre son service de gestion des commandes vers Google Cloud en utilisant Cloud Run, Cloud SQL, Pub/Sub et un VPC partagé. Les exigences incluent une assistance au paiement 24h/24 et 7j/7, une séparation selon le moindre privilège entre la plate-forme et les équipes produit, ainsi que des déploiements d'équipes produit indépendantes après la migration. L'examen de l'architecture révèle que des tableaux de bord existent, mais qu'aucune équipe n'est nommée pour s'occuper du tri des incidents, des approbations de modifications de schéma ou des défaillances du pipeline CI/CD après le transfert. Quelle décision répond le mieux au risque de préparation avant la mise en service ?",
+    "explanation": "La principale lacune n'est pas un service Google Cloud manquant ; c'est un modèle de support peu clair. Pour une migration de production avec une assistance 24h/24 et 7j/7 et une séparation des tâches, la décision d'architecture doit définir à qui appartient chaque responsabilité opérationnelle avant la mise en service. Un modèle opérationnel de type RACI, des SLO, un routage des alertes, des runbooks, des chemins d'escalade et des critères d'approbation rendent le transfert testable et vérifiable. Cela préserve également les déploiements indépendants, car les équipes produit peuvent posséder des versions d'application tandis que les équipes plateforme possèdent des limites d'infrastructure partagées. Changer de plate-forme informatique ou élargir les autorisations ne résout pas le flou sur la propriété et peut augmenter les risques.",
+    "options": [
+     "Déplacez la charge de travail vers GKE afin que l'équipe de la plateforme soit propriétaire des opérations d'exécution.",
+     "Attribuez au propriétaire du projet de l'équipe produit jusqu'à ce que les responsabilités se stabilisent.",
+     "Définissez un modèle opérationnel avec RACI, SLO, runbooks et chemins d’escalade.",
+     "Procédez au basculement et vérifiez la propriété après le premier incident."
+    ],
+    "topic": "Analyser et optimiser les processus techniques et commerciaux",
+    "domainTitle": "Analyser et optimiser les processus techniques et commerciaux",
+    "moduleTitle": "Optimisation des processus techniques et du cycle de vie de développement",
+    "sectionTitle": "Moderniser le SDLC avec CI/CD"
+   }
+  }
  },
  {
   "id": 32,
@@ -908,7 +1404,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design for Business Outcomes",
-  "sectionTitle": "Integration with External Systems and Moving Data"
+  "sectionTitle": "Integration with External Systems and Moving Data",
+  "translations": {
+   "fr": {
+    "question": "Un détaillant en ligne gère une vitrine régionale Cloud Run avec Cloud SQL. L'ingénierie propose de déplacer la plate-forme complète vers un système multirégional GKE avec un maillage de services comme amélioration au prochain trimestre. Le CIO financera uniquement les travaux liés à des avantages mesurables.\nQuelle recommandation équilibre le mieux l’évolution future avec des avantages commerciaux et opérationnels mesurables ?",
+    "explanation": "Les améliorations futures devraient être justifiées par des résultats observables, et pas seulement par une ambition architecturale. Dans ce scénario, la disponibilité atteint déjà le SLO, donc une vaste migration multirégionale GKE n'est pas prise en charge par les preuves actuelles et ajouterait un risque opérationnel pour une petite équipe avec une expérience GKE limitée. Les écarts mesurés sont la latence de l’UE et les incidents liés au déploiement. Cloud CDN pour le contenu pouvant être mis en cache peut réduire la latence pour l'utilisateur, tandis que la livraison progressive automatisée sur Cloud Run peut réduire les échecs de versions et les efforts de restauration sans réécriture de la plate-forme. Le succès doit être suivi avec la latence p95, l'impact de la conversion, le taux d'échec du déploiement, le temps de restauration et l'effort SRE. Revoyez les modifications plus importantes de la plate-forme uniquement si la croissance ou les exigences mesurées montrent que la conception actuelle ne peut pas répondre aux besoins futurs.",
+    "options": [
+     "Procédez maintenant avec le GKE multirégional et le maillage de services.",
+     "Donnez la priorité à Cloud CDN pour le contenu pouvant être mis en cache et la livraison progressive automatisée sur Cloud Run.",
+     "Migrez d'abord Cloud SQL vers Spanner.",
+     "Suspendez les améliorations jusqu'à ce que la disponibilité SLO soit manquée."
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Conception axée sur les résultats commerciaux",
+    "sectionTitle": "Intégration avec des systèmes externes et déplacement de données"
+   }
+  }
  },
  {
   "id": 33,
@@ -935,7 +1447,23 @@
   ],
   "domainTitle": "Managing and Provisioning a Solution Infrastructure",
   "moduleTitle": "Configure Storage Resources",
-  "sectionTitle": "Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery"
+  "sectionTitle": "Configuring Cloud SQL, AlloyDB, Spanner, and BigQuery",
+  "translations": {
+   "fr": {
+    "question": "Une équipe d'analyse met en place un flux de travail nocturne ML pour former un modèle de prévision à partir de fonctionnalités BigQuery organisées. L'équipe de la plateforme doit décider si le provisionnement proposé répond aux exigences.\nExposition : Examen de l'approvisionnement\nQuelle interprétation l’équipe de la plateforme doit-elle faire ?",
+    "explanation": "Le provisionnement proposé ne satisfait pas aux exigences combinées d’accès aux données, de sécurité et de fonctionnement. L'accès BigQuery au niveau du projet pour un groupe d'utilisateurs est plus large que le besoin déclaré de table uniquement, et les blocs-notes planifiés exécutés sous les identités des utilisateurs créent des problèmes fragiles de propriété, d'audit et de gestion des informations d'identification. Cron sur Workbench VMs ne fournit pas non plus le lignage géré, les tentatives et l'exécution de pipeline répétable attendus pour un flux de travail de production ML. Une meilleure approche consiste à provisionner les pipelines Vertex AI à l'aide d'un compte de service de pipeline dédié avec uniquement les autorisations de lecture et de travail BigQuery requises, ainsi qu'un accès en écriture limité au compartiment d'artefacts. Cela maintient l’identité d’exécution stable et l’historique opérationnel centralisé.",
+    "options": [
+     "Provisionner les pipelines Vertex AI avec un compte de service dédié au moindre privilège",
+     "Approuver le flux de travail basé sur un bloc-notes tel quel",
+     "Ajouter Storage Admin au groupe des data-scientists",
+     "Exportez les fonctionnalités BigQuery vers Cloud Storage avant la formation"
+    ],
+    "topic": "Gestion et provisionnement d'une infrastructure de solution",
+    "domainTitle": "Gestion et provisionnement d'une infrastructure de solution",
+    "moduleTitle": "Configurer les ressources de stockage",
+    "sectionTitle": "Configuration de Cloud SQL, AlloyDB, Spanner et BigQuery"
+   }
+  }
  },
  {
   "id": 34,
@@ -963,7 +1491,23 @@
   ],
   "domainTitle": "Managing and Provisioning a Solution Infrastructure",
   "moduleTitle": "Configure Storage Resources",
-  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks",
+  "translations": {
+   "fr": {
+    "question": "Une compagnie d'assurance stocke les documents de réclamation finalisés dans un compartiment Cloud Storage. L'architecte examine cet instantané avant de mettre en œuvre des contrôles des coûts.\nQue doit faire ensuite l’architecte ?",
+    "explanation": "Les politiques de rétention Cloud Storage et la gestion du cycle de vie des objets répondent à différentes parties de cette exigence. Une politique de rétention, verrouillée après validation, empêche la suppression ou le remplacement d'objets pendant la période de conformité de 7 ans. Les règles de cycle de vie peuvent alors réduire les coûts en déplaçant les objets plus anciens vers des classes de stockage plus froides à mesure que l'accès diminue et en supprimant les objets uniquement après l'expiration de la période de rétention. Cela préserve les limites de conformité tout en automatisant le contrôle des coûts. La modification uniquement de la classe de stockage par défaut ne protège pas les enregistrements existants ni n'automatise la suppression, et les règles de suppression ne doivent pas supprimer les versions protégées avant la fin de la période de conservation requise.",
+    "options": [
+     "Utiliser les conditions IAM et le nettoyage manuel annuel",
+     "Définir des règles de conservation verrouillées et de cycle de vie basées sur l'âge",
+     "Supprimer les versions périmées de plus de 30 jours",
+     "Remplacez la classe de stockage par défaut du bucket par Archive."
+    ],
+    "topic": "Gestion et provisionnement d'une infrastructure de solution",
+    "domainTitle": "Gestion et provisionnement d'une infrastructure de solution",
+    "moduleTitle": "Configurer les ressources de stockage",
+    "sectionTitle": "Configuration de Cloud Storage, Filestore et des disques persistants"
+   }
+  }
  },
  {
   "id": 35,
@@ -991,7 +1535,23 @@
   ],
   "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
   "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
-  "sectionTitle": "Modernizing the SDLC with CI/CD"
+  "sectionTitle": "Modernizing the SDLC with CI/CD",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de vente au détail standardise la fourniture d'infrastructures Google Cloud. Les équipes produit sont bloquées pendant plusieurs jours tandis qu'une équipe centrale provisionne manuellement les VPC, les services Cloud Run et les instances Cloud SQL. Les dirigeants doivent appliquer les étiquettes budgétaires, les lignes de base du réseau, le moindre privilège, la séparation des tâches et les preuves d'audit. Les équipes de livraison ont besoin d’un provisionnement en libre-service reproductible pour les environnements hors production. Quel changement de processus l’architecte devrait-il recommander ?",
+    "explanation": "Le meilleur changement de processus consiste à passer du traitement manuel des tickets au libre-service gouverné. Les modules d'infrastructure en tant que code approuvés, exposés via un catalogue de services interne, permettent aux équipes de livraison de fournir rapidement des environnements reproductibles. Les contrôles de stratégie CI/CD peuvent appliquer les étiquettes, les lignes de base du réseau, les modèles IAM et les approbations requises avant le déploiement, tandis que les journaux et les approbations du pipeline fournissent des preuves d'audit. Cela aligne les contrôles commerciaux sur les besoins de l'équipe de livraison au lieu de choisir uniquement la vitesse ou la gouvernance.",
+    "options": [
+     "Laissez chaque équipe créer ses propres modules et effectuer un examen de sécurité après le déploiement.",
+     "Proposez des modules d'infrastructure approuvés via un catalogue de services interne avec des contrôles de politique CI/CD et des approbations auditables.",
+     "Donnez aux équipes produit un accès au propriétaire de projet et examinez les journaux d'audit Cloud mensuellement.",
+     "Conservez un provisionnement manuel central et ajoutez un tableau de modifications hebdomadaire pour les demandes d'environnement."
+    ],
+    "topic": "Analyser et optimiser les processus techniques et commerciaux",
+    "domainTitle": "Analyser et optimiser les processus techniques et commerciaux",
+    "moduleTitle": "Optimisation des processus techniques et du cycle de vie de développement",
+    "sectionTitle": "Moderniser le SDLC avec CI/CD"
+   }
+  }
  },
  {
   "id": 36,
@@ -1020,7 +1580,23 @@
   ],
   "domainTitle": "Designing for Security and Compliance",
   "moduleTitle": "Architecting Secure Google Cloud Solutions",
-  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise SaaS de soins de santé a besoin d'une équipe d'assistance tierce pour se connecter en SSH à l'administrateur privé Compute Engine VMs lors d'incidents. L'équipe de sécurité propose le chemin d'accès ci-dessous. Quelle est la meilleure interprétation ?",
+    "explanation": "Le chemin proposé ne répond qu'en partie aux exigences du réseau : les VMs n'ont pas d'IP publique. Il ne répond pas aux exigences d'identité et de conformité, car un compte Linux partagé et une clé SSH partagée ne fournissent pas d'identité par utilisateur, de révocation individuelle rapide ou de pistes d'audit utiles par utilisateur. Il offre également une portée réseau plus large que nécessaire en autorisant SSH depuis le CIDR du fournisseur vers toutes les machines virtuelles de production. Un meilleur modèle consiste à fédérer l'IdP du fournisseur dans Google Cloud IAM, à autoriser uniquement les utilisateurs requis et VMs, à utiliser IAP TCP le transfert pour SSH vers le VMs privé et à utiliser OS Login pour l'accès Linux au niveau de l'utilisateur. Le chiffrement VPN seul ne suffit pas lorsque l’identité et l’auditabilité sont des exigences explicites.",
+    "options": [
+     "Rejetez-le et utilisez le IAM fédéré avec le transfert IAP TCP et la connexion OS.",
+     "Rejetez-le car le VMs privé n'est pas accessible par SSH.",
+     "Approuvez-le car le chiffrement VPN satisfait à la conformité de l'accès à distance.",
+     "Approuvez-le si la clé SSH partagée est alternée après des incidents."
+    ],
+    "topic": "Concevoir pour la sécurité et la conformité",
+    "domainTitle": "Concevoir pour la sécurité et la conformité",
+    "moduleTitle": "Concevoir des solutions sécurisées Google Cloud",
+    "sectionTitle": "Appliquer la posture de sécurité et concevoir un accès sécurisé"
+   }
+  }
  },
  {
   "id": 37,
@@ -1050,7 +1626,23 @@
   ],
   "domainTitle": "Designing for Security and Compliance",
   "moduleTitle": "Architecting Secure Google Cloud Solutions",
-  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access",
+  "translations": {
+   "fr": {
+    "question": "Un détaillant migre sa plate-forme commerciale vers Google Cloud. Il classe les données comme publiques, internes ou restreintes. L'architecte doit satisfaire à ces exigences :\nQuelle décision d'architecture aligne le mieux la plateforme avec le modèle de classification ?",
+    "explanation": "La classification des données doit déterminer où les données sont stockées, qui peut y accéder, comment elles sont cryptées, combien de temps elles sont conservées et quels éléments probants sont collectés. Les données PII/paiements restreintes nécessitent des limites plus strictes : stockage régional et bases de données dans us-central1, CMEK géré par l'équipe de sécurité, moindre privilège IAM, contrôles de rétention et journalisation d'audit activée avec récepteurs de journaux. Les analyses internes doivent utiliser des ensembles de données anonymisés ou filtrés afin que les analystes puissent travailler de manière rentable sans accéder aux champs restreints. Les données du catalogue public peuvent utiliser la mise en cache car elles ont un niveau de sensibilité inférieur. L’essentiel est d’appliquer les contrôles proportionnellement par classification plutôt que d’utiliser uniquement des étiquettes ou d’appliquer les contrôles les plus restrictifs à tout.",
+    "options": [
+     "Segmenter par classification ; conserver les données restreintes dans les compartiments/bases de données us-central1 avec CMEK, IAM, la rétention et les récepteurs d'audit ; publier des analyses anonymisées et mettre en cache le contenu public.",
+     "Traitez toutes les données comme restreintes avec CMEK, conservation de 7 ans et journalisation d'audit complète ; désactiver l’accès des analystes et la mise en cache publique.",
+     "Stockez toutes les classes ensemble dans des compartiments et des bases de données multirégionales ; utilisez des étiquettes pour la classification et comptez sur le cryptage et la journalisation par défaut.",
+     "Utilisez un ensemble de données multirégional BigQuery partagé avec une sécurité au niveau des lignes ; définissez l’expiration de l’ensemble de données sur 7 ans et utilisez une CMEK."
+    ],
+    "topic": "Concevoir pour la sécurité et la conformité",
+    "domainTitle": "Concevoir pour la sécurité et la conformité",
+    "moduleTitle": "Concevoir des solutions sécurisées Google Cloud",
+    "sectionTitle": "Appliquer la posture de sécurité et concevoir un accès sécurisé"
+   }
+  }
  },
  {
   "id": 38,
@@ -1077,7 +1669,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design for Business Outcomes",
-  "sectionTitle": "Integration with External Systems and Moving Data"
+  "sectionTitle": "Integration with External Systems and Moving Data",
+  "translations": {
+   "fr": {
+    "question": "Une société de services financiers migre un portail client de VMs sur site vers Google Cloud. La fenêtre de basculement est limitée à 15 minutes, le paiement et le reporting doivent respecter leurs SLA actuels, les contrôles de portée PCI nécessitent des preuves d'audit et l'équipe opérationnelle doit être prête pour la première semaine. Le budget autorise un environnement de validation temporaire, mais pas une pile de production en double pendant plusieurs mois. Quelle est la meilleure approche équilibrée de validation de migration avant le basculement ?",
+    "explanation": "La validation de la migration doit prouver que la solution cible est prête sous plusieurs angles, et pas seulement que les serveurs démarrent. Un pilote ou une répétition générale de type production peut utiliser des données masquées ou représentatives, un profil de trafic réaliste, des contrôles de sécurité, des tests DR ou de restauration, une surveillance, des alertes et des runbooks opérationnels. Des critères clairs d'autorisation/interdiction lient les résultats des tests aux SLA de l'entreprise, aux preuves de conformité, aux attentes RTO/RPO et à l'état de préparation de l'équipe. Cette approche respecte également la contrainte budgétaire en évitant un environnement de duplication complète de longue durée tout en réduisant le risque de basculement. L’essentiel à retenir est de valider l’état de préparation dans les domaines commerciaux, techniques, de sécurité et opérationnels avant d’approuver la migration de production.",
+    "options": [
+     "Créez une pile de production en double complète pendant plusieurs mois et validez chaque flux de travail historique avant la migration.",
+     "Évitez un environnement de validation séparé et comptez sur la restauration pendant la transition de production de 15 minutes.",
+     "Effectuez uniquement des tests de charge sur l'application migrée, puis approuvez le basculement si la latence respecte le SLA.",
+     "Exécutez un pilote de type production avec des données masquées représentatives, des critères go/no-go définis, des tests de performances, de sécurité, DR et de runbook."
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Conception axée sur les résultats commerciaux",
+    "sectionTitle": "Intégration avec des systèmes externes et déplacement de données"
+   }
+  }
  },
  {
   "id": 39,
@@ -1106,7 +1714,23 @@
   ],
   "domainTitle": "Managing and Provisioning a Solution Infrastructure",
   "moduleTitle": "Configure Storage Resources",
-  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks"
+  "sectionTitle": "Configuring Cloud Storage, Filestore, and Persistent Disks",
+  "translations": {
+   "fr": {
+    "question": "Un détaillant fait passer un modèle de recommandation de produits de l'expérimentation à un workflow de production partagé sur Google Cloud.\nPièce : note de flux de travail AI\nActuel : l'équipe chargée des données exécute des notebooks sur BigQuery. Transfert : l'équipe de l'application reçoit les fichiers de modèle dans Cloud Storage. Problèmes : préparation de fonctionnalités incohérente, lignée de modèle peu claire, approbations lentes. Exigence : recyclage reproductible, artefacts vérifiables, propriété partagée.\nQuelle prochaine action répond le mieux aux implications de conception ?",
+    "explanation": "L'exposition met en évidence un problème de cycle de vie ML, et pas seulement un problème de stockage ou de service. Vertex AI Pipelines est conçu pour orchestrer des flux de travail ML reproductibles tels que l'extraction de données, le prétraitement, la formation, l'évaluation, l'enregistrement et le déploiement. Les composants du pipeline peuvent être versionnés dans le contrôle de code source, les exécutions peuvent être paramétrées et les artefacts et les métadonnées peuvent être suivis pour en vérifier la traçabilité et l'auditabilité. Cela donne aux équipes de données un moyen cohérent de créer et de valider des modèles tout en donnant aux équipes d'application un transfert clair et gouverné pour les artefacts déployables. Un compartiment versionné ou API peut être utile dans une étape, mais il ne résout pas la répétabilité, la traçabilité et la collaboration entre les équipes du flux de travail.",
+    "options": [
+     "Exposez les sorties du notebook via une API Cloud Run.",
+     "Déplacez les fichiers de modèle vers un compartiment versionné Cloud Storage.",
+     "Implémentez des pipelines Vertex AI avec des composants versionnés et des artefacts suivis.",
+     "Planifiez les notebooks sur une VM Compute Engine partagée."
+    ],
+    "topic": "Gestion et provisionnement d'une infrastructure de solution",
+    "domainTitle": "Gestion et provisionnement d'une infrastructure de solution",
+    "moduleTitle": "Configurer les ressources de stockage",
+    "sectionTitle": "Configuration de Cloud Storage, Filestore et des disques persistants"
+   }
+  }
  },
  {
   "id": 40,
@@ -1137,7 +1761,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design for Business Outcomes",
-  "sectionTitle": "Integration with External Systems and Moving Data"
+  "sectionTitle": "Integration with External Systems and Moving Data",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de médias exécute une approche client APIs sur Cloud Run, un traitement des événements sur Pub/Sub et Dataflow et des analyses sur BigQuery. Le plan d'affaires ajoute désormais des lancements internationaux, des fonctionnalités de contenu assistées par l'IA et davantage d'intégrations de partenaires. La direction souhaite que la plateforme adopte des fonctionnalités Google Cloud utiles au fil du temps sans perturber les versions trimestrielles ni perdre de visibilité sur les coûts. Quel domaine d’intervention en matière de révision de l’architecture devrait ensuite être prioritaire ?",
+    "explanation": "L'objectif principal de l'examen est l'évolution de l'architecture : vérifier si les limites actuelles des services, les modèles d'intégration, la gouvernance des données, les pratiques opérationnelles et les enregistrements de décision peuvent prendre en charge la feuille de route de l'entreprise tout en tirant progressivement parti des nouvelles fonctionnalités du cloud. Cela va plus loin que l’optimisation d’un seul service. Pour ce scénario, l'architecte doit créer ou actualiser une feuille de route d'évolution qui relie les objectifs commerciaux, les changements technologiques probables, les risques, les dépendances et les incréments de migration. Cela permet de maintenir les versions trimestrielles en mouvement tout en préservant les coûts et la visibilité opérationnelle. Une migration forcée de la plateforme ou un gel des changements surchargerait l’équipe ou bloquerait l’adaptation nécessaire.",
+    "options": [
+     "Geler les choix de services jusqu'à ce que l'expansion soit terminée",
+     "Ajustez les paramètres de mise à l'échelle automatique pour les services existants",
+     "Remplacer les services Cloud Run par une plateforme standard GKE",
+     "Aligner l’évolution de l’architecture avec les feuilles de route commerciales et technologiques"
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Conception axée sur les résultats commerciaux",
+    "sectionTitle": "Intégration avec des systèmes externes et déplacement de données"
+   }
+  }
  },
  {
   "id": 41,
@@ -1166,7 +1806,23 @@
   ],
   "domainTitle": "Designing for Security and Compliance",
   "moduleTitle": "Architecting Secure Google Cloud Solutions",
-  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise a embauché une équipe partenaire pendant 9 mois pour exploiter un projet réglementé Google Cloud. Le partenaire utilise déjà son propre fournisseur d’identité OIDC et effectue fréquemment des rotations de personnel. Les entrepreneurs ont besoin d'un accès de déploiement privilégié occasionnel à Google Cloud APIs, mais ne doivent pas recevoir d'informations d'identification de longue durée ni d'accès réseau étendu. La conformité nécessite une attribution individuelle dans les journaux d'audit et une révocation rapide sans créer ni supprimer de nombreux comptes d'utilisateurs locaux. Quelle correction du contrôle d’accès constitue la recommandation la mieux équilibrée ?",
+    "explanation": "Workforce Identity Federation est le modèle approprié pour les utilisateurs humains externes qui s'authentifient déjà auprès d'un IdP externe de confiance. Il évite de créer et de supprimer des identités Google locales, prend en charge la révocation rapide via l'IdP du partenaire et élimine les clés de compte de service de longue durée. Le mappage des attributs ou des groupes d'IdP avec les liaisons de moindre privilège IAM maintient l'accès limité, tandis que l'usurpation d'identité du compte de service peut fournir un accès privilégié contrôlé pour les tâches de déploiement avec des pistes d'audit qui préservent le contexte de l'utilisateur externe. Cela équilibre mieux la conformité, la sécurité et les efforts opérationnels que les comptes locaux, les informations d’identification partagées ou la confiance basée sur le réseau.",
+    "options": [
+     "Connectez le réseau partenaire avec Cloud VPN et limitez par plage IP.",
+     "Utilisez Workforce Identity Federation avec le moindre privilège IAM et l'usurpation d'identité du compte de service.",
+     "Émettez une clé de compte de service partagé et faites-la pivoter chaque semaine.",
+     "Créez des comptes Cloud Identity et accordez Project Editor pendant la durée du contrat."
+    ],
+    "topic": "Concevoir pour la sécurité et la conformité",
+    "domainTitle": "Concevoir pour la sécurité et la conformité",
+    "moduleTitle": "Concevoir des solutions sécurisées Google Cloud",
+    "sectionTitle": "Appliquer la posture de sécurité et concevoir un accès sécurisé"
+   }
+  }
  },
  {
   "id": 42,
@@ -1193,7 +1849,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design Robust Cloud Infrastructures",
-  "sectionTitle": "Performance and Latency"
+  "sectionTitle": "Performance and Latency",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de vente au détail prévoit une nouvelle plate-forme de paiement sur Cloud Run avec Pub/Sub pour un traitement asynchrone. La revue de l'architecture inclut cette note. Quelle est la meilleure implication en matière de conception ?",
+    "explanation": "Les exigences d'observabilité doivent façonner l'architecture avant la mise en œuvre lorsque l'entreprise a des SLO explicites, des objectifs de latence, des besoins de sécurité des versions, des objectifs de diagnostic et des limites de confidentialité. Dans ce cas, les journaux de plateforme par défaut ne suffisent pas. La conception doit inclure des journaux d'application structurés avec rédaction, des mesures alignées sur le succès et la latence du paiement, un traçage distribué entre les limites Cloud Run et Pub/Sub le cas échéant, le profilage des points chauds de performances, les alertes d'impact sur le client et les tableaux de bord pour l'état du service et du parcours utilisateur. L'exigence de confidentialité signifie également que la télémétrie doit éviter les charges utiles sensibles tout en préservant les identifiants de corrélation utiles et le contexte opérationnel. L’essentiel à retenir est que l’observabilité fait partie de la conception de la solution, et pas seulement une tâche opérationnelle après le lancement.",
+    "options": [
+     "Fiez-vous aux journaux de requêtes Cloud Run par défaut jusqu'à ce que le trafic se stabilise.",
+     "Créez des tableaux de bord uniquement après le premier incident de production.",
+     "Enregistrez les charges utiles complètes de demande et de réponse pour chaque appel de paiement.",
+     "Concevez une télémétrie corrélée et rédigée avec des alertes SLO et des tableaux de bord de service."
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Concevoir des infrastructures cloud robustes",
+    "sectionTitle": "Performances et latence"
+   }
+  }
  },
  {
   "id": 43,
@@ -1220,7 +1892,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design for Business Outcomes",
-  "sectionTitle": "Buy vs Build and Design Decision Trade-offs"
+  "sectionTitle": "Buy vs Build and Design Decision Trade-offs",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise de vente au détail examine actuellement un projet de proposition de migration Google Cloud pour sa base de données de commandes. La proposition qualifie tout cela d’« exigences » :\nQuelle décision d'architecture l'architecte cloud doit-il recommander ?",
+    "explanation": "Les exigences techniques décrivent ce que la solution doit réaliser, comme la latence, la disponibilité, la durabilité, le RPO ou la tolérance aux pannes. Les contraintes de solution limitent la manière dont l'équipe peut répondre à ces exigences, comme l'absence de modifications du code d'application, de restrictions de licence, de délais fixes ou de plates-formes obligatoires. Un service nommé Google Cloud dans une proposition est généralement un choix de mise en œuvre à moins que l'entreprise n'en fasse explicitement une contrainte. Dans ce cas, la latence et RPO sont des exigences techniques mesurables, tandis que la première vague sans code est une contrainte de migration. Cloud SQL devrait être évalué par rapport à ces faits plutôt que d'être accepté comme une exigence en soi.",
+    "options": [
+     "Mandate Spanner car il offre une échelle mondiale et une forte cohérence.",
+     "Traitez la latence et RPO comme des exigences, la migration sans code comme une contrainte et Cloud SQL comme une option de conception à valider.",
+     "Traitez tous les éléments répertoriés comme des exigences techniques et mettez en œuvre le projet.",
+     "Approuvez Cloud SQL car il est géré et réduit les opérations de base de données."
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Conception axée sur les résultats commerciaux",
+    "sectionTitle": "Compromis entre les décisions d'achat et de construction et de conception"
+   }
+  }
  },
  {
   "id": 44,
@@ -1250,7 +1938,23 @@
   ],
   "domainTitle": "Managing and Provisioning a Solution Infrastructure",
   "moduleTitle": "Configure Compute Resources",
-  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration"
+  "sectionTitle": "Provisioning GKE Clusters for Container Orchestration",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise migre une application de détection de fraude basée sur Kubernetes vers Google Cloud. L'équipe souhaite conserver le modèle de déploiement actuel dans la mesure du possible.\nExposition : Notes de migration\nQuelle est la meilleure implication en matière de conception ?",
+    "explanation": "L'exigence décisive est le contrôle au niveau du nœud. GKE Standard conserve le plan de contrôle Kubernetes géré par Google tout en permettant un meilleur contrôle sur les pools de nœuds et les modèles de charge de travail tels que les DaemonSets privilégiés approuvés qui nécessitent un accès à l'hôte. Il préserve également les graphiques Helm, les manifestes et la portabilité Kubernetes API de l'équipe. GKE Autopilot réduirait davantage les opérations des nœuds, mais il est mieux adapté lorsque les charges de travail ne nécessitent pas de gestion directe des nœuds ou de comportement privilégié au niveau de l'hôte. Cloud Run réduit encore les opérations mais modifie le modèle d'orchestration. Le Kubernetes autogéré donne un contrôle maximal, mais il ajoute des opérations de plan de contrôle que l'équipe souhaite explicitement éviter.",
+    "options": [
+     "Changez la plateforme des services vers Cloud Run.",
+     "Utilisez GKE Autopilot pour toutes les charges de travail.",
+     "Gérez vous-même Kubernetes sur Compute Engine.",
+     "Utilisez GKE Standard avec les pools de nœuds gérés."
+    ],
+    "topic": "Gestion et provisionnement d'une infrastructure de solution",
+    "domainTitle": "Gestion et provisionnement d'une infrastructure de solution",
+    "moduleTitle": "Configurer les ressources de calcul",
+    "sectionTitle": "Provisionnement de clusters GKE pour l'orchestration de conteneurs"
+   }
+  }
  },
  {
   "id": 45,
@@ -1279,7 +1983,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design for Business Outcomes",
-  "sectionTitle": "Integration with External Systems and Moving Data"
+  "sectionTitle": "Integration with External Systems and Moving Data",
+  "translations": {
+   "fr": {
+    "question": "Un détaillant déplace une base de données de commandes PostgreSQL de 2 To vers Google Cloud. Le trafic est prévisible et s'adapte à une seule instance principale. L'équipe possède de solides compétences PostgreSQL mais seulement deux DBA. Les exigences incluent une faible latence en gardant l'application et la base de données dans une seule région, une connectivité privée, CMEK, des sauvegardes automatisées, un basculement automatisé et moins de travaux de mise à jour du système d'exploitation/base de données. Quelle recommandation équilibre le mieux ces contraintes ?",
+    "explanation": "La décision essentielle est de savoir si un service relationnel géré satisfait la charge de travail tout en réduisant la charge opérationnelle. Cloud SQL pour PostgreSQL correspond à une charge de travail régionale prévisible PostgreSQL et supprime une grande partie du travail pour la maintenance OS, les sauvegardes et la configuration du basculement HA. Il prend également en charge la connectivité IP privée et CMEK, qui s'alignent sur les exigences de sécurité sans forcer une refonte majeure de l'application ou du modèle de données. Il s'agit d'un meilleur équilibre que l'autogestion PostgreSQL pour le contrôle ou l'adoption d'une base de données distribuée plus perturbatrice lorsque la charge de travail ne l'exige pas.",
+    "options": [
+     "Reconstruisez la base de données sur Spanner pour une disponibilité mondiale.",
+     "Exécutez PostgreSQL sur Compute Engine avec un groupe d'instances géré.",
+     "Déplacez les enregistrements de commande vers BigQuery et interrogez-les depuis l'application.",
+     "Migrez vers Cloud SQL pour PostgreSQL avec HA, IP privée, sauvegardes et CMEK."
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Conception axée sur les résultats commerciaux",
+    "sectionTitle": "Intégration avec des systèmes externes et déplacement de données"
+   }
+  }
  },
  {
   "id": 46,
@@ -1310,7 +2030,23 @@
   ],
   "domainTitle": "Designing and Planning a Cloud Solution Architecture",
   "moduleTitle": "Design for Business Outcomes",
-  "sectionTitle": "Integration with External Systems and Moving Data"
+  "sectionTitle": "Integration with External Systems and Moving Data",
+  "translations": {
+   "fr": {
+    "question": "Un fabricant déplace un environnement de reporting SAP vers Google Cloud mais conservera les systèmes transactionnels dans deux centres de données de l'entreprise pendant 18 mois. Les tâches de reporting transféreront 12 à 15 Gbit/s de trafic privé pendant les heures de bureau, et les fenêtres de lots sont sensibles à l'instabilité. La conception doit tolérer une seule panne de connectivité et éviter l’Internet public pour le mouvement des données en régime permanent. Chaque centre de données peut commander des connexions croisées dans une installation de colocation prenant en charge l'interconnexion Google Cloud. Quel modèle de connectivité répond le mieux à ces exigences ?",
+    "explanation": "Les principales exigences sont une bande passante soutenue de plusieurs Gbit/s, une connectivité privée, une latence/gigue prévisible et une résilience face à une seule panne de connectivité. Dedicated Interconnect est la meilleure solution lorsque l'organisation peut se connecter à une installation de colocation prise en charge et a besoin d'une connectivité privée à haut débit avec Google Cloud. L'utilisation de connexions physiques redondantes et de Cloud Router avec BGP permet de maintenir le routage en cas de défaillance d'un lien ou d'un chemin périphérique. HA VPN est souvent plus rapide et moins coûteux à déployer, mais il utilise l'Internet public et est moins adapté au trafic soutenu de 12 à 15 Gbit/s et sensible à la gigue. Un seul chemin d’interconnexion laisserait clairement un point de défaillance unique.",
+    "options": [
+     "VPC Network Peering entre le VPC et les centres de données",
+     "Une seule connexion Partner Interconnect par data center",
+     "Connexions Dedicated Interconnect redondantes avec Cloud Router/BGP",
+     "Tunnels HA VPN avec routage dynamique sur internet"
+    ],
+    "topic": "Conception et planification d'une architecture de solution cloud",
+    "domainTitle": "Conception et planification d'une architecture de solution cloud",
+    "moduleTitle": "Conception axée sur les résultats commerciaux",
+    "sectionTitle": "Intégration avec des systèmes externes et déplacement de données"
+   }
+  }
  },
  {
   "id": 47,
@@ -1338,7 +2074,23 @@
   ],
   "domainTitle": "Designing for Security and Compliance",
   "moduleTitle": "Designing for Compliance",
-  "sectionTitle": "Designing for Data Privacy, Residency, and Sovereignty"
+  "sectionTitle": "Designing for Data Privacy, Residency, and Sovereignty",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise SaaS de soins de santé déplace un assistant de support client vers la production. L'assistant utilise les modèles Gemini jusqu'à Vertex AI, avec les contrôles Model Armor et Sensitive Data Protection pour les invites et les réponses. Le service juridique a besoin de preuves que les contrôles de sécurité AI fonctionnent avant le lancement. L'équipe de la plate-forme dispose de deux semaines, d'un personnel limité et ne doit pas copier les conversations brutes des clients en dehors de Google Cloud. Quelle recommandation est la mieux équilibrée ?",
+    "explanation": "Les preuves de conformité AI doivent démontrer à la fois la conception des contrôles et l’efficacité opérationnelle. Les journaux d'audit Cloud peuvent indiquer qui a modifié les configurations liées à la sécurité, les applications nettoyées ou les événements d'application Model Armor peuvent afficher les décisions de politique d'autorisation/blocage, et les métriques Cloud Monitoring peuvent démontrer le fonctionnement en cours. Un examen documenté de sécurité ou de conformité relie ces preuves aux contrôles requis. Conserver les preuves dans Google Cloud avec un contenu rédigé ou réduit au minimum répond aux exigences de confidentialité, réduit le mouvement des données et est réalisable pour une petite équipe dans un délai court. L’examen brut des transcriptions peut sembler approfondi, mais il crée des risques inutiles en matière de confidentialité et de gestion des données.",
+    "options": [
+     "Stockez les captures d'écran de la configuration Model Armor dans le plan du projet.",
+     "Utilisez les tableaux de bord de latence et de taux d’erreur comme principales preuves de conformité.",
+     "Exportez les invites et les réponses brutes à l’auditeur pour une inspection manuelle.",
+     "Utilisez les journaux d'audit Cloud, les journaux/métriques d'application épurés et les preuves d'examen signées conservées de manière centralisée."
+    ],
+    "topic": "Concevoir pour la sécurité et la conformité",
+    "domainTitle": "Concevoir pour la sécurité et la conformité",
+    "moduleTitle": "Concevoir pour la conformité",
+    "sectionTitle": "Concevoir pour la confidentialité, la résidence et la souveraineté des données"
+   }
+  }
  },
  {
   "id": 48,
@@ -1366,7 +2118,23 @@
   ],
   "domainTitle": "Designing for Security and Compliance",
   "moduleTitle": "Architecting Secure Google Cloud Solutions",
-  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access"
+  "sectionTitle": "Enforcing Security Posture and Designing for Secure Access",
+  "translations": {
+   "fr": {
+    "question": "Une société d'analyse des soins de santé teste un assistant basé sur Gemini qui résume les tickets d'assistance aux patients pour les agents des centres d'appels. Les billets peuvent contenir des PHI. Les agents ont besoin de réponses en moins de 2 secondes, les auditeurs exigent des preuves du traitement des données et des contrôles de sécurité avant l'expansion, et l'équipe ML ne peut pas exploiter une pile de modération personnalisée. Quelle recommandation équilibre le mieux ces contraintes ?",
+    "explanation": "Les workflows AI introduisent des risques de sécurité aux points de saisie rapide, de sortie du modèle, de déploiement et de journalisation. Dans ce scénario, la meilleure architecture utilise des contrôles gérés proches de l'assistant : Sensitive Data Protection peut aider à identifier ou à rédiger PHI avant que les invites ou les journaux ne soient conservés, Model Armor peut aider à filtrer les invites et les réponses pour les interactions dangereuses, l'accès au service de moindre privilège limite qui et quoi peut invoquer le flux de travail, et la journalisation d'audit fournit des preuves de conformité. Cette approche en couches s'adapte au projet pilote à faible latence et évite de demander à une petite équipe de créer et d'exploiter une infrastructure de modération personnalisée. Le compromis clé consiste à utiliser des contrôles gérés pour réduire les risques sans bloquer le projet pilote commercial ni supprimer les preuves dont les auditeurs ont besoin.",
+    "options": [
+     "Auto-hébergez un service de modération personnalisé et ouvrez un modèle sur les GPU avant le pilote.",
+     "Désactivez les filtres de journalisation et de sécurité pour réduire la rétention et la latence PHI.",
+     "Utilisez la rédaction gérée Model Armor, Sensitive Data Protection, l'accès au moindre privilège et la journalisation d'audit pour équilibrer la latence, la conformité et les opérations.",
+     "Donnez aux agents un accès direct au modèle et comptez sur la formation pour éviter de soumettre des PHI."
+    ],
+    "topic": "Concevoir pour la sécurité et la conformité",
+    "domainTitle": "Concevoir pour la sécurité et la conformité",
+    "moduleTitle": "Concevoir des solutions sécurisées Google Cloud",
+    "sectionTitle": "Appliquer la posture de sécurité et concevoir un accès sécurisé"
+   }
+  }
  },
  {
   "id": 49,
@@ -1393,7 +2161,23 @@
   ],
   "domainTitle": "Analyzing and Optimizing Technical and Business Processes",
   "moduleTitle": "Optimizing Technical Processes and Development Lifecycle",
-  "sectionTitle": "Testing, Validation, and Service Provisioning"
+  "sectionTitle": "Testing, Validation, and Service Provisioning",
+  "translations": {
+   "fr": {
+    "question": "Une entreprise provisionne les ressources Google Cloud en copiant les fichiers Terraform à partir d'un lecteur partagé et en exécutant terraform apply à partir de l'ordinateur portable d'un ingénieur. Les ressources de développement, de test et de production partagent un seul projet. Les auditeurs exigent désormais des preuves d'approbation et une préparation au retour en arrière, mais les équipes produit ne peuvent pas tolérer un long gel du déploiement. Quelle est la recommandation la plus équilibrée ?",
+    "explanation": "La principale lacune réside dans la gouvernance du workflow de provisionnement, et non dans le Terraform lui-même. Une solution équilibrée conserve l'infrastructure sous forme de code, mais la rend contrôlée et reproductible : stockez les modifications dans Git, exigez un examen par les pairs ou le propriétaire pour la production, exécutez des vérifications de plan automatisées, séparez les environnements en projets ou dossiers distincts et utilisez des versions balisées ou des validations connues pour la restauration. Cela améliore les preuves de conformité et réduit le rayon d’explosion sans interrompre la livraison pendant des mois. L'automatisation réduit également les efforts opérationnels manuels par rapport à un processus utilisant uniquement des tickets ou basé sur un ordinateur portable.",
+    "options": [
+     "Conservez le flux de travail actuel et ajoutez des captures d'écran d'audit hebdomadaires.",
+     "Centralisez toutes les candidatures sur un seul ordinateur portable d’exploitation avec des e-mails d’approbation manuelle.",
+     "Déplacez Terraform vers Git avec des projets d'environnement, des approbations de relations publiques, des plans automatisés et une restauration de version.",
+     "Gelez tout provisionnement jusqu’à ce qu’une plate-forme interne personnalisée soit créée."
+    ],
+    "topic": "Analyser et optimiser les processus techniques et commerciaux",
+    "domainTitle": "Analyser et optimiser les processus techniques et commerciaux",
+    "moduleTitle": "Optimisation des processus techniques et du cycle de vie de développement",
+    "sectionTitle": "Tests, validation et fourniture de services"
+   }
+  }
  },
  {
   "id": 50,
@@ -1422,6 +2206,22 @@
   ],
   "domainTitle": "Managing and Provisioning a Solution Infrastructure",
   "moduleTitle": "Configure and Secure Networks",
-  "sectionTitle": "Securing Networks with IAP, Cloud Armor, and Cloud IDS"
+  "sectionTitle": "Securing Networks with IAP, Cloud Armor, and Cloud IDS",
+  "translations": {
+   "fr": {
+    "question": "Une société de services financiers gère trois VPC Google Cloud indépendants dans des projets distincts : traitement des paiements, analyses et services partagés. Il ajoute un AWS VPC qui héberge une API de détection de fraude. Exigences : utilisez une connectivité IP privée, évitez la création de réseaux entièrement maillés à mesure que de nouveaux VPC sont ajoutés, gardez les paiements et les analyses segmentés à l'exception des chemins approuvés et laissez une équipe réseau centrale contrôler la politique de routage et de pare-feu. Quel modèle de connectivité l’architecte doit-il recommander ?",
+    "explanation": "Network Connectivity Center s'adapte à une topologie multi-VPC et multicloud où la connectivité doit évoluer sans créer de liens par paires entre chaque réseau. Les VPC Google Cloud peuvent être connectés en tant que rayons VPC, et AWS peut se connecter via un rayon HA VPN. Une équipe réseau centrale peut gérer le modèle de routage, tandis que les politiques de pare-feu hiérarchiques, les règles de pare-feu VPC et la conception des itinéraires limitent les communications de paiement et d'analyse aux chemins approuvés. Le point clé est de séparer la structure de connectivité des contrôles de segmentation : NCC fournit une accessibilité privée évolutive et les contrôles de politique déterminent quels flux sont autorisés.",
+    "options": [
+     "Un Shared VPC pour toutes les charges de travail avec isolation au niveau du sous-réseau",
+     "Centre de connectivité réseau avec des rayons VPC et un HA VPN parlé à AWS",
+     "Peering de réseau VPC à maillage complet avec des tunnels VPN séparés vers AWS",
+     "Équilibreurs de charge externes HTTPS avec listes autorisées IP Cloud Armor"
+    ],
+    "topic": "Gestion et provisionnement d'une infrastructure de solution",
+    "domainTitle": "Gestion et provisionnement d'une infrastructure de solution",
+    "moduleTitle": "Configurer et sécuriser les réseaux",
+    "sectionTitle": "Sécuriser les réseaux avec IAP, Cloud Armor et Cloud IDS"
+   }
+  }
  }
 ]

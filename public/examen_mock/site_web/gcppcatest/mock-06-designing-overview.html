@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mock 6 (Designing)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gcp-blue:#4285F4;
+  --gcp-blue-dark:#1A73E8;
+  --gcp-green:#34A853;
+  --gcp-yellow:#FBBC04;
+  --gcp-red:#EA4335;
+  --gcp-grey-900:#202124;
+  --gcp-grey-700:#5F6368;
+  --gcp-grey-500:#80868B;
+  --gcp-grey-200:#E8EAED;
+  --gcp-grey-100:#F1F3F4;
+  --gcp-surface:#FFFFFF;
+  --gcp-blue-soft:#E8F0FE;
+  --gcp-green-soft:#E6F4EA;
+  --gcp-yellow-soft:#FEF7E0;
+  --gcp-red-soft:#FCE8E6;
+  --font-ui:'Roboto',system-ui,sans-serif;
+  --font-read:'Lexend','Roboto',system-ui,sans-serif;
+  --shadow:0 1px 2px rgba(60,64,67,.12),0 2px 8px rgba(60,64,67,.08);
+  --shadow-hover:0 4px 16px rgba(66,133,244,.18);
+  --radius:12px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:var(--font-ui);
+  color:var(--gcp-grey-900);
+  line-height:1.65;
+  background:
+    radial-gradient(1200px 420px at 12% -10%,rgba(66,133,244,.14),transparent 55%),
+    radial-gradient(900px 360px at 92% 0%,rgba(52,168,83,.10),transparent 50%),
+    var(--gcp-grey-100);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.bar{
+  position:sticky;top:0;z-index:20;
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  padding:10px 18px;
+  background:rgba(255,255,255,.92);
+  border-bottom:1px solid var(--gcp-grey-200);
+  backdrop-filter:blur(10px);
+}
+.bar a{
+  color:var(--gcp-blue-dark);
+  text-decoration:none;
+  font-weight:500;
+  font-size:.9rem;
+}
+.bar a:hover{color:var(--gcp-blue);text-decoration:underline}
+.bar button{
+  font:inherit;font-weight:500;
+  border:1px solid var(--gcp-grey-200);
+  background:var(--gcp-surface);
+  border-radius:8px;
+  padding:6px 12px;
+  cursor:pointer;
+  color:var(--gcp-grey-900);
+}
+.bar button:hover{border-color:var(--gcp-blue);color:var(--gcp-blue-dark);background:var(--gcp-blue-soft)}
+.lang-switch{display:inline-flex;border:1px solid var(--gcp-grey-200);border-radius:8px;overflow:hidden;margin-left:auto}
+.lang-switch button{border:0;border-radius:0;background:var(--gcp-surface);padding:6px 12px;font-weight:700;color:var(--gcp-grey-700)}
+.lang-switch button.active{background:var(--gcp-blue);color:#fff}
+.wrap{max-width:980px;margin:auto;padding:28px 16px 88px}
+.head,.q,.filters,.domain-progress,.card,.overview-card,.portal-card{
+  background:var(--gcp-surface);
+  border:1px solid var(--gcp-grey-200);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.head{padding:22px 24px;margin-bottom:16px}
+.head h1{
+  margin:0 0 8px;
+  color:var(--gcp-blue-dark);
+  font-family:var(--font-ui);
+  font-size:clamp(1.25rem,2.4vw,1.55rem);
+  font-weight:700;
+  letter-spacing:-.01em;
+  line-height:1.3;
+}
+.muted{color:var(--gcp-grey-700);font-size:.92rem;line-height:1.55}
+.filters{padding:16px 18px;margin-bottom:16px;display:grid;gap:10px}
+.filters .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.filters label{font-size:.8rem;font-weight:700;color:var(--gcp-grey-700);min-width:70px;font-family:var(--font-ui)}
+.filters select{
+  font:inherit;
+  border:1px solid var(--gcp-grey-200);
+  border-radius:8px;
+  padding:8px 12px;
+  min-width:220px;
+  background:var(--gcp-surface);
+  color:var(--gcp-grey-900);
+}
+.filters select:focus{outline:2px solid rgba(66,133,244,.35);border-color:var(--gcp-blue)}
+#resultCount{font-size:.85rem;color:var(--gcp-blue-dark);font-weight:700}
+.q{padding:18px 20px;margin-bottom:14px}
+.q.hidden{display:none}
+.q:target{border-color:var(--gcp-blue);box-shadow:0 0 0 3px rgba(66,133,244,.18)}
+.meta-line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px}
+.num{font-size:.76rem;font-weight:700;color:var(--gcp-blue-dark);font-family:var(--font-ui)}
+.badge{
+  display:inline-flex;align-items:center;
+  padding:3px 9px;border-radius:999px;
+  font-family:var(--font-ui);
+  font-size:.68rem;font-weight:700;letter-spacing:.03em;
+}
+.badge.d{background:var(--gcp-blue-soft);color:var(--gcp-blue-dark)}
+.badge.m{background:var(--gcp-yellow-soft);color:#B06000}
+.badge.s{background:var(--gcp-green-soft);color:#137333}
+.badge.type{background:var(--gcp-grey-700);color:#fff;text-transform:uppercase}
+.badge.type.multi{background:var(--gcp-red)}
+.sec-title{font-size:.78rem;color:var(--gcp-grey-700);font-family:var(--font-ui)}
+.qt{
+  font-family:var(--font-read);
+  font-weight:500;
+  font-size:1.02rem;
+  line-height:1.7;
+  margin:6px 0 14px;
+  white-space:pre-line;
+  display:flex;gap:10px;align-items:flex-start;
+  color:var(--gcp-grey-900);
+}
+.qt-text{flex:1}
+.tts{
+  flex:0 0 auto;
+  font-family:var(--font-ui);
+  font-size:.76rem;font-weight:700;
+  color:var(--gcp-blue-dark);
+  border:1px solid #AECBFA;
+  background:var(--gcp-blue-soft);
+  border-radius:8px;
+  padding:6px 10px;
+  cursor:pointer;
+}
+.tts:hover{background:#D2E3FC}
+.tts.speaking{color:var(--gcp-red);border-color:#F6AEA9;background:var(--gcp-red-soft)}
+.opts{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-family:var(--font-read)}
+.opts li{
+  position:relative;
+  padding:11px 12px 11px 44px;
+  border:1px solid var(--gcp-grey-200);
+  border-radius:10px;
+  background:var(--gcp-grey-100);
+  font-size:.95rem;
+  line-height:1.6;
+  color:var(--gcp-grey-900);
+}
+.opts li:before{
+  content:attr(data-l);
+  position:absolute;left:10px;top:50%;transform:translateY(-50%);
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--gcp-grey-200);
+  font-family:var(--font-ui);
+  font-size:.72rem;font-weight:700;
+  color:var(--gcp-grey-700);
+}
+.show .correct{background:var(--gcp-green-soft);border-color:var(--gcp-green)}
+.show .correct:before{background:var(--gcp-green);color:#fff}
+.ans{
+  display:none;margin-top:12px;padding:12px 14px;
+  border-left:4px solid var(--gcp-green);
+  background:var(--gcp-green-soft);
+  border-radius:0 10px 10px 0;
+  font-family:var(--font-read);
+  font-size:.95rem;line-height:1.65;
+}
+.show .ans{display:block}
+.ans b{color:#137333;font-family:var(--font-ui)}
+.ref{margin-top:8px;font-size:.82rem;font-family:var(--font-ui)}
+.ref a{color:var(--gcp-blue-dark);word-break:break-all}
+.grid-mocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:14px}
+.card{display:block;text-decoration:none;color:inherit;padding:18px;transition:border-color .15s,box-shadow .15s}
+.card:hover{border-color:var(--gcp-blue);box-shadow:var(--shadow-hover)}
+.card .n,.overview-card .n{
+  width:34px;height:34px;border-radius:999px;
+  background:var(--gcp-blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-ui);font-size:.78rem;font-weight:700;
+}
+.card-link{color:var(--gcp-blue-dark);font-size:.8rem;font-weight:700;text-decoration:none}
+.card-link:hover{text-decoration:underline}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.overview-card{display:flex;gap:12px;text-decoration:none;color:inherit;padding:16px;min-height:118px;transition:border-color .15s,box-shadow .15s}
+.overview-card:hover{border-color:var(--gcp-blue);box-shadow:var(--shadow-hover)}
+.overview-card .n{flex:0 0 auto}
+.overview-card .summary{
+  font-family:var(--font-read);
+  font-size:.9rem;font-weight:500;line-height:1.45;
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
+}
+.overview-card .labels{display:flex;gap:5px;align-items:center;margin-bottom:8px}
+.domain-progress{padding:18px 20px;margin-bottom:16px}
+.domain-progress h2{font-size:1.02rem;margin:0 0 14px;font-weight:700;color:var(--gcp-grey-900);font-family:var(--font-ui)}
+.progress-row{display:grid;grid-template-columns:42px minmax(100px,1fr) 88px;gap:10px;align-items:center;margin:10px 0}
+.progress-label{font-size:.78rem;font-weight:700;color:var(--gcp-grey-700);font-family:var(--font-ui)}
+.progress-track{height:12px;background:var(--gcp-grey-200);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gcp-blue),var(--gcp-green));border-radius:999px}
+.progress-value{text-align:right;font-size:.76rem;font-weight:700;color:var(--gcp-grey-700);font-family:var(--font-ui)}
+.i18n{display:none}
+body.lang-fr .i18n.fr,body.lang-en .i18n.en{display:inline}
+body.lang-fr .i18n-block.fr,body.lang-en .i18n-block.en{display:block}
+body.lang-fr .i18n-block.en,body.lang-en .i18n-block.fr{display:none}
+.qt-text .i18n-block{white-space:pre-line}
+.portal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.portal-card{padding:22px;transition:border-color .15s,box-shadow .15s}
+.portal-card:hover{border-color:var(--gcp-blue);box-shadow:var(--shadow-hover)}
+.portal-card h2{margin:0 0 8px;font-size:1.12rem;font-weight:700;color:var(--gcp-grey-900);font-family:var(--font-ui)}
+.count{color:var(--gcp-green);font-weight:700;font-family:var(--font-ui)}
+.external{color:var(--gcp-yellow);filter:saturate(1.2) brightness(.85)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.button{
+  display:inline-block;padding:8px 14px;border-radius:8px;
+  background:var(--gcp-blue);color:#fff;
+  font-family:var(--font-ui);font-size:.84rem;font-weight:700;text-decoration:none;
+}
+.button:hover{background:var(--gcp-blue-dark)}
+.button.secondary{background:var(--gcp-blue-soft);color:var(--gcp-blue-dark)}
+.button.secondary:hover{background:#D2E3FC}
+@media(max-width:640px){
+  .wrap{padding:20px 12px 72px}
+  .qt{flex-direction:column}
+  .tts{align-self:flex-end}
+  .filters select{min-width:100%;width:100%}
+}
+</style>
+</head><body class="lang-fr">
+<nav class="bar">
+  <a href="index.html"><span class="i18n fr">← Liste des mocks</span><span class="i18n en">← Mock list</span></a>
+  <a href="mock-06-designing.html"><span class="i18n fr">Ouvrir le quiz</span><span class="i18n en">Open quiz</span></a>
+  <div class="lang-switch" role="group" aria-label="Language"><button type="button" data-lang="fr" onclick="setLang('fr')">FR</button><button type="button" data-lang="en" onclick="setLang('en')">EN</button></div>
+</nav>
+<main class="wrap">
+<header class="head">
+  <h1><span class="i18n fr">Vue d’ensemble — Mock 6 (Designing)</span><span class="i18n en">Overview — Mock 6 (Designing)</span></h1>
+  <div class="muted">60 <span class="i18n fr">questions · cliquez sur une question pour l’ouvrir dans le quiz</span><span class="i18n en">questions · click a card to open it in the quiz</span></div>
+</header>
+<section class="domain-progress">
+  <h2><span class="i18n fr">Répartition des questions par domaine</span><span class="i18n en">Question distribution by domain</span></h2>
+  <div class="progress-row" title="Concevoir et planifier une architecture de solution cloud / Designing and Planning a Cloud Solution Architecture"><div class="progress-label">D1</div><div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="96.7"><div class="progress-fill" style="width:96.7%"></div></div><div class="progress-value">96.7% · 58</div></div><div class="progress-row" title="Gérer et provisionner une infrastructure de solution / Managing and Provisioning a Solution Infrastructure"><div class="progress-label">D2</div><div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0.0"><div class="progress-fill" style="width:0.0%"></div></div><div class="progress-value">0.0% · 0</div></div><div class="progress-row" title="Concevoir pour la sécurité et la conformité / Designing for Security and Compliance"><div class="progress-label">D3</div><div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="1.7"><div class="progress-fill" style="width:1.7%"></div></div><div class="progress-value">1.7% · 1</div></div><div class="progress-row" title="Analyser et optimiser les processus techniques et métier / Analyzing and Optimizing Technical and Business Processes"><div class="progress-label">D4</div><div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="1.7"><div class="progress-fill" style="width:1.7%"></div></div><div class="progress-value">1.7% · 1</div></div><div class="progress-row" title="Gérer l&#x27;implémentation / Managing Implementation"><div class="progress-label">D5</div><div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0.0"><div class="progress-fill" style="width:0.0%"></div></div><div class="progress-value">0.0% · 0</div></div><div class="progress-row" title="Garantir la fiabilité des solutions et des opérations / Ensuring Solution and Operations Reliability"><div class="progress-label">D6</div><div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0.0"><div class="progress-fill" style="width:0.0%"></div></div><div class="progress-value">0.0% · 0</div></div>
+</section>
+<div class="overview-grid"><a class="overview-card" href="mock-06-designing.html#question-1"><div class="n">1</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Cloud Spanner · Multi-région · Firestore · Cloud SQL</span><span class="i18n-block en">Cloud Spanner · Multi-region · Firestore · Cloud SQL</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir les types de stockage appropriés</span><span class="i18n en">Choosing Appropriate Storage Types</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-2"><div class="n">2</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Pub/Sub</span><span class="i18n-block en">Pub/Sub</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Prise en charge de la conception d&#x27;applications</span><span class="i18n en">Supporting the Application Design</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-3"><div class="n">3</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S5</span></div><div class="summary"><span class="i18n-block fr">GKE · Cloud Run · App Engine</span><span class="i18n-block en">GKE · Cloud Run · App Engine</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir des ressources de calcul et des produits de plateforme</span><span class="i18n en">Choosing Compute Resources and Platform Products</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-4"><div class="n">4</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Compute Engine · Migration</span><span class="i18n-block en">Compute Engine · Migration</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Prise en charge de la conception d&#x27;applications</span><span class="i18n en">Supporting the Application Design</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-5"><div class="n">5</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">BigQuery</span><span class="i18n-block en">BigQuery</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-6"><div class="n">6</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S5</span></div><div class="summary"><span class="i18n-block fr">Compute Engine</span><span class="i18n-block en">Compute Engine</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir des ressources de calcul et des produits de plateforme</span><span class="i18n en">Choosing Compute Resources and Platform Products</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-7"><div class="n">7</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S5</span></div><div class="summary"><span class="i18n-block fr">Cloud Build · Artifact Registry · Cloud Run</span><span class="i18n-block en">Cloud Build · Artifact Registry · Cloud Run</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Compromis entre les décisions d&#x27;achat et de construction et de conception</span><span class="i18n en">Buy vs Build and Design Decision Trade-offs</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-8"><div class="n">8</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Bigquery</span><span class="i18n-block en">Bigquery</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-9"><div class="n">9</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Bigtable</span><span class="i18n-block en">Bigtable</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-10"><div class="n">10</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Memorystore</span><span class="i18n-block en">Memorystore</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-11"><div class="n">11</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S5</span></div><div class="summary"><span class="i18n-block fr">Cloud SQL · Sauvegarde et restauration · RPO/RTO · Reprise après sinistre</span><span class="i18n-block en">Cloud SQL · Backup and restore · RPO/RTO · Disaster recovery</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir des ressources de calcul et des produits de plateforme</span><span class="i18n en">Choosing Compute Resources and Platform Products</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-12"><div class="n">12</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S5</span></div><div class="summary"><span class="i18n-block fr">Cloud Storage · Cloud Functions · Vertex AI · Firestore</span><span class="i18n-block en">Cloud Storage · Cloud Functions · Vertex AI · Firestore</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir des ressources de calcul et des produits de plateforme</span><span class="i18n en">Choosing Compute Resources and Platform Products</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-13"><div class="n">13</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Dataflow · BigQuery</span><span class="i18n-block en">Dataflow · BigQuery</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir les technologies de traitement des données</span><span class="i18n en">Choosing Data Processing Technologies</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-14"><div class="n">14</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Memorystore</span><span class="i18n-block en">Memorystore</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir les types de stockage appropriés</span><span class="i18n en">Choosing Appropriate Storage Types</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-15"><div class="n">15</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S5</span></div><div class="summary"><span class="i18n-block fr">Artifact Registry · Cloud Build · GKE</span><span class="i18n-block en">Artifact Registry · Cloud Build · GKE</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Compromis entre les décisions d&#x27;achat et de construction et de conception</span><span class="i18n en">Buy vs Build and Design Decision Trade-offs</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-16"><div class="n">16</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S1</span></div><div class="summary"><span class="i18n-block fr">Cloud Build</span><span class="i18n-block en">Cloud Build</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Stratégie produit et mesures de réussite</span><span class="i18n en">Product Strategy and Success Measurements</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-17"><div class="n">17</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Cloud SQL</span><span class="i18n-block en">Cloud SQL</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-18"><div class="n">18</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Pub/Sub</span><span class="i18n-block en">Pub/Sub</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-19"><div class="n">19</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M2</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Cloud CDN · Cloud Load Balancing</span><span class="i18n-block en">Cloud CDN · Cloud Load Balancing</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Performances et latence</span><span class="i18n en">Performance and Latency</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-20"><div class="n">20</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M2</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Cache · Latency</span><span class="i18n-block en">Cache · Latency</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Performances et latence</span><span class="i18n en">Performance and Latency</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-21"><div class="n">21</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">GKE · Migration · IAM</span><span class="i18n-block en">GKE · Migration · IAM</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Prise en charge de la conception d&#x27;applications</span><span class="i18n en">Supporting the Application Design</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-22"><div class="n">22</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Cloud Logging · Cloud Storage</span><span class="i18n-block en">Cloud Logging · Cloud Storage</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-23"><div class="n">23</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Vertex AI · Autoscaling</span><span class="i18n-block en">Vertex AI · Autoscaling</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-24"><div class="n">24</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n-block en">Integration with External Systems and Moving Data</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Conception axée sur les résultats commerciaux</span><span class="i18n en">Design for Business Outcomes</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-25"><div class="n">25</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Apigee</span><span class="i18n-block en">Apigee</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-26"><div class="n">26</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S1</span></div><div class="summary"><span class="i18n-block fr">Cloud Storage</span><span class="i18n-block en">Cloud Storage</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Stratégie produit et mesures de réussite</span><span class="i18n en">Product Strategy and Success Measurements</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-27"><div class="n">27</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">VPC</span><span class="i18n-block en">VPC</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-28"><div class="n">28</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Vertex AI</span><span class="i18n-block en">Vertex AI</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-29"><div class="n">29</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Cloud Storage · Cloud Functions</span><span class="i18n-block en">Cloud Storage · Cloud Functions</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir les technologies de traitement des données</span><span class="i18n en">Choosing Data Processing Technologies</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-30"><div class="n">30</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">GKE</span><span class="i18n-block en">GKE</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Prise en charge de la conception d&#x27;applications</span><span class="i18n en">Supporting the Application Design</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-31"><div class="n">31</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Cloud Spanner</span><span class="i18n-block en">Cloud Spanner</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-32"><div class="n">32</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Firestore</span><span class="i18n-block en">Firestore</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir les types de stockage appropriés</span><span class="i18n en">Choosing Appropriate Storage Types</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-33"><div class="n">33</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n-block en">Integration with External Systems and Moving Data</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Conception axée sur les résultats commerciaux</span><span class="i18n en">Design for Business Outcomes</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-34"><div class="n">34</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Processing</span><span class="i18n-block en">Processing</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir les technologies de traitement des données</span><span class="i18n en">Choosing Data Processing Technologies</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-35"><div class="n">35</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">GKE · Vertex AI · Cloud SQL</span><span class="i18n-block en">GKE · Vertex AI · Cloud SQL</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir les types de stockage appropriés</span><span class="i18n en">Choosing Appropriate Storage Types</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-36"><div class="n">36</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">VPC</span><span class="i18n-block en">VPC</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Prise en charge de la conception d&#x27;applications</span><span class="i18n en">Supporting the Application Design</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-37"><div class="n">37</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M2</span><span class="badge s">S2</span></div><div class="summary"><span class="i18n-block fr">Vertex AI</span><span class="i18n-block en">Vertex AI</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Elasticité des ressources cloud</span><span class="i18n en">Elasticity of Cloud Resources</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-38"><div class="n">38</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">IAM</span><span class="i18n-block en">IAM</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Prise en charge de la conception d&#x27;applications</span><span class="i18n en">Supporting the Application Design</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-39"><div class="n">39</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Bigquery</span><span class="i18n-block en">Bigquery</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-40"><div class="n">40</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Memorystore · Cloud Armor</span><span class="i18n-block en">Memorystore · Cloud Armor</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-41"><div class="n">41</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M2</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Optimisation des coûts</span><span class="i18n-block en">Cost optimization</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Performances et latence</span><span class="i18n en">Performance and Latency</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-42"><div class="n">42</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Cloud Run · Autoscaling</span><span class="i18n-block en">Cloud Run · Autoscaling</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Prise en charge de la conception d&#x27;applications</span><span class="i18n en">Supporting the Application Design</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-43"><div class="n">43</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Cloud Load Balancing · Migration</span><span class="i18n-block en">Cloud Load Balancing · Migration</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Prise en charge de la conception d&#x27;applications</span><span class="i18n en">Supporting the Application Design</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-44"><div class="n">44</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Cloud Storage</span><span class="i18n-block en">Cloud Storage</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir les technologies de traitement des données</span><span class="i18n en">Choosing Data Processing Technologies</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-45"><div class="n">45</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Pub/Sub</span><span class="i18n-block en">Pub/Sub</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Prise en charge de la conception d&#x27;applications</span><span class="i18n en">Supporting the Application Design</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-46"><div class="n">46</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Bigtable</span><span class="i18n-block en">Bigtable</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-47"><div class="n">47</div><div><div class="labels"><span class="badge d">D4</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Sauvegarde et restauration · RPO/RTO · Reprise après sinistre</span><span class="i18n-block en">Backup and restore · RPO/RTO · Disaster recovery</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Concevoir pour la continuité des activités et la reprise après sinistre</span><span class="i18n en">Designing for Business Continuity and Disaster Recovery</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-48"><div class="n">48</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Supporting</span><span class="i18n-block en">Supporting</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Prise en charge de la conception d&#x27;applications</span><span class="i18n en">Supporting the Application Design</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-49"><div class="n">49</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Cloud Storage · Pub/Sub · Cloud Functions</span><span class="i18n-block en">Cloud Storage · Pub/Sub · Cloud Functions</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir les technologies de traitement des données</span><span class="i18n en">Choosing Data Processing Technologies</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-50"><div class="n">50</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S1</span></div><div class="summary"><span class="i18n-block fr">Strategy</span><span class="i18n-block en">Strategy</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Stratégie produit et mesures de réussite</span><span class="i18n en">Product Strategy and Success Measurements</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-51"><div class="n">51</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Firestore</span><span class="i18n-block en">Firestore</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir les technologies de traitement des données</span><span class="i18n en">Choosing Data Processing Technologies</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-52"><div class="n">52</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">VPC Service Controls</span><span class="i18n-block en">VPC Service Controls</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-53"><div class="n">53</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Vertex AI</span><span class="i18n-block en">Vertex AI</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-54"><div class="n">54</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M3</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Cloud Storage · Firestore · Cloud SQL</span><span class="i18n-block en">Cloud Storage · Firestore · Cloud SQL</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Choisir les types de stockage appropriés</span><span class="i18n en">Choosing Appropriate Storage Types</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-55"><div class="n">55</div><div><div class="labels"><span class="badge d">D3</span><span class="badge m">M1</span><span class="badge s">S3</span></div><div class="summary"><span class="i18n-block fr">Moindre privilège</span><span class="i18n-block en">Least privilege</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Appliquer la posture de sécurité et concevoir un accès sécurisé</span><span class="i18n en">Enforcing Security Posture and Designing for Secure Access</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-56"><div class="n">56</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Vertex AI</span><span class="i18n-block en">Vertex AI</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-57"><div class="n">57</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Cloud Load Balancing · Migration</span><span class="i18n-block en">Cloud Load Balancing · Migration</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-58"><div class="n">58</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Chiffrement</span><span class="i18n-block en">Encryption</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-59"><div class="n">59</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">BigQuery</span><span class="i18n-block en">BigQuery</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a><a class="overview-card" href="mock-06-designing.html#question-60"><div class="n">60</div><div><div class="labels"><span class="badge d">D1</span><span class="badge m">M1</span><span class="badge s">S4</span></div><div class="summary"><span class="i18n-block fr">Cloud Spanner · Multi-région</span><span class="i18n-block en">Cloud Spanner · Multi-region</span></div><div class="muted" style="margin-top:5px"><span class="i18n fr">Intégration avec des systèmes externes et déplacement de données</span><span class="i18n en">Integration with External Systems and Moving Data</span></div></div></a></div>
+</main>
+<script>
+const UI_I18N = {"en": {"home": "← Main menu", "mocks_home": "← Mock list", "original": "Original site ↗", "show_answers": "Show answers", "hide_answers": "Hide answers", "overview": "Overview", "open_quiz": "Open quiz", "open_mocks": "Open mocks", "source": "Source", "domain": "Domain", "module": "Module", "all_domains": "All domains", "all_modules": "All modules", "reset": "Reset", "question": "Question", "correct": "Correct answer", "reference": "Reference", "read": "🔊 Read", "stop": "■ Stop", "tts_unsupported": "Speech synthesis is not supported in this browser.", "answers_word": "Answers", "result_one": "question", "result_many": "questions", "distribution": "Question distribution by domain", "overview_hint": "questions · click a card to open it in the quiz", "labels_hint": "D/M/S labels", "lang_fr": "FR", "lang_en": "EN", "portal_title": "GCP PCA — Mock Exam Portal", "portal_lead": "Choose a local bank or open its original site. Every question is labeled Domain / Module / Section (e.g. D1/M3/S1) with filters in the quizzes.", "gcppca_meta": "Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data and Migration.", "cloudjobs_meta": "Choices, correct answer and explanation.", "mastery_meta": "Complete free exam with detailed explanations.", "examcert_count": "External application", "examcert_meta": "Full questions are served by the app/mobile and are not available on the public page.", "open_site": "Open site", "gcppca_index_sub": "720 questions · each mock can be filtered by Domain / Module", "filtered_by": "each mock is filtered by Domain / Module"}, "fr": {"home": "← Menu principal", "mocks_home": "← Liste des mocks", "original": "Site original ↗", "show_answers": "Afficher les réponses", "hide_answers": "Masquer les réponses", "overview": "Vue d’ensemble", "open_quiz": "Ouvrir le quiz", "open_mocks": "Ouvrir les mocks", "source": "Source", "domain": "Domaine", "module": "Module", "all_domains": "Tous les domaines", "all_modules": "Tous les modules", "reset": "Réinitialiser", "question": "Question", "correct": "Bonne réponse", "reference": "Référence", "read": "🔊 Lire", "stop": "■ Arrêter", "tts_unsupported": "La synthèse vocale n’est pas prise en charge par ce navigateur.", "answers_word": "Réponses", "result_one": "question", "result_many": "questions", "distribution": "Répartition des questions par domaine", "overview_hint": "questions · cliquez sur une question pour l’ouvrir dans le quiz", "labels_hint": "labels D/M/S", "lang_fr": "FR", "lang_en": "EN", "portal_title": "GCP PCA — Portail des Mock Exams", "portal_lead": "Choisissez une banque locale ou ouvrez directement son site d’origine. Chaque question est labellisée Domaine / Module / Section (ex. D1/M3/S1) avec filtres dans les quizzes.", "gcppca_meta": "Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data et Migration.", "cloudjobs_meta": "Choix, bonne réponse et explication.", "mastery_meta": "Examen gratuit complet avec explications détaillées.", "examcert_count": "Application externe", "examcert_meta": "Les questions complètes sont servies par l’application/mobile et ne figurent pas dans la page publique.", "open_site": "Ouvrir le site", "gcppca_index_sub": "720 questions · chaque mock est filtré par Domaine / Module", "filtered_by": "chaque mock est filtré par Domaine / Module"}};
+const LANG_KEY = 'pcaQuizLang';
+function currentLang(){
+  const stored = localStorage.getItem(LANG_KEY);
+  if(stored==='en'||stored==='fr') return stored;
+  return (navigator.language||'').toLowerCase().startsWith('fr') ? 'fr' : 'en';
+}
+function t(key){
+  const lang = document.body.classList.contains('lang-en') ? 'en' : 'fr';
+  return (UI_I18N[lang]&&UI_I18N[lang][key]) || (UI_I18N.fr&&UI_I18N.fr[key]) || key;
+}
+function refreshSelectLabels(lang){
+  document.querySelectorAll('select option[data-fr][data-en]').forEach(opt=>{
+    opt.textContent = opt.getAttribute('data-'+lang) || opt.textContent;
+  });
+}
+function setLang(lang){
+  if(lang!=='en'&&lang!=='fr') lang='fr';
+  document.body.classList.remove('lang-fr','lang-en');
+  document.body.classList.add('lang-'+lang);
+  document.documentElement.lang = lang;
+  localStorage.setItem(LANG_KEY, lang);
+  document.querySelectorAll('.lang-switch button').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.lang===lang);
+  });
+  refreshSelectLabels(lang);
+  document.querySelectorAll('.tts').forEach(btn=>{
+    if(!btn.classList.contains('speaking')){
+      btn.dataset.label = t('read');
+      btn.textContent = t('read');
+    }
+  });
+  applyFilters();
+  if(window.speechSynthesis) speechSynthesis.cancel();
+  resetTtsButton();
+}
+function all(v){document.querySelectorAll('.q').forEach(q=>q.classList.toggle('show',v))}
+let activeTtsButton=null;
+function resetTtsButton(){
+  if(activeTtsButton){
+    activeTtsButton.classList.remove('speaking');
+    activeTtsButton.textContent=activeTtsButton.dataset.label || t('read');
+    activeTtsButton=null;
+  }
+}
+function speakQuestion(event,button){
+  event.stopPropagation();
+  if(!('speechSynthesis' in window)){
+    alert(t('tts_unsupported'));
+    return;
+  }
+  if(activeTtsButton===button && speechSynthesis.speaking){
+    speechSynthesis.cancel();
+    resetTtsButton();
+    return;
+  }
+  speechSynthesis.cancel();
+  resetTtsButton();
+  const lang = document.body.classList.contains('lang-en') ? 'en' : 'fr';
+  const card=button.closest('.q');
+  const statementNode = card.querySelector('.qt-text .i18n-block.'+lang) || card.querySelector('.qt-text');
+  const statement=(statementNode?statementNode.textContent:'').trim();
+  const answers=[...card.querySelectorAll('.opts li')].map(li=>{
+    const txtNode = li.querySelector('.i18n-block.'+lang) || li;
+    return li.dataset.l+'. '+txtNode.textContent.trim();
+  }).join('. ');
+  const utterance=new SpeechSynthesisUtterance(statement+'. '+t('answers_word')+'. '+answers);
+  utterance.lang = lang==='fr' ? 'fr-FR' : 'en-US';
+  utterance.onend=resetTtsButton;
+  utterance.onerror=resetTtsButton;
+  activeTtsButton=button;
+  button.classList.add('speaking');
+  button.dataset.label = t('read');
+  button.textContent=t('stop');
+  speechSynthesis.speak(utterance);
+}
+function applyFilters(){
+  const d=document.getElementById('filterDomain');
+  const m=document.getElementById('filterModule');
+  if(!d||!m) return;
+  const dv=d.value;
+  const mv=m.value;
+  let n=0;
+  document.querySelectorAll('.q').forEach(q=>{
+    const okD=!dv||q.dataset.domain===dv;
+    const okM=!mv||q.dataset.module===mv;
+    const show=okD&&okM;
+    q.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  const el=document.getElementById('resultCount');
+  if(el) el.textContent=n+' '+(n>1?t('result_many'):t('result_one'));
+}
+function syncModules(){
+  const d=document.getElementById('filterDomain');
+  const sel=document.getElementById('filterModule');
+  if(!d||!sel) return;
+  const cur=sel.value;
+  [...sel.options].forEach((o,i)=>{
+    if(i===0){o.hidden=false;return;}
+    o.hidden=!!(d.value&&o.dataset.domain!==d.value);
+  });
+  if(cur && sel.selectedOptions[0] && sel.selectedOptions[0].hidden) sel.value='';
+  applyFilters();
+}
+function resetFilters(){
+  const d=document.getElementById('filterDomain');
+  const m=document.getElementById('filterModule');
+  if(d) d.value='';
+  if(m) m.value='';
+  syncModules();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  setLang(currentLang());
+  document.querySelectorAll('.q').forEach(q=>q.addEventListener('click',e=>{
+    if(e.target.closest('a,select,button,label'))return;
+    q.classList.toggle('show');
+  }));
+  const fd=document.getElementById('filterDomain');
+  const fm=document.getElementById('filterModule');
+  if(fd) fd.addEventListener('change',syncModules);
+  if(fm) fm.addEventListener('change',applyFilters);
+  applyFilters();
+});
+</script>
+</body></html>
