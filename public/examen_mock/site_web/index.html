@@ -154,7 +154,10 @@ body{
   font-size:.95rem;
   line-height:1.6;
   color:var(--gcp-grey-900);
+  cursor:pointer;
 }
+.opts li:hover{border-color:var(--gcp-blue);background:var(--gcp-blue-soft)}
+.opts li.picked-wrong{border-color:var(--gcp-red);background:var(--gcp-red-soft)}
 .opts li:before{
   content:attr(data-l);
   position:absolute;left:10px;top:50%;transform:translateY(-50%);
@@ -165,8 +168,10 @@ body{
   font-size:.72rem;font-weight:700;
   color:var(--gcp-grey-700);
 }
-.show .correct{background:var(--gcp-green-soft);border-color:var(--gcp-green)}
-.show .correct:before{background:var(--gcp-green);color:#fff}
+.show .correct,
+.opts li.correct.revealed{background:var(--gcp-green-soft);border-color:var(--gcp-green)}
+.show .correct:before,
+.opts li.correct.revealed:before{background:var(--gcp-green);color:#fff}
 .ans{
   display:none;margin-top:12px;padding:12px 14px;
   border-left:4px solid var(--gcp-green);
@@ -192,6 +197,7 @@ body{
 .card-link:hover{text-decoration:underline}
 .overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;overflow:visible}
 .overview-card{display:flex;gap:12px;text-decoration:none;color:inherit;padding:16px;min-height:118px;transition:border-color .15s,box-shadow .15s;overflow:visible;position:relative}
+.overview-card.hidden{display:none}
 .overview-card:hover{border-color:var(--gcp-blue);box-shadow:var(--shadow-hover)}
 .overview-card .n{flex:0 0 auto}
 .overview-card .summary{
@@ -277,6 +283,35 @@ body.lang-fr .i18n-block.en,body.lang-en .i18n-block.fr{display:none}
 .button:hover{background:var(--gcp-blue-dark)}
 .button.secondary{background:var(--gcp-blue-soft);color:var(--gcp-blue-dark)}
 .button.secondary:hover{background:#D2E3FC}
+.annex-toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.annex-toc a{
+  display:inline-block;padding:6px 10px;border-radius:999px;
+  background:var(--gcp-blue-soft);color:var(--gcp-blue-dark);
+  text-decoration:none;font-size:.8rem;font-weight:700;
+}
+.annex-toc a:hover{background:#D2E3FC}
+.annex-section{margin:0 0 28px}
+.annex-section.hidden{display:none}
+.annex-section h2{
+  margin:0 0 12px;font-size:1.05rem;font-weight:700;
+  color:var(--gcp-grey-900);font-family:var(--font-ui);
+  padding-bottom:8px;border-bottom:2px solid var(--gcp-blue);
+}
+.annex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.annex-card{
+  background:var(--gcp-surface);border:1px solid var(--gcp-grey-200);
+  border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:10px;
+}
+.annex-card.hidden{display:none}
+.annex-card h3{margin:0;font-size:.98rem;font-weight:700;color:var(--gcp-blue-dark);font-family:var(--font-ui)}
+.annex-card .def{font-family:var(--font-read);font-size:.9rem;line-height:1.55;color:var(--gcp-grey-900);flex:1}
+.annex-card .docs{
+  margin-top:auto;padding-top:10px;border-top:1px solid var(--gcp-grey-200);
+  font-family:var(--font-ui);font-size:.8rem;font-weight:700;
+}
+.annex-card .docs a{color:var(--gcp-blue-dark);text-decoration:none;word-break:break-all}
+.annex-card .docs a:hover{text-decoration:underline}
 @media(max-width:640px){
   .wrap{padding:20px 12px 72px}
   .qt{flex-direction:column}
@@ -323,6 +358,14 @@ body.lang-fr .i18n-block.en,body.lang-en .i18n-block.fr{display:none}
         </div>
       </article>
       <article class="portal-card">
+        <h2><span class="i18n fr">Annexe services GCP</span><span class="i18n en">GCP services annex</span></h2>
+        <div class="count">55 <span class="i18n fr">entrées</span><span class="i18n en">entries</span></div>
+        <div class="meta muted"><span class="i18n-block fr">Définitions courtes pour réviser avec les mocks. Chaque entrée renvoie vers la documentation officielle Google Cloud.</span><span class="i18n-block en">Short definitions to revise alongside the mocks. Each entry links to the official Google Cloud documentation.</span></div>
+        <div class="actions">
+          <a class="button" href="annex-gcp-services.html"><span class="i18n fr">Annexe services GCP</span><span class="i18n en">GCP services annex</span></a>
+        </div>
+      </article>
+      <article class="portal-card">
         <h2>ExamCert</h2>
         <div class="count external"><span class="i18n fr">Application externe</span><span class="i18n en">External application</span></div>
         <div class="meta muted"><span class="i18n-block fr">Les questions complètes sont servies par l’application/mobile et ne figurent pas dans la page publique.</span><span class="i18n-block en">Full questions are served by the app/mobile and are not available on the public page.</span></div>
@@ -333,7 +376,7 @@ body.lang-fr .i18n-block.en,body.lang-en .i18n-block.fr{display:none}
     </div>
   </main>
   <script>
-const UI_I18N = {"en": {"home": "← Main menu", "mocks_home": "← Mock list", "original": "Original site ↗", "show_answers": "Show answers", "hide_answers": "Hide answers", "overview": "Overview", "open_quiz": "Open quiz", "open_mocks": "Open mocks", "source": "Source", "domain": "Domain", "module": "Module", "all_domains": "All domains", "all_modules": "All modules", "reset": "Reset", "question": "Question", "correct": "Correct answer", "reference": "Reference", "read": "🔊 Read", "stop": "■ Stop", "tts_unsupported": "Speech synthesis is not supported in this browser.", "answers_word": "Answers", "result_one": "question", "result_many": "questions", "distribution": "Question distribution by domain", "overview_hint": "questions · click a card to open it in the quiz", "labels_hint": "D/M/S labels", "lang_fr": "FR", "lang_en": "EN", "portal_title": "GCP PCA — Mock Exam Portal", "portal_lead": "Choose a local bank or open its original site. Every question is labeled Domain / Module / Section (e.g. D1/M3/S1) with filters in the quizzes.", "gcppca_meta": "Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data and Migration.", "cloudjobs_meta": "Choices, correct answer and explanation.", "mastery_meta": "Complete free exam with detailed explanations.", "examcert_count": "External application", "examcert_meta": "Full questions are served by the app/mobile and are not available on the public page.", "open_site": "Open site", "gcppca_index_sub": "720 questions · each mock can be filtered by Domain / Module", "filtered_by": "each mock is filtered by Domain / Module"}, "fr": {"home": "← Menu principal", "mocks_home": "← Liste des mocks", "original": "Site original ↗", "show_answers": "Afficher les réponses", "hide_answers": "Masquer les réponses", "overview": "Vue d’ensemble", "open_quiz": "Ouvrir le quiz", "open_mocks": "Ouvrir les mocks", "source": "Source", "domain": "Domaine", "module": "Module", "all_domains": "Tous les domaines", "all_modules": "Tous les modules", "reset": "Réinitialiser", "question": "Question", "correct": "Bonne réponse", "reference": "Référence", "read": "🔊 Lire", "stop": "■ Arrêter", "tts_unsupported": "La synthèse vocale n’est pas prise en charge par ce navigateur.", "answers_word": "Réponses", "result_one": "question", "result_many": "questions", "distribution": "Répartition des questions par domaine", "overview_hint": "questions · cliquez sur une question pour l’ouvrir dans le quiz", "labels_hint": "labels D/M/S", "lang_fr": "FR", "lang_en": "EN", "portal_title": "GCP PCA — Portail des Mock Exams", "portal_lead": "Choisissez une banque locale ou ouvrez directement son site d’origine. Chaque question est labellisée Domaine / Module / Section (ex. D1/M3/S1) avec filtres dans les quizzes.", "gcppca_meta": "Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data et Migration.", "cloudjobs_meta": "Choix, bonne réponse et explication.", "mastery_meta": "Examen gratuit complet avec explications détaillées.", "examcert_count": "Application externe", "examcert_meta": "Les questions complètes sont servies par l’application/mobile et ne figurent pas dans la page publique.", "open_site": "Ouvrir le site", "gcppca_index_sub": "720 questions · chaque mock est filtré par Domaine / Module", "filtered_by": "chaque mock est filtré par Domaine / Module"}};
+const UI_I18N = {"en": {"home": "← Main menu", "mocks_home": "← Mock list", "original": "Original site ↗", "show_answers": "Show answers", "hide_answers": "Hide answers", "overview": "Overview", "open_quiz": "Open quiz", "open_mocks": "Open mocks", "source": "Source", "domain": "Domain", "module": "Module", "all_domains": "All domains", "all_modules": "All modules", "service": "Service", "all_services": "All GCP services", "reset": "Reset", "question": "Question", "correct": "Correct answer", "reference": "Reference", "read": "🔊 Read", "stop": "■ Stop", "tts_unsupported": "Speech synthesis is not supported in this browser.", "answers_word": "Answers", "result_one": "question", "result_many": "questions", "distribution": "Question distribution by domain", "overview_hint": "questions · click a card to open it in the quiz", "labels_hint": "D/M/S labels", "lang_fr": "FR", "lang_en": "EN", "portal_title": "GCP PCA — Mock Exam Portal", "portal_lead": "Choose a local bank or open its original site. Every question is labeled Domain / Module / Section (e.g. D1/M3/S1) with filters in the quizzes.", "gcppca_meta": "Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data and Migration.", "cloudjobs_meta": "Choices, correct answer and explanation.", "mastery_meta": "Complete free exam with detailed explanations.", "examcert_count": "External application", "examcert_meta": "Full questions are served by the app/mobile and are not available on the public page.", "open_site": "Open site", "gcppca_index_sub": "720 questions · each mock can be filtered by Domain / Module", "filtered_by": "each mock is filtered by Domain / Module", "annex": "GCP services annex", "annex_title": "Annex — GCP services & concepts", "annex_lead": "Short definitions to revise alongside the mocks. Each entry links to the official Google Cloud documentation.", "official_docs": "Official documentation", "annex_search": "Filter services", "annex_all": "All categories", "category": "Category"}, "fr": {"home": "← Menu principal", "mocks_home": "← Liste des mocks", "original": "Site original ↗", "show_answers": "Afficher les réponses", "hide_answers": "Masquer les réponses", "overview": "Vue d’ensemble", "open_quiz": "Ouvrir le quiz", "open_mocks": "Ouvrir les mocks", "source": "Source", "domain": "Domaine", "module": "Module", "all_domains": "Tous les domaines", "all_modules": "Tous les modules", "service": "Service", "all_services": "Tous les services GCP", "reset": "Réinitialiser", "question": "Question", "correct": "Bonne réponse", "reference": "Référence", "read": "🔊 Lire", "stop": "■ Arrêter", "tts_unsupported": "La synthèse vocale n’est pas prise en charge par ce navigateur.", "answers_word": "Réponses", "result_one": "question", "result_many": "questions", "distribution": "Répartition des questions par domaine", "overview_hint": "questions · cliquez sur une question pour l’ouvrir dans le quiz", "labels_hint": "labels D/M/S", "lang_fr": "FR", "lang_en": "EN", "portal_title": "GCP PCA — Portail des Mock Exams", "portal_lead": "Choisissez une banque locale ou ouvrez directement son site d’origine. Chaque question est labellisée Domaine / Module / Section (ex. D1/M3/S1) avec filtres dans les quizzes.", "gcppca_meta": "Healthcare, Gaming, Networking, Security, Reliability, Designing, Managing, Analyzing, Cost, GenAI, Data et Migration.", "cloudjobs_meta": "Choix, bonne réponse et explication.", "mastery_meta": "Examen gratuit complet avec explications détaillées.", "examcert_count": "Application externe", "examcert_meta": "Les questions complètes sont servies par l’application/mobile et ne figurent pas dans la page publique.", "open_site": "Ouvrir le site", "gcppca_index_sub": "720 questions · chaque mock est filtré par Domaine / Module", "filtered_by": "chaque mock est filtré par Domaine / Module", "annex": "Annexe services GCP", "annex_title": "Annexe — Services et concepts GCP", "annex_lead": "Définitions courtes pour réviser avec les mocks. Chaque entrée renvoie vers la documentation officielle Google Cloud.", "official_docs": "Documentation officielle", "annex_search": "Filtrer les services", "annex_all": "Toutes les catégories", "category": "Catégorie"}};
 const LANG_KEY = 'pcaQuizLang';
 function currentLang(){
   const stored = localStorage.getItem(LANG_KEY);
@@ -366,6 +409,8 @@ function setLang(lang){
     }
   });
   applyFilters();
+  applyOverviewFilters();
+  applyAnnexFilters();
   if(window.speechSynthesis) speechSynthesis.cancel();
   resetTtsButton();
 }
@@ -445,17 +490,84 @@ function resetFilters(){
   if(m) m.value='';
   syncModules();
 }
+function applyOverviewFilters(){
+  const sel=document.getElementById('filterService');
+  if(!sel) return;
+  const service=sel.value;
+  let n=0;
+  document.querySelectorAll('.overview-card').forEach(card=>{
+    const services=(card.dataset.services||'').split('|').filter(Boolean);
+    const show=!service||services.includes(service);
+    card.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  const el=document.getElementById('overviewResultCount');
+  if(el) el.textContent=n+' '+(n>1?t('result_many'):t('result_one'));
+}
+function resetOverviewFilters(){
+  const sel=document.getElementById('filterService');
+  if(sel) sel.value='';
+  applyOverviewFilters();
+}
+function applyAnnexFilters(){
+  const q=(document.getElementById('annexSearch')||{}).value||'';
+  const cat=(document.getElementById('annexCategory')||{}).value||'';
+  const needle=q.trim().toLowerCase();
+  let n=0;
+  document.querySelectorAll('.annex-card').forEach(card=>{
+    const hay=((card.dataset.name||'')+' '+(card.dataset.nameFr||'')+' '+(card.dataset.category||'')).toLowerCase();
+    const okQ=!needle||hay.includes(needle);
+    const okC=!cat||card.dataset.category===cat;
+    const show=okQ&&okC;
+    card.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  document.querySelectorAll('.annex-section').forEach(sec=>{
+    const visible=[...sec.querySelectorAll('.annex-card')].some(c=>!c.classList.contains('hidden'));
+    sec.classList.toggle('hidden',!visible);
+  });
+  const el=document.getElementById('annexResultCount');
+  if(el) el.textContent=n+' '+(n>1?t('result_many'):t('result_one'));
+}
+function resetAnnexFilters(){
+  const s=document.getElementById('annexSearch');
+  const c=document.getElementById('annexCategory');
+  if(s) s.value='';
+  if(c) c.value='';
+  applyAnnexFilters();
+}
 document.addEventListener('DOMContentLoaded',()=>{
   setLang(currentLang());
-  document.querySelectorAll('.q').forEach(q=>q.addEventListener('click',e=>{
-    if(e.target.closest('a,select,button,label'))return;
-    q.classList.toggle('show');
-  }));
+  document.querySelectorAll('.q').forEach(q=>{
+    q.querySelectorAll('.opts li').forEach(li=>{
+      li.addEventListener('click',e=>{
+        e.stopPropagation();
+        if(e.target.closest('a,button,.svc')) return;
+        if(li.classList.contains('correct')){
+          li.classList.add('revealed');
+          const corrects=[...q.querySelectorAll('.opts li.correct')];
+          if(corrects.length && corrects.every(c=>c.classList.contains('revealed'))){
+            q.classList.add('show');
+          }
+        } else {
+          li.classList.add('picked-wrong');
+        }
+      });
+    });
+  });
   const fd=document.getElementById('filterDomain');
   const fm=document.getElementById('filterModule');
   if(fd) fd.addEventListener('change',syncModules);
   if(fm) fm.addEventListener('change',applyFilters);
+  const fs=document.getElementById('filterService');
+  if(fs) fs.addEventListener('change',applyOverviewFilters);
+  const as=document.getElementById('annexSearch');
+  const ac=document.getElementById('annexCategory');
+  if(as) as.addEventListener('input',applyAnnexFilters);
+  if(ac) ac.addEventListener('change',applyAnnexFilters);
   applyFilters();
+  applyOverviewFilters();
+  applyAnnexFilters();
 });
 </script>
 </body>

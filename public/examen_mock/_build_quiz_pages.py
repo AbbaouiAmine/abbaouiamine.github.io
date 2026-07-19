@@ -27,6 +27,8 @@ UI = {
         "module": "Module",
         "all_domains": "All domains",
         "all_modules": "All modules",
+        "service": "Service",
+        "all_services": "All GCP services",
         "reset": "Reset",
         "question": "Question",
         "correct": "Correct answer",
@@ -52,6 +54,13 @@ UI = {
         "open_site": "Open site",
         "gcppca_index_sub": "720 questions · each mock can be filtered by Domain / Module",
         "filtered_by": "each mock is filtered by Domain / Module",
+        "annex": "GCP services annex",
+        "annex_title": "Annex — GCP services & concepts",
+        "annex_lead": "Short definitions to revise alongside the mocks. Each entry links to the official Google Cloud documentation.",
+        "official_docs": "Official documentation",
+        "annex_search": "Filter services",
+        "annex_all": "All categories",
+        "category": "Category",
     },
     "fr": {
         "home": "← Menu principal",
@@ -67,6 +76,8 @@ UI = {
         "module": "Module",
         "all_domains": "Tous les domaines",
         "all_modules": "Tous les modules",
+        "service": "Service",
+        "all_services": "Tous les services GCP",
         "reset": "Réinitialiser",
         "question": "Question",
         "correct": "Bonne réponse",
@@ -92,6 +103,13 @@ UI = {
         "open_site": "Ouvrir le site",
         "gcppca_index_sub": "720 questions · chaque mock est filtré par Domaine / Module",
         "filtered_by": "chaque mock est filtré par Domaine / Module",
+        "annex": "Annexe services GCP",
+        "annex_title": "Annexe — Services et concepts GCP",
+        "annex_lead": "Définitions courtes pour réviser avec les mocks. Chaque entrée renvoie vers la documentation officielle Google Cloud.",
+        "official_docs": "Documentation officielle",
+        "annex_search": "Filtrer les services",
+        "annex_all": "Toutes les catégories",
+        "category": "Catégorie",
     },
 }
 
@@ -248,7 +266,10 @@ body{
   font-size:.95rem;
   line-height:1.6;
   color:var(--gcp-grey-900);
+  cursor:pointer;
 }
+.opts li:hover{border-color:var(--gcp-blue);background:var(--gcp-blue-soft)}
+.opts li.picked-wrong{border-color:var(--gcp-red);background:var(--gcp-red-soft)}
 .opts li:before{
   content:attr(data-l);
   position:absolute;left:10px;top:50%;transform:translateY(-50%);
@@ -259,8 +280,10 @@ body{
   font-size:.72rem;font-weight:700;
   color:var(--gcp-grey-700);
 }
-.show .correct{background:var(--gcp-green-soft);border-color:var(--gcp-green)}
-.show .correct:before{background:var(--gcp-green);color:#fff}
+.show .correct,
+.opts li.correct.revealed{background:var(--gcp-green-soft);border-color:var(--gcp-green)}
+.show .correct:before,
+.opts li.correct.revealed:before{background:var(--gcp-green);color:#fff}
 .ans{
   display:none;margin-top:12px;padding:12px 14px;
   border-left:4px solid var(--gcp-green);
@@ -286,6 +309,7 @@ body{
 .card-link:hover{text-decoration:underline}
 .overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;overflow:visible}
 .overview-card{display:flex;gap:12px;text-decoration:none;color:inherit;padding:16px;min-height:118px;transition:border-color .15s,box-shadow .15s;overflow:visible;position:relative}
+.overview-card.hidden{display:none}
 .overview-card:hover{border-color:var(--gcp-blue);box-shadow:var(--shadow-hover)}
 .overview-card .n{flex:0 0 auto}
 .overview-card .summary{
@@ -371,6 +395,35 @@ body.lang-fr .i18n-block.en,body.lang-en .i18n-block.fr{display:none}
 .button:hover{background:var(--gcp-blue-dark)}
 .button.secondary{background:var(--gcp-blue-soft);color:var(--gcp-blue-dark)}
 .button.secondary:hover{background:#D2E3FC}
+.annex-toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.annex-toc a{
+  display:inline-block;padding:6px 10px;border-radius:999px;
+  background:var(--gcp-blue-soft);color:var(--gcp-blue-dark);
+  text-decoration:none;font-size:.8rem;font-weight:700;
+}
+.annex-toc a:hover{background:#D2E3FC}
+.annex-section{margin:0 0 28px}
+.annex-section.hidden{display:none}
+.annex-section h2{
+  margin:0 0 12px;font-size:1.05rem;font-weight:700;
+  color:var(--gcp-grey-900);font-family:var(--font-ui);
+  padding-bottom:8px;border-bottom:2px solid var(--gcp-blue);
+}
+.annex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.annex-card{
+  background:var(--gcp-surface);border:1px solid var(--gcp-grey-200);
+  border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:10px;
+}
+.annex-card.hidden{display:none}
+.annex-card h3{margin:0;font-size:.98rem;font-weight:700;color:var(--gcp-blue-dark);font-family:var(--font-ui)}
+.annex-card .def{font-family:var(--font-read);font-size:.9rem;line-height:1.55;color:var(--gcp-grey-900);flex:1}
+.annex-card .docs{
+  margin-top:auto;padding-top:10px;border-top:1px solid var(--gcp-grey-200);
+  font-family:var(--font-ui);font-size:.8rem;font-weight:700;
+}
+.annex-card .docs a{color:var(--gcp-blue-dark);text-decoration:none;word-break:break-all}
+.annex-card .docs a:hover{text-decoration:underline}
 @media(max-width:640px){
   .wrap{padding:20px 12px 72px}
   .qt{flex-direction:column}
@@ -413,6 +466,8 @@ function setLang(lang){
     }
   });
   applyFilters();
+  applyOverviewFilters();
+  applyAnnexFilters();
   if(window.speechSynthesis) speechSynthesis.cancel();
   resetTtsButton();
 }
@@ -492,17 +547,84 @@ function resetFilters(){
   if(m) m.value='';
   syncModules();
 }
+function applyOverviewFilters(){
+  const sel=document.getElementById('filterService');
+  if(!sel) return;
+  const service=sel.value;
+  let n=0;
+  document.querySelectorAll('.overview-card').forEach(card=>{
+    const services=(card.dataset.services||'').split('|').filter(Boolean);
+    const show=!service||services.includes(service);
+    card.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  const el=document.getElementById('overviewResultCount');
+  if(el) el.textContent=n+' '+(n>1?t('result_many'):t('result_one'));
+}
+function resetOverviewFilters(){
+  const sel=document.getElementById('filterService');
+  if(sel) sel.value='';
+  applyOverviewFilters();
+}
+function applyAnnexFilters(){
+  const q=(document.getElementById('annexSearch')||{}).value||'';
+  const cat=(document.getElementById('annexCategory')||{}).value||'';
+  const needle=q.trim().toLowerCase();
+  let n=0;
+  document.querySelectorAll('.annex-card').forEach(card=>{
+    const hay=((card.dataset.name||'')+' '+(card.dataset.nameFr||'')+' '+(card.dataset.category||'')).toLowerCase();
+    const okQ=!needle||hay.includes(needle);
+    const okC=!cat||card.dataset.category===cat;
+    const show=okQ&&okC;
+    card.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  document.querySelectorAll('.annex-section').forEach(sec=>{
+    const visible=[...sec.querySelectorAll('.annex-card')].some(c=>!c.classList.contains('hidden'));
+    sec.classList.toggle('hidden',!visible);
+  });
+  const el=document.getElementById('annexResultCount');
+  if(el) el.textContent=n+' '+(n>1?t('result_many'):t('result_one'));
+}
+function resetAnnexFilters(){
+  const s=document.getElementById('annexSearch');
+  const c=document.getElementById('annexCategory');
+  if(s) s.value='';
+  if(c) c.value='';
+  applyAnnexFilters();
+}
 document.addEventListener('DOMContentLoaded',()=>{
   setLang(currentLang());
-  document.querySelectorAll('.q').forEach(q=>q.addEventListener('click',e=>{
-    if(e.target.closest('a,select,button,label'))return;
-    q.classList.toggle('show');
-  }));
+  document.querySelectorAll('.q').forEach(q=>{
+    q.querySelectorAll('.opts li').forEach(li=>{
+      li.addEventListener('click',e=>{
+        e.stopPropagation();
+        if(e.target.closest('a,button,.svc')) return;
+        if(li.classList.contains('correct')){
+          li.classList.add('revealed');
+          const corrects=[...q.querySelectorAll('.opts li.correct')];
+          if(corrects.length && corrects.every(c=>c.classList.contains('revealed'))){
+            q.classList.add('show');
+          }
+        } else {
+          li.classList.add('picked-wrong');
+        }
+      });
+    });
+  });
   const fd=document.getElementById('filterDomain');
   const fm=document.getElementById('filterModule');
   if(fd) fd.addEventListener('change',syncModules);
   if(fm) fm.addEventListener('change',applyFilters);
+  const fs=document.getElementById('filterService');
+  if(fs) fs.addEventListener('change',applyOverviewFilters);
+  const as=document.getElementById('annexSearch');
+  const ac=document.getElementById('annexCategory');
+  if(as) as.addEventListener('input',applyAnnexFilters);
+  if(ac) ac.addEventListener('change',applyAnnexFilters);
   applyFilters();
+  applyOverviewFilters();
+  applyAnnexFilters();
 });
 """.replace("__UI_JSON__", json.dumps(UI, ensure_ascii=False))
 
@@ -606,6 +728,25 @@ def filter_bar() -> str:
     <select id="filterModule">{module_options()}</select>
     <button type="button" onclick="resetFilters()">{bi(UI["fr"]["reset"], UI["en"]["reset"])}</button>
     <span id="resultCount"></span>
+  </div>
+</div>
+"""
+
+
+def overview_service_filter_bar(services: list[str]) -> str:
+    opts = [
+        option_bi("", UI["fr"]["all_services"], UI["en"]["all_services"])
+    ]
+    for name in services:
+        label_fr = CONCEPT_FR.get(name, name)
+        opts.append(option_bi(name, label_fr, name))
+    return f"""
+<div class="filters">
+  <div class="row">
+    <label for="filterService">{bi(UI["fr"]["service"], UI["en"]["service"])}</label>
+    <select id="filterService">{''.join(opts)}</select>
+    <button type="button" onclick="resetOverviewFilters()">{bi(UI["fr"]["reset"], UI["en"]["reset"])}</button>
+    <span id="overviewResultCount"></span>
   </div>
 </div>
 """
@@ -927,6 +1068,229 @@ SERVICE_DEFS = {
     },
 }
 
+# Ambiguous labels: keep for annex/overview chips, skip in-text linkify.
+LINKIFY_DENYLIST = frozenset({"HA", "Migration", "Encryption"})
+_linkify_pattern: re.Pattern[str] | None = None
+_linkify_alias_lc: dict[str, str] | None = None
+
+
+def _ensure_linkify_index() -> tuple[re.Pattern[str], dict[str, str]]:
+    """Build longest-match regex + lowercased alias → SERVICE_DEFS key."""
+    global _linkify_pattern, _linkify_alias_lc
+    if _linkify_pattern is not None and _linkify_alias_lc is not None:
+        return _linkify_pattern, _linkify_alias_lc
+    aliases: dict[str, str] = {}
+    for key in SERVICE_DEFS:
+        if key in LINKIFY_DENYLIST:
+            continue
+        aliases[key] = key
+        fr_label = CONCEPT_FR.get(key)
+        if fr_label and fr_label not in LINKIFY_DENYLIST:
+            aliases[fr_label] = key
+    terms = sorted(aliases.keys(), key=len, reverse=True)
+    _linkify_alias_lc = {a.lower(): k for a, k in aliases.items()}
+    _linkify_pattern = re.compile(
+        r"(?<![A-Za-z0-9])("
+        + "|".join(re.escape(t) for t in terms)
+        + r")(?![A-Za-z0-9])",
+        re.IGNORECASE,
+    )
+    return _linkify_pattern, _linkify_alias_lc
+
+
+def linkify_service_terms(text: str) -> str:
+    """Escape text and wrap known GCP terms with .svc tooltip spans."""
+    if not text:
+        return ""
+    pattern, alias_lc = _ensure_linkify_index()
+    parts: list[str] = []
+    last = 0
+    for m in pattern.finditer(text):
+        parts.append(esc(text[last : m.start()]))
+        matched = m.group(1)
+        canon = alias_lc.get(matched.lower())
+        if not canon:
+            parts.append(esc(matched))
+        else:
+            defs = SERVICE_DEFS[canon]
+            parts.append(
+                f'<span class="svc" tabindex="0"'
+                f' data-tip-en="{esc(defs["en"])}"'
+                f' data-tip-fr="{esc(defs["fr"])}">'
+                f"{esc(matched)}</span>"
+            )
+        last = m.end()
+    parts.append(esc(text[last:]))
+    return "".join(parts)
+
+
+def bi_linked(text_fr: str, text_en: str, block: bool = False) -> str:
+    """Bilingual span with service-term tooltips inside each language block."""
+    cls = "i18n-block" if block else "i18n"
+    return (
+        f'<span class="{cls} fr">{linkify_service_terms(text_fr)}</span>'
+        f'<span class="{cls} en">{linkify_service_terms(text_en)}</span>'
+    )
+
+
+# Official documentation URLs for the annex (PCA revision companion).
+SERVICE_DOCS = {
+    "VPC Service Controls": "https://cloud.google.com/vpc-service-controls/docs",
+    "Shared VPC": "https://cloud.google.com/vpc/docs/shared-vpc",
+    "Cloud Load Balancing": "https://cloud.google.com/load-balancing/docs",
+    "Cloud Interconnect": "https://cloud.google.com/network-connectivity/docs/interconnect",
+    "Cloud VPN": "https://cloud.google.com/network-connectivity/docs/vpn",
+    "Cloud Armor": "https://cloud.google.com/armor/docs",
+    "Cloud NAT": "https://cloud.google.com/nat/docs",
+    "Cloud DNS": "https://cloud.google.com/dns/docs",
+    "Cloud CDN": "https://cloud.google.com/cdn/docs",
+    "Cloud SQL": "https://cloud.google.com/sql/docs",
+    "Cloud Spanner": "https://cloud.google.com/spanner/docs",
+    "Cloud Storage": "https://cloud.google.com/storage/docs",
+    "BigQuery": "https://cloud.google.com/bigquery/docs",
+    "Bigtable": "https://cloud.google.com/bigtable/docs",
+    "Firestore": "https://cloud.google.com/firestore/docs",
+    "Memorystore": "https://cloud.google.com/memorystore/docs",
+    "AlloyDB": "https://cloud.google.com/alloydb/docs",
+    "GKE": "https://cloud.google.com/kubernetes-engine/docs",
+    "Compute Engine": "https://cloud.google.com/compute/docs",
+    "Cloud Run": "https://cloud.google.com/run/docs",
+    "App Engine": "https://cloud.google.com/appengine/docs",
+    "Cloud Functions": "https://cloud.google.com/functions/docs",
+    "Pub/Sub": "https://cloud.google.com/pubsub/docs",
+    "Dataflow": "https://cloud.google.com/dataflow/docs",
+    "Dataproc": "https://cloud.google.com/dataproc/docs",
+    "Cloud Composer": "https://cloud.google.com/composer/docs",
+    "Vertex AI": "https://cloud.google.com/vertex-ai/docs",
+    "Gemini": "https://cloud.google.com/gemini/docs",
+    "IAM": "https://cloud.google.com/iam/docs",
+    "Cloud KMS": "https://cloud.google.com/kms/docs",
+    "Secret Manager": "https://cloud.google.com/secret-manager/docs",
+    "Cloud Monitoring": "https://cloud.google.com/monitoring/docs",
+    "Cloud Logging": "https://cloud.google.com/logging/docs",
+    "Cloud Trace": "https://cloud.google.com/trace/docs",
+    "Cloud Build": "https://cloud.google.com/build/docs",
+    "Artifact Registry": "https://cloud.google.com/artifact-registry/docs",
+    "Terraform": "https://cloud.google.com/docs/terraform",
+    "Anthos": "https://cloud.google.com/anthos/docs",
+    "Apigee": "https://cloud.google.com/apigee/docs",
+    "HA": "https://cloud.google.com/architecture/framework/reliability",
+    "Autoscaling": "https://cloud.google.com/compute/docs/autoscaler",
+    "Disaster recovery": "https://cloud.google.com/architecture/dr-scenarios-planning-guide",
+    "Backup and restore": "https://cloud.google.com/backup-disaster-recovery/docs",
+    "Migration": "https://cloud.google.com/migration-center/docs",
+    "CMEK": "https://cloud.google.com/kms/docs/cmek",
+    "Encryption": "https://cloud.google.com/docs/security/encryption",
+    "Least privilege": "https://cloud.google.com/iam/docs/using-iam-securely",
+    "Multi-region": "https://cloud.google.com/docs/geography-and-regions",
+    "Multi-zone": "https://cloud.google.com/compute/docs/regions-zones",
+    "RPO/RTO": "https://cloud.google.com/architecture/dr-scenarios-planning-guide",
+    "SLA/SLO": "https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring",
+    "Cost optimization": "https://cloud.google.com/architecture/framework/cost-optimization",
+    "VPC": "https://cloud.google.com/vpc/docs",
+    "VPC Peering": "https://cloud.google.com/vpc/docs/vpc-peering",
+    "Spot VMs": "https://cloud.google.com/compute/docs/instances/spot",
+}
+
+ANNEX_GROUPS = [
+    (
+        "compute",
+        "Compute",
+        "Compute",
+        ["Compute Engine", "GKE", "Cloud Run", "App Engine", "Cloud Functions", "Spot VMs"],
+    ),
+    (
+        "storage",
+        "Storage & databases",
+        "Stockage et bases de données",
+        [
+            "Cloud Storage",
+            "Cloud SQL",
+            "Cloud Spanner",
+            "AlloyDB",
+            "Bigtable",
+            "Firestore",
+            "Memorystore",
+            "BigQuery",
+        ],
+    ),
+    (
+        "networking",
+        "Networking",
+        "Réseau",
+        [
+            "VPC",
+            "Shared VPC",
+            "VPC Peering",
+            "Cloud Load Balancing",
+            "Cloud Interconnect",
+            "Cloud VPN",
+            "Cloud NAT",
+            "Cloud DNS",
+            "Cloud CDN",
+            "Cloud Armor",
+        ],
+    ),
+    (
+        "security",
+        "Security & identity",
+        "Sécurité et identité",
+        [
+            "IAM",
+            "VPC Service Controls",
+            "Cloud KMS",
+            "CMEK",
+            "Secret Manager",
+            "Encryption",
+            "Least privilege",
+        ],
+    ),
+    (
+        "data",
+        "Data & analytics",
+        "Données et analytique",
+        ["Pub/Sub", "Dataflow", "Dataproc", "Cloud Composer"],
+    ),
+    (
+        "ai",
+        "AI & ML",
+        "IA et ML",
+        ["Vertex AI", "Gemini"],
+    ),
+    (
+        "ops",
+        "Operations & DevOps",
+        "Opérations et DevOps",
+        [
+            "Cloud Monitoring",
+            "Cloud Logging",
+            "Cloud Trace",
+            "Cloud Build",
+            "Artifact Registry",
+            "Terraform",
+            "Anthos",
+            "Apigee",
+        ],
+    ),
+    (
+        "concepts",
+        "Architecture concepts",
+        "Concepts d’architecture",
+        [
+            "HA",
+            "Autoscaling",
+            "Disaster recovery",
+            "Backup and restore",
+            "Migration",
+            "Multi-region",
+            "Multi-zone",
+            "RPO/RTO",
+            "SLA/SLO",
+            "Cost optimization",
+        ],
+    ),
+]
+
 
 def extract_concepts(q: dict) -> list[str]:
     """Return ordered concept labels for a question (max 4)."""
@@ -1039,7 +1403,7 @@ def render_question(q: dict, i: int, total: int) -> str:
         cls = ' class="correct"' if option_is_correct(q, j, letter) else ""
         text_en = re.sub(r"^[A-F]\.\s*", "", o_en)
         text_fr = re.sub(r"^[A-F]\.\s*", "", opts_fr[j] if j < len(opts_fr) else o_en)
-        lis.append(f'<li{cls} data-l="{letter}">{bi(text_fr, text_en, block=True)}</li>')
+        lis.append(f'<li{cls} data-l="{letter}">{bi_linked(text_fr, text_en, block=True)}</li>')
     qtype = q.get("type") or ("multi" if len(letters) > 1 else "single")
     type_cls = "multi" if qtype == "multi" or len(letters) > 1 else "single"
     label = q.get("label") or f"{q.get('domain','')}/{q.get('module','')}/{q.get('section','')}"
@@ -1076,12 +1440,12 @@ def render_question(q: dict, i: int, total: int) -> str:
     {topic_html}
   </div>
   <div class="qt">
-    <div class="qt-text">{bi(q_fr, q_en, block=True)}</div>
+    <div class="qt-text">{bi_linked(q_fr, q_en, block=True)}</div>
     <button type="button" class="tts" data-label="🔊" onclick="speakQuestion(event,this)" aria-label="TTS">🔊</button>
   </div>
   <ul class="opts">{''.join(lis)}</ul>
   <div class="ans"><b>{bi(UI["fr"]["correct"], UI["en"]["correct"])} : {esc(', '.join(letters))}</b>
-  <div>{bi(expl_fr, expl_en, block=True)}</div>{ref_html}</div>
+  <div>{bi_linked(expl_fr, expl_en, block=True)}</div>{ref_html}</div>
 </section>
 """
 
@@ -1128,6 +1492,7 @@ def page(
 def overview_page(title_fr: str, title_en: str, questions: list, quiz_url: str, nav_home: str) -> str:
     cards = []
     total = len(questions)
+    service_set: set[str] = set()
     domain_counts = {
         did: sum(1 for q in questions if q.get("domain") == did)
         for did in sorted(TAX["domains"], key=lambda x: TAX["domains"][x]["number"])
@@ -1145,6 +1510,7 @@ def overview_page(title_fr: str, title_en: str, questions: list, quiz_url: str, 
         )
     for i, q in enumerate(questions, 1):
         concepts = extract_concepts(q)
+        service_set.update(concepts)
         section_en = q.get("sectionTitle") or ""
         section_fr = fr_of(q, "sectionTitle") or section_en
         module_en = q.get("moduleTitle") or ""
@@ -1154,8 +1520,10 @@ def overview_page(title_fr: str, title_en: str, questions: list, quiz_url: str, 
         )
         subtitle_en = section_en if concepts else module_en
         subtitle_fr = section_fr if concepts else module_fr
+        services_attr = "|".join(concepts)
         cards.append(
-            f'<a class="overview-card" href="{esc(quiz_url)}#question-{i}">'
+            f'<a class="overview-card" href="{esc(quiz_url)}#question-{i}" '
+            f'data-services="{esc(services_attr)}">'
             f'<div class="n">{i}</div><div>'
             f'<div class="labels">'
             f'<span class="badge d">{esc(q.get("domain") or "")}</span>'
@@ -1166,6 +1534,7 @@ def overview_page(title_fr: str, title_en: str, questions: list, quiz_url: str, 
             f'<div class="muted" style="margin-top:5px">{bi(subtitle_fr, subtitle_en)}</div>'
             f'</div></a>'
         )
+    services = sorted(service_set, key=str.lower)
     return f"""<!doctype html>
 <html lang="fr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -1176,6 +1545,7 @@ def overview_page(title_fr: str, title_en: str, questions: list, quiz_url: str, 
 <nav class="bar">
   <a href="{nav_home}">{bi(UI["fr"]["mocks_home"], UI["en"]["mocks_home"])}</a>
   <a href="{esc(quiz_url)}">{bi(UI["fr"]["open_quiz"], UI["en"]["open_quiz"])}</a>
+  <a href="../annex-gcp-services.html">{bi(UI["fr"]["annex"], UI["en"]["annex"])}</a>
   {lang_switch()}
 </nav>
 <main class="wrap">
@@ -1183,6 +1553,7 @@ def overview_page(title_fr: str, title_en: str, questions: list, quiz_url: str, 
   <h1>{bi(UI["fr"]["overview"] + " — " + title_fr, UI["en"]["overview"] + " — " + title_en)}</h1>
   <div class="muted">{total} {bi(UI["fr"]["overview_hint"], UI["en"]["overview_hint"])}</div>
 </header>
+{overview_service_filter_bar(services)}
 <section class="domain-progress">
   <h2>{bi(UI["fr"]["distribution"], UI["en"]["distribution"])}</h2>
   {''.join(progress_rows)}
@@ -1233,7 +1604,8 @@ def build_gcppcatest():
             "https://gcppcatest.com/practice.php",
             qs,
             "../index.html",
-            f'<a href="{overview_fn}">{bi(UI["fr"]["overview"], UI["en"]["overview"])}</a>',
+            f'<a href="{overview_fn}">{bi(UI["fr"]["overview"], UI["en"]["overview"])}</a>'
+            f' · <a href="../annex-gcp-services.html">{bi(UI["fr"]["annex"], UI["en"]["annex"])}</a>',
         )
         (WEB / "gcppcatest" / fn).write_text(html_page)
         (WEB / "gcppcatest" / overview_fn).write_text(
@@ -1253,7 +1625,9 @@ def build_gcppcatest():
             f'<div style="margin-top:8px"><a class="card-link" href="{fn}">'
             f'{bi(UI["fr"]["open_quiz"], UI["en"]["open_quiz"])}</a>'
             f' · <a class="card-link" href="{overview_fn}">'
-            f'{bi(UI["fr"]["overview"], UI["en"]["overview"])}</a></div></div>'
+            f'{bi(UI["fr"]["overview"], UI["en"]["overview"])}</a>'
+            f' · <a class="card-link" href="../annex-gcp-services.html">'
+            f'{bi(UI["fr"]["annex"], UI["en"]["annex"])}</a></div></div>'
         )
         print("wrote", fn)
         print("wrote", overview_fn)
@@ -1267,6 +1641,7 @@ def build_gcppcatest():
 </head><body class="lang-fr">
 <nav class="bar">
   <a href="../index.html">{bi(UI["fr"]["home"], UI["en"]["home"])}</a>
+  <a href="../annex-gcp-services.html">{bi(UI["fr"]["annex"], UI["en"]["annex"])}</a>
   <a href="https://gcppcatest.com/practice.php" target="_blank" rel="noopener">{bi(UI["fr"]["original"], UI["en"]["original"])}</a>
   {lang_switch()}
 </nav>
@@ -1282,6 +1657,77 @@ def build_gcppcatest():
 """
     (WEB / "gcppcatest" / "index.html").write_text(index)
     print("wrote gcppcatest/index.html")
+
+
+def build_annex():
+    toc = []
+    sections = []
+    cat_opts = [option_bi("", UI["fr"]["annex_all"], UI["en"]["annex_all"])]
+    for cat_id, title_en, title_fr, keys in ANNEX_GROUPS:
+        cat_opts.append(option_bi(cat_id, title_fr, title_en))
+        toc.append(
+            f'<a href="#cat-{esc(cat_id)}">{bi(title_fr, title_en)}</a>'
+        )
+        cards = []
+        for key in keys:
+            defs = SERVICE_DEFS.get(key)
+            docs = SERVICE_DOCS.get(key)
+            if not defs or not docs:
+                continue
+            label_fr = CONCEPT_FR.get(key, key)
+            cards.append(
+                f'<article class="annex-card" data-category="{esc(cat_id)}" '
+                f'data-name="{esc(key)}" data-name-fr="{esc(label_fr)}">'
+                f"<h3>{bi(label_fr, key)}</h3>"
+                f'<div class="def">{bi(defs["fr"], defs["en"], block=True)}</div>'
+                f'<div class="docs"><a href="{esc(docs)}" target="_blank" rel="noopener">'
+                f'{bi(UI["fr"]["official_docs"], UI["en"]["official_docs"])} ↗</a></div>'
+                f"</article>"
+            )
+        if not cards:
+            continue
+        sections.append(
+            f'<section class="annex-section" id="cat-{esc(cat_id)}">'
+            f"<h2>{bi(title_fr, title_en)}</h2>"
+            f'<div class="annex-grid">{"".join(cards)}</div>'
+            f"</section>"
+        )
+
+    html_page = f"""<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{esc(UI["fr"]["annex_title"])}</title>
+{FONT_HEAD}
+<style>{CSS}</style>
+</head><body class="lang-fr">
+<nav class="bar">
+  <a href="index.html">{bi(UI["fr"]["home"], UI["en"]["home"])}</a>
+  <a href="gcppcatest/index.html">{bi(UI["fr"]["open_mocks"], UI["en"]["open_mocks"])}</a>
+  {lang_switch()}
+</nav>
+<main class="wrap">
+<header class="head">
+  <h1>{bi(UI["fr"]["annex_title"], UI["en"]["annex_title"])}</h1>
+  <p class="muted">{bi(UI["fr"]["annex_lead"], UI["en"]["annex_lead"], block=True)}</p>
+</header>
+<div class="filters">
+  <div class="row">
+    <label for="annexSearch">{bi(UI["fr"]["annex_search"], UI["en"]["annex_search"])}</label>
+    <input id="annexSearch" type="search" placeholder="Cloud SQL, IAM, VPC…" style="font:inherit;border:1px solid var(--gcp-grey-200);border-radius:8px;padding:8px 12px;min-width:220px;background:#fff">
+    <label for="annexCategory">{bi(UI["fr"]["category"], UI["en"]["category"])}</label>
+    <select id="annexCategory">{''.join(cat_opts)}</select>
+    <button type="button" onclick="resetAnnexFilters()">{bi(UI["fr"]["reset"], UI["en"]["reset"])}</button>
+    <span id="annexResultCount"></span>
+  </div>
+</div>
+<nav class="annex-toc">{''.join(toc)}</nav>
+{''.join(sections)}
+</main>
+<script>{LANG_JS}</script>
+</body></html>
+"""
+    (WEB / "annex-gcp-services.html").write_text(html_page)
+    print("wrote annex-gcp-services.html")
 
 
 def build_cloudjobs():
@@ -1366,6 +1812,14 @@ def build_portal():
         </div>
       </article>
       <article class="portal-card">
+        <h2>{bi(UI["fr"]["annex"], UI["en"]["annex"])}</h2>
+        <div class="count">{len(SERVICE_DOCS)} {bi("entrées", "entries")}</div>
+        <div class="meta muted">{bi(UI["fr"]["annex_lead"], UI["en"]["annex_lead"], block=True)}</div>
+        <div class="actions">
+          <a class="button" href="annex-gcp-services.html">{bi(UI["fr"]["annex"], UI["en"]["annex"])}</a>
+        </div>
+      </article>
+      <article class="portal-card">
         <h2>ExamCert</h2>
         <div class="count external">{bi(UI["fr"]["examcert_count"], UI["en"]["examcert_count"])}</div>
         <div class="meta muted">{bi(UI["fr"]["examcert_meta"], UI["en"]["examcert_meta"], block=True)}</div>
@@ -1425,6 +1879,7 @@ def main():
     build_gcppcatest()
     build_cloudjobs()
     build_mastery()
+    build_annex()
     build_portal()
     print("Done")
 
