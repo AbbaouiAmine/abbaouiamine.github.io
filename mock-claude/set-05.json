@@ -12,7 +12,20 @@
     "correct": [
       0
     ],
-    "why": "Vague business language must become checkable functional requirements before design starts. Building first, oversizing the model, or reverse-engineering requirements from a prompt all skip the step that makes the system buildable and testable."
+    "why": "Vague business language must become checkable functional requirements before design starts. Building first, oversizing the model, or reverse-engineering requirements from a prompt all skip the step that makes the system buildable and testable.",
+    "translations": {
+      "fr": {
+        "domain": "Compréhension des besoins",
+        "q": "Un stakeholder dit : « le bot doit comprendre l'intention du client ». Avant de construire quoi que ce soit, quelle est la bonne prochaine étape ?",
+        "options": [
+          "Traduire cela en besoins fonctionnels concrets : quelles intentions, quels champs extraire, et ce qui compte comme une classification correcte",
+          "Commencer à construire immédiatement et laisser la capacité générale du modèle gérer ce que « intention » finira par signifier",
+          "Choisir le plus grand modèle possible pour que la compréhension de l'intention soit aussi forte que possible, indépendamment du scope",
+          "Écrire le system prompt en premier et en déduire les besoins à partir de ce qu'il finit par faire"
+        ],
+        "why": "Un langage métier vague doit devenir des besoins fonctionnels vérifiables avant que la conception ne commence. Construire d'abord, surdimensionner le modèle, ou déduire les besoins à rebours d'un prompt sautent tous l'étape qui rend le système constructible et testable."
+      }
+    }
   },
   {
     "domain": "Systems Life Cycle",
@@ -27,7 +40,20 @@
     "correct": [
       0
     ],
-    "why": "Operate-and-maintain is about post-launch monitoring and response to drift or regressions. Requirements, tier selection, and eval design happen earlier, during design and build."
+    "why": "Operate-and-maintain is about post-launch monitoring and response to drift or regressions. Requirements, tier selection, and eval design happen earlier, during design and build.",
+    "translations": {
+      "fr": {
+        "domain": "Cycle de vie des systèmes",
+        "q": "Une feature Claude a été shippée et est en production. Quelle activité appartient à la phase operate-and-maintain du cycle de vie, et non à une phase antérieure ?",
+        "options": [
+          "Monitorer la qualité et le coût en production, et trier les régressions au fur et à mesure que le modèle ou le pattern d'usage évolue",
+          "Rédiger les besoins fonctionnels initiaux",
+          "Sélectionner le tier de modèle à utiliser pour le prototype",
+          "Concevoir la suite d'evals pour la première release"
+        ],
+        "why": "La phase operate-and-maintain concerne le monitoring post-lancement et la réponse au drift ou aux régressions. Les besoins, la sélection du tier et la conception des evals se font plus tôt, pendant la conception et la construction."
+      }
+    }
   },
   {
     "domain": "Claude Application Design",
@@ -42,7 +68,20 @@
     "correct": [
       0
     ],
-    "why": "Different interfaces layer different default context and instruction handling around the same words, so behaviour can diverge. The API does support system prompts and Claude Code does not ignore them, and no interface guarantees identical behaviour by default."
+    "why": "Different interfaces layer different default context and instruction handling around the same words, so behaviour can diverge. The API does support system prompts and Claude Code does not ignore them, and no interface guarantees identical behaviour by default.",
+    "translations": {
+      "fr": {
+        "domain": "Conception d'applications Claude",
+        "q": "La même feature doit fonctionner dans claude.ai, via l'API, et dans Claude Code. Un collègue suppose qu'un prompt bien écrit se comportera de façon identique partout. Quelle est la faille dans ce raisonnement ?",
+        "options": [
+          "Chaque surface enveloppe le prompt dans un contexte par défaut et un placement des instructions différents, donc un même wording peut se comporter différemment selon les cas",
+          "Il n'y a aucune faille ; un même prompt est garanti de se comporter de façon identique sur toutes les interfaces",
+          "Seule l'API supporte les system prompts",
+          "Claude Code ignore complètement les system prompts"
+        ],
+        "why": "Des interfaces différentes superposent un contexte par défaut et une gestion des instructions différents autour des mêmes mots, donc le comportement peut diverger. L'API supporte bien les system prompts et Claude Code ne les ignore pas, et aucune interface ne garantit un comportement identique par défaut."
+      }
+    }
   },
   {
     "domain": "Claude Application Design",
@@ -57,7 +96,20 @@
     "correct": [
       0
     ],
-    "why": "Conflicting version requirements across plugins is a dependency conflict that needs explicit resolution, exactly like any software dependency graph. It is not cosmetic, not purely a performance concern, and not something the model silently arbitrates."
+    "why": "Conflicting version requirements across plugins is a dependency conflict that needs explicit resolution, exactly like any software dependency graph. It is not cosmetic, not purely a performance concern, and not something the model silently arbitrates.",
+    "translations": {
+      "fr": {
+        "domain": "Conception d'applications Claude",
+        "q": "Un plugin dont dépend votre app requiert le plugin B en version 2.x, mais vous avez pinné le plugin B en 1.x ailleurs dans le projet. De quel type de problème s'agit-il ?",
+        "options": [
+          "Un conflit de dépendances entre plugins qui doit être résolu en alignant les versions ou en isolant les plugins avant que l'un ou l'autre ne puisse être fiable en production",
+          "Une duplication sans conséquence, puisque les plugins ne partagent pas d'état et que les numéros de version sont cosmétiques",
+          "Un pur problème de performance qui n'affecte que le temps de chargement",
+          "Quelque chose que seul le modèle peut résoudre au runtime en choisissant la version qui semble la plus récente"
+        ],
+        "why": "Des exigences de version contradictoires entre plugins constituent un conflit de dépendances qui nécessite une résolution explicite, exactement comme pour tout graphe de dépendances logiciel. Ce n'est pas cosmétique, ce n'est pas purement un problème de performance, et ce n'est pas quelque chose que le modèle arbitre silencieusement."
+      }
+    }
   },
   {
     "domain": "Configuration Management",
@@ -73,7 +125,20 @@
       0,
       1
     ],
-    "why": "A documented breaking change demands checking your specific dependency on the old behaviour and validating the new version against evals before promoting it. Dated versions are not automatically safe to adopt blind, and breaking changes affect anyone consuming that version, not just floating aliases."
+    "why": "A documented breaking change demands checking your specific dependency on the old behaviour and validating the new version against evals before promoting it. Dated versions are not automatically safe to adopt blind, and breaking changes affect anyone consuming that version, not just floating aliases.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion de la configuration",
+        "q": "Votre app pinne claude-model-2026-06-15 en production. Une nouvelle version datée est publiée avec un breaking change documenté sur la façon dont elle formate les listes numérotées. Quelles sont les DEUX bonnes prochaines étapes ?",
+        "options": [
+          "Tester la nouvelle version par rapport à votre suite d'evals et à votre parser en aval avant de la promouvoir",
+          "Lire les release notes concernant ce breaking change spécifique et vérifier si votre prompt ou votre parser dépend de l'ancien formatage",
+          "Passer à la nouvelle version immédiatement en production, puisqu'une release datée est toujours sûre à adopter sans test",
+          "Ignorer les release notes puisque les breaking changes ne s'appliquent qu'aux alias flottants, pas aux versions datées"
+        ],
+        "why": "Un breaking change documenté exige de vérifier votre dépendance spécifique à l'ancien comportement et de valider la nouvelle version par rapport aux evals avant de la promouvoir. Les versions datées ne sont pas automatiquement sûres à adopter sans test, et les breaking changes affectent quiconque consomme cette version, pas seulement les alias flottants."
+      }
+    }
   },
   {
     "domain": "Claude API Mechanics",
@@ -88,7 +153,20 @@
     "correct": [
       0
     ],
-    "why": "Vendor-hosted access generally preserves the Messages API shape while differing in auth and some platform-specific details. It is the same model family, and streaming and tool use are not first-party exclusives."
+    "why": "Vendor-hosted access generally preserves the Messages API shape while differing in auth and some platform-specific details. It is the same model family, and streaming and tool use are not first-party exclusives.",
+    "translations": {
+      "fr": {
+        "domain": "Mécanismes de l'API Claude",
+        "q": "Vous invoquez Claude via l'endpoint hébergé d'un vendor tiers plutôt que via l'API first-party. Quelle affirmation est exacte ?",
+        "options": [
+          "La forme des requêtes et réponses de la Messages API reste cohérente, mais l'authentification, les headers disponibles et certains patterns d'accès peuvent différer selon le vendor",
+          "Les vendors tiers font tourner un modèle complètement différent qui partage simplement le même nom",
+          "Le streaming n'est disponible que via l'API first-party",
+          "Le tool use n'est pas disponible lorsqu'on invoque via un vendor tiers"
+        ],
+        "why": "L'accès hébergé par un vendor préserve généralement la forme de la Messages API tout en différant sur l'auth et certains détails spécifiques à la plateforme. Il s'agit de la même famille de modèles, et le streaming comme le tool use ne sont pas exclusifs au first-party."
+      }
+    }
   },
   {
     "domain": "Claude API Mechanics",
@@ -103,7 +181,20 @@
     "correct": [
       0
     ],
-    "why": "Multiple cache breakpoints let you cache each stable segment independently, so the daily profile change only invalidates its own segment, not the whole prefix. Caching as one block or disabling it entirely wastes the win available from the stable system prompt, and moving the profile block after the question does not by itself fix cache segmentation."
+    "why": "Multiple cache breakpoints let you cache each stable segment independently, so the daily profile change only invalidates its own segment, not the whole prefix. Caching as one block or disabling it entirely wastes the win available from the stable system prompt, and moving the profile block after the question does not by itself fix cache segmentation.",
+    "translations": {
+      "fr": {
+        "domain": "Mécanismes de l'API Claude",
+        "q": "Un long system prompt unique est suivi d'un bloc de profil par utilisateur qui change chaque jour, puis de la question de l'utilisateur. Vous voulez cacher le maximum possible sans cacher des données de profil obsolètes. Quelle est la bonne approche ?",
+        "options": [
+          "Placer un cache breakpoint après le system prompt stable et un autre séparé après le bloc de profil, afin que chaque segment stable soit caché indépendamment",
+          "Cacher tout le prompt assemblé comme un seul bloc, en acceptant que la section profil force un cache miss complet à chaque changement",
+          "Désactiver complètement le caching puisque tout contenu dynamique, où qu'il soit dans le prompt, invalide tout le mécanisme",
+          "Déplacer le bloc de profil après la question de l'utilisateur pour que sa position n'ait plus d'importance"
+        ],
+        "why": "Plusieurs cache breakpoints permettent de cacher chaque segment stable indépendamment, de sorte que le changement quotidien du profil n'invalide que son propre segment, pas tout le préfixe. Cacher en un seul bloc ou désactiver complètement le caching gaspille le gain disponible grâce au system prompt stable, et déplacer le bloc de profil après la question ne corrige pas en soi la segmentation du cache."
+      }
+    }
   },
   {
     "domain": "Software Engineering Foundations",
@@ -118,7 +209,20 @@
     "correct": [
       0
     ],
-    "why": "Incremental, tested refactoring reduces risk while improving structure, which is the standard response to a growing single-responsibility violation. A full rewrite with no tests risks losing behaviour, a comment does not fix the structural problem, and 'it can't be structured' is simply false."
+    "why": "Incremental, tested refactoring reduces risk while improving structure, which is the standard response to a growing single-responsibility violation. A full rewrite with no tests risks losing behaviour, a comment does not fix the structural problem, and 'it can't be structured' is simply false.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux du software engineering",
+        "q": "Une fonction de gestion de prompts « fait tout » de 2000 lignes est devenue illisible, et chaque changement risque de casser autre chose. Quelle est la réponse appropriée ?",
+        "options": [
+          "Refactorer progressivement en fonctions plus petites, bien nommées, avec des responsabilités claires, appuyées par des tests, plutôt que de tout réécrire de zéro",
+          "Ne rien faire, puisque le code de gestion de prompts est par nature impossible à structurer",
+          "Tout réécrire de zéro à partir d'un fichier vide en une seule session, sans tests",
+          "Ajouter un long commentaire explicatif en haut et continuer à étendre la fonction comme avant"
+        ],
+        "why": "Un refactoring progressif et testé réduit le risque tout en améliorant la structure, ce qui est la réponse standard à une violation croissante du principe de responsabilité unique. Une réécriture complète sans tests risque de perdre du comportement, un commentaire ne corrige pas le problème structurel, et « ça ne peut pas être structuré » est simplement faux."
+      }
+    }
   },
   {
     "domain": "Software Engineering Foundations",
@@ -133,7 +237,20 @@
     "correct": [
       0
     ],
-    "why": "Code review is the SDLC step that catches conflicting assumptions before merge; skipping it is exactly what let two independent changes collide. Context window size, model capability, and caching do not address a missing human review step."
+    "why": "Code review is the SDLC step that catches conflicting assumptions before merge; skipping it is exactly what let two independent changes collide. Context window size, model capability, and caching do not address a missing human review step.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux du software engineering",
+        "q": "Deux ingénieurs ajoutent chacun une feature appelant Claude dans le même fichier au cours du même sprint, sans étape de code review. Quelle pratique SDLC manque-t-il ?",
+        "options": [
+          "Une code review intégrée au processus de merge, permettant de détecter les hypothèses contradictoires avant qu'elles n'atteignent la production",
+          "Une context window plus grande, qui aurait permis à un ingénieur de voir automatiquement les changements de l'autre",
+          "Un modèle plus capable, qui aurait résolu les hypothèses contradictoires par lui-même",
+          "Le prompt caching, qui empêche les conflits de merge"
+        ],
+        "why": "La code review est l'étape du SDLC qui détecte les hypothèses contradictoires avant le merge ; la sauter est exactement ce qui a permis à deux changements indépendants d'entrer en collision. La taille de la context window, la capacité du modèle et le caching ne compensent pas l'absence d'une étape de revue humaine."
+      }
+    }
   },
   {
     "domain": "LLM Fundamentals",
@@ -148,7 +265,20 @@
     "correct": [
       0
     ],
-    "why": "Zero-shot refers to the absence of example demonstrations, not the absence of instructions; you can still give detailed task instructions with zero examples. It does not require an empty system prompt, does not ignore the question, and applies beyond classification."
+    "why": "Zero-shot refers to the absence of example demonstrations, not the absence of instructions; you can still give detailed task instructions with zero examples. It does not require an empty system prompt, does not ignore the question, and applies beyond classification.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux LLM",
+        "q": "Un collègue affirme que « zero-shot » signifie que le modèle n'a aucun contexte sur la tâche. Quelle est la description exacte ?",
+        "options": [
+          "Zero-shot signifie qu'aucun exemple travaillé n'est fourni, même si les instructions de la tâche peuvent rester détaillées ; le modèle n'a aucune démonstration d'exemple sur laquelle faire du pattern-matching",
+          "Zero-shot signifie que le system prompt doit être vide",
+          "Zero-shot signifie que le modèle ignore complètement la question de l'utilisateur",
+          "Zero-shot ne s'applique qu'aux tâches de classification, jamais à la génération ouverte"
+        ],
+        "why": "Zero-shot fait référence à l'absence de démonstrations d'exemples, pas à l'absence d'instructions ; on peut toujours donner des instructions de tâche détaillées avec zéro exemple. Cela ne requiert pas un system prompt vide, n'ignore pas la question, et s'applique au-delà de la classification."
+      }
+    }
   },
   {
     "domain": "Technical Fundamentals",
@@ -163,7 +293,20 @@
     "correct": [
       0
     ],
-    "why": "A websocket provides the persistent, bidirectional connection needed for server-pushed streaming updates. Polling re-requests repeatedly rather than staying open, Batches is asynchronous and non-live, and a CDN cache serves static content rather than a live stream."
+    "why": "A websocket provides the persistent, bidirectional connection needed for server-pushed streaming updates. Polling re-requests repeatedly rather than staying open, Batches is asynchronous and non-live, and a CDN cache serves static content rather than a live stream.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux techniques",
+        "q": "Un dashboard doit afficher des tokens qui arrivent en streaming sur une connexion persistante, le serveur pouvant pousser des mises à jour sans que le client ne refasse une requête. Quelle technologie sous-jacente est décrite ici ?",
+        "options": [
+          "Un websocket, qui maintient ouverte une connexion bidirectionnelle persistante",
+          "Un appel REST synchrone ponctuel répété via un intervalle de polling",
+          "La Message Batches API",
+          "Un cache CDN"
+        ],
+        "why": "Un websocket fournit la connexion persistante et bidirectionnelle nécessaire pour des mises à jour en streaming poussées par le serveur. Le polling refait des requêtes de façon répétée plutôt que de rester ouvert, Batches est asynchrone et non live, et un cache CDN sert du contenu statique plutôt qu'un flux live."
+      }
+    }
   },
   {
     "domain": "Model Selection and Tradeoffs",
@@ -178,7 +321,20 @@
     "correct": [
       0
     ],
-    "why": "Matching tier to task difficulty is the core selection tradeoff: nuance-heavy work justifies a higher tier, and simple retrieval does not need it. Uniform tier choice in either direction either overpays or underserves one of the two tasks."
+    "why": "Matching tier to task difficulty is the core selection tradeoff: nuance-heavy work justifies a higher tier, and simple retrieval does not need it. Uniform tier choice in either direction either overpays or underserves one of the two tasks.",
+    "translations": {
+      "fr": {
+        "domain": "Sélection de modèles et compromis",
+        "q": "Un résumeur de documents juridiques doit saisir des nuances contractuelles subtiles, et un bot de recherche sur un wiki interne doit simplement trouver la bonne page rapidement. Comment les tiers devraient-ils différer ?",
+        "options": [
+          "Utiliser un tier à plus forte capacité pour la tâche juridique nuancée et un tier plus rapide et moins cher pour la tâche de recherche plus simple",
+          "Utiliser le même tier pour les deux, puisque la cohérence entre features compte plus que l'adéquation entre capacité et difficulté de la tâche",
+          "Utiliser le tier le moins cher pour les deux afin de contrôler le coût de manière uniforme",
+          "Utiliser le tier le plus élevé pour les deux afin d'éviter tout risque de manquer quelque chose"
+        ],
+        "why": "Faire correspondre le tier à la difficulté de la tâche est le compromis central de la sélection : un travail riche en nuances justifie un tier plus élevé, et une simple recherche n'en a pas besoin. Un choix de tier uniforme, dans un sens ou dans l'autre, revient soit à surpayer soit à sous-servir l'une des deux tâches."
+      }
+    }
   },
   {
     "domain": "Agent Construction with Claude",
@@ -193,7 +349,20 @@
     "correct": [
       0
     ],
-    "why": "The tradeoff is control and operational burden versus convenience: self-hosting means you own the infrastructure, managed hosting shifts that operational load elsewhere. The two are not equivalent, cost depends on context rather than being universally lower for self-hosting, and managed deployment is squarely an agentic-use option."
+    "why": "The tradeoff is control and operational burden versus convenience: self-hosting means you own the infrastructure, managed hosting shifts that operational load elsewhere. The two are not equivalent, cost depends on context rather than being universally lower for self-hosting, and managed deployment is squarely an agentic-use option.",
+    "translations": {
+      "fr": {
+        "domain": "Construction d'agents avec Claude",
+        "q": "Vous devez choisir entre faire tourner un agent vous-même sur votre propre infrastructure ou utiliser un déploiement d'agent managé hébergé par Anthropic. Quel est le compromis central ?",
+        "options": [
+          "Le self-hosting vous donne un contrôle total sur l'infrastructure et le flux de données, au prix de devoir l'opérer vous-même ; un déploiement managé réduit la charge opérationnelle au prix d'un contrôle moindre sur l'infrastructure",
+          "Il n'y a aucune différence significative ; les deux options fonctionnent de façon identique avec des responsabilités opérationnelles identiques",
+          "Le self-hosting est toujours moins cher, indépendamment de la capacité opérationnelle de l'équipe",
+          "Le déploiement managé n'est disponible que pour des cas d'usage non agentiques"
+        ],
+        "why": "Le compromis est celui du contrôle et de la charge opérationnelle contre la commodité : le self-hosting signifie que vous possédez l'infrastructure, l'hébergement managé déplace cette charge opérationnelle ailleurs. Les deux ne sont pas équivalents, le coût dépend du contexte plutôt que d'être universellement plus bas pour le self-hosting, et le déploiement managé est bel et bien une option pour les usages agentiques."
+      }
+    }
   },
   {
     "domain": "Agent Patterns and Frameworks",
@@ -209,7 +378,20 @@
       0,
       1
     ],
-    "why": "The tool-use loop and subagent delegation are established agent patterns for multi-step work. Branching every possible input by hand is the workflow approach taken to an unworkable extreme, and disabling tools removes the agentic capability rather than patterning it."
+    "why": "The tool-use loop and subagent delegation are established agent patterns for multi-step work. Branching every possible input by hand is the workflow approach taken to an unworkable extreme, and disabling tools removes the agentic capability rather than patterning it.",
+    "translations": {
+      "fr": {
+        "domain": "Patterns et frameworks d'agents",
+        "q": "Quels sont les DEUX patterns de conception d'agents reconnus pour gérer des tâches multi-étapes ?",
+        "options": [
+          "Une boucle de tool use où l'agent appelle des tools de façon répétée et intègre les résultats jusqu'à la fin",
+          "Déléguer une sous-tâche bornée à un subagent qui renvoie un résultat compact",
+          "Coder en dur chaque input possible comme sa propre branche pour qu'aucune décision au runtime ne soit jamais nécessaire",
+          "Désactiver tous les tools pour forcer le modèle à raisonner uniquement à partir de sa propre connaissance"
+        ],
+        "why": "La boucle de tool use et la délégation à des subagents sont des patterns d'agents établis pour le travail multi-étapes. Brancher manuellement chaque input possible est l'approche workflow poussée à un extrême ingérable, et désactiver les tools retire la capacité agentique plutôt que de la structurer en pattern."
+      }
+    }
   },
   {
     "domain": "Output Handling",
@@ -224,7 +406,20 @@
     "correct": [
       0
     ],
-    "why": "Confident, fluent phrasing is not evidence of accuracy, so specific claims need validation against real sources. Trusting fluency is exactly the failure mode, temperature does not fix factual grounding, and model size alone does not guarantee lower hallucination rates."
+    "why": "Confident, fluent phrasing is not evidence of accuracy, so specific claims need validation against real sources. Trusting fluency is exactly the failure mode, temperature does not fix factual grounding, and model size alone does not guarantee lower hallucination rates.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion des outputs",
+        "q": "Un assistant affirme avec assurance une statistique qui semble faire autorité, mais qui ne peut être retracée à aucune source que vous lui avez fournie. Quelle pratique aurait permis de détecter cela avant que ça n'atteigne l'utilisateur ?",
+        "options": [
+          "Le scepticisme envers un output assuré : valider les affirmations spécifiques par rapport à votre matériel source plutôt que de faire confiance à un phrasing fluide et assuré",
+          "Rien ; si le phrasing est assuré et fluide, le contenu est fiable",
+          "Augmenter la temperature, puisqu'un phrasing plus varié tend à autocorriger les erreurs factuelles",
+          "Passer à un modèle plus petit, qui hallucine moins que les plus grands"
+        ],
+        "why": "Un phrasing assuré et fluide n'est pas une preuve d'exactitude, donc les affirmations spécifiques doivent être validées par rapport à de vraies sources. Faire confiance à la fluidité est exactement le mode d'échec, la temperature ne corrige pas l'ancrage factuel, et la taille du modèle seule ne garantit pas un taux d'hallucination plus faible."
+      }
+    }
   },
   {
     "domain": "Output Handling",
@@ -239,7 +434,20 @@
     "correct": [
       0
     ],
-    "why": "Defensive parsing means handling the error, validating structure, and defining a fallback in code, since a prompt request alone does not guarantee conformance. max_tokens does not guarantee valid syntax, and examples help but do not substitute for code-level defense."
+    "why": "Defensive parsing means handling the error, validating structure, and defining a fallback in code, since a prompt request alone does not guarantee conformance. max_tokens does not guarantee valid syntax, and examples help but do not substitute for code-level defense.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion des outputs",
+        "q": "Votre client API fait actuellement `json.loads(response)` sans try/except. Quelle est l'amélioration minimale de parsing défensif à apporter ?",
+        "options": [
+          "Envelopper le parsing dans une gestion d'erreurs, valider la structure parsée par rapport à un schéma attendu, et définir un fallback pour les outputs malformés",
+          "Rien ne doit changer tant que le prompt demande du JSON",
+          "Augmenter max_tokens pour que le JSON ait moins de risques d'être malformé",
+          "Ajouter plus d'exemples few-shot d'output JSON uniquement, sans aucun changement au niveau du code"
+        ],
+        "why": "Le parsing défensif signifie gérer l'erreur, valider la structure et définir un fallback dans le code, puisqu'une simple demande dans le prompt ne garantit pas la conformité. max_tokens ne garantit pas une syntaxe valide, et les exemples aident mais ne remplacent pas une défense au niveau du code."
+      }
+    }
   },
   {
     "domain": "AI Application Security",
@@ -254,7 +462,20 @@
     "correct": [
       0
     ],
-    "why": "Authentication proves who someone is; authorization separately checks whether that identity may perform this specific action. A valid session alone does not establish permission, HTTPS protects transport not permission, and the model's own judgement is not an access control."
+    "why": "Authentication proves who someone is; authorization separately checks whether that identity may perform this specific action. A valid session alone does not establish permission, HTTPS protects transport not permission, and the model's own judgement is not an access control.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité des applications IA",
+        "q": "Une requête arrive sur votre panel d'admin propulsé par Claude avec un cookie de session valide. Avant de la laisser supprimer un compte utilisateur, qu'est-ce qu'il faut vérifier en plus ?",
+        "options": [
+          "L'autorisation : que cette identité authentifiée spécifique est habilitée à effectuer cette action spécifique, et pas seulement qu'elle est connectée",
+          "Rien de plus ; un cookie de session valide est une preuve suffisante que l'action doit se poursuivre",
+          "Uniquement que la requête passe par HTTPS",
+          "Uniquement que le modèle lui-même estime que l'action semble raisonnable"
+        ],
+        "why": "L'authentification prouve qui est quelqu'un ; l'autorisation vérifie séparément si cette identité peut effectuer cette action spécifique. Une session valide seule n'établit pas la permission, HTTPS protège le transport et non la permission, et le jugement du modèle lui-même n'est pas un contrôle d'accès."
+      }
+    }
   },
   {
     "domain": "Guardrails and Safe Deployment",
@@ -269,7 +490,20 @@
     "correct": [
       0
     ],
-    "why": "Secure-by-design calls for layered, independent controls rather than one probabilistic instruction. A longer prompt line is still a single, bypassable layer, removing it entirely drops even that layer, and user self-policing is not a control at all."
+    "why": "Secure-by-design calls for layered, independent controls rather than one probabilistic instruction. A longer prompt line is still a single, bypassable layer, removing it entirely drops even that layer, and user self-policing is not a control at all.",
+    "translations": {
+      "fr": {
+        "domain": "Guardrails et déploiement sûr",
+        "q": "Votre politique de contenu n'est appliquée que par une seule ligne dans le system prompt. Quelle est l'amélioration recommandée selon les principes de secure-by-design ?",
+        "options": [
+          "Superposer des contrôles indépendants : des directives de politique dans le prompt, plus un filtrage côté output, plus des permissions de tools limitées, afin qu'aucun contrôle unique ne soit un point de défaillance unique",
+          "Rendre la ligne du system prompt plus longue et plus insistante, puisqu'une instruction suffisamment détaillée constitue un contrôle autonome adéquat",
+          "Supprimer la ligne du system prompt puisqu'elle n'apporte aucune valeur par elle-même",
+          "Compter sur l'utilisateur pour s'autoréguler dans ce qu'il demande"
+        ],
+        "why": "Le secure-by-design appelle à des contrôles superposés et indépendants plutôt qu'à une seule instruction probabiliste. Une ligne de prompt plus longue reste une couche unique et contournable, la supprimer entièrement fait disparaître même cette couche, et l'autorégulation de l'utilisateur n'est pas un contrôle du tout."
+      }
+    }
   },
   {
     "domain": "Claude Hooks",
@@ -284,7 +518,20 @@
     "correct": [
       0
     ],
-    "why": "A hook enforces deterministically at the point of execution, which is what a guarantee requires. A prompt instruction, a cautious model, or a lower temperature are all probabilistic and can be overridden by circumstances the guidance did not anticipate."
+    "why": "A hook enforces deterministically at the point of execution, which is what a guarantee requires. A prompt instruction, a cautious model, or a lower temperature are all probabilistic and can be overridden by circumstances the guidance did not anticipate.",
+    "translations": {
+      "fr": {
+        "domain": "Claude Hooks",
+        "q": "Vous voulez la garantie qu'une commande shell spécifique ne pourra jamais s'exécuter, quelle que soit la décision de l'agent en cours de session. Quel mécanisme offre réellement une garantie, par opposition à une simple forte suggestion ?",
+        "options": [
+          "Un hook qui intercepte et bloque la commande de façon déterministe avant son exécution",
+          "Un paragraphe détaillé dans le system prompt interdisant cette commande",
+          "Choisir un modèle réputé pour être prudent",
+          "Baisser la temperature pour cette session"
+        ],
+        "why": "Un hook s'applique de façon déterministe au moment de l'exécution, ce qu'exige une garantie. Une instruction dans le prompt, un modèle prudent, ou une temperature plus basse sont tous probabilistes et peuvent être contournés par des circonstances que la consigne n'avait pas anticipées."
+      }
+    }
   },
   {
     "domain": "Identity, Secrets, and Key Management",
@@ -299,7 +546,20 @@
     "correct": [
       0
     ],
-    "why": "After-the-fact attribution requires identity-tied access logging and monitoring. Context window size has nothing to do with audit trails, a single shared account destroys attributability, and caching a description is unrelated to access logs."
+    "why": "After-the-fact attribution requires identity-tied access logging and monitoring. Context window size has nothing to do with audit trails, a single shared account destroys attributability, and caching a description is unrelated to access logs.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion des identités, secrets et clés",
+        "q": "Votre équipe veut savoir, après coup, exactement quel service account a accédé à un tool interne sensible et quand. Quelle capacité cela nécessite-t-il ?",
+        "options": [
+          "Un monitoring et un logging des accès autorisés liés à l'identité, afin que les actions puissent être attribuées et examinées après coup",
+          "Une context window plus grande, pour que le modèle se souvienne de qui l'a appelé",
+          "Un seul service account partagé, par simplicité",
+          "Le prompt caching sur la description du tool"
+        ],
+        "why": "L'attribution après coup nécessite un logging et un monitoring des accès liés à l'identité. La taille de la context window n'a rien à voir avec les pistes d'audit, un seul compte partagé détruit l'attributabilité, et cacher une description n'a aucun rapport avec les logs d'accès."
+      }
+    }
   },
   {
     "domain": "Tool Implementation",
@@ -314,7 +574,20 @@
     "correct": [
       0
     ],
-    "why": "Distinct, well-scoped descriptions with explicit boundaries are the proactive defense against wrong-tool selection. A sprawling tool set or generic descriptions both increase ambiguity, and skipping detail leaves the model with nothing to disambiguate on."
+    "why": "Distinct, well-scoped descriptions with explicit boundaries are the proactive defense against wrong-tool selection. A sprawling tool set or generic descriptions both increase ambiguity, and skipping detail leaves the model with nothing to disambiguate on.",
+    "translations": {
+      "fr": {
+        "domain": "Implémentation de tools",
+        "q": "Vous concevez un ensemble de tools pour un agent et voulez minimiser la sélection du mauvais tool dès le départ, avant que des bugs n'apparaissent en production. Quelle pratique traite ce problème de façon proactive ?",
+        "options": [
+          "Rédiger chaque description de tool pour qu'elle soit mutuellement distincte, y compris quand ne pas l'utiliser, et garder l'ensemble de tools ciblé plutôt qu'étendu de façon excessive",
+          "Ajouter le plus de tools possible dès le départ pour que l'agent ait une flexibilité maximale pour toute tâche future",
+          "Donner à chaque tool une description identique et générique pour que l'agent ne soit biaisé envers aucun d'entre eux",
+          "Compter sur le jugement général du modèle et éviter d'écrire des descriptions détaillées"
+        ],
+        "why": "Des descriptions distinctes et bien délimitées, avec des frontières explicites, constituent la défense proactive contre la mauvaise sélection de tool. Un ensemble de tools étendu de façon excessive ou des descriptions génériques augmentent tous les deux l'ambiguïté, et éviter le détail ne laisse rien au modèle pour désambiguïser."
+      }
+    }
   },
   {
     "domain": "Tool Implementation",
@@ -329,7 +602,20 @@
     "correct": [
       0
     ],
-    "why": "A structured, categorised error lets the agent decide to retry, wait, or escalate appropriately. An empty string or generic message gives no actionable signal, and a silent partial result actively misleads the agent into treating a failure as success."
+    "why": "A structured, categorised error lets the agent decide to retry, wait, or escalate appropriately. An empty string or generic message gives no actionable signal, and a silent partial result actively misleads the agent into treating a failure as success.",
+    "translations": {
+      "fr": {
+        "domain": "Implémentation de tools",
+        "q": "Un appel de tool échoue parce que le service en aval est temporairement indisponible. Que devrait renvoyer le tool à l'agent ?",
+        "options": [
+          "Une erreur structurée indiquant que l'échec est transitoire et réessayable, distincte d'un échec permanent ou d'un input invalide",
+          "Une chaîne vide sans aucune information supplémentaire",
+          "Le même message d'erreur générique, que l'échec soit temporaire ou permanent",
+          "Un résultat partiel tronqué silencieusement sans aucune indication que quelque chose s'est mal passé"
+        ],
+        "why": "Une erreur structurée et catégorisée permet à l'agent de décider de réessayer, d'attendre, ou d'escalader de façon appropriée. Une chaîne vide ou un message générique ne donne aucun signal exploitable, et un résultat partiel silencieux induit activement l'agent à traiter un échec comme un succès."
+      }
+    }
   },
   {
     "domain": "MCP Server Development",
@@ -344,7 +630,20 @@
     "correct": [
       0
     ],
-    "why": "Resources are the MCP primitive for exposing readable reference data the model can pull into context. Tools represent actions rather than passive reference data, prompts are user-invoked templates, and a transport is the communication channel, not content."
+    "why": "Resources are the MCP primitive for exposing readable reference data the model can pull into context. Tools represent actions rather than passive reference data, prompts are user-invoked templates, and a transport is the communication channel, not content.",
+    "translations": {
+      "fr": {
+        "domain": "Développement de serveurs MCP",
+        "q": "Un serveur MCP expose un glossaire d'entreprise statique et volumineux que Claude doit pouvoir lire dans son contexte quand c'est pertinent, sans que le modèle ait besoin d'invoquer une action pour le récupérer chaque fois. Quelle primitive MCP convient le mieux ?",
+        "options": [
+          "Une resource",
+          "Un tool, puisque tout contenu utilisé par le modèle doit être récupéré via un appel de tool explicite",
+          "Un prompt template",
+          "Un réglage de transport"
+        ],
+        "why": "Les resources sont la primitive MCP faite pour exposer des données de référence lisibles que le modèle peut intégrer dans son contexte. Les tools représentent des actions plutôt que des données de référence passives, les prompts sont des templates invoqués par l'utilisateur, et un transport est le canal de communication, pas du contenu."
+      }
+    }
   },
   {
     "domain": "Agentic Customization",
@@ -359,7 +658,20 @@
     "correct": [
       0
     ],
-    "why": "Centralized maintenance, complex auth, and reuse across many applications is exactly the MCP server case. Duplicating a Skill or hand-syncing five custom tools both create maintenance burden the centralized server avoids, and pasted instructions cannot perform authenticated REST calls at all."
+    "why": "Centralized maintenance, complex auth, and reuse across many applications is exactly the MCP server case. Duplicating a Skill or hand-syncing five custom tools both create maintenance burden the centralized server avoids, and pasted instructions cannot perform authenticated REST calls at all.",
+    "translations": {
+      "fr": {
+        "domain": "Personnalisation agentique",
+        "q": "Une capacité doit appeler trois services REST internes différents avec une auth complexe, être réutilisée par cinq applications Claude distinctes, et être maintenue par une équipe platform dédiée. Quelle approche convient le mieux ?",
+        "options": [
+          "Un serveur MCP, maintenu de façon centralisée et auquel chacune des cinq applications se connecte",
+          "Un Skill dupliqué dans les repositories de chacune des cinq applications",
+          "Cinq custom tools écrits séparément à la main, un par application, maintenus manuellement en synchronisation",
+          "Un seul bloc d'instructions partagé et codé en dur, collé dans le system prompt de chaque application"
+        ],
+        "why": "Une maintenance centralisée, une auth complexe et une réutilisation à travers de nombreuses applications correspondent exactement au cas du serveur MCP. Dupliquer un Skill ou synchroniser à la main cinq custom tools créent tous les deux une charge de maintenance que le serveur centralisé évite, et des instructions collées ne peuvent absolument pas effectuer d'appels REST authentifiés."
+      }
+    }
   },
   {
     "domain": "Agent Architecture",
@@ -374,7 +686,20 @@
     "correct": [
       0
     ],
-    "why": "Mostly-fixed steps with one point of genuine judgement call for a workflow with a small bounded agentic decision, not a wholesale switch to autonomy. Full autonomy overcorrects for one variable point, a fully rigid workflow can't make the judgement call at all, and random selection ignores the data meant to inform the choice."
+    "why": "Mostly-fixed steps with one point of genuine judgement call for a workflow with a small bounded agentic decision, not a wholesale switch to autonomy. Full autonomy overcorrects for one variable point, a fully rigid workflow can't make the judgement call at all, and random selection ignores the data meant to inform the choice.",
+    "translations": {
+      "fr": {
+        "domain": "Architecture d'agents",
+        "q": "Les étapes d'une tâche sont majoritairement fixes, mais une étape nécessite occasionnellement que l'agent choisisse entre deux approches valides en fonction de données qu'il n'a jamais vues auparavant. Comment cela devrait-il être architecturé ?",
+        "options": [
+          "Un workflow dans l'ensemble, avec un petit point de décision agentique borné uniquement au niveau de cette unique étape variable",
+          "Un agent entièrement autonome pour chaque étape, puisque toute variabilité, où qu'elle soit, signifie que la tâche entière devrait être agentique",
+          "Un workflow rigide sans aucune étape agentique, nécessitant qu'un humain choisisse manuellement l'approche à chaque fois",
+          "Deux workflows entièrement séparés et codés en dur, un par approche possible, choisis au hasard"
+        ],
+        "why": "Des étapes majoritairement fixes avec un seul point de véritable jugement appellent un workflow avec une petite décision agentique bornée, pas un basculement complet vers l'autonomie. L'autonomie complète surcorrige pour un seul point variable, un workflow entièrement rigide ne peut pas du tout porter ce jugement, et une sélection aléatoire ignore les données censées éclairer le choix."
+      }
+    }
   },
   {
     "domain": "Agentic Customization",
@@ -389,7 +714,20 @@
     "correct": [
       0
     ],
-    "why": "Instructions and reference material with nothing external to call is the textbook Skill case; standing up a server here adds cost with no corresponding capability gained. Tools represent actions rather than formatting guidance, and while CLAUDE.md could hold some of this, a Skill is the structured, reusable form built for exactly this need."
+    "why": "Instructions and reference material with nothing external to call is the textbook Skill case; standing up a server here adds cost with no corresponding capability gained. Tools represent actions rather than formatting guidance, and while CLAUDE.md could hold some of this, a Skill is the structured, reusable form built for exactly this need.",
+    "translations": {
+      "fr": {
+        "domain": "Personnalisation agentique",
+        "q": "Une capacité consiste uniquement en un ensemble d'instructions écrites et d'exemples de référence sur la façon de formater un rapport spécifique, utilisée seulement dans Claude Code par une seule équipe, sans aucun système externe à appeler. Quelle approche convient, et pourquoi pas un serveur MCP ?",
+        "options": [
+          "Un Skill ; il n'y a aucune capacité externe ni système live à exposer, donc un serveur ajouterait une surcharge opérationnelle sans aucun bénéfice",
+          "Un serveur MCP, parce que toute capacité réutilisable devrait par défaut passer par un serveur, peu importe si elle appelle quelque chose d'externe",
+          "Un custom tool, puisque les tools sont le choix par défaut dès que plusieurs personnes vont utiliser quelque chose",
+          "Codé en dur dans CLAUDE.md sans aucune autre structure, puisque c'est spécifique à l'équipe"
+        ],
+        "why": "Des instructions et du matériel de référence sans rien d'externe à appeler, c'est le cas d'école du Skill ; monter un serveur ici ajoute un coût sans gain de capacité correspondant. Les tools représentent des actions plutôt qu'une consigne de formatage, et bien que CLAUDE.md puisse contenir une partie de cela, un Skill est la forme structurée et réutilisable construite exactement pour ce besoin."
+      }
+    }
   },
   {
     "domain": "Prompt Engineering",
@@ -405,7 +743,20 @@
       0,
       1
     ],
-    "why": "A word limit and required field set, plus a no-preamble rule, are direct constraints on the shape of the output. Worked pairs are few-shot examples rather than constraints, and a mission-statement explanation is background context, not a constraint on output form."
+    "why": "A word limit and required field set, plus a no-preamble rule, are direct constraints on the shape of the output. Worked pairs are few-shot examples rather than constraints, and a mission-statement explanation is background context, not a constraint on output form.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt Engineering",
+        "q": "Lesquels de ces DEUX éléments sont des exemples de contraintes de sortie, par opposition à des exemples few-shot ?",
+        "options": [
+          "Spécifier un nombre maximal de mots et un ensemble de champs JSON requis",
+          "Exiger que la réponse omette tout préambule et commence directement par la réponse",
+          "Montrer trois paires input-output travaillées avant la vraie tâche",
+          "Expliquer la mission de l'entreprise pour donner du contexte"
+        ],
+        "why": "Une limite de mots et un ensemble de champs requis, plus une règle de no-preamble, sont des contraintes directes sur la forme de l'output. Les paires travaillées sont des exemples few-shot plutôt que des contraintes, et l'explication de la mission d'entreprise est du contexte de fond, pas une contrainte sur la forme de l'output."
+      }
+    }
   },
   {
     "domain": "Prompt Engineering",
@@ -420,7 +771,20 @@
     "correct": [
       0
     ],
-    "why": "Long inputs are read less reliably in the middle, so critical instructions belong at the start or end, with unneeded background trimmed. Doubling background or repeating mid-document placement does not fix the position problem, and temperature does not affect positional attention."
+    "why": "Long inputs are read less reliably in the middle, so critical instructions belong at the start or end, with unneeded background trimmed. Doubling background or repeating mid-document placement does not fix the position problem, and temperature does not affect positional attention.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt Engineering",
+        "q": "Un prompt enfouit la seule instruction la plus importante au milieu de six paragraphes de contexte. Le modèle continue de la manquer. Quelle est la correction la plus directe ?",
+        "options": [
+          "Déplacer l'instruction critique au début ou à la fin du prompt, là où les modèles portent le plus fiablement leur attention, et couper le contexte superflu",
+          "Répéter les six paragraphes de contexte deux fois pour que l'instruction obtienne plus d'exposition au total",
+          "Passer à une temperature plus basse pour que le modèle lise plus attentivement",
+          "Ajouter l'instruction comme une sixième occurrence au milieu pour qu'elle apparaisse plus souvent"
+        ],
+        "why": "Les inputs longs sont lus de façon moins fiable au milieu, donc les instructions critiques doivent se trouver au début ou à la fin, avec le contexte inutile coupé. Doubler le contexte ou répéter en plein milieu du document ne corrige pas le problème de position, et la temperature n'affecte pas l'attention positionnelle."
+      }
+    }
   },
   {
     "domain": "Context Engineering",
@@ -435,6 +799,19 @@
     "correct": [
       0
     ],
-    "why": "Context isolation through separate subagent contexts lets each hold the shared reference without their intermediate reasoning bleeding together. A single shared context defeats the isolation goal, one subagent narrating to the other loses fidelity, and skipping the reference entirely abandons the actual source material."
+    "why": "Context isolation through separate subagent contexts lets each hold the shared reference without their intermediate reasoning bleeding together. A single shared context defeats the isolation goal, one subagent narrating to the other loses fidelity, and skipping the reference entirely abandons the actual source material.",
+    "translations": {
+      "fr": {
+        "domain": "Context engineering",
+        "q": "Deux subagents indépendants ont chacun besoin d'un large document de référence partagé pour accomplir leurs parties séparées d'une tâche, mais ces documents ne doivent pas polluer le raisonnement ultérieur de l'un avec les étapes intermédiaires de l'autre.",
+        "options": [
+          "Donner à chaque subagent son propre contexte isolé contenant la référence partagée, afin que leurs raisonnements intermédiaires ne se croisent jamais",
+          "Faire tourner les deux subagents dans un seul contexte partagé afin qu'ils puissent voir le raisonnement de l'autre au fur et à mesure",
+          "Donner le document de référence à un seul subagent et lui faire résumer verbalement l'ensemble à l'autre",
+          "Ne donner le document à aucun des deux et laisser les deux raisonner à partir de leur connaissance générale à la place"
+        ],
+        "why": "L'isolation de contexte via des contextes de subagents séparés permet à chacun de détenir la référence partagée sans que leurs raisonnements intermédiaires ne se mélangent. Un seul contexte partagé va à l'encontre de l'objectif d'isolation, un subagent qui narre à l'autre perd en fidélité, et se passer entièrement de la référence abandonne le matériel source réel."
+      }
+    }
   }
 ]

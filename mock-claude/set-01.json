@@ -13,7 +13,20 @@
     "correct": [
       0
     ],
-    "why": "Even at temperature 0, determinism is not guaranteed. The long option asserts a false impossibility; streaming and window size do not explain wording variation."
+    "why": "Even at temperature 0, determinism is not guaranteed. The long option asserts a false impossibility; streaming and window size do not explain wording variation.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux LLM",
+        "q": "Deux exécutions du même prompt à temperature 0 renvoient un texte légèrement différent. Quelle explication est correcte ?",
+        "options": [
+          "Le sampling peut encore introduire de la variation ; temperature 0 favorise les tokens les plus probables mais ne garantit pas une sortie strictement identique",
+          "C'est impossible à temperature 0, donc l'un des deux appels a forcément utilisé silencieusement une version de modèle différente ou renvoyé une réponse mise en cache d'une requête antérieure",
+          "Le streaming était resté activé pour l'un des deux appels",
+          "Les deux appels utilisaient des context windows différentes"
+        ],
+        "why": "Même à temperature 0, le déterminisme n'est pas garanti. L'option longue affirme à tort une impossibilité ; le streaming et la taille de la fenêtre n'expliquent pas la variation de formulation."
+      }
+    }
   },
   {
     "s": "A",
@@ -30,7 +43,20 @@
       0,
       1
     ],
-    "why": "Single-shot is one example; multi-shot adds several to shape output per call at token cost. Examples do not fine-tune the model, and zero-shot is not universally superior once specified."
+    "why": "Single-shot is one example; multi-shot adds several to shape output per call at token cost. Examples do not fine-tune the model, and zero-shot is not universally superior once specified.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt Engineering",
+        "q": "Parmi ces affirmations sur les modes de prompting, lesquelles DEUX sont exactes ? (Choisir 2)",
+        "options": [
+          "Le single-shot inclut exactement un exemple travaillé",
+          "Les exemples multi-shot guident la sortie pour cet appel, au prix d'un coût en tokens supplémentaire",
+          "Le zero-shot surpasse toujours le few-shot dès que la tâche est bien spécifiée",
+          "Le multi-shot fine-tune le modèle de façon permanente sur les exemples"
+        ],
+        "why": "Le single-shot correspond à un exemple ; le multi-shot en ajoute plusieurs pour orienter la sortie de chaque appel, au prix de tokens supplémentaires. Les exemples ne fine-tunent pas le modèle, et le zero-shot n'est pas systématiquement supérieur une fois la tâche spécifiée."
+      }
+    }
   },
   {
     "s": "A",
@@ -46,7 +72,20 @@
     "correct": [
       0
     ],
-    "why": "Overflowing mid-generation yields truncated output with a model_context_window_exceeded stop reason. The window is fixed: it neither silently drops turns nor expands."
+    "why": "Overflowing mid-generation yields truncated output with a model_context_window_exceeded stop reason. The window is fixed: it neither silently drops turns nor expands.",
+    "translations": {
+      "fr": {
+        "domain": "Mécanique de l'API",
+        "q": "Une session multi-tours grandit jusqu'à ce qu'une requête dépasse la fenêtre en pleine génération. Que se passe-t-il ?",
+        "options": [
+          "La sortie est tronquée et la réponse porte un stop_reason indiquant un dépassement de la context window",
+          "La requête est acceptée silencieusement et le modèle supprime les tours précédents qu'il juge les moins pertinents pour faire de la place au reste",
+          "La fenêtre s'agrandit automatiquement pour cet appel",
+          "L'appel renvoie un 200 avec un contenu vide"
+        ],
+        "why": "Un dépassement en pleine génération produit une sortie tronquée avec un stop_reason model_context_window_exceeded. La fenêtre est fixe : elle ne supprime pas silencieusement des tours et ne s'agrandit pas."
+      }
+    }
   },
   {
     "s": "A",
@@ -62,7 +101,20 @@
     "correct": [
       0
     ],
-    "why": "Adaptive thinking spends reasoning effort only where it changes the answer. Always-max overpays on trivial calls, fast-mode-everywhere underserves the hard ones, and a bigger tier does not target the mix."
+    "why": "Adaptive thinking spends reasoning effort only where it changes the answer. Always-max overpays on trivial calls, fast-mode-everywhere underserves the hard ones, and a bigger tier does not target the mix.",
+    "translations": {
+      "fr": {
+        "domain": "Sélection de modèles",
+        "q": "Vous avez de nombreux appels triviaux et occasionnellement des appels difficiles, et vous voulez payer pour un raisonnement approfondi uniquement quand cela aide. Que choisir ?",
+        "options": [
+          "Le adaptive thinking, avec un effort ajusté à la tâche",
+          "L'extended thinking figé à l'effort maximum sur chaque appel, pour que la qualité ne soit jamais en risque sur les cas réellement difficiles",
+          "Le mode rapide sur chaque appel",
+          "Un tier de modèle plus grand pour tous les appels"
+        ],
+        "why": "L'adaptive thinking ne dépense de l'effort de raisonnement que là où cela change la réponse. Un effort maximum permanent fait payer trop cher les appels triviaux, le mode rapide partout dessert les cas difficiles, et un tier plus grand ne cible pas ce mélange."
+      }
+    }
   },
   {
     "s": "A",
@@ -78,7 +130,20 @@
     "correct": [
       0
     ],
-    "why": "Caching cuts the cost of re-sending an unchanged prefix, but caches expire and only the stable portion is cached. It does not make calls free, target output tokens, or require batch."
+    "why": "Caching cuts the cost of re-sending an unchanged prefix, but caches expire and only the stable portion is cached. It does not make calls free, target output tokens, or require batch.",
+    "translations": {
+      "fr": {
+        "domain": "Coûts et tokens",
+        "q": "Un system prompt volumineux et stable est envoyé à chaque appel dans une application à fort volume. Que fait le prompt caching, et quelle est sa limite ?",
+        "options": [
+          "Il réutilise le préfixe stable à coût réduit, mais le cache expire et doit être rafraîchi, et seul le préfixe inchangé en bénéficie",
+          "Il rend tous les appels suivants gratuits, quels que soient les changements dans le prompt",
+          "Il réduit spécifiquement le coût des tokens de sortie",
+          "Il ne fonctionne qu'en mode batch"
+        ],
+        "why": "Le caching réduit le coût du renvoi d'un préfixe inchangé, mais les caches expirent et seule la partie stable est mise en cache. Il ne rend pas les appels gratuits, ne cible pas les tokens de sortie, et ne nécessite pas le mode batch."
+      }
+    }
   },
   {
     "s": "B",
@@ -95,7 +160,20 @@
       0,
       1
     ],
-    "why": "Wrong shape signals a missing output constraint; drift signals an underspecified system prompt. A hallucinated structure needs few-shot examples (not temperature), and shape is not fixed by reasoning examples."
+    "why": "Wrong shape signals a missing output constraint; drift signals an underspecified system prompt. A hallucinated structure needs few-shot examples (not temperature), and shape is not fixed by reasoning examples.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt Engineering",
+        "q": "Associez chaque échec de prompt à la technique manquante. Quelles DEUX associations sont correctes ? (Choisir 2)",
+        "options": [
+          "Sortie dans le mauvais format → ajouter une contrainte de sortie",
+          "Dérive au fil des tours → resserrer et compléter le system prompt",
+          "Structure hallucinée → augmenter la temperature",
+          "Mauvais format → ajouter plus d'exemples few-shot de raisonnement"
+        ],
+        "why": "Un mauvais format signale l'absence d'une contrainte de sortie ; la dérive signale un system prompt sous-spécifié. Une structure hallucinée a besoin d'exemples few-shot (pas de temperature), et le format ne se corrige pas avec des exemples de raisonnement."
+      }
+    }
   },
   {
     "s": "B",
@@ -111,7 +189,20 @@
     "correct": [
       0
     ],
-    "why": "Move control into the API with structured outputs and strict tool use. The long option is more of the prompt-only approach that already failed; temperature and model size do not enforce structure."
+    "why": "Move control into the API with structured outputs and strict tool use. The long option is more of the prompt-only approach that already failed; temperature and model size do not enforce structure.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion des sorties",
+        "q": "Le formatage géré uniquement par le prompt continue d'échouer sur des entrées non testées qui cassent votre parser. Quelle est la meilleure prochaine étape ?",
+        "options": [
+          "Contraindre la sortie au niveau de l'API : un JSON schema pour la réponse et un tool use strict pour les arguments",
+          "Étendre le prompt avec un ensemble exhaustif de règles de formatage et plusieurs rappels, puis réessayer toute entrée dont la sortie échoue au parsing jusqu'à ce qu'elle finisse par se conformer au schema",
+          "Baisser la temperature à 0 et faire confiance à la sortie",
+          "Passer à un modèle plus grand"
+        ],
+        "why": "Déplacez le contrôle vers l'API avec des sorties structurées et un tool use strict. L'option longue n'est qu'une nouvelle dose de l'approche uniquement par prompt qui a déjà échoué ; la temperature et la taille du modèle n'imposent pas de structure."
+      }
+    }
   },
   {
     "s": "B",
@@ -127,7 +218,20 @@
     "correct": [
       0
     ],
-    "why": "A stream ending is not a message completing: commit only after message_stop, discarding partial turns on interruption. Committing early risks storing a half-built turn."
+    "why": "A stream ending is not a message completing: commit only after message_stop, discarding partial turns on interruption. Committing early risks storing a half-built turn.",
+    "translations": {
+      "fr": {
+        "domain": "Mécanique de l'API",
+        "q": "À quel moment un tour en streaming doit-il être écrit dans l'historique de la conversation ?",
+        "options": [
+          "Seulement après message_stop",
+          "Dès l'arrivée du premier événement content_block_start, pour que l'historique stocké reste à jour avec le modèle en temps réel",
+          "Après le premier token",
+          "Chaque fois que le socket se ferme, quelle qu'en soit la raison"
+        ],
+        "why": "La fin d'un stream n'équivaut pas à la complétion d'un message : ne validez qu'après message_stop, en écartant les tours partiels en cas d'interruption. Valider trop tôt risque de stocker un tour à moitié construit."
+      }
+    }
   },
   {
     "s": "B",
@@ -143,7 +247,20 @@
     "correct": [
       0
     ],
-    "why": "Claude matches on the description, so an exclusion condition resolves most wrong-tool bugs. The long option is the trap: differing input schemas do not help when descriptions overlap."
+    "why": "Claude matches on the description, so an exclusion condition resolves most wrong-tool bugs. The long option is the trap: differing input schemas do not help when descriptions overlap.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Deux tools sont tous deux décrits comme récupérant de l'information, et Claude appelle souvent le mauvais. Quelle est la meilleure correction unique ?",
+        "options": [
+          "Ajouter à chaque description une indication claire de quand NE PAS l'utiliser",
+          "Donner à chaque tool un schema d'entrée plus riche et fortement typé, avec des noms de paramètres distinctifs, pour que le modèle ait plus de signal pour les différencier",
+          "Supprimer l'un des deux tools",
+          "Augmenter le tier du modèle"
+        ],
+        "why": "Claude se base sur la description, donc une condition d'exclusion résout la plupart des bugs de mauvais tool choisi. L'option longue est le piège : des schemas d'entrée différents n'aident pas quand les descriptions se recoupent."
+      }
+    }
   },
   {
     "s": "B",
@@ -159,7 +276,20 @@
     "correct": [
       0
     ],
-    "why": "For irreversible actions the gate goes into the design before the loop is wired. Waiting until after the first write, or only on retry, lets the irreversible action through first."
+    "why": "For irreversible actions the gate goes into the design before the loop is wired. Waiting until after the first write, or only on retry, lets the irreversible action through first.",
+    "translations": {
+      "fr": {
+        "domain": "Agents et workflows",
+        "q": "Vous câblez un agent dont un tool peut modifier de façon irréversible un système client. Où doit se situer le point de contrôle humain ?",
+        "options": [
+          "Dans la conception, en verrouillant l'action irréversible avant même que la boucle soit construite",
+          "Après la première écriture en production, ajouté une fois que vous avez observé le comportement de l'agent sur du trafic réel et pouvez placer le verrou précisément",
+          "Uniquement dans le gestionnaire de retry",
+          "Il peut être omis si les tests sont passés"
+        ],
+        "why": "Pour les actions irréversibles, le verrou doit faire partie de la conception avant même que la boucle soit câblée. Attendre après la première écriture, ou ne le placer que sur le retry, laisse passer l'action irréversible en premier."
+      }
+    }
   },
   {
     "s": "B",
@@ -175,7 +305,20 @@
     "correct": [
       0
     ],
-    "why": "State must survive across many short sessions, which external storage provides. Raising max_tokens does not survive session boundaries, stateless drops needed continuity, and summarised memory is still in-context."
+    "why": "State must survive across many short sessions, which external storage provides. Raising max_tokens does not survive session boundaries, stateless drops needed continuity, and summarised memory is still in-context.",
+    "translations": {
+      "fr": {
+        "domain": "Agents et workflows",
+        "q": "Les sessions en production s'avèrent courtes et nombreuses, à l'inverse des longues sessions de dev, et la mémoire in-context échoue désormais tôt. Quel modèle convient le plus probablement ?",
+        "options": [
+          "Un stockage externe qui persiste l'état à travers les nombreuses sessions courtes",
+          "Conserver la mémoire in-context mais augmenter max_tokens à chaque session pour que l'historique ait plus de place pour s'accumuler avant d'échouer",
+          "Sans état (stateless) pour chaque session",
+          "Une mémoire in-context résumée"
+        ],
+        "why": "L'état doit survivre à travers de nombreuses sessions courtes, ce que fournit un stockage externe. Augmenter max_tokens ne survit pas aux limites de session, le mode stateless perd la continuité nécessaire, et une mémoire résumée reste in-context."
+      }
+    }
   },
   {
     "s": "B",
@@ -191,7 +334,20 @@
     "correct": [
       0
     ],
-    "why": "Image cost grows with dimensions and the ceiling differs by tier, so resolution matters a lot. Flat pricing and output-only billing are wrong, and text description is not universally cheaper."
+    "why": "Image cost grows with dimensions and the ceiling differs by tier, so resolution matters a lot. Flat pricing and output-only billing are wrong, and text description is not universally cheaper.",
+    "translations": {
+      "fr": {
+        "domain": "Mécanique de l'API",
+        "q": "Avant d'écrire l'ingestion multimodale, vous estimez le coût des images. Quelle affirmation est exacte ?",
+        "options": [
+          "Les tokens visuels augmentent avec les dimensions de l'image et le plafond par image varie selon le tier du modèle, donc un original haute résolution peut coûter plusieurs fois plus qu'une miniature",
+          "Toutes les images coûtent un nombre de tokens fixe, quelle que soit leur taille ou le modèle",
+          "Les images ne sont facturées que sur les tokens de sortie",
+          "Décrire les images en texte est toujours moins cher que de les envoyer"
+        ],
+        "why": "Le coût d'une image augmente avec ses dimensions et le plafond diffère selon le tier, donc la résolution compte beaucoup. La tarification fixe et la facturation sur la sortie seule sont fausses, et décrire en texte n'est pas universellement moins cher."
+      }
+    }
   },
   {
     "s": "B",
@@ -207,7 +363,20 @@
     "correct": [
       0
     ],
-    "why": "Connected servers load their definitions into context regardless of use, so connect deliberately. The long option invents a restriction that does not exist."
+    "why": "Connected servers load their definitions into context regardless of use, so connect deliberately. The long option invents a restriction that does not exist.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Vous connectez trois serveurs MCP pour réutiliser des tools maintenus. Que devez-vous gérer ?",
+        "options": [
+          "Les définitions de tools de chaque serveur se chargent dans le context qu'elles soient utilisées ou non, ce qui ajoute du coût",
+          "Une fois connectés, les serveurs prennent le contrôle du routage des tools et vos tools personnalisés écrits à la main ne peuvent plus être enregistrés dans la même application",
+          "Les trois doivent utiliser stdio",
+          "La context window s'agrandit de façon permanente"
+        ],
+        "why": "Les serveurs connectés chargent leurs définitions dans le context, qu'elles soient utilisées ou non, donc il faut se connecter délibérément. L'option longue invente une restriction qui n'existe pas."
+      }
+    }
   },
   {
     "s": "B",
@@ -223,7 +392,20 @@
     "correct": [
       0
     ],
-    "why": "Thinking blocks must be returned unchanged or the next request fails. Summarising, deleting, or relocating them breaks the exchange."
+    "why": "Thinking blocks must be returned unchanged or the next request fails. Summarising, deleting, or relocating them breaks the exchange.",
+    "translations": {
+      "fr": {
+        "domain": "Sélection de modèles",
+        "q": "Au fil d'un échange multi-tours utilisant l'extended thinking, que doit-il se passer avec les thinking blocks ?",
+        "options": [
+          "Ils doivent être renvoyés inchangés",
+          "Ils devraient être résumés et renvoyés pour que l'historique reste compact tout en préservant le raisonnement pour les tours suivants",
+          "Ils devraient être supprimés avant l'appel suivant",
+          "Ils devraient se trouver dans le system prompt"
+        ],
+        "why": "Les thinking blocks doivent être renvoyés inchangés, sinon la requête suivante échoue. Les résumer, les supprimer ou les déplacer casse l'échange."
+      }
+    }
   },
   {
     "s": "C",
@@ -240,7 +422,20 @@
       0,
       1
     ],
-    "why": "Allowing safe commands while denying destructive ones gates shell execution, and denying Read(.env.production) enforces the path restriction at the settings layer. bypassPermissions removes the guard, and an unrestricted allow is the opposite of the requirement."
+    "why": "Allowing safe commands while denying destructive ones gates shell execution, and denying Read(.env.production) enforces the path restriction at the settings layer. bypassPermissions removes the guard, and an unrestricted allow is the opposite of the requirement.",
+    "translations": {
+      "fr": {
+        "domain": "Claude Code",
+        "q": "Vous configurez Claude Code pour un refactor de confiance qui doit auto-approuver les edits, bloquer les commandes shell destructrices, et ne jamais lire .env.production. Quelles DEUX parties de settings sont correctes ? (Choisir 2)",
+        "options": [
+          "allow [\"Bash(npm run:*)\"], deny [\"Bash(rm:*)\", \"Bash(git push:*)\"]",
+          "deny [\"Read(.env.production)\"]",
+          "defaultMode \"bypassPermissions\"",
+          "allow [\"Bash(*)\", \"Edit(*)\"] sans verrou sur les commandes destructrices"
+        ],
+        "why": "Autoriser les commandes sûres tout en refusant les destructrices verrouille l'exécution shell, et refuser Read(.env.production) impose la restriction de chemin au niveau des settings. bypassPermissions retire le garde-fou, et un allow sans restriction est l'opposé de l'exigence."
+      }
+    }
   },
   {
     "s": "C",
@@ -256,7 +451,20 @@
     "correct": [
       0
     ],
-    "why": "Auto-approving edits is fine as a default, but the worst-case high-cost action still warrants a human gate before the write. Reviewing after the fact is too late for a change that reaches production services."
+    "why": "Auto-approving edits is fine as a default, but the worst-case high-cost action still warrants a human gate before the write. Reviewing after the fact is too late for a change that reaches production services.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Vos settings auto-approuvent les edits. En plein refactor, l'agent propose de modifier un fichier de configuration de déploiement lu par plusieurs services en production. Où doit se situer un verrou humain pour cette action précise ?",
+        "options": [
+          "Un humain relit et approuve ce changement précis avant que l'écriture ne s'exécute, car une valeur erronée est difficile à annuler et affecte des systèmes au-delà du fichier",
+          "Nulle part ; les settings auto-approuvent déjà les edits",
+          "Ajouter bypassPermissions pour que l'agent ne s'arrête jamais",
+          "Le relire après l'écriture, dans la prochaine pull request"
+        ],
+        "why": "Auto-approuver les edits par défaut est correct, mais l'action la plus coûteuse dans le pire cas justifie tout de même un verrou humain avant l'écriture. La relire après coup arrive trop tard pour un changement qui atteint des services en production."
+      }
+    }
   },
   {
     "s": "C",
@@ -273,7 +481,20 @@
       0,
       1
     ],
-    "why": "Only PreToolUse can block, and the hook signals a block with exit code 2 plus a reason on stderr. PostToolUse runs after the tool, so it cannot prevent the read, and exit 0 allows the call."
+    "why": "Only PreToolUse can block, and the hook signals a block with exit code 2 plus a reason on stderr. PostToolUse runs after the tool, so it cannot prevent the read, and exit 0 allows the call.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Un hook PreToolUse doit bloquer une lecture non autorisée. Quelles DEUX affirmations sont vraies ? (Choisir 2)",
+        "options": [
+          "Il doit utiliser PreToolUse, car cet événement se déclenche avant l'exécution du tool",
+          "Sortir avec le code 2 bloque l'appel, et le texte écrit sur stderr devient le message que Claude voit",
+          "PostToolUse pourrait aussi bloquer, en inspectant le résultat et en annulant la lecture",
+          "Sortir avec le code 0 et la raison sur stdout est ce qui signale le blocage"
+        ],
+        "why": "Seul PreToolUse peut bloquer, et le hook signale un blocage avec le code de sortie 2 plus une raison sur stderr. PostToolUse s'exécute après le tool, donc il ne peut pas empêcher la lecture, et sortir avec le code 0 autorise l'appel."
+      }
+    }
   },
   {
     "s": "C",
@@ -289,7 +510,20 @@
     "correct": [
       0
     ],
-    "why": "In the Claude Code terminal, a Skill loads from .claude/skills when its description matches the request. The long option is the Anthropic-hosted-agent setup; the others belong to the Messages API and Agent SDK runtimes."
+    "why": "In the Claude Code terminal, a Skill loads from .claude/skills when its description matches the request. The long option is the Anthropic-hosted-agent setup; the others belong to the Messages API and Agent SDK runtimes.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Un développeur veut qu'une Skill de checklist de revue se charge quand il demande une revue dans le terminal Claude Code. Que doit-on configurer ?",
+        "options": [
+          "Placer SKILL.md dans .claude/skills avec une description qui correspond aux demandes de revue",
+          "Définir l'agent comme une ressource API qui liste la skill et définir le header beta managed-agents sur les appels, en écrivant la skill pour que ses étapes ne dépendent d'aucun fichier local",
+          "Envoyer les headers beta code-execution et skills sur chaque requête",
+          "Définir settingSources explicitement pour l'Agent SDK"
+        ],
+        "why": "Dans le terminal Claude Code, une Skill se charge depuis .claude/skills quand sa description correspond à la demande. L'option longue correspond à la configuration d'un agent hébergé par Anthropic ; les autres appartiennent aux runtimes de la Messages API et de l'Agent SDK."
+      }
+    }
   },
   {
     "s": "C",
@@ -305,7 +539,20 @@
     "correct": [
       0
     ],
-    "why": "For an Agent SDK job that must load skills from the repo, set settingSources explicitly rather than trusting a default. The terminal placement, managed-agents header, and code-execution headers belong to other runtimes."
+    "why": "For an Agent SDK job that must load skills from the repo, set settingSources explicitly rather than trusting a default. The terminal placement, managed-agents header, and code-execution headers belong to other runtimes.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Un job headless planifié utilise l'Agent SDK et attend que la Skill se charge depuis le repo. Que doit-on configurer ?",
+        "options": [
+          "Activer les sources filesystem en définissant settingSources explicitement pour que l'agent charge les skills depuis le projet, plutôt que de compter sur une valeur par défaut, et vérifier la valeur par défaut actuelle dans la référence de l'Agent SDK",
+          "Placer SKILL.md dans .claude/skills et compter sur le comportement par défaut du terminal",
+          "Définir le header beta managed-agents",
+          "Envoyer les headers beta code-execution et skills"
+        ],
+        "why": "Pour un job Agent SDK qui doit charger les skills depuis le repo, définissez settingSources explicitement plutôt que de faire confiance à une valeur par défaut. Le placement dans le terminal, le header managed-agents et les headers code-execution appartiennent à d'autres runtimes."
+      }
+    }
   },
   {
     "s": "C",
@@ -321,7 +568,20 @@
     "correct": [
       0
     ],
-    "why": "The defect is the absolute path to the author's home directory; referencing from CLAUDE_PROJECT_DIR resolves from the repo root anywhere. Another absolute path or a home shortcut just moves the same problem, and removing the step drops the capability."
+    "why": "The defect is the absolute path to the author's home directory; referencing from CLAUDE_PROJECT_DIR resolves from the repo root anywhere. Another absolute path or a home shortcut just moves the same problem, and removing the step drops the capability.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion de la configuration",
+        "q": "Un SKILL.md fonctionne sur la machine de son auteur mais casse quand un collègue clone le repo, car l'étape 1 appelle /Users/alexmorgan/projects/deploy-utils/validate.sh. Quelle est la bonne correction ?",
+        "options": [
+          "Référencer le script depuis la racine du projet via CLAUDE_PROJECT_DIR pour qu'il se résolve où que le repo soit cloné",
+          "Le remplacer par un autre chemin absolu qui pointe vers un lecteur réseau partagé accessible à tous",
+          "Utiliser un raccourci de répertoire personnel comme ~/projects/deploy-utils/validate.sh",
+          "Supprimer l'étape pour que la skill n'appelle plus de script externe"
+        ],
+        "why": "Le défaut est le chemin absolu vers le répertoire personnel de l'auteur ; référencer depuis CLAUDE_PROJECT_DIR se résout depuis la racine du repo n'importe où. Un autre chemin absolu ou un raccourci personnel ne fait que déplacer le même problème, et supprimer l'étape fait perdre la fonctionnalité."
+      }
+    }
   },
   {
     "s": "C",
@@ -337,7 +597,20 @@
     "correct": [
       0
     ],
-    "why": "An org-wide mandate for every install is an enterprise-scope, HTTP-transport deployment through managed settings. Local scopes are per-developer, and project scope covers one team's repo, not the whole organisation."
+    "why": "An org-wide mandate for every install is an enterprise-scope, HTTP-transport deployment through managed settings. Local scopes are per-developer, and project scope covers one team's repo, not the whole organisation.",
+    "translations": {
+      "fr": {
+        "domain": "Développement de serveurs MCP",
+        "q": "Un serveur MCP de scan de sécurité doit être déployé sur l'installation Claude Code de chaque développeur dans toute l'organisation. Quel transport et quel scope conviennent ?",
+        "options": [
+          "HTTP + Enterprise (managed settings)",
+          "stdio + Local, installé une fois sur chaque machine et partagé de façon informelle pour que chaque développeur garde le contrôle de sa propre copie",
+          "HTTP + Project (.mcp.json)",
+          "stdio or HTTP + Local"
+        ],
+        "why": "Un mandat à l'échelle de l'organisation pour chaque installation appelle un déploiement de scope enterprise en transport HTTP via des managed settings. Les scopes locaux sont par développeur, et le scope projet couvre le repo d'une équipe, pas toute l'organisation."
+      }
+    }
   },
   {
     "s": "D",
@@ -354,7 +627,20 @@
       0,
       1
     ],
-    "why": "Gradeable criteria state a checkable output. 'Every action item and its owner' and a constrained 'approve/deny plus reason' can be graded; 'helpful' and 'satisfies the user' are too vague to check."
+    "why": "Gradeable criteria state a checkable output. 'Every action item and its owner' and a constrained 'approve/deny plus reason' can be graded; 'helpful' and 'satisfies the user' are too vague to check.",
+    "translations": {
+      "fr": {
+        "domain": "Eval et debugging",
+        "q": "Parmi ces critères de succès, lesquels DEUX sont assez précis pour construire un eval ? (Choisir 2)",
+        "options": [
+          "Un résumé de deux phrases qui liste chaque action à faire et son responsable",
+          "Une décision de remboursement valant exactement 'approve' ou 'deny' avec une raison en une ligne",
+          "Un résumé utile et de haute qualité du fil de discussion",
+          "Une réponse qui satisfait l'utilisateur"
+        ],
+        "why": "Un critère gradable énonce une sortie vérifiable. 'Chaque action et son responsable' et un 'approve/deny plus raison' contraint peuvent être notés ; 'utile' et 'satisfait l'utilisateur' sont trop vagues pour être vérifiés."
+      }
+    }
   },
   {
     "s": "D",
@@ -370,7 +656,20 @@
     "correct": [
       0
     ],
-    "why": "Failure handling means naming each error, classifying it retriable or terminal, and stating the fallback for the user. Blind retry loops, longer timeouts, and bigger models are not an error path."
+    "why": "Failure handling means naming each error, classifying it retriable or terminal, and stating the fallback for the user. Blind retry loops, longer timeouts, and bigger models are not an error path.",
+    "translations": {
+      "fr": {
+        "domain": "Eval et debugging",
+        "q": "Dans la section de gestion des échecs d'un design doc, quelle est la tâche centrale ?",
+        "options": [
+          "Énumérer les erreurs que la production va lever, marquer chacune comme retriable ou terminale, et définir le résultat visible par l'utilisateur quand la récupération échoue",
+          "Envelopper chaque appel externe dans une boucle de retry automatique qui continue d'essayer jusqu'au succès, puisque la plupart des échecs en production sont transitoires et se résolvent d'eux-mêmes en quelques tentatives",
+          "Augmenter le timeout de la requête",
+          "Passer à un modèle plus grand pour plus de résilience"
+        ],
+        "why": "La gestion des échecs consiste à nommer chaque erreur, à la classer retriable ou terminale, et à énoncer le repli visible par l'utilisateur. Des boucles de retry aveugles, des timeouts plus longs et des modèles plus grands ne constituent pas un chemin d'erreur."
+      }
+    }
   },
   {
     "s": "D",
@@ -386,7 +685,20 @@
     "correct": [
       0
     ],
-    "why": "Set hard budgets before architecture so you can check the design against them before writing code. Waiting until after the build, an overrun, or an incident means the budget never shaped the design."
+    "why": "Set hard budgets before architecture so you can check the design against them before writing code. Waiting until after the build, an overrun, or an incident means the budget never shaped the design.",
+    "translations": {
+      "fr": {
+        "domain": "Sélection de modèles",
+        "q": "Quand faut-il fixer des budgets stricts de coût et de latence ?",
+        "options": [
+          "Avant que l'architecture ne soit décidée",
+          "Après que le système soit construit et profilé sous trafic réel, quand vous avez enfin des chiffres précis sur lesquels baser les plafonds",
+          "Seulement une fois que les coûts dépassent les prévisions",
+          "Lors de la première revue d'incident"
+        ],
+        "why": "Fixez des budgets stricts avant l'architecture pour pouvoir vérifier la conception par rapport à eux avant d'écrire du code. Attendre après la construction, un dépassement, ou un incident signifie que le budget n'a jamais façonné la conception."
+      }
+    }
   },
   {
     "s": "D",
@@ -402,7 +714,20 @@
     "correct": [
       0
     ],
-    "why": "A named boundary becomes an enforceable design decision, implemented with a hook. Documentation alone enforces nothing at runtime, and least privilege cannot be skipped or wholly delegated away."
+    "why": "A named boundary becomes an enforceable design decision, implemented with a hook. Documentation alone enforces nothing at runtime, and least privilege cannot be skipped or wholly delegated away.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Nommer la frontière de confiance sur papier transforme le least privilege en quelque chose que vous pouvez…?",
+        "options": [
+          "Faire respecter avec un hook, plutôt qu'un setting que vous vous souvenez d'ajouter plus tard",
+          "Garantir automatiquement, car documenter la frontière est en soi ce qui applique la restriction au runtime sur chaque tool que l'agent peut atteindre",
+          "Omettre, si le modèle se comporte bien",
+          "Déléguer entièrement à l'équipe sécurité"
+        ],
+        "why": "Une frontière nommée devient une décision de conception applicable, mise en œuvre avec un hook. La documentation seule n'applique rien au runtime, et le least privilege ne peut être omis ni entièrement délégué."
+      }
+    }
   },
   {
     "s": "D",
@@ -418,7 +743,20 @@
     "correct": [
       0
     ],
-    "why": "Open-ended grading at scale uses an LLM judge against explicit criteria, calibrated to human labels. Self-reported confidence is unreliable, exact-match fails on free text, and a handful of samples does not generalise."
+    "why": "Open-ended grading at scale uses an LLM judge against explicit criteria, calibrated to human labels. Self-reported confidence is unreliable, exact-match fails on free text, and a handful of samples does not generalise.",
+    "translations": {
+      "fr": {
+        "domain": "Eval et debugging",
+        "q": "Vous devez noter des milliers de résumés ouverts où l'exact-match ne fonctionnera pas. Quelle approche est solide ?",
+        "options": [
+          "Un LLM-as-judge qui note par rapport à des critères explicites, validé sur un échantillon labellisé par des humains",
+          "Faire confiance à la confiance déclarée par chaque résumé et noter sur cette base, puisque le modèle a le plus de context sur sa propre réussite",
+          "Une correspondance exacte de chaîne (exact-string match) avec une référence",
+          "Examiner quelques échantillons à l'œil et extrapoler"
+        ],
+        "why": "Noter des sorties ouvertes à grande échelle utilise un juge LLM par rapport à des critères explicites, calibré sur des labels humains. La confiance auto-déclarée n'est pas fiable, l'exact-match échoue sur du texte libre, et quelques échantillons ne généralisent pas."
+      }
+    }
   },
   {
     "s": "D",
@@ -434,7 +772,20 @@
     "correct": [
       0
     ],
-    "why": "A step-by-step trace shows where the run diverged, isolating tool versus model versus orchestration. Re-reading, rerunning, and model swaps are guesses that do not localise the fault."
+    "why": "A step-by-step trace shows where the run diverged, isolating tool versus model versus orchestration. Re-reading, rerunning, and model swaps are guesses that do not localise the fault.",
+    "translations": {
+      "fr": {
+        "domain": "Eval et debugging",
+        "q": "Un agent renvoie une mauvaise réponse. Qu'est-ce qui isole le plus directement si c'est le tool, le modèle, ou l'orchestration qui a échoué ?",
+        "options": [
+          "Une trace de l'exécution",
+          "Relire attentivement la réponse finale pour déduire de sa formulation où le raisonnement a dû se tromper",
+          "La réexécuter plusieurs fois",
+          "Remplacer par un modèle plus grand"
+        ],
+        "why": "Une trace détaillée de l'exécution montre où le run a divergé, isolant le tool, le modèle ou l'orchestration. Relire, réexécuter, et changer de modèle sont des suppositions qui ne localisent pas la faute."
+      }
+    }
   },
   {
     "s": "D",
@@ -450,7 +801,20 @@
     "correct": [
       0
     ],
-    "why": "Two problems are stacked: a rejected key and an insecurely stored one, so both must be fixed. Rotating back into the same file leaves the storage defect, OAuth does not match a service-account identity, and backoff does not fix a rejected key."
+    "why": "Two problems are stacked: a rejected key and an insecurely stored one, so both must be fixed. Rotating back into the same file leaves the storage defect, OAuth does not match a service-account identity, and backoff does not fix a rejected key.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Une trace de connexion MCP montre un 401 à la fois sur la première tentative et sur le retry, avec le credential lu comme une valeur en clair depuis un fichier à un chemin connu. Quelle est la bonne correction ?",
+        "options": [
+          "Faire une rotation de la clé rejetée pour que la connexion puisse s'authentifier, et sortir le credential du fichier vers une variable d'environnement au runtime pour qu'il ne soit plus jamais stocké en clair",
+          "Faire une rotation de la clé et réécrire la nouvelle valeur dans le même fichier de credentials, puisqu'une clé fraîche est ce que le service acceptera",
+          "Passer ce service de l'authentification par API-key à OAuth",
+          "Ajouter un retry avec backoff pour qu'une troisième tentative puisse réussir"
+        ],
+        "why": "Deux problèmes se superposent : une clé rejetée et une clé stockée de façon non sécurisée, donc les deux doivent être corrigés. Faire une rotation en réécrivant dans le même fichier laisse le défaut de stockage, OAuth ne correspond pas à une identité de compte de service, et le backoff ne corrige pas une clé rejetée."
+      }
+    }
   },
   {
     "s": "E",
@@ -466,7 +830,20 @@
     "correct": [
       0
     ],
-    "why": "When data residency governs, choose the platform that keeps data in the client's cloud and compliance boundary. Cost, model recency, and an assumption that only local hosting is compliant all miss the constraint."
+    "why": "When data residency governs, choose the platform that keeps data in the client's cloud and compliance boundary. Cost, model recency, and an assumption that only local hosting is compliant all miss the constraint.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Un client régulé exige que les données ne quittent jamais son cloud existant. Comment cela doit-il orienter le choix de plateforme ?",
+        "options": [
+          "Exécuter sur le fournisseur (Bedrock ou Vertex) qui garde les données à l'intérieur du cloud et de la frontière de conformité du client",
+          "Par défaut utiliser l'API first-party, puisqu'elle est toujours la moins chère et reçoit les nouveaux modèles en premier, puis ajouter des contrôles réseau par-dessus pour satisfaire les auditeurs",
+          "Seul le self-hosting local peut être conforme",
+          "Choisir la plateforme qui a le modèle le plus récent"
+        ],
+        "why": "Quand la résidence des données gouverne, choisissez la plateforme qui garde les données dans le cloud et la frontière de conformité du client. Le coût, la fraîcheur du modèle, et l'idée que seul le self-hosting est conforme passent tous à côté de la contrainte."
+      }
+    }
   },
   {
     "s": "E",
@@ -483,6 +860,19 @@
       0,
       1
     ],
-    "why": "Pinning the model and versioning prompts make changes deliberate, attributable, and reversible. Auto-upgrading and unversioned inline prompts remove exactly the control that reuse and rollback depend on."
+    "why": "Pinning the model and versioning prompts make changes deliberate, attributable, and reversible. Auto-upgrading and unversioned inline prompts remove exactly the control that reuse and rollback depend on.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion de la configuration",
+        "q": "Vous préparez un build pour la réutilisation et un déploiement sûr. Quelles DEUX pratiques comptent le plus ? (Choisir 2)",
+        "options": [
+          "Épingler (pin) la version du modèle en production",
+          "Versionner vos prompts pour qu'un changement puisse être attribué et annulé (rollback)",
+          "Toujours déployer automatiquement sur le modèle le plus récent pour rester à jour",
+          "Garder les prompts en ligne (inline) et non versionnés pour réduire la charge"
+        ],
+        "why": "Épingler le modèle et versionner les prompts rendent les changements délibérés, attribuables et réversibles. Le passage automatique au dernier modèle et les prompts en ligne non versionnés suppriment exactement le contrôle dont dépendent la réutilisation et le rollback."
+      }
+    }
   }
 ]

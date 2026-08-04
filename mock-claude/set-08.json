@@ -12,7 +12,20 @@
     "correct": [
       0
     ],
-    "why": "Tokens are the unit of text for input/output, billing, and context-window accounting."
+    "why": "Tokens are the unit of text for input/output, billing, and context-window accounting.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux LLM",
+        "q": "Qu'est-ce qu'un token dans l'API Claude ?",
+        "options": [
+          "Unité de texte que le modèle lit et génère ; la facturation et la fenêtre de contexte sont mesurées en tokens",
+          "Une clé de cache permanente qui expire après 24 heures",
+          "Une resource MCP nommée pour l'accès au système de fichiers",
+          "Une règle de permission qui autorise ou refuse les commandes Bash"
+        ],
+        "why": "Les tokens sont l'unité de texte pour l'entrée/sortie, la facturation et la comptabilité de la fenêtre de contexte."
+      }
+    }
   },
   {
     "domain": "LLM Fundamentals",
@@ -27,7 +40,20 @@
     "correct": [
       0
     ],
-    "why": "The context window is a fixed token budget covering prompts, history, tool results, and output."
+    "why": "The context window is a fixed token budget covering prompts, history, tool results, and output.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux LLM",
+        "q": "Quelle définition correspond à la fenêtre de contexte (context window) ?",
+        "options": [
+          "Budget fixe de tokens pour les prompts, l'historique, les résultats d'outils et la sortie",
+          "Stockage illimité pour chaque conversation passée à travers tous les clients",
+          "Un paramètre d'interface qui contrôle uniquement la temperature",
+          "Le nombre maximal de tools qu'un projet peut enregistrer"
+        ],
+        "why": "La fenêtre de contexte est un budget de tokens fixe couvrant les prompts, l'historique, les résultats d'outils et la sortie."
+      }
+    }
   },
   {
     "domain": "LLM Fundamentals",
@@ -42,7 +68,20 @@
     "correct": [
       0
     ],
-    "why": "Temperature steers sampling randomness; temperature 0 still does not guarantee identical bytes."
+    "why": "Temperature steers sampling randomness; temperature 0 still does not guarantee identical bytes.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux LLM",
+        "q": "Que contrôle la temperature / le sampling ?",
+        "options": [
+          "Le caractère aléatoire dans le choix des tokens ; même à temperature 0, la sortie n'est pas garantie identique octet pour octet",
+          "Quelle région cloud héberge le modèle",
+          "Si les résultats d'outils sont écrits sur disque",
+          "L'ID de modèle daté figé en production"
+        ],
+        "why": "La temperature pilote l'aléatoire du sampling ; la temperature 0 ne garantit toujours pas des octets identiques."
+      }
+    }
   },
   {
     "domain": "LLM Fundamentals",
@@ -57,7 +96,20 @@
     "correct": [
       0
     ],
-    "why": "Slight variation is expected; grade structure/facts rather than exact strings."
+    "why": "Slight variation is expected; grade structure/facts rather than exact strings.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux LLM",
+        "q": "Qu'implique le non-déterminisme pour tester les sorties de Claude ?",
+        "options": [
+          "Des appels identiques peuvent différer légèrement ; vérifier la structure ou les faits clés, pas une chaîne exacte",
+          "Chaque appel à temperature 0 doit correspondre octet pour octet pour toujours",
+          "Le streaming doit être désactivé sinon les résultats sont invalides",
+          "Le non-déterminisme n'apparaît qu'en utilisant la Batches API"
+        ],
+        "why": "Une légère variation est attendue ; noter la structure/les faits plutôt que des chaînes exactes."
+      }
+    }
   },
   {
     "domain": "LLM Fundamentals",
@@ -72,7 +124,20 @@
     "correct": [
       0
     ],
-    "why": "Tiers are capability/cost/latency families chosen to match task difficulty."
+    "why": "Tiers are capability/cost/latency families chosen to match task difficulty.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux LLM",
+        "q": "Que sont les tiers de modèle (model tiers) ?",
+        "options": [
+          "Des familles de modèles échangeant capacité contre coût/latence ; faire correspondre le tier à la difficulté de la tâche",
+          "Des niveaux de permission à l'intérieur de Claude Code (allow / deny / ask)",
+          "Des modes de transport MCP (stdio vs HTTP)",
+          "Des notes d'eval : pass, fail, et flaky"
+        ],
+        "why": "Les tiers sont des familles capacité/coût/latence choisies pour correspondre à la difficulté de la tâche."
+      }
+    }
   },
   {
     "domain": "LLM Fundamentals",
@@ -87,7 +152,20 @@
     "correct": [
       0
     ],
-    "why": "max_tokens caps generated output length; it does not reduce input tokens or history size."
+    "why": "max_tokens caps generated output length; it does not reduce input tokens or history size.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux LLM",
+        "q": "Que contrôle max_tokens ?",
+        "options": [
+          "Une limite sur les tokens de sortie pour un appel ; cela ne réduit pas le coût d'entrée ni ne réduit l'historique de conversation",
+          "La taille du préfixe de prompt cache",
+          "Combien de fichiers la Files API peut héberger",
+          "Le nombre maximal de jobs Batches concurrents"
+        ],
+        "why": "max_tokens limite la longueur de la sortie générée ; cela ne réduit pas les tokens d'entrée ni la taille de l'historique."
+      }
+    }
   },
   {
     "domain": "LLM Fundamentals",
@@ -102,7 +180,20 @@
     "correct": [
       0
     ],
-    "why": "Images consume tokens based on size; limits depend on the model tier."
+    "why": "Images consume tokens based on size; limits depend on the model tier.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux LLM",
+        "q": "Que sont les tokens visuels (visual tokens) ?",
+        "options": [
+          "Le coût en tokens d'une image qui s'échelonne avec les dimensions ; le plafond varie selon le tier de modèle",
+          "Des tokens réservés exclusivement aux system prompts",
+          "Des cache breakpoints marqués sur les URL d'images",
+          "Des tokens de permission pour lire des captures d'écran dans Claude Code"
+        ],
+        "why": "Les images consomment des tokens selon leur taille ; les limites dépendent du tier de modèle."
+      }
+    }
   },
   {
     "domain": "Prompt and Context Engineering",
@@ -117,7 +208,20 @@
     "correct": [
       0
     ],
-    "why": "System prompts hold stable role/rules; they are conventionally strongest but not injection-proof."
+    "why": "System prompts hold stable role/rules; they are conventionally strongest but not injection-proof.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt et context engineering",
+        "q": "Qu'est-ce qu'un system prompt ?",
+        "options": [
+          "Emplacement durable pour le rôle, le ton et les règles stables face aux tours utilisateur ultérieurs — pas une preuve absolue contre l'injection",
+          "Un message utilisateur d'une ligne qui doit être régénéré à chaque tour",
+          "Un tool MCP qui renvoie les conventions du projet",
+          "Un alias de modèle flottant qui pointe toujours vers le dernier"
+        ],
+        "why": "Les system prompts contiennent le rôle/les règles stables ; ils sont conventionnellement les plus forts mais pas à l'épreuve de l'injection."
+      }
+    }
   },
   {
     "domain": "Prompt and Context Engineering",
@@ -133,7 +237,20 @@
       0,
       1
     ],
-    "why": "Zero-shot has no examples but can still have rich instructions; it does not fine-tune."
+    "why": "Zero-shot has no examples but can still have rich instructions; it does not fine-tune.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt et context engineering",
+        "q": "Lesquelles des DEUX affirmations sur le zero-shot sont vraies ? (Choisir 2)",
+        "options": [
+          "La tâche est décrite sans exemple travaillé",
+          "Les instructions peuvent tout de même être détaillées et explicites",
+          "Cela nécessite exactement un exemple travaillé",
+          "Cela fine-tune de façon permanente les poids du modèle"
+        ],
+        "why": "Le zero-shot n'a pas d'exemples mais peut tout de même avoir des instructions riches ; il ne fine-tune pas."
+      }
+    }
   },
   {
     "domain": "Prompt and Context Engineering",
@@ -148,7 +265,20 @@
     "correct": [
       0
     ],
-    "why": "Single-shot means exactly one worked example in the prompt."
+    "why": "Single-shot means exactly one worked example in the prompt.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt et context engineering",
+        "q": "Qu'est-ce que le single-shot prompting ?",
+        "options": [
+          "Exactement un exemple travaillé dans le prompt pour ancrer le format ou le comportement attendu",
+          "Aucun exemple du tout, seulement une description de la tâche",
+          "Plusieurs exemples qui fine-tunent de façon permanente les poids",
+          "Streamer un seul événement SSE puis fermer le socket"
+        ],
+        "why": "Le single-shot signifie exactement un exemple travaillé dans le prompt."
+      }
+    }
   },
   {
     "domain": "Prompt and Context Engineering",
@@ -163,7 +293,20 @@
     "correct": [
       0
     ],
-    "why": "Few-shot adds several in-prompt examples for that call; it does not fine-tune the model."
+    "why": "Few-shot adds several in-prompt examples for that call; it does not fine-tune the model.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt et context engineering",
+        "q": "Qu'est-ce que le few-shot / multi-shot prompting ?",
+        "options": [
+          "Plusieurs exemples dans le prompt pour façonner le format ou le raisonnement pour cet appel (au prix de tokens) — cela ne fine-tune pas le modèle",
+          "Uploader un jeu d'entraînement qui change de façon permanente les poids du modèle",
+          "Utiliser une temperature supérieure à 1,0 exclusivement",
+          "Figer plusieurs ID de modèle datés dans une seule requête"
+        ],
+        "why": "Le few-shot ajoute plusieurs exemples in-prompt pour cet appel ; cela ne fine-tune pas le modèle."
+      }
+    }
   },
   {
     "domain": "Prompt and Context Engineering",
@@ -178,7 +321,20 @@
     "correct": [
       0
     ],
-    "why": "Output constraints specify shape/length/format rules, separate from few-shot examples."
+    "why": "Output constraints specify shape/length/format rules, separate from few-shot examples.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt et context engineering",
+        "q": "Qu'est-ce qu'une contrainte de sortie (output constraint) ?",
+        "options": [
+          "Une règle explicite sur la forme de la sortie (JSON, longueur, pas de préambule) — distincte des exemples few-shot",
+          "Une limite sur le nombre de serveurs MCP qu'un projet peut installer",
+          "Le header Retry-After sur une réponse 429",
+          "Une permission de Claude Code qui bloque Write"
+        ],
+        "why": "Les contraintes de sortie spécifient des règles de forme/longueur/format, séparées des exemples few-shot."
+      }
+    }
   },
   {
     "domain": "Prompt and Context Engineering",
@@ -194,7 +350,20 @@
       0,
       1
     ],
-    "why": "Caching discounts a stable unchanged prefix and expires; it is not fine-tuning."
+    "why": "Caching discounts a stable unchanged prefix and expires; it is not fine-tuning.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt et context engineering",
+        "q": "Lesquels des DEUX faits définissent le prompt caching ? (Choisir 2)",
+        "options": [
+          "Un préfixe stable peut être réutilisé à coût réduit",
+          "Seul le préfixe inchangé en bénéficie ; les caches expirent",
+          "Cela fine-tune le modèle quand un prompt se répète",
+          "Le contenu dynamique par tour reste toujours entièrement en cache pour toujours"
+        ],
+        "why": "Le caching réduit le coût d'un préfixe stable inchangé et expire ; ce n'est pas du fine-tuning."
+      }
+    }
   },
   {
     "domain": "Prompt and Context Engineering",
@@ -209,7 +378,20 @@
     "correct": [
       0
     ],
-    "why": "Breakpoints mark cacheable segments; stable-before-dynamic ordering improves hit rate."
+    "why": "Breakpoints mark cacheable segments; stable-before-dynamic ordering improves hit rate.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt et context engineering",
+        "q": "Qu'est-ce qu'un cache breakpoint ?",
+        "options": [
+          "Une marque de cache sur un segment ; placer le contenu stable avant le contenu dynamique pour maximiser les hits",
+          "Le moment où une fenêtre de contexte débordé en cours de génération",
+          "Une valeur de stop_reason signifiant que le modèle a refusé",
+          "Un transport MCP qui tunnelise uniquement via HTTPS"
+        ],
+        "why": "Les breakpoints marquent les segments cacheables ; un ordre stable-avant-dynamique améliore le taux de hits."
+      }
+    }
   },
   {
     "domain": "Prompt and Context Engineering",
@@ -224,7 +406,20 @@
     "correct": [
       0
     ],
-    "why": "Context engineering is deliberately designing what enters the context window."
+    "why": "Context engineering is deliberately designing what enters the context window.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt et context engineering",
+        "q": "Qu'est-ce que le context engineering ?",
+        "options": [
+          "Concevoir ce qui entre dans la fenêtre : chunking, compaction, et sous-contextes isolés",
+          "Choisir uniquement le SKU de GPU pour l'inférence",
+          "Écrire CLAUDE.md sans aucune autre pratique",
+          "Régler la temperature et rien d'autre"
+        ],
+        "why": "Le context engineering consiste à concevoir délibérément ce qui entre dans la fenêtre de contexte."
+      }
+    }
   },
   {
     "domain": "Prompt and Context Engineering",
@@ -239,7 +434,20 @@
     "correct": [
       0
     ],
-    "why": "RAG retrieves passages then generates grounded answers, preferably with citations."
+    "why": "RAG retrieves passages then generates grounded answers, preferably with citations.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt et context engineering",
+        "q": "Que signifie RAG et que veut-il dire ?",
+        "options": [
+          "Retrieval-Augmented Generation : récupérer des passages puis générer des réponses ancrées, idéalement avec des citations validées",
+          "Random Adaptive Guarding : un mode de permission de Claude Code",
+          "REST API Gateway : la seule façon d'appeler Claude",
+          "Resource Allocation Graph utilisé par les transports MCP"
+        ],
+        "why": "Le RAG récupère des passages puis génère des réponses ancrées, de préférence avec des citations."
+      }
+    }
   },
   {
     "domain": "Prompt and Context Engineering",
@@ -254,7 +462,20 @@
     "correct": [
       0
     ],
-    "why": "Chunking splits docs into coherent passages so retrieval can be precise."
+    "why": "Chunking splits docs into coherent passages so retrieval can be precise.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt et context engineering",
+        "q": "Qu'est-ce que le chunking dans un pipeline RAG ?",
+        "options": [
+          "Découper les documents en passages cohérents pour une récupération précise, au lieu de chunks de documents entiers",
+          "Fusionner tous les PDF en un seul blob base64 par requête",
+          "Réduire max_tokens de moitié à chaque retry",
+          "Supprimer CLAUDE.md quand le contexte débordé"
+        ],
+        "why": "Le chunking découpe les documents en passages cohérents pour que la récupération puisse être précise."
+      }
+    }
   },
   {
     "domain": "Prompt and Context Engineering",
@@ -269,7 +490,20 @@
     "correct": [
       0
     ],
-    "why": "Compaction reclaims budget by pruning or summarizing stale context."
+    "why": "Compaction reclaims budget by pruning or summarizing stale context.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt et context engineering",
+        "q": "Qu'est-ce que la compaction de contexte (context compaction) ?",
+        "options": [
+          "Récupérer du budget de fenêtre via l'élagage/le résumé de l'historique périmé et des résultats d'outils (côté application et/ou compaction de la plateforme)",
+          "Augmenter la taille de la fenêtre de contexte en achetant un tier supérieur",
+          "Désactiver le prompt caching pour libérer des tokens",
+          "Convertir les images en tokens visuels exclusivement"
+        ],
+        "why": "La compaction récupère du budget en élaguant ou en résumant le contexte périmé."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -284,7 +518,20 @@
     "correct": [
       0
     ],
-    "why": "Messages is the primary conversation endpoint for Claude."
+    "why": "Messages is the primary conversation endpoint for Claude.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Qu'est-ce que la Messages API ?",
+        "options": [
+          "Le endpoint principal pour envoyer des conversations (system, user, assistant, tools) à Claude",
+          "Le seul mode print headless de Claude Code",
+          "Une resource MCP pour les fils d'email",
+          "Un transport exclusif à Google Vertex"
+        ],
+        "why": "Messages est le endpoint de conversation principal pour Claude."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -299,7 +546,20 @@
     "correct": [
       0
     ],
-    "why": "Commit turns after message_stop; socket close is not completion."
+    "why": "Commit turns after message_stop; socket close is not completion.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "En streaming, quand un tour assistant doit-il être ajouté à l'historique ?",
+        "options": [
+          "Seulement après message_stop — la seule fin du flux HTTP ne signifie pas l'achèvement du message",
+          "Après l'arrivée du premier token SSE",
+          "Quand la connexion TCP s'ouvre",
+          "Jamais ; les réponses en streaming ne doivent pas être stockées"
+        ],
+        "why": "Ajouter les tours après message_stop ; la fermeture du socket ne signifie pas l'achèvement."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -314,7 +574,20 @@
     "correct": [
       0
     ],
-    "why": "Structured outputs constrain the model response shape via schema; tool schemas validate tool args."
+    "why": "Structured outputs constrain the model response shape via schema; tool schemas validate tool args.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Que sont les structured outputs / le JSON schema dans l'API ?",
+        "options": [
+          "Un schéma JSON côté API qui contraint la forme de la réponse — distinct des tool schemas qui valident les arguments d'outils",
+          "Une Skill de Claude Code qui ne formate que du Markdown",
+          "La même chose que les exemples few-shot",
+          "Un champ de facturation exclusif à Bedrock"
+        ],
+        "why": "Les structured outputs contraignent la forme de la réponse du modèle via un schéma ; les tool schemas valident les arguments des tools."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -329,7 +602,20 @@
     "correct": [
       0
     ],
-    "why": "Extended thinking is manual reasoning with a token budget; preserve thinking blocks across turns."
+    "why": "Extended thinking is manual reasoning with a token budget; preserve thinking blocks across turns.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Qu'est-ce que l'extended thinking ?",
+        "options": [
+          "Un mode de raisonnement interne manuel avec budget_tokens ; en multi-tours, renvoyer les blocs de thinking inchangés",
+          "Un adaptive thinking toujours actif sans budget",
+          "Un équivalent du mode plan de Claude Code pour l'API",
+          "Mettre en cache les tokens de thinking entre clients"
+        ],
+        "why": "L'extended thinking est un raisonnement manuel avec un budget de tokens ; préserver les blocs de thinking entre les tours."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -344,7 +630,20 @@
     "correct": [
       0
     ],
-    "why": "Adaptive thinking lets the model decide reasoning depth, steered by effort."
+    "why": "Adaptive thinking lets the model decide reasoning depth, steered by effort.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Qu'est-ce que l'adaptive thinking ?",
+        "options": [
+          "thinking.type: \"adaptive\" — le modèle décide quand et combien raisonner ; la profondeur est pilotée via effort",
+          "Une valeur budget_tokens fixe qui ne change jamais",
+          "Désactiver tout raisonnement interne pour les charges FAQ",
+          "Un template de prompt MCP pour le raisonnement"
+        ],
+        "why": "L'adaptive thinking laisse le modèle décider de la profondeur de raisonnement, pilotée par effort."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -359,7 +658,20 @@
     "correct": [
       0
     ],
-    "why": "effort steers adaptive thinking depth vs latency/cost."
+    "why": "effort steers adaptive thinking depth vs latency/cost.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "À quoi sert le paramètre effort ?",
+        "options": [
+          "Un levier d'adaptive thinking (souvent via output_config) : de low à max — échange qualité, latence et coût",
+          "À quel point Claude Code réessaie une commande Bash échouée",
+          "Le nombre d'exemples few-shot requis",
+          "La priorité de transport MCP entre stdio et HTTP"
+        ],
+        "why": "effort pilote la profondeur de l'adaptive thinking par rapport à la latence/au coût."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -374,7 +686,20 @@
     "correct": [
       0
     ],
-    "why": "stop_reason explains why generation ended and drives truncation/tool handling."
+    "why": "stop_reason explains why generation ended and drives truncation/tool handling.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Qu'est-ce que stop_reason ?",
+        "options": [
+          "Pourquoi la génération s'est arrêtée : end_turn, tool_use, max_tokens, model_context_window_exceeded, etc.",
+          "Le code de statut HTTP de l'appel Messages",
+          "Uniquement un exit code de hook Claude Code",
+          "Si le prompt caching a fait un hit ou un miss"
+        ],
+        "why": "stop_reason explique pourquoi la génération s'est terminée et pilote la troncature/la gestion des tools."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -389,7 +714,20 @@
     "correct": [
       0
     ],
-    "why": "usage reports token counts (and cache) for cost attribution."
+    "why": "usage reports token counts (and cache) for cost attribution.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Qu'est-ce que le champ usage sur une réponse ?",
+        "options": [
+          "input_tokens / output_tokens (et les infos de cache le cas échéant) — base pour le suivi des coûts par fonctionnalité",
+          "Une liste des utilisateurs autorisés à appeler l'API",
+          "La section contributeurs de CLAUDE.md",
+          "Le pourcentage de disponibilité du serveur MCP"
+        ],
+        "why": "usage rapporte les comptes de tokens (et le cache) pour l'attribution des coûts."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -404,7 +742,20 @@
     "correct": [
       0
     ],
-    "why": "Batches is async bulk processing with per-item success/failure."
+    "why": "Batches is async bulk processing with per-item success/failure.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "À quoi sert la Batches API ?",
+        "options": [
+          "Traitement asynchrone pour de gros volumes (poll puis fetch) ; chaque élément peut réussir ou échouer indépendamment",
+          "Chat en temps réel avec des SLA sous la seconde uniquement",
+          "Remplacer la Messages API pour toutes les applications interactives",
+          "Héberger des fichiers de logo réutilisables au lieu du base64"
+        ],
+        "why": "Batches est un traitement en masse asynchrone avec succès/échec par élément."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -419,7 +770,20 @@
     "correct": [
       0
     ],
-    "why": "Files API hosts reusable assets to avoid repeated base64 uploads."
+    "why": "Files API hosts reusable assets to avoid repeated base64 uploads.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Que fournit la Files API ?",
+        "options": [
+          "Héberge des fichiers réutilisés (ex. un logo) pour ne pas ré-uploader de base64 à chaque appel",
+          "Un substitut au endpoint de conversation Messages",
+          "Un fine-tuning automatique à partir de CSV uploadés",
+          "Un transport stdio local pour MCP"
+        ],
+        "why": "La Files API héberge des assets réutilisables pour éviter des uploads base64 répétés."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -435,7 +799,20 @@
       0,
       1
     ],
-    "why": "SDKs wrap the same REST Messages API with helpers; they do not replace the protocol."
+    "why": "SDKs wrap the same REST Messages API with helpers; they do not replace the protocol.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Lesquelles des DEUX affirmations sur SDK vs REST sont correctes ? (Choisir 2)",
+        "options": [
+          "Les SDK clients encapsulent la même API REST",
+          "Les appels HTTP sous-jacents restent la même Messages API",
+          "Les SDK utilisent un protocole binaire privé qui contourne REST",
+          "REST ne peut pas streamer tandis que les SDK le peuvent"
+        ],
+        "why": "Les SDK encapsulent la même Messages API REST avec des helpers ; ils ne remplacent pas le protocole."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -450,7 +827,20 @@
     "correct": [
       0
     ],
-    "why": "429/529 are capacity signals handled with backoff, jitter, and Retry-After."
+    "why": "429/529 are capacity signals handled with backoff, jitter, and Retry-After.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Que signifient 429 et 529 pour les clients Claude ?",
+        "options": [
+          "Limite de débit (429) ou surcharge (529) : réessayer avec un backoff exponentiel et du jitter ; respecter retry-after",
+          "Dépréciation permanente du modèle nécessitant une nouvelle clé d'API",
+          "Des cache hits réussis qui ne nécessitent aucun retry",
+          "Des codes de succès d'authentification dans Claude Code"
+        ],
+        "why": "429/529 sont des signaux de capacité gérés avec backoff, jitter, et Retry-After."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -465,7 +855,20 @@
     "correct": [
       0
     ],
-    "why": "Pinning dated IDs keeps production behavior stable vs floating aliases."
+    "why": "Pinning dated IDs keeps production behavior stable vs floating aliases.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Qu'est-ce que le model pinning ?",
+        "options": [
+          "Figer une version de modèle datée en production ; les alias flottants peuvent changer de comportement sans déploiement",
+          "Verrouiller la temperature à 0 pour toujours",
+          "Stocker les prompts uniquement dans CLAUDE.md",
+          "Forcer tout le trafic à passer par Batches"
+        ],
+        "why": "Figer des ID datés garde le comportement en production stable par rapport aux alias flottants."
+      }
+    }
   },
   {
     "domain": "Agents and Workflows",
@@ -480,7 +883,20 @@
     "correct": [
       0
     ],
-    "why": "Tool use = model-invoked actions through named schemas and descriptions."
+    "why": "Tool use = model-invoked actions through named schemas and descriptions.",
+    "translations": {
+      "fr": {
+        "domain": "Agents et workflows",
+        "q": "Qu'est-ce que le tool use ?",
+        "options": [
+          "Le modèle invoque des actions via des schémas nommés ; des descriptions claires (et quand ne pas les utiliser) réduisent les mauvais appels d'outils",
+          "Uploader des fichiers via la Files API uniquement",
+          "Lire des resources MCP sans aucun schéma",
+          "Régler effort au maximum sur chaque appel FAQ"
+        ],
+        "why": "Le tool use désigne les actions invoquées par le modèle via des schémas et des descriptions nommés."
+      }
+    }
   },
   {
     "domain": "Tools and MCPs",
@@ -495,7 +911,20 @@
     "correct": [
       0
     ],
-    "why": "The loop repeatedly calls tools and feeds results back until a final answer."
+    "why": "The loop repeatedly calls tools and feeds results back until a final answer.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Qu'est-ce que la tool-use loop ?",
+        "options": [
+          "Boucle d'agent : appeler des tools, replier les résultats, répéter jusqu'à une réponse finale",
+          "Un unique appel de tool qui ne doit jamais se répéter",
+          "Compacter le contexte en supprimant les tool schemas",
+          "Interroger (poll) Batches jusqu'à ce que chaque élément échoue"
+        ],
+        "why": "La boucle appelle des tools de façon répétée et réinjecte les résultats jusqu'à une réponse finale."
+      }
+    }
   },
   {
     "domain": "Agents and Workflows",
@@ -511,7 +940,20 @@
       0,
       1
     ],
-    "why": "Workflows are predetermined paths; agents choose steps at runtime. HITL and tools apply to either."
+    "why": "Workflows are predetermined paths; agents choose steps at runtime. HITL and tools apply to either.",
+    "translations": {
+      "fr": {
+        "domain": "Agents et workflows",
+        "q": "Lesquelles des DEUX affirmations distinguent correctement workflow vs agent ? (Choisir 2)",
+        "options": [
+          "Workflow = chemin codé fixe",
+          "Agent = décisions à l'exécution sur quoi faire ensuite",
+          "Un workflow nécessite toujours un human-in-the-loop ; les agents jamais",
+          "Les agents ne peuvent pas utiliser de tools ; les workflows le peuvent toujours"
+        ],
+        "why": "Les workflows sont des chemins prédéterminés ; les agents choisissent les étapes à l'exécution. Le HITL et les tools s'appliquent aux deux."
+      }
+    }
   },
   {
     "domain": "Agents and Workflows",
@@ -527,7 +969,20 @@
       0,
       1
     ],
-    "why": "HITL is a designed human approval gate before irreversible actions."
+    "why": "HITL is a designed human approval gate before irreversible actions.",
+    "translations": {
+      "fr": {
+        "domain": "Agents et workflows",
+        "q": "Lesquelles des DEUX affirmations définissent bien le human-in-the-loop ? (Choisir 2)",
+        "options": [
+          "Une porte humaine avant une action irréversible",
+          "Conçu dans le workflow dès le départ, pas ajouté après la première écriture",
+          "Le modèle approuvant ses propres tools destructeurs",
+          "Désactiver toutes les permissions de Claude Code"
+        ],
+        "why": "Le HITL est une porte d'approbation humaine conçue avant les actions irréversibles."
+      }
+    }
   },
   {
     "domain": "Agents and Workflows",
@@ -542,7 +997,20 @@
     "correct": [
       0
     ],
-    "why": "Subagents get isolated context and return a compact result to the parent."
+    "why": "Subagents get isolated context and return a compact result to the parent.",
+    "translations": {
+      "fr": {
+        "domain": "Agents et workflows",
+        "q": "Qu'est-ce qu'un subagent ?",
+        "options": [
+          "Un agent délégué avec son propre contexte ; il isole le travail bruyant et renvoie un résultat compact",
+          "Un alias de modèle flottant pour Haiku",
+          "Une resource MCP contenant la transcription du parent",
+          "Un exit code de hook PreToolUse"
+        ],
+        "why": "Les subagents obtiennent un contexte isolé et renvoient un résultat compact au parent."
+      }
+    }
   },
   {
     "domain": "Tools and MCPs",
@@ -557,7 +1025,20 @@
     "correct": [
       0
     ],
-    "why": "MCP standardizes tools, resources, and prompts that load into model context."
+    "why": "MCP standardizes tools, resources, and prompts that load into model context.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Qu'est-ce que MCP ?",
+        "options": [
+          "Model Context Protocol : connecter des tools, resources et prompts maintenus ; les définitions se chargent dans le contexte",
+          "Managed Claude Packaging réservé à Bedrock",
+          "Un stop_reason signifiant des tokens maximum atteints",
+          "La somme de contrôle interne de la Files API"
+        ],
+        "why": "MCP standardise les tools, resources et prompts qui se chargent dans le contexte du modèle."
+      }
+    }
   },
   {
     "domain": "Agents and Workflows",
@@ -572,7 +1053,20 @@
     "correct": [
       0
     ],
-    "why": "stdio runs locally as a subprocess; HTTP serves remote clients; scope controls distribution."
+    "why": "stdio runs locally as a subprocess; HTTP serves remote clients; scope controls distribution.",
+    "translations": {
+      "fr": {
+        "domain": "Agents et workflows",
+        "q": "En quoi les transports MCP stdio et HTTP diffèrent-ils ?",
+        "options": [
+          "stdio = sous-processus local ; HTTP = client distant — le scope (Local/Project/Enterprise) décide qui obtient le serveur",
+          "stdio est uniquement cloud ; HTTP est uniquement local",
+          "Les deux sont des alias identiques pour le streaming Messages",
+          "HTTP est déprécié ; seul stdio fonctionne avec Claude Code"
+        ],
+        "why": "stdio s'exécute localement comme un sous-processus ; HTTP sert des clients distants ; le scope contrôle la distribution."
+      }
+    }
   },
   {
     "domain": "Tools and MCPs",
@@ -588,7 +1082,20 @@
       0,
       1
     ],
-    "why": "Resources are readable data; tools are actions. Resources are not chat endpoints or tool actions."
+    "why": "Resources are readable data; tools are actions. Resources are not chat endpoints or tool actions.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Lesquelles des DEUX affirmations décrivent correctement une resource MCP ? (Choisir 2)",
+        "options": [
+          "Elle expose des données de référence lisibles (ex. un glossaire)",
+          "Elle est distincte d'un tool, qui effectue une action",
+          "C'est une action à effet de bord invoquée par le modèle",
+          "Elle remplace la Messages API pour le chat"
+        ],
+        "why": "Les resources sont des données lisibles ; les tools sont des actions. Les resources ne sont ni des endpoints de chat ni des actions de tool."
+      }
+    }
   },
   {
     "domain": "Tools and MCPs",
@@ -603,7 +1110,20 @@
     "correct": [
       0
     ],
-    "why": "MCP prompts are user-invoked templates; tools are model-invoked actions."
+    "why": "MCP prompts are user-invoked templates; tools are model-invoked actions.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Qu'est-ce qu'un prompt MCP ?",
+        "options": [
+          "Un template nommé et paramétré que l'utilisateur invoque — pas une action invoquée par le modèle comme un tool",
+          "La même chose qu'un tool schema exécuté par le modèle",
+          "Un reçu d'upload de la Files API",
+          "Un niveau d'effort d'adaptive thinking"
+        ],
+        "why": "Les prompts MCP sont des templates invoqués par l'utilisateur ; les tools sont des actions invoquées par le modèle."
+      }
+    }
   },
   {
     "domain": "Agents and Workflows",
@@ -618,7 +1138,20 @@
     "correct": [
       0
     ],
-    "why": "Agent SDK scaffolds tool loops/context/patterns and can load repo skills via settingSources."
+    "why": "Agent SDK scaffolds tool loops/context/patterns and can load repo skills via settingSources.",
+    "translations": {
+      "fr": {
+        "domain": "Agents et workflows",
+        "q": "Que fournit l'Agent SDK ?",
+        "options": [
+          "Une base pour la tool loop, le contexte et les patterns d'agent ; régler settingSources pour charger les skills depuis le repo",
+          "Un remplacement du endpoint REST Messages",
+          "Uniquement des helpers d'authentification Bedrock",
+          "Un jailbreak automatique des politiques de production"
+        ],
+        "why": "L'Agent SDK fournit une base pour les tool loops/le contexte/les patterns et peut charger des skills du repo via settingSources."
+      }
+    }
   },
   {
     "domain": "Tools and MCPs",
@@ -633,7 +1166,20 @@
     "correct": [
       0
     ],
-    "why": "Run tools where the data lives — client for browser state, server for backends."
+    "why": "Run tools where the data lives — client for browser state, server for backends.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Comment choisir entre des tools côté client et côté serveur ?",
+        "options": [
+          "L'exécution suit les données : l'état du navigateur est côté client ; les bases de données backend sont côté serveur",
+          "Tous les tools doivent s'exécuter côté client pour la sécurité",
+          "Tous les tools doivent s'exécuter côté serveur sinon MCP casse",
+          "L'emplacement n'a pas d'importance ; les tools sont interchangeables"
+        ],
+        "why": "Exécuter les tools là où vivent les données — côté client pour l'état du navigateur, côté serveur pour les backends."
+      }
+    }
   },
   {
     "domain": "Claude Code",
@@ -648,7 +1194,20 @@
     "correct": [
       0
     ],
-    "why": "CLAUDE.md is versioned project guidance Claude Code loads for conventions."
+    "why": "CLAUDE.md is versioned project guidance Claude Code loads for conventions.",
+    "translations": {
+      "fr": {
+        "domain": "Claude Code",
+        "q": "Qu'est-ce que CLAUDE.md ?",
+        "options": [
+          "Le contexte de projet versionné (plus les préférences au niveau utilisateur) que Claude Code charge pour les conventions d'équipe",
+          "Un fichier de configuration de transport MCP HTTP",
+          "Le registre de model pinning en production chez Anthropic",
+          "Un manifeste de job Batches"
+        ],
+        "why": "CLAUDE.md est un guide de projet versionné que Claude Code charge pour les conventions."
+      }
+    }
   },
   {
     "domain": "Claude Code",
@@ -663,7 +1222,20 @@
     "correct": [
       0
     ],
-    "why": "Skills are reusable instruction packs matched by description — not live servers."
+    "why": "Skills are reusable instruction packs matched by description — not live servers.",
+    "translations": {
+      "fr": {
+        "domain": "Claude Code",
+        "q": "Qu'est-ce qu'une Skill / SKILL.md ?",
+        "options": [
+          "Des instructions réutilisables chargées quand la description correspond à la demande ; pas un serveur d'API en direct",
+          "Un serveur MCP distant qui doit rester en cours d'exécution",
+          "Un alias d'ID de modèle daté",
+          "Un conteneur binaire de la Files API"
+        ],
+        "why": "Les Skills sont des paquets d'instructions réutilisables mis en correspondance par description — pas des serveurs en direct."
+      }
+    }
   },
   {
     "domain": "Claude Code",
@@ -678,7 +1250,20 @@
     "correct": [
       0
     ],
-    "why": "CLAUDE_PROJECT_DIR anchors portable paths to the project root."
+    "why": "CLAUDE_PROJECT_DIR anchors portable paths to the project root.",
+    "translations": {
+      "fr": {
+        "domain": "Claude Code",
+        "q": "À quoi sert CLAUDE_PROJECT_DIR ?",
+        "options": [
+          "La racine du projet pour des chemins de script portables — éviter les chemins absolus propres à une machine",
+          "Le sélecteur de région cloud Anthropic",
+          "Un stop_reason pour la traversée de chemin",
+          "La chaîne marqueur du cache breakpoint"
+        ],
+        "why": "CLAUDE_PROJECT_DIR ancre les chemins portables à la racine du projet."
+      }
+    }
   },
   {
     "domain": "Claude Code",
@@ -693,7 +1278,20 @@
     "correct": [
       0
     ],
-    "why": "Allow/deny rules gate which tools and paths Claude Code may use."
+    "why": "Allow/deny rules gate which tools and paths Claude Code may use.",
+    "translations": {
+      "fr": {
+        "domain": "Claude Code",
+        "q": "Que sont les permissions allow / deny de Claude Code ?",
+        "options": [
+          "Des règles de settings qui autorisent ou bloquent des tools/chemins (ex. Bash(rm:*), Read(.env))",
+          "Des quotas de limite de débit de la Messages API",
+          "Des types MIME de resources MCP",
+          "Des seuils de réussite de suite d'eval"
+        ],
+        "why": "Les règles allow/deny conditionnent quels tools et chemins Claude Code peut utiliser."
+      }
+    }
   },
   {
     "domain": "Claude Code",
@@ -708,7 +1306,20 @@
     "correct": [
       0
     ],
-    "why": "Plan mode explores read-only before editing — suited to untrusted repos."
+    "why": "Plan mode explores read-only before editing — suited to untrusted repos.",
+    "translations": {
+      "fr": {
+        "domain": "Claude Code",
+        "q": "Qu'est-ce que le mode plan (Plan mode) dans Claude Code ?",
+        "options": [
+          "Une exploration en lecture seule avant modification — la bonne posture pour un repo non fiable",
+          "Un mode qui applique automatiquement chaque patch suggéré",
+          "bypassPermissions avec du logging supplémentaire",
+          "Un mode print headless réservé au CI"
+        ],
+        "why": "Le mode plan explore en lecture seule avant toute modification — adapté à un repo non fiable."
+      }
+    }
   },
   {
     "domain": "Claude Code",
@@ -723,7 +1334,20 @@
     "correct": [
       0
     ],
-    "why": "bypassPermissions disables guards — unsafe for untrusted or high-risk work."
+    "why": "bypassPermissions disables guards — unsafe for untrusted or high-risk work.",
+    "translations": {
+      "fr": {
+        "domain": "Claude Code",
+        "q": "Que fait bypassPermissions ?",
+        "options": [
+          "Supprime les garde-fous de permission ; à éviter sur du code non fiable ou des actions à haut risque",
+          "Active automatiquement le mode plan",
+          "Force tous les serveurs MCP sur stdio",
+          "Fige l'ID de modèle sur une version datée"
+        ],
+        "why": "bypassPermissions désactive les garde-fous — dangereux pour du travail non fiable ou à haut risque."
+      }
+    }
   },
   {
     "domain": "Claude Code",
@@ -738,7 +1362,20 @@
     "correct": [
       0
     ],
-    "why": "PreToolUse can deterministically block a tool (e.g. exit 2 + stderr)."
+    "why": "PreToolUse can deterministically block a tool (e.g. exit 2 + stderr).",
+    "translations": {
+      "fr": {
+        "domain": "Claude Code",
+        "q": "Qu'est-ce qu'un hook PreToolUse ?",
+        "options": [
+          "Un hook avant l'exécution d'un tool ; un exit code 2 plus une raison sur stderr bloque l'appel de façon déterministe",
+          "Un logger post-exécution qui ne peut pas bloquer les tools",
+          "Un callback de rafraîchissement de resource MCP",
+          "Un événement de streaming de la Messages API"
+        ],
+        "why": "PreToolUse peut bloquer un tool de façon déterministe (ex. exit 2 + stderr)."
+      }
+    }
   },
   {
     "domain": "Claude Code",
@@ -753,7 +1390,20 @@
     "correct": [
       0
     ],
-    "why": "Headless/print runs Claude Code non-interactively for CI and automation."
+    "why": "Headless/print runs Claude Code non-interactively for CI and automation.",
+    "translations": {
+      "fr": {
+        "domain": "Claude Code",
+        "q": "Qu'est-ce que le mode headless / print ?",
+        "options": [
+          "Une invocation non interactive de Claude Code pour le CI / les jobs planifiés, sans humain attaché",
+          "Un REPL interactif uniquement",
+          "Le mode plan avec une interface graphique",
+          "Le streaming de Messages dans le navigateur"
+        ],
+        "why": "Le mode headless/print exécute Claude Code de façon non interactive pour le CI et l'automatisation."
+      }
+    }
   },
   {
     "domain": "Eval, Testing, and Debugging",
@@ -769,7 +1419,20 @@
       0,
       1
     ],
-    "why": "Eval suites are gradeable tests that should gate prompt changes like code."
+    "why": "Eval suites are gradeable tests that should gate prompt changes like code.",
+    "translations": {
+      "fr": {
+        "domain": "Eval, tests et debugging",
+        "q": "Lesquelles des DEUX affirmations définissent une suite d'eval ? (Choisir 2)",
+        "options": [
+          "Des jeux de tests avec des critères de succès notables/vérifiables",
+          "Devrait conditionner les changements de prompt comme les tests conditionnent le code",
+          "Une allow-list de permission de Claude Code",
+          "Un registre d'alias de modèle flottant"
+        ],
+        "why": "Les suites d'eval sont des tests notables qui devraient conditionner les changements de prompt comme le code."
+      }
+    }
   },
   {
     "domain": "Eval, Testing, and Debugging",
@@ -784,7 +1447,20 @@
     "correct": [
       0
     ],
-    "why": "LLM-as-judge scores open-ended outputs against criteria, ideally human-calibrated."
+    "why": "LLM-as-judge scores open-ended outputs against criteria, ideally human-calibrated.",
+    "translations": {
+      "fr": {
+        "domain": "Eval, tests et debugging",
+        "q": "Qu'est-ce que le LLM-as-judge ?",
+        "options": [
+          "Noter des sorties ouvertes avec un LLM par rapport à des critères explicites, calibré sur un échantillon étiqueté par des humains",
+          "Remplacer tous les tests unitaires par une égalité de chaîne à temperature 0",
+          "Laisser les utilisateurs noter le trafic de production en temps réel uniquement",
+          "Un stop_reason quand le modèle refuse"
+        ],
+        "why": "Le LLM-as-judge note les sorties ouvertes par rapport à des critères, idéalement calibrés par des humains."
+      }
+    }
   },
   {
     "domain": "Eval, Testing, and Debugging",
@@ -799,7 +1475,20 @@
     "correct": [
       0
     ],
-    "why": "Traces log agent steps so you can isolate tool, model, or orchestration faults."
+    "why": "Traces log agent steps so you can isolate tool, model, or orchestration faults.",
+    "translations": {
+      "fr": {
+        "domain": "Eval, tests et debugging",
+        "q": "Qu'est-ce qu'une trace dans le debugging d'agent ?",
+        "options": [
+          "Un log étape par étape d'une exécution d'agent pour isoler une défaillance du tool, du modèle ou de l'orchestration",
+          "Une seule valeur de max_tokens",
+          "La page de statut HTTP de MCP",
+          "Uniquement un compteur de cache hit du prompt cache"
+        ],
+        "why": "Les traces loguent les étapes de l'agent pour isoler les fautes de tool, de modèle ou d'orchestration."
+      }
+    }
   },
   {
     "domain": "Eval, Testing, and Debugging",
@@ -814,7 +1503,20 @@
     "correct": [
       0
     ],
-    "why": "The reliability floor is a non-negotiable quality bar set before cost/latency trades."
+    "why": "The reliability floor is a non-negotiable quality bar set before cost/latency trades.",
+    "translations": {
+      "fr": {
+        "domain": "Eval, tests et debugging",
+        "q": "Qu'est-ce qu'un reliability floor ?",
+        "options": [
+          "La fiabilité minimale que la conception doit tenir et ne peut pas sacrifier pour le coût ou la vitesse — fixée avant l'architecture",
+          "La temperature la plus basse autorisée en production",
+          "Un défaut deny-all de Claude Code",
+          "Le tier de modèle le moins cher disponible"
+        ],
+        "why": "Le reliability floor est une barre de qualité non négociable fixée avant les arbitrages coût/latence."
+      }
+    }
   },
   {
     "domain": "Security and Safety",
@@ -830,7 +1532,20 @@
       0,
       1
     ],
-    "why": "Injection embeds instructions in untrusted content; isolate and least-privilege. Jailbreak is a different attack path."
+    "why": "Injection embeds instructions in untrusted content; isolate and least-privilege. Jailbreak is a different attack path.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Lesquelles des DEUX affirmations sur le prompt injection sont correctes ? (Choisir 2)",
+        "options": [
+          "Des instructions malveillantes apparaissent dans du contenu non fiable comme des pages, des fichiers ou des sorties d'outils",
+          "Les mitigations incluent l'isolation du contenu non fiable et l'application du moindre privilège aux tools",
+          "C'est identique à un jailbreak (contournement direct de la politique par l'utilisateur en chat)",
+          "Cela se corrige uniquement en réglant la temperature à 0"
+        ],
+        "why": "L'injection embarque des instructions dans du contenu non fiable ; isoler et appliquer le moindre privilège. Le jailbreak est un chemin d'attaque différent."
+      }
+    }
   },
   {
     "domain": "Security and Safety",
@@ -846,7 +1561,20 @@
       0,
       1
     ],
-    "why": "Jailbreaks are direct user bypass attempts handled by policy/refusals — not document injection or window overflow."
+    "why": "Jailbreaks are direct user bypass attempts handled by policy/refusals — not document injection or window overflow.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Lesquels des DEUX points définissent correctement un jailbreak ? (Choisir 2)",
+        "options": [
+          "Une tentative directe de l'utilisateur de contourner la politique via la conversation",
+          "Géré principalement via des refus et des contrôles de politique",
+          "Des instructions malveillantes cachées uniquement dans des documents récupérés",
+          "Le même mécanisme qu'un dépassement de la fenêtre de contexte"
+        ],
+        "why": "Les jailbreaks sont des tentatives directes de contournement par l'utilisateur gérées par la politique/les refus — pas de l'injection de document ni un débordement de fenêtre."
+      }
+    }
   },
   {
     "domain": "Security and Safety",
@@ -861,7 +1589,20 @@
     "correct": [
       0
     ],
-    "why": "Least privilege limits available capabilities so injection cannot escalate."
+    "why": "Least privilege limits available capabilities so injection cannot escalate.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Qu'est-ce que le moindre privilège pour les tools Claude ?",
+        "options": [
+          "N'accorder que les tools/permissions nécessaires ; une instruction injectée ne peut pas déclencher une capacité qui n'est pas là",
+          "Activer chaque tool pour que l'agent ne échoue jamais",
+          "Toujours utiliser bypassPermissions en CI",
+          "Stocker les clés d'API dans le system prompt"
+        ],
+        "why": "Le moindre privilège limite les capacités disponibles pour que l'injection ne puisse pas s'escalader."
+      }
+    }
   },
   {
     "domain": "Security and Safety",
@@ -876,7 +1617,20 @@
     "correct": [
       0
     ],
-    "why": "Layered independent controls catch failures when one layer is bypassed."
+    "why": "Layered independent controls catch failures when one layer is bypassed.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Qu'est-ce que la superposition de garde-fous (guardrail layering) ?",
+        "options": [
+          "Plusieurs contrôles indépendants (prompt, filtrage de sortie, permissions d'outils) pour que le contournement d'une couche soit rattrapé par une autre",
+          "S'appuyer uniquement sur le system prompt pour toute la sécurité",
+          "Désactiver le logging pour réduire la surface d'attaque",
+          "N'utiliser que la temperature 0 comme contrôle de sécurité"
+        ],
+        "why": "Des contrôles indépendants en couches rattrapent les défaillances quand une couche est contournée."
+      }
+    }
   },
   {
     "domain": "Security and Safety",
@@ -891,7 +1645,20 @@
     "correct": [
       0
     ],
-    "why": "Trust boundaries name where untrusted content enters so hooks can enforce policy."
+    "why": "Trust boundaries name where untrusted content enters so hooks can enforce policy.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Qu'est-ce qu'une frontière de confiance (trust boundary) ?",
+        "options": [
+          "Une frontière nommée entre le contenu de confiance et non fiable (web, sortie d'outils) — base pour un hook applicable",
+          "Le bord de la fenêtre de contexte en tokens",
+          "Un lien de peering VPC Bedrock",
+          "La différence entre Haiku et Opus"
+        ],
+        "why": "Les trust boundaries nomment où le contenu non fiable entre, pour que les hooks puissent appliquer une politique."
+      }
+    }
   },
   {
     "domain": "Security and Safety",
@@ -906,7 +1673,20 @@
     "correct": [
       0
     ],
-    "why": "Minimize what you send; redact or tokenize identifiers when they must appear."
+    "why": "Minimize what you send; redact or tokenize identifiers when they must appear.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Qu'est-ce que la minimisation des données lors de l'appel à Claude ?",
+        "options": [
+          "N'envoyer que les champs nécessaires à la tâche ; rédiger ou tokeniser les identifiants qui doivent transiter",
+          "Uploader des bases de données entières pour maximiser le recall du RAG",
+          "Désactiver le logging d'usage pour toujours",
+          "Mettre en cache chaque prompt entre tous les tenants"
+        ],
+        "why": "Minimiser ce que vous envoyez ; rédiger ou tokeniser les identifiants quand ils doivent apparaître."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -921,7 +1701,20 @@
     "correct": [
       0
     ],
-    "why": "Bedrock runs Claude in the customer’s AWS account for governance/residency."
+    "why": "Bedrock runs Claude in the customer’s AWS account for governance/residency.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "À quoi sert Amazon Bedrock avec Claude ?",
+        "options": [
+          "Exécuter Claude à l'intérieur d'un compte AWS existant pour la gouvernance et la résidence des données",
+          "Remplacer CLAUDE.md par AWS SSM uniquement",
+          "Un synonyme du mode plan de Claude Code",
+          "Le seul endpoint Messages first-party d'Anthropic"
+        ],
+        "why": "Bedrock exécute Claude dans le compte AWS du client pour la gouvernance/résidence."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -936,7 +1729,20 @@
     "correct": [
       0
     ],
-    "why": "Vertex hosts Claude in the customer’s GCP org for residency needs."
+    "why": "Vertex hosts Claude in the customer’s GCP org for residency needs.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "À quoi sert Google Vertex AI avec Claude ?",
+        "options": [
+          "Exécuter Claude à l'intérieur de l'organisation Google Cloud du client pour des contraintes de résidence",
+          "La seule façon d'utiliser le prompt caching",
+          "Un transport MCP stdio local",
+          "Le binaire print headless de Claude Code"
+        ],
+        "why": "Vertex héberge Claude dans l'organisation GCP du client pour les besoins de résidence."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -951,7 +1757,20 @@
     "correct": [
       0
     ],
-    "why": "First-party is Anthropic’s direct API — simple and often earliest models."
+    "why": "First-party is Anthropic’s direct API — simple and often earliest models.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Qu'est-ce que l'API Anthropic first-party ?",
+        "options": [
+          "L'API directe d'Anthropic ; souvent les modèles les plus récents et la simplicité, en dehors du cloud du client quand la résidence l'exige autrement",
+          "Disponible uniquement via Bedrock",
+          "Identique au mode plan de Claude Code",
+          "Une resource MCP listant les fiches de modèle"
+        ],
+        "why": "Le first-party est l'API directe d'Anthropic — simple et souvent avec les modèles les plus récents."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -966,7 +1785,20 @@
     "correct": [
       0
     ],
-    "why": "Version prompts like code for attribution, comparison, and rollback."
+    "why": "Version prompts like code for attribution, comparison, and rollback.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Qu'est-ce que le versioning de prompts ?",
+        "options": [
+          "Versionner les prompts pour que les changements soient attribuables, comparables et réversibles comme du code",
+          "Incrémenter max_tokens à chaque déploiement",
+          "Des alias de modèle flottants sans pin",
+          "Stocker les prompts uniquement dans l'historique de chat"
+        ],
+        "why": "Versionner les prompts comme du code pour l'attribution, la comparaison et le rollback."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -981,7 +1813,20 @@
     "correct": [
       0
     ],
-    "why": "Managed agents are Anthropic-hosted, ID-addressable long-running agents."
+    "why": "Managed agents are Anthropic-hosted, ID-addressable long-running agents.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Qu'est-ce qu'un agent managé / hébergé ?",
+        "options": [
+          "Un agent longue durée hébergé par Anthropic et adressé par ID (skill + beta managed-agents) — la skill n'est pas un serveur en direct que vous opérez",
+          "N'importe quelle session Claude Code locale",
+          "Un sous-processus MCP stdio que vous devez garder en cours d'exécution",
+          "Un job Batches qui ne se termine jamais"
+        ],
+        "why": "Les agents managés sont des agents longue durée hébergés par Anthropic et adressables par ID."
+      }
+    }
   },
   {
     "domain": "Applications and Integration",
@@ -996,6 +1841,19 @@
     "correct": [
       0
     ],
-    "why": "Accelerator packs pin models, version prompts, and eval before upgrades."
+    "why": "Accelerator packs pin models, version prompts, and eval before upgrades.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Qu'est-ce que l'accelerator packaging ?",
+        "options": [
+          "Une construction réutilisable : figer le modèle, versionner les prompts, évaluer avant mise à niveau — pour que le pack survive aux mises à jour de modèle",
+          "Livrer uniquement des alias flottants sans evals",
+          "Regrouper les clés d'API dans le frontend",
+          "Désactiver les structured outputs pour la vitesse"
+        ],
+        "why": "Les accelerator packs figent les modèles, versionnent les prompts, et évaluent avant les mises à niveau."
+      }
+    }
   }
 ]

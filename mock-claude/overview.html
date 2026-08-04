@@ -246,6 +246,32 @@
       color: #9a8f88;
       line-height: 1.5;
     }
+    .lang-switch {
+      display: inline-flex;
+      gap: 4px;
+      margin-left: auto;
+      padding: 3px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+    .lang-switch button {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .lang-switch button.active {
+      background: var(--accent);
+      color: #fff;
+    }
     @media (max-width: 640px) {
       .wrap { padding: 20px 12px 72px; }
       .filters select { min-width: 100%; width: 100%; }
@@ -254,11 +280,15 @@
     }
   </style>
 </head>
-<body>
+<body class="lang-fr">
   <nav class="bar">
-    <a href="index.html">← Accueil mock</a>
-    <a href="glossary.html">Glossaire</a>
+    <a href="index.html" id="nav-home">← Accueil mock</a>
+    <a href="glossary.html" id="nav-glossary">Glossaire</a>
     <a id="open-quiz" href="index.html">Ouvrir le quiz</a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" id="btn-lang-fr">FR</button>
+      <button type="button" data-lang="en" id="btn-lang-en">EN</button>
+    </div>
   </nav>
 
   <main class="wrap">
@@ -266,21 +296,89 @@
 
     <header class="head">
       <h1 id="title">Vue d’ensemble</h1>
-      <p class="muted" id="lead">
-        Répartition par domaine et liste des questions. Cliquez une carte pour l’ouvrir dans le quiz (ordre source, non mélangé).
-      </p>
+      <p class="muted" id="lead"></p>
     </header>
 
     <div id="content"></div>
 
-    <p class="disclaimer">
-      Outil d’étude indépendant. Non affilié à Anthropic — contenu généré / non vérifié.
-    </p>
+    <p class="disclaimer" id="disclaimer"></p>
   </main>
 
   <script src="questions-data.js"></script>
   <script>
     (function () {
+      const LANG_KEY = "claudeMockLang";
+      const UI = {
+        fr: {
+          home: "← Accueil mock",
+          glossary: "Glossaire",
+          open_quiz: "Ouvrir le quiz",
+          title_prefix: "Vue d’ensemble — ",
+          lead: (n) =>
+            n +
+            " questions · cliquez une carte pour l’ouvrir dans le quiz (ordre source).",
+          dist: "Répartition par domaine",
+          domain: "Domaine",
+          all_domains: "Tous les domaines",
+          reset: "Réinitialiser",
+          result: (n) => n + " question" + (n > 1 ? "s" : ""),
+          missing: "Set introuvable",
+          err_range:
+            "<div class='err'>Utilisez <code>overview.html?set=1</code> … <code>set=8</code>.</div>",
+          load_err:
+            "<div class='err'>Impossible de charger <code>questions-data.js</code>.</div>",
+          disclaimer:
+            "Outil d’étude indépendant. Non affilié à Anthropic — contenu généré / non vérifié.",
+        },
+        en: {
+          home: "← Mock home",
+          glossary: "Glossary",
+          open_quiz: "Open quiz",
+          title_prefix: "Overview — ",
+          lead: (n) =>
+            n +
+            " questions · click a card to open it in the quiz (source order).",
+          dist: "Distribution by domain",
+          domain: "Domain",
+          all_domains: "All domains",
+          reset: "Reset",
+          result: (n) => n + " question" + (n > 1 ? "s" : ""),
+          missing: "Set not found",
+          err_range:
+            "<div class='err'>Use <code>overview.html?set=1</code> … <code>set=8</code>.</div>",
+          load_err:
+            "<div class='err'>Could not load <code>questions-data.js</code>.</div>",
+          disclaimer:
+            "Independent study tool. Not affiliated with Anthropic — generated / unverified content.",
+        },
+      };
+
+      function currentLang() {
+        const stored = localStorage.getItem(LANG_KEY);
+        if (stored === "en" || stored === "fr") return stored;
+        const legacy = localStorage.getItem("claudeGlossaryLang");
+        if (legacy === "en" || legacy === "fr") return legacy;
+        return (navigator.language || "").toLowerCase().startsWith("fr")
+          ? "fr"
+          : "en";
+      }
+
+      let lang = currentLang();
+      function t(key) {
+        return (UI[lang] || UI.fr)[key];
+      }
+
+      function localizeQ(q) {
+        if (lang !== "fr") return q;
+        const fr = q.translations && q.translations.fr;
+        if (!fr) return q;
+        return {
+          ...q,
+          domain: fr.domain || q.domain,
+          q: fr.q || q.q,
+        };
+      }
+
       const data = window.MOCK_EXAM;
       const params = new URLSearchParams(location.search);
       const setId = Number(params.get("set") || "1");
@@ -289,153 +387,8 @@
       const openQuiz = document.getElementById("open-quiz");
 
       if (!data || !Array.isArray(data.sets)) {
-        content.innerHTML = "<div class='err'>Impossible de charger <code>questions-data.js</code>.</div>";
+        content.innerHTML = UI.fr.load_err;
         return;
-      }
-
-      data.sets.forEach((s) => {
-        const a = document.createElement("a");
-        a.href = "overview.html?set=" + s.id;
-        a.textContent = "Set " + s.id;
-        if (s.id === setId) a.classList.add("active");
-        picker.appendChild(a);
-      });
-
-      const set = data.sets.find((s) => s.id === setId);
-      if (!set) {
-        document.getElementById("title").textContent = "Set introuvable";
-        content.innerHTML =
-          "<div class='err'>Utilisez <code>overview.html?set=1</code> … <code>set=8</code>.</div>";
-        return;
-      }
-
-      document.title = "Vue d’ensemble · " + set.label;
-      document.getElementById("title").textContent =
-        "Vue d’ensemble — " + set.label;
-      document.getElementById("lead").textContent =
-        set.questions.length +
-        " questions · cliquez une carte pour l’ouvrir dans le quiz (ordre source).";
-      openQuiz.href = "index.html?set=" + set.id;
-
-      const byDomain = {};
-      set.questions.forEach((q) => {
-        byDomain[q.domain] = (byDomain[q.domain] || 0) + 1;
-      });
-      const domains = Object.keys(byDomain).sort((a, b) =>
-        a.localeCompare(b),
-      );
-      const total = set.questions.length;
-
-      const progress = document.createElement("section");
-      progress.className = "domain-progress";
-      progress.innerHTML = "<h2>Répartition par domaine</h2>";
-      domains.forEach((d) => {
-        const n = byDomain[d];
-        const pct = Math.round((n / total) * 100);
-        const row = document.createElement("div");
-        row.className = "progress-row";
-        row.innerHTML =
-          '<div class="progress-label"></div>' +
-          '<div class="progress-track"><div class="progress-fill" style="width:' +
-          pct +
-          '%"></div></div>' +
-          '<div class="progress-value">' +
-          n +
-          "/" +
-          total +
-          "</div>";
-        row.querySelector(".progress-label").textContent = d;
-        progress.appendChild(row);
-      });
-
-      const filters = document.createElement("div");
-      filters.className = "filters";
-      filters.innerHTML =
-        '<div class="row">' +
-        '<label for="filterDomain">Domaine</label>' +
-        '<select id="filterDomain"><option value="">Tous les domaines</option></select>' +
-        '<button type="button" id="resetFilters">Réinitialiser</button>' +
-        '<span id="resultCount"></span>' +
-        "</div>";
-      const sel = filters.querySelector("#filterDomain");
-      domains.forEach((d) => {
-        const opt = document.createElement("option");
-        opt.value = d;
-        opt.textContent = d;
-        sel.appendChild(opt);
-      });
-
-      const grid = document.createElement("div");
-      grid.className = "overview-grid";
-
-      function truncate(text, max) {
-        const t = String(text || "").trim();
-        if (t.length <= max) return t;
-        return t.slice(0, max - 1).trimEnd() + "…";
-      }
-
-      set.questions.forEach((q, i) => {
-        const num = i + 1;
-        const card = document.createElement("a");
-        card.className = "overview-card";
-        card.href = "index.html?set=" + set.id + "&q=" + num;
-        card.dataset.domain = q.domain;
-
-        const badges = [];
-        badges.push(
-          '<span class="badge domain">' + escapeHtml(shortDomain(q.domain)) + "</span>",
-        );
-        badges.push(
-          '<span class="badge pick' +
-            (q.pick > 1 ? " multi" : "") +
-            '">pick ' +
-            q.pick +
-            "</span>",
-        );
-        if (q.s) {
-          badges.push('<span class="badge section">§ ' + escapeHtml(q.s) + "</span>");
-        }
-
-        card.innerHTML =
-          '<div class="n">' +
-          num +
-          "</div>" +
-          "<div>" +
-          '<div class="labels">' +
-          badges.join("") +
-          "</div>" +
-          '<div class="summary"></div>' +
-          "</div>";
-        card.querySelector(".summary").textContent = truncate(q.q, 140);
-        grid.appendChild(card);
-      });
-
-      function applyFilters() {
-        const dv = sel.value;
-        let n = 0;
-        grid.querySelectorAll(".overview-card").forEach((card) => {
-          const show = !dv || card.dataset.domain === dv;
-          card.classList.toggle("hidden", !show);
-          if (show) n++;
-        });
-        document.getElementById("resultCount").textContent =
-          n + " question" + (n > 1 ? "s" : "");
-      }
-
-      content.appendChild(progress);
-      content.appendChild(filters);
-      content.appendChild(grid);
-
-      sel.addEventListener("change", applyFilters);
-      document.getElementById("resetFilters").addEventListener("click", () => {
-        sel.value = "";
-        applyFilters();
-      });
-      applyFilters();
-
-      function shortDomain(d) {
-        if (d.length <= 28) return d;
-        return d.slice(0, 26).trimEnd() + "…";
       }
 
       function escapeHtml(s) {
@@ -445,6 +398,197 @@
           .replace(/>/g, "&gt;")
           .replace(/"/g, "&quot;");
       }
+
+      function shortDomain(d) {
+        if (d.length <= 28) return d;
+        return d.slice(0, 26).trimEnd() + "…";
+      }
+
+      function truncate(text, max) {
+        const t = String(text || "").trim();
+        if (t.length <= max) return t;
+        return t.slice(0, max - 1).trimEnd() + "…";
+      }
+
+      function applyChrome() {
+        document.documentElement.lang = lang;
+        document.body.classList.remove("lang-fr", "lang-en");
+        document.body.classList.add("lang-" + lang);
+        document.querySelectorAll(".lang-switch button").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.lang === lang);
+        });
+        document.getElementById("nav-home").textContent = t("home");
+        document.getElementById("nav-glossary").textContent = t("glossary");
+        openQuiz.textContent = t("open_quiz");
+        document.getElementById("disclaimer").textContent = t("disclaimer");
+      }
+
+      function render() {
+        content.innerHTML = "";
+        picker.innerHTML = "";
+        applyChrome();
+
+        data.sets.forEach((s) => {
+          const a = document.createElement("a");
+          a.href = "overview.html?set=" + s.id;
+          a.textContent = "Set " + s.id;
+          if (s.id === setId) a.classList.add("active");
+          picker.appendChild(a);
+        });
+
+        const set = data.sets.find((s) => s.id === setId);
+        if (!set) {
+          document.getElementById("title").textContent = t("missing");
+          content.innerHTML = t("err_range");
+          return;
+        }
+
+        document.title = t("title_prefix") + set.label;
+        document.getElementById("title").textContent =
+          t("title_prefix") + set.label;
+        document.getElementById("lead").textContent = t("lead")(
+          set.questions.length,
+        );
+        openQuiz.href = "index.html?set=" + set.id;
+
+        const byDomain = {};
+        set.questions.forEach((q) => {
+          const loc = localizeQ(q);
+          byDomain[loc.domain] = (byDomain[loc.domain] || 0) + 1;
+        });
+        const domains = Object.keys(byDomain).sort((a, b) =>
+          a.localeCompare(b, lang),
+        );
+        const total = set.questions.length;
+
+        const progress = document.createElement("section");
+        progress.className = "domain-progress";
+        progress.innerHTML = "<h2>" + escapeHtml(t("dist")) + "</h2>";
+        domains.forEach((d) => {
+          const n = byDomain[d];
+          const pct = Math.round((n / total) * 100);
+          const row = document.createElement("div");
+          row.className = "progress-row";
+          row.innerHTML =
+            '<div class="progress-label"></div>' +
+            '<div class="progress-track"><div class="progress-fill" style="width:' +
+            pct +
+            '%"></div></div>' +
+            '<div class="progress-value">' +
+            n +
+            "/" +
+            total +
+            "</div>";
+          row.querySelector(".progress-label").textContent = d;
+          progress.appendChild(row);
+        });
+
+        const filters = document.createElement("div");
+        filters.className = "filters";
+        filters.innerHTML =
+          '<div class="row">' +
+          '<label for="filterDomain">' +
+          escapeHtml(t("domain")) +
+          "</label>" +
+          '<select id="filterDomain"><option value="">' +
+          escapeHtml(t("all_domains")) +
+          "</option></select>" +
+          '<button type="button" id="resetFilters">' +
+          escapeHtml(t("reset")) +
+          "</button>" +
+          '<span id="resultCount"></span>' +
+          "</div>";
+        const sel = filters.querySelector("#filterDomain");
+        domains.forEach((d) => {
+          const opt = document.createElement("option");
+          opt.value = d;
+          opt.textContent = d;
+          sel.appendChild(opt);
+        });
+
+        const grid = document.createElement("div");
+        grid.className = "overview-grid";
+
+        set.questions.forEach((q, i) => {
+          const loc = localizeQ(q);
+          const num = i + 1;
+          const card = document.createElement("a");
+          card.className = "overview-card";
+          card.href = "index.html?set=" + set.id + "&q=" + num;
+          card.dataset.domain = loc.domain;
+
+          const badges = [];
+          badges.push(
+            '<span class="badge domain">' +
+              escapeHtml(shortDomain(loc.domain)) +
+              "</span>",
+          );
+          badges.push(
+            '<span class="badge pick' +
+              (q.pick > 1 ? " multi" : "") +
+              '">pick ' +
+              q.pick +
+              "</span>",
+          );
+          if (q.s) {
+            badges.push(
+              '<span class="badge section">§ ' + escapeHtml(q.s) + "</span>",
+            );
+          }
+
+          card.innerHTML =
+            '<div class="n">' +
+            num +
+            "</div>" +
+            "<div>" +
+            '<div class="labels">' +
+            badges.join("") +
+            "</div>" +
+            '<div class="summary"></div>' +
+            "</div>";
+          card.querySelector(".summary").textContent = truncate(loc.q, 140);
+          grid.appendChild(card);
+        });
+
+        function applyFilters() {
+          const dv = sel.value;
+          let n = 0;
+          grid.querySelectorAll(".overview-card").forEach((card) => {
+            const show = !dv || card.dataset.domain === dv;
+            card.classList.toggle("hidden", !show);
+            if (show) n++;
+          });
+          document.getElementById("resultCount").textContent = t("result")(n);
+        }
+
+        content.appendChild(progress);
+        content.appendChild(filters);
+        content.appendChild(grid);
+
+        sel.addEventListener("change", applyFilters);
+        document.getElementById("resetFilters").addEventListener("click", () => {
+          sel.value = "";
+          applyFilters();
+        });
+        applyFilters();
+      }
+
+      function setLang(next) {
+        if (next !== "en" && next !== "fr") next = "fr";
+        lang = next;
+        localStorage.setItem(LANG_KEY, lang);
+        localStorage.setItem("claudeGlossaryLang", lang);
+        render();
+      }
+
+      document.getElementById("btn-lang-fr").addEventListener("click", () =>
+        setLang("fr"),
+      );
+      document.getElementById("btn-lang-en").addEventListener("click", () =>
+        setLang("en"),
+      );
+
+      render();
     })();
   </script>
 </body>

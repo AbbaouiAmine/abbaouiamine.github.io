@@ -348,30 +348,63 @@
       border-radius: inherit;
     }
     .hidden { display: none !important; }
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 1.1rem;
+    }
+    .brand-row .brand { margin-bottom: 0; flex: 1; min-width: 0; }
+    .lang-switch {
+      display: inline-flex;
+      gap: 4px;
+      flex-shrink: 0;
+      padding: 3px;
+      border-radius: 999px;
+      background: rgba(255, 252, 249, 0.9);
+      border: 1px solid var(--line);
+    }
+    .lang-switch button {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .lang-switch button.active {
+      background: var(--accent);
+      color: #fff;
+    }
     @media (max-width: 520px) {
       .btn-row { flex-direction: column; }
     }
   </style>
 </head>
-<body>
+<body class="lang-fr">
   <div class="shell">
-    <div class="brand">
-      <h1>Claude Certified Developer <span style="font-family:var(--font);font-weight:500;font-size:0.55em;color:var(--muted)">· Foundations</span></h1>
-      <div class="sub" id="subtitle">Mock exam practice</div>
+    <div class="brand-row">
+      <div class="brand">
+        <h1>Claude Certified Developer <span style="font-family:var(--font);font-weight:500;font-size:0.55em;color:var(--muted)">· Foundations</span></h1>
+        <div class="sub" id="subtitle">Mock exam practice</div>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="fr" id="btn-lang-fr">FR</button>
+        <button type="button" data-lang="en" id="btn-lang-en">EN</button>
+      </div>
     </div>
 
     <section id="home" class="card">
-      <div class="eyebrow">Entraînement · 6 practice sets</div>
-      <p class="lead">
-        Questions scenario-based, format proche de l’examen (single ou pick 2).
-        Feedback immédiat avec explication. Seuil indicatif&nbsp;: <strong>72&nbsp;%</strong>.
-        · <a href="glossary.html" style="color:var(--accent-dark);font-weight:700;text-decoration:none">Glossaire des termes</a>
-      </p>
+      <div class="eyebrow" id="home-eyebrow">Entraînement</div>
+      <p class="lead" id="home-lead"></p>
       <div class="grid" id="set-grid"></div>
-      <p class="note">
-        Progression <strong>non sauvegardée</strong> — un refresh repart de zéro.
-        Questions en anglais (comme le matériau source).
-      </p>
+      <p class="note" id="home-note"></p>
     </section>
 
     <section id="quiz" class="card hidden">
@@ -381,7 +414,7 @@
         <span class="progress-meta" id="q-progress"></span>
       </div>
       <div style="margin:-2px 0 10px;display:flex;justify-content:flex-end">
-        <a class="linkish" id="btn-overview" href="overview.html" style="text-decoration:none">Vue d’ensemble</a>
+        <a class="linkish" id="btn-overview" href="overview.html" style="text-decoration:none"></a>
       </div>
       <div class="bar"><i id="q-bar"></i></div>
       <h2 class="q" id="q-text"></h2>
@@ -389,36 +422,121 @@
       <div class="options" id="q-options"></div>
       <div id="q-feedback" class="feedback hidden"></div>
       <div class="actions">
-        <button type="button" class="btn btn-primary" id="btn-check" disabled>Vérifier</button>
-        <button type="button" class="btn btn-next hidden" id="btn-next">Question suivante →</button>
+        <button type="button" class="btn btn-primary" id="btn-check" disabled></button>
+        <button type="button" class="btn btn-next hidden" id="btn-next"></button>
       </div>
     </section>
 
     <section id="results" class="card hidden" style="text-align:center">
-      <div class="eyebrow" id="res-label">Set terminé</div>
+      <div class="eyebrow" id="res-label"></div>
       <div class="score-big" id="res-score"></div>
       <div class="pass-line" id="res-pass"></div>
       <p class="lead" id="res-msg" style="margin-left:auto;margin-right:auto"></p>
       <div id="res-domains" style="text-align:left;margin:0 0 1.4rem"></div>
       <div class="btn-row">
-        <button type="button" class="btn btn-primary" id="btn-retake">Refaire ce set</button>
-        <button type="button" class="btn btn-ghost" id="btn-other">← Autre set</button>
+        <button type="button" class="btn btn-primary" id="btn-retake"></button>
+        <button type="button" class="btn btn-ghost" id="btn-other"></button>
       </div>
     </section>
 
-    <p class="disclaimer">
-      Outil d’étude indépendant. Non affilié à Anthropic, non issu du contenu officiel d’examen.
-      Contenu généré / non vérifié.
-    </p>
+    <p class="disclaimer" id="disclaimer"></p>
   </div>
 
   <script src="questions-data.js"></script>
   <script>
     (function () {
+      const LANG_KEY = "claudeMockLang";
+      const UI = {
+        fr: {
+          subtitle_home: "Entraînement mock exam",
+          home_eyebrow: "Entraînement",
+          home_lead:
+            'Questions scenario-based, format proche de l’examen (single ou pick 2). Feedback immédiat avec explication. Seuil indicatif&nbsp;: <strong>72&nbsp;%</strong>. · <a href="glossary.html" style="color:var(--accent-dark);font-weight:700;text-decoration:none">Glossaire des termes</a>',
+          home_note:
+            "Progression <strong>non sauvegardée</strong> — un refresh repart de zéro. Choisissez FR ou EN pour l’énoncé des questions.",
+          start: "Démarrer",
+          overview: "Vue d’ensemble",
+          questions: "questions",
+          home: "← Accueil",
+          check: "Vérifier",
+          next: "Question suivante →",
+          see_results: "Voir les résultats",
+          pick: (n, sel) =>
+            `Sélectionnez ${n} · choisi${sel > 1 ? "s" : ""} ${sel}`,
+          correct: "Correct",
+          incorrect: "Pas tout à fait",
+          res_done: "terminé",
+          res_above: "au-dessus",
+          res_below: "en dessous",
+          res_of: "du seuil",
+          res_ok: "Bon niveau. Relisez les domaines en rouge si besoin.",
+          res_bad:
+            "Sous le seuil indicatif — concentrez-vous sur les domaines en rouge.",
+          skipped: (n) =>
+            ` (${n} question${n > 1 ? "s" : ""} non jouée${n > 1 ? "s" : ""} via deep-link).`,
+          retake: "Refaire ce set",
+          other: "← Autre set",
+          load_err:
+            "<p class='lead'>Impossible de charger <code>questions-data.js</code>.</p>",
+          disclaimer:
+            "Outil d’étude indépendant. Non affilié à Anthropic, non issu du contenu officiel d’examen. Contenu généré / non vérifié.",
+        },
+        en: {
+          subtitle_home: "Mock exam practice",
+          home_eyebrow: "Practice",
+          home_lead:
+            'Scenario-based questions in exam-like format (single or pick 2). Instant feedback with explanations. Indicative cut line: <strong>72%</strong>. · <a href="glossary.html" style="color:var(--accent-dark);font-weight:700;text-decoration:none">Term glossary</a>',
+          home_note:
+            "Progress is <strong>not saved</strong> — a refresh starts over. Switch FR or EN for question wording.",
+          start: "Start",
+          overview: "Overview",
+          questions: "questions",
+          home: "← Home",
+          check: "Check",
+          next: "Next question →",
+          see_results: "See results",
+          pick: (n, sel) =>
+            `Select ${n} · selected ${sel}`,
+          correct: "Correct",
+          incorrect: "Not quite",
+          res_done: "complete",
+          res_above: "above",
+          res_below: "below",
+          res_of: "the",
+          res_ok: "Solid level. Review red domains if needed.",
+          res_bad:
+            "Below the indicative cut — focus on the red domains.",
+          skipped: (n) =>
+            ` (${n} question${n > 1 ? "s" : ""} skipped via deep-link).`,
+          retake: "Retake this set",
+          other: "← Other set",
+          load_err:
+            "<p class='lead'>Could not load <code>questions-data.js</code>.</p>",
+          disclaimer:
+            "Independent study tool. Not affiliated with Anthropic or sourced from official exam content. User-generated / unverified.",
+        },
+      };
+
+      function currentLang() {
+        const stored = localStorage.getItem(LANG_KEY);
+        if (stored === "en" || stored === "fr") return stored;
+        const legacy = localStorage.getItem("claudeGlossaryLang");
+        if (legacy === "en" || legacy === "fr") return legacy;
+        return (navigator.language || "").toLowerCase().startsWith("fr")
+          ? "fr"
+          : "en";
+      }
+
+      let lang = currentLang();
+
+      function t(key) {
+        const pack = UI[lang] || UI.fr;
+        return pack[key];
+      }
+
       const data = window.MOCK_EXAM;
       if (!data || !Array.isArray(data.sets)) {
-        document.getElementById("home").innerHTML =
-          "<p class='lead'>Impossible de charger <code>questions-data.js</code>.</p>";
+        document.getElementById("home").innerHTML = UI.fr.load_err;
         return;
       }
 
@@ -443,6 +561,7 @@
         resPass: document.getElementById("res-pass"),
         resMsg: document.getElementById("res-msg"),
         resDomains: document.getElementById("res-domains"),
+        overview: document.getElementById("btn-overview"),
       };
 
       let state = {
@@ -452,6 +571,7 @@
         selected: [],
         checked: false,
         results: [],
+        view: "home",
       };
 
       function shuffle(arr) {
@@ -465,10 +585,34 @@
 
       function shuffleOptions(q) {
         const order = shuffle(q.options.map((_, i) => i));
-        return {
+        const out = {
           ...q,
           options: order.map((i) => q.options[i]),
           correct: q.correct.map((c) => order.indexOf(c)),
+        };
+        const fr = q.translations && q.translations.fr;
+        if (fr && Array.isArray(fr.options) && fr.options.length === q.options.length) {
+          out.translations = {
+            ...q.translations,
+            fr: {
+              ...fr,
+              options: order.map((i) => fr.options[i]),
+            },
+          };
+        }
+        return out;
+      }
+
+      function localize(q) {
+        if (lang !== "fr") return q;
+        const fr = q.translations && q.translations.fr;
+        if (!fr) return q;
+        return {
+          ...q,
+          domain: fr.domain || q.domain,
+          q: fr.q || q.q,
+          options: Array.isArray(fr.options) ? fr.options : q.options,
+          why: fr.why || q.why,
         };
       }
 
@@ -485,6 +629,7 @@
       }
 
       function show(view) {
+        state.view = view;
         el.home.classList.toggle("hidden", view !== "home");
         el.quiz.classList.toggle("hidden", view !== "quiz");
         el.results.classList.toggle("hidden", view !== "results");
@@ -496,8 +641,66 @@
         }
       }
 
+      function applyChrome() {
+        document.documentElement.lang = lang;
+        document.body.classList.remove("lang-fr", "lang-en");
+        document.body.classList.add("lang-" + lang);
+        document.querySelectorAll(".lang-switch button").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.lang === lang);
+        });
+        document.getElementById("home-eyebrow").textContent =
+          t("home_eyebrow") + " · " + data.sets.length + " practice sets";
+        document.getElementById("home-lead").innerHTML = t("home_lead");
+        document.getElementById("home-note").innerHTML = t("home_note");
+        document.getElementById("btn-home").textContent = t("home");
+        el.overview.textContent = t("overview");
+        el.check.textContent = t("check");
+        document.getElementById("btn-retake").textContent = t("retake");
+        document.getElementById("btn-other").textContent = t("other");
+        document.getElementById("disclaimer").textContent = t("disclaimer");
+      }
+
+      function setLang(next) {
+        if (next !== "en" && next !== "fr") next = "fr";
+        lang = next;
+        localStorage.setItem(LANG_KEY, lang);
+        localStorage.setItem("claudeGlossaryLang", lang);
+        applyChrome();
+        if (state.view === "home") renderHome();
+        else if (state.view === "quiz") {
+          if (state.set) {
+            el.subtitle.textContent = `Foundations · ${state.set.label}`;
+          }
+          if (state.checked) {
+            // re-render question + keep feedback
+            const savedSelected = state.selected.slice();
+            const savedChecked = true;
+            renderQuestion();
+            state.selected = savedSelected;
+            state.checked = savedChecked;
+            paintOptions();
+            const q = localize(current());
+            const ok = arraysEqual(state.selected, current().correct);
+            el.feedback.className = "feedback " + (ok ? "ok" : "bad");
+            el.feedback.innerHTML =
+              `<strong>${ok ? t("correct") : t("incorrect")}</strong>` +
+              `<div>${escapeHtml(q.why)}</div>`;
+            el.check.classList.add("hidden");
+            el.next.classList.remove("hidden");
+            el.next.textContent =
+              state.idx + 1 >= state.deck.length
+                ? t("see_results")
+                : t("next");
+          } else {
+            renderQuestion();
+          }
+        } else if (state.view === "results") {
+          renderResults();
+        }
+      }
+
       function renderHome() {
-        el.subtitle.textContent = "Mock exam practice";
+        el.subtitle.textContent = t("subtitle_home");
         el.grid.innerHTML = "";
         data.sets.forEach((s) => {
           const card = document.createElement("div");
@@ -505,10 +708,10 @@
           card.innerHTML =
             `<span class="n">${s.id}</span>` +
             `<span class="l">${s.label}</span>` +
-            `<span class="c">${s.questions.length} questions</span>` +
+            `<span class="c">${s.questions.length} ${t("questions")}</span>` +
             `<div class="set-actions">` +
-            `<a class="go" href="index.html?set=${s.id}">Démarrer</a>` +
-            `<a class="ov" href="overview.html?set=${s.id}">Vue d’ensemble</a>` +
+            `<a class="go" href="index.html?set=${s.id}">${t("start")}</a>` +
+            `<a class="ov" href="overview.html?set=${s.id}">${t("overview")}</a>` +
             `</div>`;
           card.querySelector(".go").addEventListener("click", (e) => {
             e.preventDefault();
@@ -526,6 +729,7 @@
         const prior = deck.slice(0, idx).map((q) => ({
           correct: false,
           domain: q.domain,
+          domainFr: (q.translations && q.translations.fr && q.translations.fr.domain) || q.domain,
           skipped: true,
         }));
         state = {
@@ -535,10 +739,10 @@
           selected: [],
           checked: false,
           results: prior,
+          view: "quiz",
         };
         el.subtitle.textContent = `Foundations · ${set.label}`;
-        const ov = document.getElementById("btn-overview");
-        if (ov) ov.href = `overview.html?set=${set.id}`;
+        if (el.overview) el.overview.href = `overview.html?set=${set.id}`;
         renderQuestion();
         show("quiz");
       }
@@ -548,14 +752,15 @@
       }
 
       function renderQuestion() {
-        const q = current();
+        const raw = current();
+        const q = localize(raw);
         const total = state.deck.length;
         el.domain.textContent = q.domain;
         el.progress.textContent = `${state.idx + 1} / ${total}`;
         el.bar.style.width = `${((state.idx + (state.checked ? 1 : 0)) / total) * 100}%`;
         el.text.textContent = q.q;
-        if (q.pick > 1) {
-          el.pick.textContent = `Sélectionnez ${q.pick} · choisi${state.selected.length > 1 ? "s" : ""} ${state.selected.length}`;
+        if (raw.pick > 1) {
+          el.pick.textContent = t("pick")(raw.pick, state.selected.length);
           el.pick.style.minHeight = "";
         } else {
           el.pick.textContent = "";
@@ -566,7 +771,7 @@
         q.options.forEach((opt, i) => {
           const btn = document.createElement("button");
           btn.type = "button";
-          btn.className = "opt" + (q.pick > 1 ? " multi" : "");
+          btn.className = "opt" + (raw.pick > 1 ? " multi" : "");
           btn.dataset.index = String(i);
           const mark = document.createElement("span");
           mark.className = "mark";
@@ -582,12 +787,12 @@
         el.feedback.innerHTML = "";
         el.check.classList.remove("hidden");
         el.next.classList.add("hidden");
-        el.check.disabled = state.selected.length !== q.pick;
+        el.check.disabled = state.selected.length !== raw.pick;
         paintOptions();
       }
 
       function paintOptions() {
-        const q = current();
+        const raw = current();
         [...el.options.children].forEach((btn) => {
           const i = Number(btn.dataset.index);
           const mark = btn.querySelector(".mark");
@@ -599,7 +804,7 @@
             mark.textContent = "•";
           }
           if (state.checked) {
-            const isRight = q.correct.includes(i);
+            const isRight = raw.correct.includes(i);
             if (isRight) {
               btn.classList.add("right");
               mark.textContent = "✓";
@@ -612,9 +817,9 @@
             btn.disabled = false;
           }
         });
-        el.check.disabled = state.selected.length !== q.pick;
-        if (q.pick > 1 && !state.checked) {
-          el.pick.textContent = `Sélectionnez ${q.pick} · choisi${state.selected.length > 1 ? "s" : ""} ${state.selected.length}`;
+        el.check.disabled = state.selected.length !== raw.pick;
+        if (raw.pick > 1 && !state.checked) {
+          el.pick.textContent = t("pick")(raw.pick, state.selected.length);
         }
       }
 
@@ -634,19 +839,26 @@
       }
 
       function checkAnswer() {
-        const q = current();
-        if (state.selected.length !== q.pick) return;
+        const raw = current();
+        const q = localize(raw);
+        if (state.selected.length !== raw.pick) return;
         state.checked = true;
-        const ok = arraysEqual(state.selected, q.correct);
-        state.results.push({ correct: ok, domain: q.domain });
+        const ok = arraysEqual(state.selected, raw.correct);
+        state.results.push({
+          correct: ok,
+          domain: raw.domain,
+          domainFr:
+            (raw.translations && raw.translations.fr && raw.translations.fr.domain) ||
+            raw.domain,
+        });
         el.feedback.className = "feedback " + (ok ? "ok" : "bad");
         el.feedback.innerHTML =
-          `<strong>${ok ? "Correct" : "Pas tout à fait"}</strong>` +
+          `<strong>${ok ? t("correct") : t("incorrect")}</strong>` +
           `<div>${escapeHtml(q.why)}</div>`;
         el.check.classList.add("hidden");
         el.next.classList.remove("hidden");
         el.next.textContent =
-          state.idx + 1 >= state.deck.length ? "Voir les résultats" : "Question suivante →";
+          state.idx + 1 >= state.deck.length ? t("see_results") : t("next");
         paintOptions();
         el.bar.style.width = `${((state.idx + 1) / state.deck.length) * 100}%`;
       }
@@ -663,30 +875,25 @@
       }
 
       function renderResults() {
-        const total = state.deck.length;
         const graded = state.results.filter((r) => !r.skipped);
         const score = graded.filter((r) => r.correct).length;
-        const gradedTotal = graded.length || total;
+        const gradedTotal = graded.length || state.deck.length;
         const pct = Math.round((score / gradedTotal) * 100);
         const pass = pct >= cut;
         const skipped = state.results.filter((r) => r.skipped).length;
-        el.resLabel.textContent = `${state.set.label} · terminé`;
+        el.resLabel.textContent = `${state.set.label} · ${t("res_done")}`;
         el.resScore.innerHTML = `${score}<span>/${gradedTotal}</span>`;
         el.resPass.className = "pass-line " + (pass ? "ok" : "bad");
-        el.resPass.textContent = `${pct}% ${pass ? "· au-dessus" : "· en dessous"} du seuil ${cut}%`;
-        el.resMsg.textContent = pass
-          ? "Bon niveau. Relisez les domaines en rouge si besoin."
-          : "Sous le seuil indicatif — concentrez-vous sur les domaines en rouge.";
-        if (skipped) {
-          el.resMsg.textContent +=
-            ` (${skipped} question${skipped > 1 ? "s" : ""} non jouée${skipped > 1 ? "s" : ""} via deep-link).`;
-        }
+        el.resPass.textContent = `${pct}% · ${pass ? t("res_above") : t("res_below")} ${t("res_of")} ${cut}%`;
+        el.resMsg.textContent = pass ? t("res_ok") : t("res_bad");
+        if (skipped) el.resMsg.textContent += t("skipped")(skipped);
 
         const byDomain = {};
         graded.forEach((r) => {
-          if (!byDomain[r.domain]) byDomain[r.domain] = { c: 0, t: 0 };
-          byDomain[r.domain].t += 1;
-          if (r.correct) byDomain[r.domain].c += 1;
+          const key = lang === "fr" ? r.domainFr || r.domain : r.domain;
+          if (!byDomain[key]) byDomain[key] = { c: 0, t: 0 };
+          byDomain[key].t += 1;
+          if (r.correct) byDomain[key].c += 1;
         });
 
         el.resDomains.innerHTML = "";
@@ -726,6 +933,10 @@
       });
       el.check.addEventListener("click", checkAnswer);
       el.next.addEventListener("click", next);
+      document.getElementById("btn-lang-fr").addEventListener("click", () => setLang("fr"));
+      document.getElementById("btn-lang-en").addEventListener("click", () => setLang("en"));
+
+      applyChrome();
 
       const params = new URLSearchParams(location.search);
       const setParam = Number(params.get("set") || "");

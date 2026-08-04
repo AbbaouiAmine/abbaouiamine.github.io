@@ -867,7 +867,8 @@
   </main>
 
   <script>
-    const LANG_KEY = "claudeGlossaryLang";
+    const LANG_KEY = "claudeMockLang";
+    const LANG_KEY_LEGACY = "claudeGlossaryLang";
     const UI_I18N = {
       en: { result_one: "entry", result_many: "entries" },
       fr: { result_one: "entrée", result_many: "entrées" },
@@ -876,6 +877,8 @@
     function currentLang() {
       const stored = localStorage.getItem(LANG_KEY);
       if (stored === "en" || stored === "fr") return stored;
+      const legacy = localStorage.getItem(LANG_KEY_LEGACY);
+      if (legacy === "en" || legacy === "fr") return legacy;
       return (navigator.language || "").toLowerCase().startsWith("fr") ? "fr" : "en";
     }
 
@@ -896,6 +899,7 @@
       document.body.classList.add("lang-" + lang);
       document.documentElement.lang = lang;
       localStorage.setItem(LANG_KEY, lang);
+      localStorage.setItem(LANG_KEY_LEGACY, lang);
       document.querySelectorAll(".lang-switch button").forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.lang === lang);
       });

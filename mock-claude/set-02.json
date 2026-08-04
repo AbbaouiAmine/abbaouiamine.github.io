@@ -13,7 +13,20 @@
     "correct": [
       0
     ],
-    "why": "Generation is non-deterministic, so grade on structure or key facts, not an exact string. Temperature 0 reduces variation but does not guarantee identical bytes, and retrying or upsizing does not make the assertion valid."
+    "why": "Generation is non-deterministic, so grade on structure or key facts, not an exact string. Temperature 0 reduces variation but does not guarantee identical bytes, and retrying or upsizing does not make the assertion valid.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux LLM",
+        "q": "Un test de régression est instable car il compare la sortie du modèle à une chaîne attendue fixe. Quelle est la meilleure correction ?",
+        "options": [
+          "Vérifier la structure ou les faits clés de la sortie plutôt qu'une chaîne exacte, car la génération est non déterministe",
+          "Fixer la temperature à 0 et supposer que la sortie est désormais identique au byte à chaque exécution, en conservant l'assertion de chaîne exacte",
+          "Réexécuter le test jusqu'à ce qu'il passe par hasard",
+          "Déplacer le test vers le tier de modèle le plus grand"
+        ],
+        "why": "La génération est non déterministe, donc il faut noter sur la structure ou les faits clés, pas une chaîne exacte. La temperature 0 réduit la variation mais ne garantit pas des bytes identiques, et réessayer ou monter en gamme ne rend pas l'assertion valide."
+      }
+    }
   },
   {
     "s": "A",
@@ -30,7 +43,20 @@
       0,
       1
     ],
-    "why": "History and tool outputs both accumulate in the window and spend the fixed budget. Parameter count and temperature are model settings, not context the window holds."
+    "why": "History and tool outputs both accumulate in the window and spend the fixed budget. Parameter count and temperature are model settings, not context the window holds.",
+    "translations": {
+      "fr": {
+        "domain": "Mécanique de l'API",
+        "q": "Parmi ces éléments, lesquels DEUX consomment le budget de context à mesure que la conversation grandit ? (Choisir 2)",
+        "options": [
+          "Les résultats de tools accumulés",
+          "Les tours précédents conservés dans l'historique",
+          "Le nombre de paramètres du modèle",
+          "Le réglage de temperature"
+        ],
+        "why": "L'historique et les sorties de tools s'accumulent tous deux dans la fenêtre et consomment le budget fixe. Le nombre de paramètres et la temperature sont des réglages du modèle, pas du context contenu dans la fenêtre."
+      }
+    }
   },
   {
     "s": "A",
@@ -46,7 +72,20 @@
     "correct": [
       0
     ],
-    "why": "Reasoning effort should be spent only where it changes the answer. Maxing thinking or the model tier on simple, latency-sensitive work just adds cost and latency."
+    "why": "Reasoning effort should be spent only where it changes the answer. Maxing thinking or the model tier on simple, latency-sensitive work just adds cost and latency.",
+    "translations": {
+      "fr": {
+        "domain": "Sélection de modèles",
+        "q": "Une charge de travail est simple, sensible à la latence, et n'a pas besoin de raisonnement étape par étape. Quel réglage convient ?",
+        "options": [
+          "Se passer de l'extended thinking, en ne l'activant que là où une passe de raisonnement change la réponse",
+          "Activer l'extended thinking à effort maximum pour que même les réponses simples soient extra fiables, sans jamais le regretter plus tard",
+          "Toujours router vers le plus grand modèle",
+          "Fixer l'adaptive thinking à son effort le plus élevé de façon permanente"
+        ],
+        "why": "L'effort de raisonnement doit être dépensé uniquement là où il change la réponse. Maximiser le thinking ou le tier du modèle sur un travail simple et sensible à la latence ne fait qu'ajouter du coût et de la latence."
+      }
+    }
   },
   {
     "s": "A",
@@ -62,7 +101,20 @@
     "correct": [
       0
     ],
-    "why": "Cache checkpoints let the unchanged prefix be reused at reduced cost. max_tokens caps output not input, batch does not suit a live session, and more examples add tokens."
+    "why": "Cache checkpoints let the unchanged prefix be reused at reduced cost. max_tokens caps output not input, batch does not suit a live session, and more examples add tokens.",
+    "translations": {
+      "fr": {
+        "domain": "Coûts et tokens",
+        "q": "Dans une longue session d'agent, le même préfixe d'instructions est renvoyé à chaque tour. Qu'est-ce qui réduit le coût d'entrée répété ?",
+        "options": [
+          "Des cache checkpoints sur le préfixe stable",
+          "Baisser max_tokens à chaque tour pour que les réponses soient plus courtes, ce qui fait baisser le coût d'entrée par tour à mesure que la session avance",
+          "Passer la session en mode batch",
+          "Ajouter plus d'exemples few-shot"
+        ],
+        "why": "Les cache checkpoints permettent de réutiliser le préfixe inchangé à coût réduit. max_tokens plafonne la sortie et non l'entrée, le batch ne convient pas à une session en direct, et plus d'exemples ajoutent des tokens."
+      }
+    }
   },
   {
     "s": "B",
@@ -78,7 +130,20 @@
     "correct": [
       0
     ],
-    "why": "Drift across turns points to an underspecified system prompt, so fix it there. Piling reasoning examples into every user turn is costly and off-target, and temperature or model swaps do not address drift."
+    "why": "Drift across turns points to an underspecified system prompt, so fix it there. Piling reasoning examples into every user turn is costly and off-target, and temperature or model swaps do not address drift.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt Engineering",
+        "q": "Au fil d'une longue conversation, le format de sortie du modèle dérive lentement par rapport à ce que vous avez demandé. Quelle technique traite ce type d'échec ?",
+        "options": [
+          "Compléter et resserrer le system prompt pour que la règle de format soit énoncée de façon durable",
+          "Ajouter trois exemples few-shot des étapes de raisonnement souhaitées à chaque message utilisateur pour que le modèle se réancre sur la structure à chaque tour",
+          "Augmenter la temperature",
+          "Changer de modèle en cours de route"
+        ],
+        "why": "La dérive au fil des tours pointe vers un system prompt sous-spécifié, donc il faut la corriger là. Empiler des exemples de raisonnement dans chaque tour utilisateur est coûteux et à côté du sujet, et la temperature ou le changement de modèle ne traitent pas la dérive."
+      }
+    }
   },
   {
     "s": "B",
@@ -95,7 +160,20 @@
       0,
       1
     ],
-    "why": "Delimiting user input as data and separating trusted instructions into the system prompt both blunt injection. A polite request is unenforceable, and blanket truncation mangles legitimate input."
+    "why": "Delimiting user input as data and separating trusted instructions into the system prompt both blunt injection. A polite request is unenforceable, and blanket truncation mangles legitimate input.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt Engineering",
+        "q": "Le texte soumis par l'utilisateur est concaténé directement dans votre template de prompt et parfois écrase vos instructions. Quelles DEUX mesures aident au niveau du prompt ? (Choisir 2)",
+        "options": [
+          "Délimiter et étiqueter clairement le texte utilisateur comme des données",
+          "Garder les instructions de confiance dans le system prompt, séparées du contenu utilisateur",
+          "Demander poliment aux utilisateurs de ne pas inclure d'instructions",
+          "Tronquer toute entrée utilisateur à une longueur courte fixe"
+        ],
+        "why": "Délimiter l'entrée utilisateur comme des données et séparer les instructions de confiance dans le system prompt atténuent tous deux le prompt injection. Une demande polie n'est pas applicable, et une troncature systématique abîme les entrées légitimes."
+      }
+    }
   },
   {
     "s": "B",
@@ -111,7 +189,20 @@
     "correct": [
       0
     ],
-    "why": "The system prompt is the authoritative, stable home for durable rules. Repeating them in assistant turns is fragile and wasteful, and user or tool content is lower priority."
+    "why": "The system prompt is the authoritative, stable home for durable rules. Repeating them in assistant turns is fragile and wasteful, and user or tool content is lower priority.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt Engineering",
+        "q": "Où les règles durables de rôle et de sécurité tiennent-elles le plus fiablement face aux tours utilisateur suivants ?",
+        "options": [
+          "Le system prompt",
+          "Répétées mot pour mot dans chaque réponse de l'assistant, pour que le modèle en soit continuellement rappelé tout au long de la conversation",
+          "Le dernier message utilisateur",
+          "Un résultat de tool"
+        ],
+        "why": "Le system prompt est le foyer stable et faisant autorité pour les règles durables. Les répéter dans les tours de l'assistant est fragile et coûteux, et le contenu utilisateur ou de tool est de priorité inférieure."
+      }
+    }
   },
   {
     "s": "B",
@@ -127,7 +218,20 @@
     "correct": [
       0
     ],
-    "why": "Constrain the output and validate defensively before it moves on. Temperature 0 reduces but does not eliminate stray prose, trusting the output is what breaks, and max_tokens is unrelated."
+    "why": "Constrain the output and validate defensively before it moves on. Temperature 0 reduces but does not eliminate stray prose, trusting the output is what breaks, and max_tokens is unrelated.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion des sorties",
+        "q": "Votre parser casse occasionnellement sur une sortie qui est du JSON valide mais qui inclut un préambule en prose. Quelle est la gestion la plus robuste en production ?",
+        "options": [
+          "Contraindre à du JSON uniquement et valider par rapport à un schema, en réparant ou rejetant la sortie malformée avant qu'elle ne se propage en aval",
+          "Mettre la temperature à 0, ce qui élimine entièrement la variation de formatage pour qu'un préambule ne puisse plus jamais apparaître",
+          "Faire confiance à la sortie et la parser directement",
+          "Augmenter max_tokens"
+        ],
+        "why": "Contraignez la sortie et validez-la de façon défensive avant qu'elle ne soit transmise. La temperature 0 réduit mais n'élimine pas la prose parasite, faire confiance à la sortie est ce qui casse, et max_tokens n'a pas de rapport."
+      }
+    }
   },
   {
     "s": "B",
@@ -143,7 +247,20 @@
     "correct": [
       0
     ],
-    "why": "Overlapping descriptions cause wrong-tool selection, so make each description distinct with an exclusion condition. List order is not the lever, removing a tool drops a capability, and temperature does not help."
+    "why": "Overlapping descriptions cause wrong-tool selection, so make each description distinct with an exclusion condition. List order is not the lever, removing a tool drops a capability, and temperature does not help.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Un agent appelle un tool de recherche bien plus souvent qu'un tool de création, même quand la création est prévue. Leurs descriptions se recoupent. Quelle est la meilleure première correction ?",
+        "options": [
+          "Réécrire les descriptions pour que chacune énonce son but distinct et quand ne pas l'utiliser",
+          "Réordonner les tools pour que le tool de création soit listé en premier, puisque le modèle tend à préférer le tool qui apparaît plus tôt dans la liste",
+          "Supprimer le tool de recherche",
+          "Augmenter la temperature"
+        ],
+        "why": "Des descriptions qui se recoupent causent une mauvaise sélection de tool, donc rendez chaque description distincte avec une condition d'exclusion. L'ordre de la liste n'est pas le levier, supprimer un tool fait perdre une fonctionnalité, et la temperature n'aide pas."
+      }
+    }
   },
   {
     "s": "B",
@@ -159,7 +276,20 @@
     "correct": [
       0
     ],
-    "why": "A known, fixed path is a workflow: deterministic and cheaper. Reaching for an agent adds nondeterminism and cost you do not need, and a mega-prompt or unordered calls cannot reliably sequence the work."
+    "why": "A known, fixed path is a workflow: deterministic and cheaper. Reaching for an agent adds nondeterminism and cost you do not need, and a mega-prompt or unordered calls cannot reliably sequence the work.",
+    "translations": {
+      "fr": {
+        "domain": "Agents et workflows",
+        "q": "Vous pouvez écrire la séquence exacte et fixe d'étapes qu'une tâche suit toujours. Quelle architecture est la bonne, et pourquoi ?",
+        "options": [
+          "Un workflow, car le chemin est connu et le coder évite le coût et le non-déterminisme d'un agent",
+          "Un agent, car les agents sont plus capables et pérennes et vous pouvez toujours le contraindre plus tard si la latence et le coût supplémentaires deviennent un problème en production",
+          "Un unique mega-prompt contenant toutes les étapes",
+          "Des appels indépendants et non ordonnés"
+        ],
+        "why": "Un chemin connu et fixe est un workflow : déterministe et moins coûteux. Se tourner vers un agent ajoute du non-déterminisme et du coût dont vous n'avez pas besoin, et un mega-prompt ou des appels non ordonnés ne peuvent pas séquencer le travail de façon fiable."
+      }
+    }
   },
   {
     "s": "B",
@@ -175,7 +305,20 @@
     "correct": [
       0
     ],
-    "why": "Irreversible actions get a human gate before execution, designed in. Logging and alerting are after the money moved, and temperature or a prompt reminder are not enforceable controls."
+    "why": "Irreversible actions get a human gate before execution, designed in. Logging and alerting are after the money moved, and temperature or a prompt reminder are not enforceable controls.",
+    "translations": {
+      "fr": {
+        "domain": "Agents et workflows",
+        "q": "Un agent capable d'émettre des remboursements passe en production, et les remboursements sont irréversibles. Quel est le bon choix de conception ?",
+        "options": [
+          "Un verrou d'approbation humaine avant que le remboursement ne s'exécute, câblé dès la conception",
+          "Un logging et une alerte détaillés, pour que si un mauvais remboursement part, l'ingénieur d'astreinte soit notifié en quelques minutes et puisse entamer l'annulation",
+          "Une temperature basse pour réduire les comportements risqués",
+          "Un rappel poli dans le system prompt d'être prudent"
+        ],
+        "why": "Les actions irréversibles reçoivent un verrou humain avant exécution, conçu en amont. Le logging et les alertes arrivent après que l'argent soit parti, et la temperature ou un rappel dans le prompt ne sont pas des contrôles applicables."
+      }
+    }
   },
   {
     "s": "B",
@@ -191,7 +334,20 @@
     "correct": [
       0
     ],
-    "why": "Isolating each document in a subagent keeps contexts clean and feeds synthesis compact extracts. Cramming all 40 in is the bloat that degraded quality, dropping documents loses data, and temperature is irrelevant."
+    "why": "Isolating each document in a subagent keeps contexts clean and feeds synthesis compact extracts. Cramming all 40 in is the bloat that degraded quality, dropping documents loses data, and temperature is irrelevant.",
+    "translations": {
+      "fr": {
+        "domain": "Agents et workflows",
+        "q": "Un agent de recherche doit lire 40 documents et produire une synthèse citée unique, mais tout mettre dans un seul context dégrade la qualité. Quelle est la meilleure approche ?",
+        "options": [
+          "Faire extraire chaque document par des subagents en isolation, puis synthétiser à partir des extraits compacts",
+          "Charger les 40 en une fois et augmenter max_tokens au maximum permis par le modèle pour que rien n'ait à être exclu du context unique",
+          "N'utiliser que les documents qui rentrent confortablement",
+          "Baisser la temperature"
+        ],
+        "why": "Isoler chaque document dans un subagent garde les contexts propres et alimente la synthèse avec des extraits compacts. Tout entasser dans les 40 est précisément le surplus qui a dégradé la qualité, exclure des documents perd des données, et la temperature n'a pas de rapport."
+      }
+    }
   },
   {
     "s": "B",
@@ -207,7 +363,20 @@
     "correct": [
       0
     ],
-    "why": "Inline base64 suits one-off images; the Files API suits assets reused across requests so they aren't re-sent each time. Inlining a reused asset repeatedly wastes tokens, and text description or forced batching miss the point."
+    "why": "Inline base64 suits one-off images; the Files API suits assets reused across requests so they aren't re-sent each time. Inlining a reused asset repeatedly wastes tokens, and text description or forced batching miss the point.",
+    "translations": {
+      "fr": {
+        "domain": "Mécanique de l'API",
+        "q": "Une image ponctuelle est analysée une seule fois ; un logo est réutilisé à travers des milliers de requêtes. Comment fournir chacun ?",
+        "options": [
+          "Mettre l'image ponctuelle en ligne en base64, et placer le logo réutilisé derrière la Files API pour qu'il ne soit pas ré-uploadé à chaque appel",
+          "Mettre les deux en ligne en base64 à chaque fois, puisque l'inlining est le plus simple et que les octets supplémentaires sur l'asset réutilisé sont négligeables à l'échelle",
+          "Décrire les deux en texte pour éviter les tokens d'image",
+          "Traiter les deux en batch quels que soient les besoins de latence"
+        ],
+        "why": "L'inlining en base64 convient à une image ponctuelle ; la Files API convient aux assets réutilisés à travers des requêtes pour qu'ils ne soient pas renvoyés à chaque fois. Mettre en ligne un asset réutilisé à répétition gaspille des tokens, et la description en texte ou le batch forcé passent à côté du sujet."
+      }
+    }
   },
   {
     "s": "B",
@@ -223,7 +392,20 @@
     "correct": [
       0
     ],
-    "why": "Thinking blocks must be returned unchanged or the next request fails. Summarising, deleting, or relocating them breaks the exchange."
+    "why": "Thinking blocks must be returned unchanged or the next request fails. Summarising, deleting, or relocating them breaks the exchange.",
+    "translations": {
+      "fr": {
+        "domain": "Sélection de modèles",
+        "q": "À travers les tours, vous utilisez l'extended thinking. Quelle est l'exigence sur les thinking blocks renvoyés ?",
+        "options": [
+          "Les renvoyer inchangés au tour suivant",
+          "Les compresser en un court résumé pour que l'historique croissant ne dépasse pas le budget de context, tout en gardant le raisonnement disponible",
+          "Les supprimer avant l'appel suivant",
+          "Les déplacer dans le system prompt"
+        ],
+        "why": "Les thinking blocks doivent être renvoyés inchangés, sinon la requête suivante échoue. Les résumer, les supprimer ou les déplacer casse l'échange."
+      }
+    }
   },
   {
     "s": "C",
@@ -239,7 +421,20 @@
     "correct": [
       0
     ],
-    "why": "Match authority to risk: on an untrusted repo, plan mode explores read-only before changing anything. bypassPermissions grants far too much too early, approving every read is needless friction, and disabling tools defeats exploration."
+    "why": "Match authority to risk: on an untrusted repo, plan mode explores read-only before changing anything. bypassPermissions grants far too much too early, approving every read is needless friction, and disabling tools defeats exploration.",
+    "translations": {
+      "fr": {
+        "domain": "Claude Code",
+        "q": "Vous pointez Claude Code sur un repo tiers inconnu auquel vous ne faites pas entièrement confiance. Quelle posture de permissions convient pour la première passe ?",
+        "options": [
+          "Un plan mode en lecture seule pour explorer et proposer avant tout edit",
+          "bypassPermissions, pour que l'exploration soit rapide et sans interruption, en se disant que vous relirez tout dans le diff final avant de merger de toute façon",
+          "Approuver manuellement chaque lecture de fichier",
+          "Désactiver tous les tools"
+        ],
+        "why": "Faites correspondre l'autorité au risque : sur un repo non fiable, le plan mode explore en lecture seule avant tout changement. bypassPermissions accorde bien trop de pouvoir trop tôt, approuver chaque lecture est une friction inutile, et désactiver les tools annule l'exploration."
+      }
+    }
   },
   {
     "s": "C",
@@ -256,7 +451,20 @@
       0,
       1
     ],
-    "why": "Explicit deny rules at the settings layer block the destructive command and the secret read regardless of the session. bypassPermissions removes guards, and an unrestricted Bash allow does the opposite."
+    "why": "Explicit deny rules at the settings layer block the destructive command and the secret read regardless of the session. bypassPermissions removes guards, and an unrestricted Bash allow does the opposite.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Vous devez garantir qu'un agent ne peut ni exécuter rm ni lire secrets/config.json, quoi qu'on lui demande. Quelles DEUX parties de settings appliquent cela ? (Choisir 2)",
+        "options": [
+          "deny [\"Bash(rm:*)\"]",
+          "deny [\"Read(secrets/config.json)\"]",
+          "defaultMode \"bypassPermissions\"",
+          "allow [\"Bash(*)\"]"
+        ],
+        "why": "Des règles deny explicites au niveau des settings bloquent la commande destructrice et la lecture du secret quelle que soit la session. bypassPermissions retire les garde-fous, et un allow Bash sans restriction fait l'inverse."
+      }
+    }
   },
   {
     "s": "C",
@@ -273,7 +481,20 @@
       0,
       1
     ],
-    "why": "Only PreToolUse can block, and the hook signals a block with exit code 2 plus a reason on stderr. PostToolUse runs after the write, and exit 0 allows the call."
+    "why": "Only PreToolUse can block, and the hook signals a block with exit code 2 plus a reason on stderr. PostToolUse runs after the write, and exit 0 allows the call.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Un hook doit empêcher un tool d'écrire hors du répertoire du projet. Quelles DEUX affirmations sont correctes ? (Choisir 2)",
+        "options": [
+          "Utiliser l'événement PreToolUse, car il se déclenche avant que l'écriture ne s'exécute",
+          "Sortir avec le code 2 et mettre la raison sur stderr pour bloquer",
+          "Utiliser PostToolUse et annuler l'écriture après coup",
+          "Sortir avec le code 0 et la raison sur stdout"
+        ],
+        "why": "Seul PreToolUse peut bloquer, et le hook signale un blocage avec le code de sortie 2 plus une raison sur stderr. PostToolUse s'exécute après l'écriture, et sortir avec le code 0 autorise l'appel."
+      }
+    }
   },
   {
     "s": "C",
@@ -289,7 +510,20 @@
     "correct": [
       0
     ],
-    "why": "For a Messages API request, send the code-execution and skills beta headers and keep the skill free of local-file dependencies. The terminal placement, settingSources, and managed-agents header belong to other runtimes."
+    "why": "For a Messages API request, send the code-execution and skills beta headers and keep the skill free of local-file dependencies. The terminal placement, settingSources, and managed-agents header belong to other runtimes.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Un service appelle la Messages API et veut qu'une Skill s'exécute dans le cadre de la requête. Que doit-on configurer ?",
+        "options": [
+          "Envoyer les headers beta code-execution et skills, et écrire la skill pour que ses étapes ne dépendent pas de fichiers ou tools locaux",
+          "Placer SKILL.md dans .claude/skills et laisser le terminal la prendre en charge",
+          "Définir settingSources explicitement pour l'Agent SDK",
+          "Définir le header beta managed-agents et lister la skill sur une ressource agent"
+        ],
+        "why": "Pour une requête sur la Messages API, envoyez les headers beta code-execution et skills et gardez la skill libre de toute dépendance à des fichiers locaux. Le placement dans le terminal, settingSources et le header managed-agents appartiennent à d'autres runtimes."
+      }
+    }
   },
   {
     "s": "C",
@@ -305,7 +539,20 @@
     "correct": [
       0
     ],
-    "why": "An Anthropic-hosted agent addressed by ID is defined as an API resource listing the skill, with the managed-agents beta header, and the skill must not depend on local files. The others are the terminal and SDK runtimes."
+    "why": "An Anthropic-hosted agent addressed by ID is defined as an API resource listing the skill, with the managed-agents beta header, and the skill must not depend on local files. The others are the terminal and SDK runtimes.",
+    "translations": {
+      "fr": {
+        "domain": "Tools et MCP",
+        "q": "Une équipe produit veut qu'une Skill s'exécute au sein d'un agent longue durée hébergé par Anthropic, accessible par un agent ID à travers les sessions. Que faut-il ?",
+        "options": [
+          "Définir l'agent comme une ressource API qui liste la skill et définir le header beta managed-agents, en écrivant la skill pour éviter les dépendances à des fichiers locaux puisqu'elle s'exécute dans le sandbox d'Anthropic",
+          "Placer SKILL.md dans .claude/skills",
+          "Définir settingSources explicitement",
+          "Envoyer uniquement le header code-execution"
+        ],
+        "why": "Un agent hébergé par Anthropic et adressé par ID est défini comme une ressource API listant la skill, avec le header beta managed-agents, et la skill ne doit pas dépendre de fichiers locaux. Les autres options correspondent aux runtimes du terminal et du SDK."
+      }
+    }
   },
   {
     "s": "C",
@@ -321,7 +568,20 @@
     "correct": [
       0
     ],
-    "why": "The defect is the machine-specific absolute path; CLAUDE_PROJECT_DIR resolves from the repo root anywhere. A shared mount or home shortcut just relocates the same fragility, and deleting the step drops the capability."
+    "why": "The defect is the machine-specific absolute path; CLAUDE_PROJECT_DIR resolves from the repo root anywhere. A shared mount or home shortcut just relocates the same fragility, and deleting the step drops the capability.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion de la configuration",
+        "q": "Le SKILL.md d'un plugin code en dur un tool à /Users/dev/tools/lint.sh et échoue pour les collègues. Quelle est la meilleure correction ?",
+        "options": [
+          "Le référencer depuis la racine du projet via CLAUDE_PROJECT_DIR",
+          "Pointer la machine de chaque collègue vers un montage réseau partagé au même chemin absolu et documenter ce montage dans le README pour garder des configurations cohérentes",
+          "Utiliser un raccourci de répertoire personnel comme ~/tools/lint.sh",
+          "Supprimer l'étape pour que la skill n'appelle plus le script"
+        ],
+        "why": "Le défaut est le chemin absolu spécifique à la machine ; CLAUDE_PROJECT_DIR se résout depuis la racine du repo n'importe où. Un montage partagé ou un raccourci personnel ne fait que déplacer la même fragilité, et supprimer l'étape fait perdre la fonctionnalité."
+      }
+    }
   },
   {
     "s": "C",
@@ -337,7 +597,20 @@
     "correct": [
       0
     ],
-    "why": "A personal, same-machine tool uses stdio at local scope. Enterprise managed settings are for org-wide mandates, and project scope shares with a team, neither of which this needs."
+    "why": "A personal, same-machine tool uses stdio at local scope. Enterprise managed settings are for org-wide mandates, and project scope shares with a team, neither of which this needs.",
+    "translations": {
+      "fr": {
+        "domain": "Développement de serveurs MCP",
+        "q": "Un tool d'inspection SQLite local que vous n'utilisez que sur votre propre machine. Quel transport et quel scope conviennent ?",
+        "options": [
+          "stdio + Local",
+          "HTTP + Enterprise via des managed settings, pour qu'il soit gouverné centralement et disponible de façon constante dans tout environnement où vous pourriez un jour travailler",
+          "HTTP + Project (.mcp.json)",
+          "HTTP + Local"
+        ],
+        "why": "Un tool personnel, sur la même machine, utilise stdio en scope local. Les managed settings d'entreprise sont pour des mandats à l'échelle de l'organisation, et le scope projet partage avec une équipe, ce dont ce cas n'a besoin ni l'un ni l'autre."
+      }
+    }
   },
   {
     "s": "D",
@@ -354,7 +627,20 @@
       0,
       1
     ],
-    "why": "A constrained JSON schema and a one-of-five classification are checkable. 'Useful' and 'handle it well' are too vague to grade against."
+    "why": "A constrained JSON schema and a one-of-five classification are checkable. 'Useful' and 'handle it well' are too vague to grade against.",
+    "translations": {
+      "fr": {
+        "domain": "Eval et debugging",
+        "q": "Parmi ceux-ci, lesquels DEUX sont des critères de succès notables pour lesquels vous pourriez construire un eval ? (Choisir 2)",
+        "options": [
+          "Produire un JSON valide avec les champs sentiment (positive/negative/neutral) et confidence (0-1)",
+          "Classer le ticket dans exactement une des cinq catégories nommées",
+          "Produire un triage réellement utile",
+          "Bien traiter le ticket"
+        ],
+        "why": "Un schema JSON contraint et une classification parmi cinq sont vérifiables. 'Utile' et 'bien traiter' sont trop vagues pour être notés."
+      }
+    }
   },
   {
     "s": "D",
@@ -370,7 +656,20 @@
     "correct": [
       0
     ],
-    "why": "Failure handling classifies each error retriable or terminal and defines the user-facing fallback. Naming implementation libraries is too low-level for the decision, and logging or tier-swaps are not the error path."
+    "why": "Failure handling classifies each error retriable or terminal and defines the user-facing fallback. Naming implementation libraries is too low-level for the decision, and logging or tier-swaps are not the error path.",
+    "translations": {
+      "fr": {
+        "domain": "Eval et debugging",
+        "q": "En écrivant la section de gestion des échecs d'un design doc, que devez-vous décider pour chaque erreur ?",
+        "options": [
+          "Si elle est retriable ou terminale, et ce que reçoit l'utilisateur quand elle ne peut pas être récupérée",
+          "La bibliothèque et le langage exacts pour le retry, pour que la section soit assez concrète pour qu'un ingénieur puisse construire dessus sans aucun travail de conception supplémentaire",
+          "Si cela vaut la peine de la logger",
+          "Vers quel tier de modèle plus grand basculer"
+        ],
+        "why": "La gestion des échecs classe chaque erreur retriable ou terminale et définit le repli visible par l'utilisateur. Nommer des bibliothèques d'implémentation est trop bas niveau pour cette décision, et le logging ou le basculement de tier ne constituent pas le chemin d'erreur."
+      }
+    }
   },
   {
     "s": "D",
@@ -386,7 +685,20 @@
     "correct": [
       0
     ],
-    "why": "The reliability floor is the minimum reliability you refuse to trade for cost or latency. It is not a cost figure, a model choice, or a latency percentile."
+    "why": "The reliability floor is the minimum reliability you refuse to trade for cost or latency. It is not a cost figure, a model choice, or a latency percentile.",
+    "translations": {
+      "fr": {
+        "domain": "Sélection de modèles",
+        "q": "Dans la section coût-et-latence d'un design doc, qu'est-ce que le 'plancher de fiabilité' (reliability floor) ?",
+        "options": [
+          "La fiabilité minimale que la conception doit maintenir et ne peut sacrifier pour le coût ou la vitesse",
+          "Le coût le plus bas atteignable si vous êtes prêt à accepter autant de requêtes perdues et de timeouts que ce prix l'exige",
+          "Le modèle le moins cher disponible",
+          "L'objectif de latence p99"
+        ],
+        "why": "Le plancher de fiabilité est la fiabilité minimale que vous refusez de sacrifier pour le coût ou la latence. Ce n'est ni un chiffre de coût, ni un choix de modèle, ni un percentile de latence."
+      }
+    }
   },
   {
     "s": "D",
@@ -402,7 +714,20 @@
     "correct": [
       0
     ],
-    "why": "Untrusted means anything outside your control that another party can write, chiefly fetched content and tool output. Encryption is about transport, not authorship, and your own prompt and constants are trusted."
+    "why": "Untrusted means anything outside your control that another party can write, chiefly fetched content and tool output. Encryption is about transport, not authorship, and your own prompt and constants are trusted.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Dans la section frontière de confiance, quel contenu doit être traité comme non fiable ?",
+        "options": [
+          "Tout ce que l'agent lit et que quelqu'un d'autre peut écrire, comme des pages web récupérées et des sorties de tool",
+          "Seulement le texte arrivant via une connexion non chiffrée, puisque la sécurité du transport est ce qui déterminerait si une entrée est fiable",
+          "Le system prompt du développeur lui-même",
+          "Les constantes compilées de l'application"
+        ],
+        "why": "Non fiable signifie tout ce qui est hors de votre contrôle et qu'une autre partie peut écrire, principalement du contenu récupéré et des sorties de tool. Le chiffrement concerne le transport, pas l'auteur, et votre propre prompt et vos constantes sont fiables."
+      }
+    }
   },
   {
     "s": "D",
@@ -418,7 +743,20 @@
     "correct": [
       0
     ],
-    "why": "Least privilege means the tool simply cannot perform the injected action, which is the durable defense alongside isolating untrusted content. A prompt instruction is bypassable, keyword scanning is brittle, and a bigger model can be more compliant."
+    "why": "Least privilege means the tool simply cannot perform the injected action, which is the durable defense alongside isolating untrusted content. A prompt instruction is bypassable, keyword scanning is brittle, and a bigger model can be more compliant.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Une page récupérée par un summariser contient un texte caché indiquant à l'agent d'envoyer un fichier par email à une adresse externe. Quelle est la mitigation la plus efficace ?",
+        "options": [
+          "Least privilege : le summariser n'a aucune capacité d'envoi d'email, donc les instructions injectées ne peuvent pas atteindre une action d'envoi, et le contenu non fiable est gardé séparé des instructions",
+          "Ajouter une ligne dans le system prompt disant au modèle d'ignorer les instructions intégrées dans les pages récupérées",
+          "Scanner les pages récupérées à la recherche du mot 'ignore'",
+          "Passer à un modèle plus grand"
+        ],
+        "why": "Le least privilege signifie que le tool ne peut simplement pas effectuer l'action injectée, ce qui constitue la défense durable en complément de l'isolation du contenu non fiable. Une instruction dans le prompt est contournable, le scan par mot-clé est fragile, et un modèle plus grand peut être plus conciliant."
+      }
+    }
   },
   {
     "s": "D",
@@ -434,7 +772,20 @@
     "correct": [
       0
     ],
-    "why": "The tool returned correct data, so the fault is in how the model reasoned over it. The sweeping claim about the integration layer is false, and network and key issues would not produce correct tool data plus a wrong answer."
+    "why": "The tool returned correct data, so the fault is in how the model reasoned over it. The sweeping claim about the integration layer is false, and network and key issues would not produce correct tool data plus a wrong answer.",
+    "translations": {
+      "fr": {
+        "domain": "Eval et debugging",
+        "q": "La réponse d'un agent est erronée. La trace montre que le tool a renvoyé des données correctes. Où se situe l'échec ?",
+        "options": [
+          "Dans l'usage que le modèle a fait des données, pas dans le tool",
+          "Dans la couche d'intégration, car chaque fois qu'une réponse finale est erronée, la faute réside dans la façon dont la sortie du tool a été parsée et renvoyée au modèle",
+          "Dans le réseau",
+          "Dans la configuration de la clé API"
+        ],
+        "why": "Le tool a renvoyé des données correctes, donc la faute est dans la façon dont le modèle a raisonné sur elles. L'affirmation générale sur la couche d'intégration est fausse, et des problèmes de réseau ou de clé ne produiraient pas des données de tool correctes accompagnées d'une mauvaise réponse."
+      }
+    }
   },
   {
     "s": "D",
@@ -450,7 +801,20 @@
     "correct": [
       0
     ],
-    "why": "Both problems must be fixed: rotate the rejected key and stop storing it in plaintext by moving it to an environment variable. Re-committing leaves the storage defect, OAuth does not fit a service credential, and backoff does not fix a rejected key."
+    "why": "Both problems must be fixed: rotate the rejected key and stop storing it in plaintext by moving it to an environment variable. Re-committing leaves the storage defect, OAuth does not fit a service credential, and backoff does not fix a rejected key.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité et safety",
+        "q": "Un fichier de credentials commité a exposé une clé API. Deux choses sont vraies : la clé est rejetée, et elle est stockée en clair. Quelle est la bonne correction ?",
+        "options": [
+          "Faire une rotation de la clé et la sortir du fichier vers une variable d'environnement référencée au runtime",
+          "Faire une rotation de la clé et recommiter la nouvelle valeur dans le même fichier pour que l'application continue de fonctionner sans changement de code, puis restreindre qui peut lire le repo",
+          "Passer le service à OAuth",
+          "Ajouter un retry avec backoff pour qu'une tentative ultérieure réussisse"
+        ],
+        "why": "Les deux problèmes doivent être corrigés : faire une rotation de la clé rejetée et arrêter de la stocker en clair en la déplaçant vers une variable d'environnement. Recommiter dans le même fichier laisse le défaut de stockage, OAuth ne convient pas à un credential de service, et le backoff ne corrige pas une clé rejetée."
+      }
+    }
   },
   {
     "s": "E",
@@ -466,7 +830,20 @@
     "correct": [
       0
     ],
-    "why": "When governance and data residency point to an existing cloud, run Claude through that cloud's platform (here, Bedrock). Rebuilding tooling elsewhere, assuming only self-hosting is compliant, or chasing model recency all miss the constraint."
+    "why": "When governance and data residency point to an existing cloud, run Claude through that cloud's platform (here, Bedrock). Rebuilding tooling elsewhere, assuming only self-hosting is compliant, or chasing model recency all miss the constraint.",
+    "translations": {
+      "fr": {
+        "domain": "Applications et intégration",
+        "q": "Votre équipe fait déjà tout tourner sur AWS et a besoin de Claude dans le même compte pour la gouvernance. Comment cela doit-il orienter le choix de plateforme ?",
+        "options": [
+          "Utiliser Amazon Bedrock pour que Claude s'exécute au sein de la gouvernance AWS existante et de la frontière de données",
+          "Utiliser l'API first-party et reconstruire votre outillage de gouvernance autour, puisque rester sur la plateforme native d'un fournisseur justifie la migration, quel que soit l'endroit où vivent vos données aujourd'hui",
+          "Uniquement du self-hosting, car c'est la seule option conforme",
+          "Choisir la plateforme qui a livré le modèle le plus récent"
+        ],
+        "why": "Quand la gouvernance et la résidence des données pointent vers un cloud existant, exécutez Claude via la plateforme de ce cloud (ici, Bedrock). Reconstruire l'outillage ailleurs, supposer que seul le self-hosting est conforme, ou courir après la fraîcheur du modèle passent tous à côté de la contrainte."
+      }
+    }
   },
   {
     "s": "E",
@@ -483,6 +860,19 @@
       0,
       1
     ],
-    "why": "Pinning the model and versioning prompts make change deliberate and reversible, which is what surviving updates requires. Auto-adopting and unversioned inline prompts remove exactly that control."
+    "why": "Pinning the model and versioning prompts make change deliberate and reversible, which is what surviving updates requires. Auto-adopting and unversioned inline prompts remove exactly that control.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion de la configuration",
+        "q": "Vous livrez un accélérateur réutilisable qui doit survivre aux mises à jour de modèle. Quelles DEUX pratiques comptent le plus ? (Choisir 2)",
+        "options": [
+          "Épingler la version du modèle et la mettre à jour délibérément après des evals",
+          "Versionner les prompts pour que les changements soient attribuables et réversibles",
+          "Adopter automatiquement chaque nouveau modèle à sa sortie pour rester à jour",
+          "Garder les prompts en ligne et non versionnés pour rester léger"
+        ],
+        "why": "Épingler le modèle et versionner les prompts rendent le changement délibéré et réversible, ce qu'exige la survie aux mises à jour. L'adoption automatique et les prompts en ligne non versionnés suppriment exactement ce contrôle."
+      }
+    }
   }
 ]

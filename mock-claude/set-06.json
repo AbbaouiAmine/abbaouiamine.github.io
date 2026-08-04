@@ -12,7 +12,20 @@
     "correct": [
       0
     ],
-    "why": "Each workload matches its own SLA: live moderation needs realtime response, and the tolerant monthly job belongs on Batches for cost. Consolidating either way sacrifices either latency or cost for no real benefit, and streaming does not reduce per-token cost."
+    "why": "Each workload matches its own SLA: live moderation needs realtime response, and the tolerant monthly job belongs on Batches for cost. Consolidating either way sacrifices either latency or cost for no real benefit, and streaming does not reduce per-token cost.",
+    "translations": {
+      "fr": {
+        "domain": "Mécanismes de l'API Claude",
+        "q": "Une feature de modération doit flagger les messages de chat live en moins d'une seconde, et séparément re-scorer toute l'archive de messages une fois par mois pour un rapport de compliance. Comment ces deux besoins devraient-ils être répartis ?",
+        "options": [
+          "Des appels synchrones pour la modération live ; la Batches API pour le re-score mensuel de l'archive",
+          "La Batches API pour les deux, puisque consolider tout sur un seul chemin d'API simplifie la codebase",
+          "Des appels synchrones pour les deux, en acceptant le coût plus élevé sur le re-score mensuel pour éviter de maintenir deux chemins de code",
+          "Le streaming pour le re-score mensuel, puisque le streaming est l'option la moins chère indépendamment de l'urgence"
+        ],
+        "why": "Chaque charge de travail correspond à son propre SLA : la modération live a besoin d'une réponse en temps réel, et la tâche mensuelle, tolérante aux délais, relève de Batches pour le coût. Consolider dans un sens ou dans l'autre sacrifie soit la latence soit le coût sans réel bénéfice, et le streaming ne réduit pas le coût par token."
+      }
+    }
   },
   {
     "domain": "Claude API Mechanics",
@@ -28,7 +41,20 @@
       0,
       1
     ],
-    "why": "Both are large, latency-tolerant jobs with no one waiting on an immediate response, the batch sweet spot. Live chat and as-you-type validation both need an immediate synchronous response."
+    "why": "Both are large, latency-tolerant jobs with no one waiting on an immediate response, the batch sweet spot. Live chat and as-you-type validation both need an immediate synchronous response.",
+    "translations": {
+      "fr": {
+        "domain": "Mécanismes de l'API Claude",
+        "q": "Quels sont les DEUX scénarios qui justifient réellement la Batches API par rapport aux appels synchrones ?",
+        "options": [
+          "Ré-indexer une bibliothèque de documents pendant la nuit, sans utilisateur en attente du résultat",
+          "Scorer un backlog de 200 000 tickets de support pour un dashboard hebdomadaire",
+          "Répondre à la question d'un client dans un widget de chat live",
+          "Valider un champ de formulaire au fur et à mesure que l'utilisateur tape"
+        ],
+        "why": "Les deux sont des tâches volumineuses et tolérantes à la latence, sans personne en attente d'une réponse immédiate, exactement le point idéal de Batches. Le chat live et la validation en temps réel de saisie nécessitent tous les deux une réponse synchrone immédiate."
+      }
+    }
   },
   {
     "domain": "Model Selection and Tradeoffs",
@@ -43,7 +69,20 @@
     "correct": [
       0
     ],
-    "why": "A documented breaking change to output formatting demands validating and adjusting the dependent code before promotion. Upgrading blind risks silently breaking the parser, permanently freezing loses real capability gains, and disabling the parser abandons validation entirely."
+    "why": "A documented breaking change to output formatting demands validating and adjusting the dependent code before promotion. Upgrading blind risks silently breaking the parser, permanently freezing loses real capability gains, and disabling the parser abandons validation entirely.",
+    "translations": {
+      "fr": {
+        "domain": "Sélection de modèles et compromis",
+        "q": "Une nouvelle version de modèle est publiée avec un raisonnement nettement meilleur, mais un changement documenté dans la façon dont elle échappe les caractères spéciaux dans l'output de code. Votre pipeline parse cet output avec une regex calibrée pour l'ancien échappement. Quel est le chemin de migration sûr ?",
+        "options": [
+          "Tester la nouvelle version par rapport à votre parser et votre suite d'evals en staging, mettre à jour la regex si nécessaire, puis promouvoir de façon délibérée",
+          "Passer à la nouvelle version en production immédiatement, puisqu'un meilleur raisonnement l'emporte toujours sur une petite différence de formatage",
+          "Ignorer la nouvelle version définitivement pour ne plus jamais avoir à toucher au parser",
+          "Désactiver le parser et transmettre l'output brut directement aux utilisateurs"
+        ],
+        "why": "Un breaking change documenté sur le formatage de l'output exige de valider et d'ajuster le code dépendant avant la promotion. Passer à la nouvelle version sans vérification risque de casser silencieusement le parser, la geler définitivement fait perdre de réels gains de capacité, et désactiver le parser abandonne complètement la validation."
+      }
+    }
   },
   {
     "domain": "Cost and Token Management",
@@ -58,7 +97,20 @@
     "correct": [
       0
     ],
-    "why": "A cost model needs actual usage data, a growth assumption, and pricing, projected forward systematically. Team size is irrelevant to spend, a single invoice extrapolated by guesswork lacks a growth basis, and window size alone says nothing about tokens actually consumed."
+    "why": "A cost model needs actual usage data, a growth assumption, and pricing, projected forward systematically. Team size is irrelevant to spend, a single invoice extrapolated by guesswork lacks a growth basis, and window size alone says nothing about tokens actually consumed.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion des coûts et tokens",
+        "q": "Vous voulez prévoir les dépenses Claude du prochain trimestre pour une feature qui croît de 15 % mois après mois. De quels inputs un modèle de coût solide a-t-il besoin ?",
+        "options": [
+          "L'usage historique de tokens par requête, le taux de croissance, et le pricing actuel par token, projetés dans le futur",
+          "Uniquement la facture totale du mois en cours, extrapolée au jugé",
+          "Le nombre d'ingénieurs dans l'équipe",
+          "La taille de la context window, indépendamment de la proportion réellement utilisée par appel"
+        ],
+        "why": "Un modèle de coût a besoin de données d'usage réelles, d'une hypothèse de croissance, et du pricing, projetés de façon systématique. La taille de l'équipe est sans rapport avec les dépenses, une seule facture extrapolée au jugé manque de base de croissance, et la taille de la fenêtre seule ne dit rien sur les tokens réellement consommés."
+      }
+    }
   },
   {
     "domain": "Tool Implementation",
@@ -73,7 +125,20 @@
     "correct": [
       0
     ],
-    "why": "Client-side tools depend on access to the user's local browser state, which a server cannot see; swapping execution location breaks that access entirely. Tools are not interchangeable across execution boundaries, and a database query running client-side would typically fail or be insecure, not simply run faster."
+    "why": "Client-side tools depend on access to the user's local browser state, which a server cannot see; swapping execution location breaks that access entirely. Tools are not interchangeable across execution boundaries, and a database query running client-side would typically fail or be insecure, not simply run faster.",
+    "translations": {
+      "fr": {
+        "domain": "Implémentation de tools",
+        "q": "Un agent dispose à la fois d'un tool côté client (qui lit l'input du formulaire en cours de l'utilisateur) et d'un tool côté serveur (qui interroge une base de données de production). Un refactor échange accidentellement leurs emplacements d'exécution. Qu'est-ce qui casse en premier ?",
+        "options": [
+          "Le tool censé lire l'état client live ne peut plus y accéder une fois forcé de s'exécuter côté serveur, puisque le serveur n'a aucune visibilité sur l'état in-browser de l'utilisateur",
+          "Rien ne casse, puisque les tools sont interchangeables indépendamment de leur lieu d'exécution",
+          "Seule la latence change ; les deux tools fonctionnent sinon de façon identique",
+          "Le tool de base de données devient plus rapide une fois exécuté côté client"
+        ],
+        "why": "Les tools côté client dépendent de l'accès à l'état local du navigateur de l'utilisateur, que le serveur ne peut pas voir ; échanger le lieu d'exécution casse entièrement cet accès. Les tools ne sont pas interchangeables à travers les frontières d'exécution, et une requête de base de données exécutée côté client échouerait typiquement ou serait non sécurisée, plutôt que simplement plus rapide."
+      }
+    }
   },
   {
     "domain": "Tool Implementation",
@@ -88,7 +153,20 @@
     "correct": [
       0
     ],
-    "why": "Splitting an overloaded tool into focused, single-responsibility tools with matching descriptions removes the ambiguity about what each call returns. Renaming or adding more responsibilities does not address the confusion, and a longer example patches around a design problem rather than fixing it."
+    "why": "Splitting an overloaded tool into focused, single-responsibility tools with matching descriptions removes the ambiguity about what each call returns. Renaming or adding more responsibilities does not address the confusion, and a longer example patches around a design problem rather than fixing it.",
+    "translations": {
+      "fr": {
+        "domain": "Implémentation de tools",
+        "q": "Un unique tool nommé handle_request fait actuellement du lookup, de la validation et de la notification en un seul appel, et l'agent se trompe fréquemment sur le résultat qu'il va obtenir. Quelle est la correction la plus directe ?",
+        "options": [
+          "Le scinder en trois tools ciblés, chacun avec une responsabilité claire et une description qui la reflète",
+          "Renommer le tool avec quelque chose de plus accrocheur pour qu'il soit plus mémorable pour le modèle",
+          "Ajouter une quatrième responsabilité pour que ce soit clairement le tool « qui fait tout »",
+          "Laisser le tool tel qu'il est mais ajouter un exemple d'usage plus long dans le system prompt"
+        ],
+        "why": "Scinder un tool surchargé en tools ciblés à responsabilité unique, avec des descriptions correspondantes, supprime l'ambiguïté sur ce que chaque appel renvoie. Renommer ou ajouter davantage de responsabilités ne résout pas la confusion, et un exemple plus long masque un problème de conception plutôt que de le corriger."
+      }
+    }
   },
   {
     "domain": "Agent Architecture",
@@ -103,7 +181,20 @@
     "correct": [
       0
     ],
-    "why": "A workflow whose branch count keeps growing faster than you can maintain is the signal to reconsider the architecture, not just add branch twelve. Endless branch-adding is the losing race that motivated the reconsideration, deleting everything with no plan is reckless, and ignoring new input types loses real work."
+    "why": "A workflow whose branch count keeps growing faster than you can maintain is the signal to reconsider the architecture, not just add branch twelve. Endless branch-adding is the losing race that motivated the reconsideration, deleting everything with no plan is reckless, and ignoring new input types loses real work.",
+    "translations": {
+      "fr": {
+        "domain": "Architecture d'agents",
+        "q": "Un workflow branche actuellement sur onze types de documents différents, chacun avec son propre chemin de code dédié, et un douzième type vient d'apparaître sans chemin existant. Le réflexe de l'équipe est d'ajouter une douzième branche. Que devriez-vous considérer à la place ?",
+        "options": [
+          "Si le facteur de branchement lui-même signale que c'est désormais du territoire d'agent, puisque de nouveaux types de documents continuent d'apparaître plus vite que les branches ne peuvent être écrites",
+          "Écrire immédiatement la douzième branche, puisque les workflows devraient toujours être étendus pour couvrir chaque nouveau cas au fur et à mesure qu'il apparaît",
+          "Supprimer les onze branches existantes et repartir de zéro sans remplacement clair",
+          "Ignorer complètement le douzième type de document jusqu'à ce qu'il soit pratique d'écrire une branche"
+        ],
+        "why": "Un workflow dont le nombre de branches continue de croître plus vite que ce que vous pouvez maintenir est le signal pour reconsidérer l'architecture, pas simplement ajouter la branche douze. Ajouter des branches sans fin est la course perdue qui a motivé cette remise en question, tout supprimer sans plan est imprudent, et ignorer les nouveaux types d'input fait perdre du travail réel."
+      }
+    }
   },
   {
     "domain": "Agent Construction with Claude",
@@ -118,7 +209,20 @@
     "correct": [
       0
     ],
-    "why": "The Agent SDK provides scaffolding for the loop and common patterns, cutting the amount of custom orchestration code a tight deadline would otherwise require. It is the same underlying model family, does not change per-token pricing, and does not override the workflow-versus-agent decision for you."
+    "why": "The Agent SDK provides scaffolding for the loop and common patterns, cutting the amount of custom orchestration code a tight deadline would otherwise require. It is the same underlying model family, does not change per-token pricing, and does not override the workflow-versus-agent decision for you.",
+    "translations": {
+      "fr": {
+        "domain": "Construction d'agents avec Claude",
+        "q": "Vous devez décider entre construire une boucle d'agent custom de zéro ou utiliser le Claude Agent SDK. Votre équipe n'a aucun code d'orchestration existant et une deadline serrée. Qu'est-ce que le SDK offre qui change la donne ?",
+        "options": [
+          "Une gestion intégrée de la boucle de tool use, de la gestion de contexte, et des patterns d'agents courants, réduisant ce que vous devez construire et tester vous-même",
+          "Un modèle complètement différent avec des capacités différentes de l'API brute",
+          "Un pricing par token garanti plus bas que l'appel direct à l'API",
+          "Une conversion automatique de tout workflow en agent, indépendamment du fait que cela convienne à la tâche"
+        ],
+        "why": "L'Agent SDK fournit une structure pour la boucle et les patterns courants, réduisant la quantité de code d'orchestration custom qu'une deadline serrée exigerait sinon. C'est la même famille de modèles sous-jacente, cela ne change pas le pricing par token, et cela ne remplace pas pour vous la décision workflow contre agent."
+      }
+    }
   },
   {
     "domain": "Prompt Engineering",
@@ -133,7 +237,20 @@
     "correct": [
       0
     ],
-    "why": "The system prompt carries durable priority, which is exactly why critical constraints belong there rather than being left to a user message to reinforce. Length is not the deciding factor, and precedence is not arbitrary, it follows deliberate placement."
+    "why": "The system prompt carries durable priority, which is exactly why critical constraints belong there rather than being left to a user message to reinforce. Length is not the deciding factor, and precedence is not arbitrary, it follows deliberate placement.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt Engineering",
+        "q": "Une instruction de ton de voix se trouve dans le system prompt, et une instruction de ton contradictoire apparaît dans le message de l'utilisateur. Laquelle prévaut généralement, et pourquoi cela compte-t-il pour la conception ?",
+        "options": [
+          "Le system prompt est l'emplacement de priorité supérieure et plus durable, donc les contraintes critiques doivent y figurer plutôt que de compter sur les messages utilisateur pour les faire respecter",
+          "Le message utilisateur prévaut toujours sur le system prompt, sans aucune exception dans aucun cas",
+          "L'instruction la plus longue l'emporte",
+          "Aucune des deux ne prévaut ; le modèle choisit de façon arbitraire, et cela est imprévisible par conception"
+        ],
+        "why": "Le system prompt porte une priorité durable, ce qui explique exactement pourquoi les contraintes critiques doivent y figurer plutôt que d'être laissées à un message utilisateur pour les renforcer. La longueur n'est pas le facteur décisif, et la préséance n'est pas arbitraire, elle suit un placement délibéré."
+      }
+    }
   },
   {
     "domain": "Prompt Engineering",
@@ -148,7 +265,20 @@
     "correct": [
       0
     ],
-    "why": "A concrete constraint gives the model something specific to satisfy, unlike a vague adjective open to interpretation. Repetition of the same vague word does not add precision, dropping the instruction abandons the goal, and a tier swap does not fix an underspecified constraint."
+    "why": "A concrete constraint gives the model something specific to satisfy, unlike a vague adjective open to interpretation. Repetition of the same vague word does not add precision, dropping the instruction abandons the goal, and a tier swap does not fix an underspecified constraint.",
+    "translations": {
+      "fr": {
+        "domain": "Prompt Engineering",
+        "q": "Vos instructions demandent au modèle d'« être concis », mais les réponses restent longues malgré tout. Quel ajustement a le plus de chances de fonctionner ?",
+        "options": [
+          "Remplacer l'adjectif vague par une contrainte spécifique, comme un nombre maximal de phrases ou de mots",
+          "Répéter le mot « concis » plusieurs fois dans la même phrase pour insister",
+          "Supprimer complètement l'instruction, puisque les adjectifs vagues n'influencent jamais la longueur",
+          "Passer à un autre tier de modèle sans changer l'instruction"
+        ],
+        "why": "Une contrainte concrète donne au modèle quelque chose de spécifique à satisfaire, contrairement à un adjectif vague ouvert à l'interprétation. Répéter le même mot vague n'ajoute pas de précision, abandonner l'instruction abandonne l'objectif, et changer de tier ne corrige pas une contrainte sous-spécifiée."
+      }
+    }
   },
   {
     "domain": "Context Engineering",
@@ -163,7 +293,20 @@
     "correct": [
       0
     ],
-    "why": "Pruning stale, no-longer-relevant tool outputs is the direct fix for both budget pressure and quality degradation from noise. Keeping everything indefinitely is what caused the problem, adding another call adds more clutter, and a smaller model does not resolve an oversized, noisy context."
+    "why": "Pruning stale, no-longer-relevant tool outputs is the direct fix for both budget pressure and quality degradation from noise. Keeping everything indefinitely is what caused the problem, adding another call adds more clutter, and a smaller model does not resolve an oversized, noisy context.",
+    "translations": {
+      "fr": {
+        "domain": "Context engineering",
+        "q": "Le contexte d'un agent contient le texte complet de 12 réponses d'API provenant d'appels de tools antérieurs, dont la plupart ne sont plus pertinentes pour l'étape en cours, et la qualité se dégrade. Quelle est la bonne action de gestion de contexte à mener ?",
+        "options": [
+          "Élaguer les outputs de tools obsolètes, en ne gardant que ce qui reste pertinent pour l'étape en cours, afin de récupérer du budget et de réduire le bruit",
+          "Laisser les 12 en place, puisque retirer n'importe quel output de tool risque de perdre une information dont l'agent pourrait finir par avoir besoin",
+          "Ajouter un 13ème appel de tool pour compenser",
+          "Passer à un modèle plus petit pour que le contexte existant rentre plus confortablement"
+        ],
+        "why": "Élaguer les outputs de tools obsolètes et non pertinents est la correction directe à la fois pour la pression sur le budget et pour la dégradation de la qualité due au bruit. Tout garder indéfiniment est ce qui a causé le problème, ajouter un autre appel ajoute encore plus d'encombrement, et un modèle plus petit ne résout pas un contexte surdimensionné et bruyant."
+      }
+    }
   },
   {
     "domain": "Claude Application Design",
@@ -178,7 +321,20 @@
     "correct": [
       0
     ],
-    "why": "Forcing a value into every field encourages fabrication when the source lacks that data; an explicit null or not-found representation lets the model report absence honestly. Model tier is not the driver of a schema design gap, the input format is not implicated, and adding more fields compounds rather than fixes the issue."
+    "why": "Forcing a value into every field encourages fabrication when the source lacks that data; an explicit null or not-found representation lets the model report absence honestly. Model tier is not the driver of a schema design gap, the input format is not implicated, and adding more fields compounds rather than fixes the issue.",
+    "translations": {
+      "fr": {
+        "domain": "Conception d'applications Claude",
+        "q": "Le schéma de votre application pour une tâche d'extraction structurée comporte 40 champs optionnels, et le modèle remplit fréquemment des valeurs qui semblent plausibles mais incorrectes pour des champs qui n'étaient en réalité pas présents dans le document source. Vers quel problème de conception cela pointe-t-il ?",
+        "options": [
+          "Le schéma a probablement besoin d'un moyen de représenter explicitement « champ non trouvé », plutôt que de forcer une valeur dans chaque champ indépendamment du fait qu'elle soit supportée par l'input",
+          "Le tier du modèle est trop petit et devrait simplement être amélioré",
+          "Le format d'input du document n'est pas supporté",
+          "Le schéma a trop peu de champs et devrait être étendu davantage"
+        ],
+        "why": "Forcer une valeur dans chaque champ encourage la fabrication lorsque la source manque de cette donnée ; une représentation explicite de null ou de non-trouvé permet au modèle de signaler honnêtement l'absence. Le tier du modèle n'est pas à l'origine d'une lacune de conception de schéma, le format d'input n'est pas en cause, et ajouter davantage de champs aggrave le problème plutôt que de le résoudre."
+      }
+    }
   },
   {
     "domain": "Claude Application Design",
@@ -193,7 +349,20 @@
     "correct": [
       0
     ],
-    "why": "Session boundaries are a design choice: isolated conversations per feature are often correct for scoping and privacy, and shared cross-feature memory, if wanted, needs to be built deliberately rather than assumed. Forcing one shared conversation ignores legitimate isolation needs, window size is not the driver here, and calling it an automatic bug skips the actual design tradeoff."
+    "why": "Session boundaries are a design choice: isolated conversations per feature are often correct for scoping and privacy, and shared cross-feature memory, if wanted, needs to be built deliberately rather than assumed. Forcing one shared conversation ignores legitimate isolation needs, window size is not the driver here, and calling it an automatic bug skips the actual design tradeoff.",
+    "translations": {
+      "fr": {
+        "domain": "Conception d'applications Claude",
+        "q": "Plusieurs features de votre app maintiennent chacune leur propre conversation séparée avec Claude pour le même utilisateur final, et aucune n'a conscience des autres. Un utilisateur se plaint que l'assistant « oublie » des choses d'une feature à l'autre. Quelle est la véritable réponse architecturale ici ?",
+        "options": [
+          "Cela peut être un compromis de conception intentionnel : certaines features justifient réellement des conversations séparées et isolées, et une mémoire cross-feature est une capacité distincte à concevoir délibérément si on la souhaite, pas un défaut automatique",
+          "Chaque feature doit toujours partager une seule conversation géante pour que rien ne soit jamais oublié",
+          "La context window est trop petite et doit être augmentée avant de considérer quoi que ce soit d'autre",
+          "C'est toujours un bug qui doit être corrigé en fusionnant toutes les conversations"
+        ],
+        "why": "Les frontières de session sont un choix de conception : des conversations isolées par feature sont souvent correctes pour le scoping et la vie privée, et une mémoire partagée entre features, si souhaitée, doit être construite délibérément plutôt que supposée. Forcer une seule conversation partagée ignore des besoins d'isolation légitimes, la taille de la fenêtre n'est pas le facteur ici, et qualifier cela de bug automatique évite le véritable compromis de conception."
+      }
+    }
   },
   {
     "domain": "AI Application Security",
@@ -209,7 +378,20 @@
       0,
       1
     ],
-    "why": "Isolating untrusted file content from trusted instructions, plus tightly scoping available actions, are the two levers that blunt embedded manipulation. A virus scan addresses malware, not textual injection, which is a different risk entirely, and context window size has no bearing on injection resistance."
+    "why": "Isolating untrusted file content from trusted instructions, plus tightly scoping available actions, are the two levers that blunt embedded manipulation. A virus scan addresses malware, not textual injection, which is a different risk entirely, and context window size has no bearing on injection resistance.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité des applications IA",
+        "q": "Un agent de traitement de documents lit des fichiers uploadés par des utilisateurs anonymes avant toute revue humaine. Quelles sont les DEUX pratiques qui réduisent le risque que ces fichiers portent des instructions manipulatrices intégrées ?",
+        "options": [
+          "Traiter le contenu des fichiers uploadés comme des données non fiables, isolées des propres instructions de l'agent",
+          "Restreindre étroitement les actions disponibles pour l'agent, afin que même une lecture manipulée ne puisse pas déclencher une opération sensible",
+          "Faire entièrement confiance au contenu une fois que le fichier passe un scan antivirus, puisque malware et prompt injection sont la même catégorie de risque",
+          "Augmenter la context window du modèle pour qu'il puisse lire le fichier entier en une fois"
+        ],
+        "why": "Isoler le contenu de fichier non fiable des instructions fiables, ainsi que restreindre étroitement les actions disponibles, sont les deux leviers qui atténuent la manipulation intégrée. Un scan antivirus traite le malware, pas l'injection textuelle, qui est un risque entièrement différent, et la taille de la context window n'a aucun effet sur la résistance à l'injection."
+      }
+    }
   },
   {
     "domain": "AI Application Security",
@@ -224,7 +406,20 @@
     "correct": [
       0
     ],
-    "why": "These are genuinely distinct risk categories with distinct mitigations: jailbreak attempts are handled through the model's own policy and refusal behaviour, while content injection is handled through isolating untrusted data and limiting what it can trigger. Being authenticated does not make a jailbreak attempt harmless, and 'both involve text' is too shallow a similarity to imply one fix covers both."
+    "why": "These are genuinely distinct risk categories with distinct mitigations: jailbreak attempts are handled through the model's own policy and refusal behaviour, while content injection is handled through isolating untrusted data and limiting what it can trigger. Being authenticated does not make a jailbreak attempt harmless, and 'both involve text' is too shallow a similarity to imply one fix covers both.",
+    "translations": {
+      "fr": {
+        "domain": "Sécurité des applications IA",
+        "q": "Un utilisateur demande directement à votre assistant, en pleine conversation, de jouer le rôle d'une version sans restriction de lui-même, sans aucune règle. Est-ce la même catégorie de risque qu'une page web avec des instructions malveillantes cachées, et cela nécessite-t-il la même correction ?",
+        "options": [
+          "Non ; c'est une tentative de jailbreak via une conversation directe, traitée par la policy et l'entraînement au refus, alors que le cas de la page web est une injection via du contenu non fiable, traitée par l'isolation et le moindre privilège",
+          "Oui ; les deux sont des attaques identiques résolues par exactement le même contrôle technique unique",
+          "Non ; la demande directe n'est absolument pas un risque puisque l'utilisateur est une partie légitime et authentifiée",
+          "Oui, mais seulement parce que les deux impliquent du texte"
+        ],
+        "why": "Ce sont réellement des catégories de risque distinctes avec des mitigations distinctes : les tentatives de jailbreak sont traitées via la policy et le comportement de refus propres au modèle, tandis que l'injection de contenu est traitée en isolant les données non fiables et en limitant ce qu'elles peuvent déclencher. Être authentifié ne rend pas une tentative de jailbreak inoffensive, et « les deux impliquent du texte » est une similarité trop superficielle pour impliquer qu'une seule correction couvre les deux."
+      }
+    }
   },
   {
     "domain": "Guardrails and Safe Deployment",
@@ -239,7 +434,20 @@
     "correct": [
       0
     ],
-    "why": "Layered guardrails at multiple points reduce reliance on any single check catching everything. A lone end check has no backup if it fails, restricting checks to input-only ignores output-side risk entirely, and a system-prompt statement alone is a probabilistic control, not a full guardrail."
+    "why": "Layered guardrails at multiple points reduce reliance on any single check catching everything. A lone end check has no backup if it fails, restricting checks to input-only ignores output-side risk entirely, and a system-prompt statement alone is a probabilistic control, not a full guardrail.",
+    "translations": {
+      "fr": {
+        "domain": "Guardrails et déploiement sûr",
+        "q": "Votre équipe doit décider où placer une vérification de content policy : une seule fois, tout à la fin après la génération complète de la réponse, ou également plus tôt dans le pipeline. Que suggère la mise en couches (layering) ?",
+        "options": [
+          "Vérifier à plusieurs points, puisqu'une vérification uniquement en fin de course manque la chance de prévenir un problème plus tôt et n'offre aucune profondeur si cette vérification unique est contournée ou manque quelque chose",
+          "Une vérification unique en fin de pipeline est toujours suffisante et les vérifications supplémentaires sont une pure redondance sans valeur",
+          "Les vérifications de policy ne devraient jamais s'exécuter que sur l'input utilisateur, jamais sur l'output du modèle lui-même",
+          "Les vérifications de policy sont inutiles si le system prompt énonce déjà la politique"
+        ],
+        "why": "Des guardrails superposés à plusieurs points réduisent la dépendance envers une vérification unique censée tout attraper. Une vérification unique en fin de course n'a aucun backup si elle échoue, restreindre les vérifications au seul input ignore entièrement le risque côté output, et une simple mention dans le system prompt est un contrôle probabiliste, pas un guardrail complet."
+      }
+    }
   },
   {
     "domain": "Identity, Secrets, and Key Management",
@@ -254,7 +462,20 @@
     "correct": [
       0
     ],
-    "why": "Time-bound, identity-scoped credentials expire on their own, removing the dependence on someone remembering to revoke access manually. A stronger password does not add an expiry, relying on the departing contractor to self-revoke is not a control, and rate limits address throughput, not access lifecycle."
+    "why": "Time-bound, identity-scoped credentials expire on their own, removing the dependence on someone remembering to revoke access manually. A stronger password does not add an expiry, relying on the departing contractor to self-revoke is not a control, and rate limits address throughput, not access lifecycle.",
+    "translations": {
+      "fr": {
+        "domain": "Gestion des identités, secrets et clés",
+        "q": "L'accès temporaire d'un contractor à votre clé API Claude doit se terminer automatiquement lorsque son contrat se termine, sans que personne n'ait à se souvenir de la révoquer manuellement. Quelle capacité répond à ce besoin ?",
+        "options": [
+          "Des credentials ou accès limités dans le temps et liés à l'identité, plutôt qu'une clé partagée de longue durée avec une validité indéfinie",
+          "Un mot de passe plus fort sur la clé partagée",
+          "Demander au contractor de supprimer la clé de ses notes lorsqu'il part",
+          "Augmenter la rate limit sur la clé pour que l'usage du contractor n'interfère pas avec le trafic de production"
+        ],
+        "why": "Des credentials liés à l'identité et limités dans le temps expirent d'eux-mêmes, supprimant la dépendance envers le fait que quelqu'un se souvienne de révoquer l'accès manuellement. Un mot de passe plus fort n'ajoute pas d'expiration, compter sur l'auto-révocation du contractor partant n'est pas un contrôle, et les rate limits traitent le débit, pas le cycle de vie de l'accès."
+      }
+    }
   },
   {
     "domain": "Debugging and Error Handling",
@@ -269,7 +490,20 @@
     "correct": [
       0
     ],
-    "why": "Tracing shows the fault entering exactly where the truncation occurred, downstream of correct retrieval and correct model reasoning, so the formatting tool or its wiring is where to look. Blaming the model or the earliest step by default ignores what the trace actually shows, and nothing in the trace implicates the original request."
+    "why": "Tracing shows the fault entering exactly where the truncation occurred, downstream of correct retrieval and correct model reasoning, so the formatting tool or its wiring is where to look. Blaming the model or the earliest step by default ignores what the trace actually shows, and nothing in the trace implicates the original request.",
+    "translations": {
+      "fr": {
+        "domain": "Debugging et gestion des erreurs",
+        "q": "Un agent multi-étapes produit un rapport final erroné. La trace montre que le tool de retrieval a renvoyé les bons documents, et que le résumé qu'en fait le modèle est exact, mais qu'un tool de formatage en aval a tronqué le résumé en plein milieu d'une phrase avant qu'il n'atteigne l'utilisateur. Où se situe la faute ?",
+        "options": [
+          "Dans le tool de formatage ou son intégration dans le pipeline, puisque le retrieval et le raisonnement du modèle étaient tous les deux corrects jusqu'à ce point",
+          "Dans le raisonnement du modèle, puisqu'un rapport final erroné provient toujours du modèle, indépendamment de ce que montre la trace",
+          "Dans le tool de retrieval, puisque c'est l'étape la plus précoce et donc toujours la première chose à suspecter",
+          "Dans la requête originale de l'utilisateur, puisqu'elle a dû être ambiguë"
+        ],
+        "why": "La trace montre que la faute apparaît exactement là où la troncature s'est produite, en aval d'un retrieval correct et d'un raisonnement de modèle correct, donc c'est le tool de formatage ou son câblage qu'il faut examiner. Blâmer le modèle ou l'étape la plus précoce par défaut ignore ce que la trace montre réellement, et rien dans la trace n'implique la requête originale."
+      }
+    }
   },
   {
     "domain": "Debugging and Error Handling",
@@ -284,7 +518,20 @@
     "correct": [
       0
     ],
-    "why": "Different error categories call for different recovery strategies and different user messaging, which a single blanket response cannot provide. Users benefit from knowing whether to retry, fix input, or wait, better internal logging alone doesn't change the poor user experience, and removing handling entirely is a regression, not an improvement."
+    "why": "Different error categories call for different recovery strategies and different user messaging, which a single blanket response cannot provide. Users benefit from knowing whether to retry, fix input, or wait, better internal logging alone doesn't change the poor user experience, and removing handling entirely is a regression, not an improvement.",
+    "translations": {
+      "fr": {
+        "domain": "Debugging et gestion des erreurs",
+        "q": "Un gestionnaire d'erreurs attrape actuellement chaque type d'exception de façon identique et dit toujours à l'utilisateur de « réessayer plus tard », que la cause soit un mauvais input utilisateur, une rate limit, ou une erreur serveur permanente. Quelle est l'amélioration à apporter ?",
+        "options": [
+          "Classifier les erreurs par type et par capacité de récupération, et choisir la stratégie de récupération ainsi que le message destiné à l'utilisateur par catégorie plutôt qu'une réponse générique unique",
+          "Garder le message générique unique, puisque les utilisateurs n'ont pas besoin de connaître la distinction entre types d'erreurs",
+          "Logger les erreurs avec plus de détails en interne sans changer ce qui est jamais dit à l'utilisateur",
+          "Supprimer entièrement la gestion des erreurs et laisser les exceptions remonter brutes jusqu'à l'utilisateur"
+        ],
+        "why": "Différentes catégories d'erreurs appellent des stratégies de récupération et des messages utilisateur différents, ce qu'une réponse générique unique ne peut pas fournir. Les utilisateurs bénéficient de savoir s'il faut réessayer, corriger l'input, ou attendre, un meilleur logging interne seul ne change pas la mauvaise expérience utilisateur, et supprimer entièrement la gestion est une régression, pas une amélioration."
+      }
+    }
   },
   {
     "domain": "MCP Server Development",
@@ -299,7 +546,20 @@
     "correct": [
       0
     ],
-    "why": "HTTP-based transport fits a remote, request-oriented client-server relationship; stdio is designed for a local subprocess communicating over shared standard input and output, not cross-machine networking. The two transports are not interchangeable regardless of topology, and MCP is not limited to raw TCP sockets as the only network option."
+    "why": "HTTP-based transport fits a remote, request-oriented client-server relationship; stdio is designed for a local subprocess communicating over shared standard input and output, not cross-machine networking. The two transports are not interchangeable regardless of topology, and MCP is not limited to raw TCP sockets as the only network option.",
+    "translations": {
+      "fr": {
+        "domain": "Développement de serveurs MCP",
+        "q": "Vous choisissez un transport pour un serveur MCP qui sera appelé par un client sur une autre machine via le réseau, sans exigence de connexion ouverte persistante entre les appels. Lequel convient le mieux, et pourquoi pas stdio ?",
+        "options": [
+          "Un transport basé sur HTTP, puisqu'il supporte une communication réseau orientée requête ; stdio suppose un sous-processus local partageant l'entrée et la sortie standard sur la même machine",
+          "stdio, puisqu'il fonctionne sur n'importe quel réseau tant que les deux machines sont sur le même sous-réseau",
+          "Les deux fonctionnent de façon identique, indépendamment du fait que le client et le serveur partagent une machine",
+          "Un socket TCP brut est le seul choix valide pour tout serveur MCP"
+        ],
+        "why": "Un transport basé sur HTTP convient à une relation client-serveur distante et orientée requête ; stdio est conçu pour un sous-processus local communiquant via une entrée et sortie standard partagées, pas pour du réseau entre machines. Les deux transports ne sont pas interchangeables quelle que soit la topologie, et MCP ne se limite pas aux sockets TCP bruts comme seule option réseau."
+      }
+    }
   },
   {
     "domain": "MCP Server Development",
@@ -314,7 +574,20 @@
     "correct": [
       0
     ],
-    "why": "A well-built server validates and normalises what it returns, rather than passing upstream imperfections straight through as if clean. Deferring entirely to the calling application ignores the server's own responsibility, refusing all data over occasional flaws is an overcorrection, and caching malformed records preserves the very problem being raised."
+    "why": "A well-built server validates and normalises what it returns, rather than passing upstream imperfections straight through as if clean. Deferring entirely to the calling application ignores the server's own responsibility, refusing all data over occasional flaws is an overcorrection, and caching malformed records preserves the very problem being raised.",
+    "translations": {
+      "fr": {
+        "domain": "Développement de serveurs MCP",
+        "q": "Votre serveur MCP renvoie actuellement des données brutes et non validées directement depuis une API en amont vers Claude, incluant occasionnellement des enregistrements malformés. Quelle pratique côté serveur améliorerait la robustesse ?",
+        "options": [
+          "Valider et normaliser les données avant de les renvoyer, afin que les enregistrements malformés en amont n'atteignent pas le modèle comme s'ils étaient propres",
+          "Faire passer tout sans changement, puisque la validation relève uniquement de la responsabilité de l'application qui appelle le serveur",
+          "Arrêter complètement de renvoyer des données dès que le service en amont est imparfait",
+          "Cacher les enregistrements malformés pour qu'ils soient renvoyés de façon cohérente à chaque fois"
+        ],
+        "why": "Un serveur bien construit valide et normalise ce qu'il renvoie, plutôt que de laisser passer les imperfections en amont comme si elles étaient propres. Se décharger entièrement sur l'application appelante ignore la responsabilité propre du serveur, refuser toutes les données à cause de défauts occasionnels est une surcorrection, et cacher des enregistrements malformés préserve exactement le problème signalé."
+      }
+    }
   },
   {
     "domain": "Agentic Customization",
@@ -329,7 +602,20 @@
     "correct": [
       0
     ],
-    "why": "Live, authenticated API access reused across multiple consumers is the MCP server case; a Skill is packaged instructions and reference material, not a mechanism for making live authenticated calls itself. Hand-duplicating a custom tool three times creates the exact maintenance burden a shared server avoids, and this is squarely within scope for one of the three approaches."
+    "why": "Live, authenticated API access reused across multiple consumers is the MCP server case; a Skill is packaged instructions and reference material, not a mechanism for making live authenticated calls itself. Hand-duplicating a custom tool three times creates the exact maintenance burden a shared server avoids, and this is squarely within scope for one of the three approaches.",
+    "translations": {
+      "fr": {
+        "domain": "Personnalisation agentique",
+        "q": "Une capacité doit appeler une API interne live et authentifiée, et doit aussi être accessible de façon identique depuis trois tools internes non liés que votre entreprise construit. En pesant Skills, custom tools et MCP, lequel convient, et qu'est-ce qui exclut un Skill ici ?",
+        "options": [
+          "Un serveur MCP ; un Skill est du contenu instructionnel et ne peut pas lui-même effectuer des appels d'API live authentifiés",
+          "Un Skill, puisque les Skills peuvent nativement effectuer n'importe quel appel d'API authentifié avec la bonne description",
+          "Un custom tool dupliqué à la main dans chacun des trois tools consommateurs",
+          "Aucune des trois approches ne convient à une API live authentifiée"
+        ],
+        "why": "Un accès API live et authentifié réutilisé à travers plusieurs consommateurs est le cas du serveur MCP ; un Skill est constitué d'instructions et de matériel de référence packagés, pas d'un mécanisme pour effectuer lui-même des appels live authentifiés. Dupliquer à la main un custom tool trois fois crée exactement la charge de maintenance qu'un serveur partagé évite, et ce cas rentre bel et bien dans le périmètre d'une des trois approches."
+      }
+    }
   },
   {
     "domain": "Software Engineering Foundations",
@@ -344,7 +630,20 @@
     "correct": [
       0
     ],
-    "why": "Adding another blocking network call to an already-blocking pipeline is exactly the concurrency concern to address before shipping, since one slow call would otherwise stall unrelated work. Label storage format, branch naming, and editor tooling are unrelated to the concurrency risk being introduced."
+    "why": "Adding another blocking network call to an already-blocking pipeline is exactly the concurrency concern to address before shipping, since one slow call would otherwise stall unrelated work. Label storage format, branch naming, and editor tooling are unrelated to the concurrency risk being introduced.",
+    "translations": {
+      "fr": {
+        "domain": "Fondamentaux du software engineering",
+        "q": "Une équipe veut ajouter une classification de texte basée sur Claude à un pipeline existant de traitement de requêtes synchrone qui bloque actuellement à chaque appel d'I/O. Quelle préoccupation fondamentale devrait être traitée avant d'ajouter le nouvel appel API bloquant ?",
+        "options": [
+          "Si le pipeline devrait passer à de l'I/O asynchrone et non bloquante, pour qu'un appel de classification lent ne bloque pas des requêtes non liées",
+          "Si les labels de classification devraient être stockés comme des strings ou des integers",
+          "Si la convention de nommage des branches git devrait changer",
+          "Si l'éditeur de code de l'équipe supporte la coloration syntaxique pour le nouveau code"
+        ],
+        "why": "Ajouter un autre appel réseau bloquant à un pipeline déjà bloquant est exactement la préoccupation de concurrence à traiter avant de shipper, puisqu'un appel lent bloquerait sinon du travail non lié. Le format de stockage des labels, la convention de nommage des branches, et l'outillage de l'éditeur sont sans rapport avec le risque de concurrence introduit."
+      }
+    }
   },
   {
     "domain": "Systems Life Cycle",
@@ -359,7 +658,20 @@
     "correct": [
       0
     ],
-    "why": "Architectural decisions made before implementation begins are squarely design-phase work. Fixing an incident and monitoring dashboards are operate-phase activities, and writing the integration code is build-phase, both of which come after design decisions are made."
+    "why": "Architectural decisions made before implementation begins are squarely design-phase work. Fixing an incident and monitoring dashboards are operate-phase activities, and writing the integration code is build-phase, both of which come after design decisions are made.",
+    "translations": {
+      "fr": {
+        "domain": "Cycle de vie des systèmes",
+        "q": "Laquelle de ces activités appartient le plus clairement à la phase de design, plutôt qu'aux phases de build ou d'operate du cycle de vie des systèmes ?",
+        "options": [
+          "Décider de l'architecture globale, incluant les compromis workflow contre agent et la sélection du tier de modèle, avant d'écrire le code d'implémentation",
+          "Corriger un incident de production survenu la nuit dernière",
+          "Écrire le code d'intégration réel avec l'API choisie",
+          "Monitorer les dashboards de coût en direct après le lancement"
+        ],
+        "why": "Les décisions architecturales prises avant que l'implémentation ne commence relèvent carrément de la phase de design. Corriger un incident et monitorer des dashboards sont des activités de la phase operate, et écrire le code d'intégration relève de la phase build, ces deux phases venant après que les décisions de design ont été prises."
+      }
+    }
   },
   {
     "domain": "Understanding Requirements",
@@ -374,7 +686,20 @@
     "correct": [
       0
     ],
-    "why": "A vague adjective like 'quickly' cannot be checked without a concrete, measurable target such as a latency percentile under a defined load. It is not sufficiently specific as written, an exhaustive future feature list is unrelated to this gap, and naming an engineer does not make the requirement testable."
+    "why": "A vague adjective like 'quickly' cannot be checked without a concrete, measurable target such as a latency percentile under a defined load. It is not sufficiently specific as written, an exhaustive future feature list is unrelated to this gap, and naming an engineer does not make the requirement testable.",
+    "translations": {
+      "fr": {
+        "domain": "Compréhension des besoins",
+        "q": "Un besoin énonce que « le système doit répondre rapidement ». Qu'est-ce qui manque pour que cela devienne exploitable pour la conception et les tests ?",
+        "options": [
+          "Une cible concrète et mesurable, comme un percentile de latence spécifique sous une charge spécifique, afin qu'elle puisse être vérifiée objectivement",
+          "Rien ; « rapidement » est suffisamment spécifique pour concevoir et tester directement",
+          "Une liste de chaque feature future possible dont le système pourrait un jour avoir besoin",
+          "Le nom de l'ingénieur responsable de l'écriture du code"
+        ],
+        "why": "Un adjectif vague comme « rapidement » ne peut pas être vérifié sans une cible concrète et mesurable, comme un percentile de latence sous une charge définie. Ce n'est pas suffisamment spécifique tel qu'écrit, une liste exhaustive de futures features est sans rapport avec cette lacune, et nommer un ingénieur ne rend pas le besoin testable."
+      }
+    }
   },
   {
     "domain": "Agent Patterns and Frameworks",
@@ -389,6 +714,19 @@
     "correct": [
       0
     ],
-    "why": "Unstructured accumulation can bury useful signal under volume; the fix is curating what's retained rather than keeping everything indefinitely or dropping memory altogether. A bigger window without curation still drowns in the same noise, and this is a memory-management issue, not simply a capability ceiling."
+    "why": "Unstructured accumulation can bury useful signal under volume; the fix is curating what's retained rather than keeping everything indefinitely or dropping memory altogether. A bigger window without curation still drowns in the same noise, and this is a memory-management issue, not simply a capability ceiling.",
+    "translations": {
+      "fr": {
+        "domain": "Patterns et frameworks d'agents",
+        "q": "La mémoire d'un agent contient actuellement chaque appel de tool et résultat de toute la session sans aucun élagage, et au tour 40 l'agent commence à répéter des erreurs antérieures dont il aurait déjà dû tirer les leçons. Que suggère cela sur la façon dont la mémoire est utilisée ?",
+        "options": [
+          "Une accumulation brute sans résumé ni structuration peut enterrer le signal utile sous le volume, donc ce qui est conservé doit être curé, et non simplement retenu indéfiniment",
+          "La mémoire devrait être complètement désactivée, puisque toute mémoire rend clairement les agents pires avec le temps",
+          "L'agent a besoin d'une context window plus grande et rien d'autre ne doit changer",
+          "Le problème n'a aucun rapport avec la mémoire et est purement une question de capacité du modèle"
+        ],
+        "why": "Une accumulation non structurée peut enterrer le signal utile sous le volume ; la correction consiste à curer ce qui est retenu plutôt que de tout garder indéfiniment ou d'abandonner complètement la mémoire. Une fenêtre plus grande sans curation reste noyée dans le même bruit, et c'est un problème de gestion de mémoire, pas simplement un plafond de capacité."
+      }
+    }
   }
 ]
