@@ -22,13 +22,12 @@ All sets are also in `questions-all.json`. Regenerate from `source-questions.js`
 ## Practice UI
 
 Open [`index.html`](./index.html) in a browser (loads `questions-data.js` next to it — works via `file://` or a local server).  
-**Language:** FR/EN toggle on the quiz, overview, and glossary (shared preference `claudeMockLang`). English remains the canonical source; French lives under `translations.fr` on each question (`q`, `options`, `why`, `domain`).  
 Glossary of exam terms: [`glossary.html`](./glossary.html) (FR/EN, search + categories).  
 Per-set overview (domain distribution + question cards): [`overview.html?set=1`](./overview.html?set=1) … `set=8`. Deep-link into quiz: `index.html?set=1&q=12` (stable source order).
 
 ```bash
 # optional local server
-cd mock-claude && python3 -m http.server 8765
+cd mock && python3 -m http.server 8765
 # then http://localhost:8765/
 ```
 

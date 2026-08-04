@@ -947,6 +947,10 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then((rs) => rs.forEach((r) => r.unregister()));
+      }
+
       setLang(currentLang());
       const as = document.getElementById("annexSearch");
       const ac = document.getElementById("annexCategory");

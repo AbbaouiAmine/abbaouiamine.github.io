@@ -304,10 +304,11 @@
     <p class="disclaimer" id="disclaimer"></p>
   </main>
 
-  <script src="questions-data.js"></script>
+  <script src="questions-data.js?v=20260804b"></script>
   <script>
     (function () {
       const LANG_KEY = "claudeMockLang";
+      const DATA_URL = "questions-all.json?v=20260804b";
       const UI = {
         fr: {
           home: "← Accueil mock",
@@ -364,14 +365,16 @@
       }
 
       let lang = currentLang();
+      let data = null;
       function t(key) {
         return (UI[lang] || UI.fr)[key];
       }
 
       function localizeQ(q) {
+        if (!q) return q;
         if (lang !== "fr") return q;
         const fr = q.translations && q.translations.fr;
-        if (!fr) return q;
+        if (!fr || typeof fr !== "object") return q;
         return {
           ...q,
           domain: fr.domain || q.domain,
@@ -379,17 +382,11 @@
         };
       }
 
-      const data = window.MOCK_EXAM;
       const params = new URLSearchParams(location.search);
       const setId = Number(params.get("set") || "1");
       const content = document.getElementById("content");
       const picker = document.getElementById("set-picker");
       const openQuiz = document.getElementById("open-quiz");
-
-      if (!data || !Array.isArray(data.sets)) {
-        content.innerHTML = UI.fr.load_err;
-        return;
-      }
 
       function escapeHtml(s) {
         return String(s)
@@ -578,7 +575,8 @@
         lang = next;
         localStorage.setItem(LANG_KEY, lang);
         localStorage.setItem("claudeGlossaryLang", lang);
-        render();
+        if (data) render();
+        else applyChrome();
       }
 
       document.getElementById("btn-lang-fr").addEventListener("click", () =>
@@ -588,7 +586,31 @@
         setLang("en"),
       );
 
-      render();
+      async function loadExam() {
+        if ("serviceWorker" in navigator) {
+          try {
+            const regs = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(regs.map((r) => r.unregister()));
+          } catch (_) {}
+        }
+        try {
+          const res = await fetch(DATA_URL, { cache: "no-cache" });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          const raw = await res.json();
+          if (!raw || !Array.isArray(raw.sets)) throw new Error("bad data");
+          data = raw;
+        } catch (_) {
+          data = window.MOCK_EXAM;
+        }
+        if (!data || !Array.isArray(data.sets)) {
+          content.innerHTML = t("load_err");
+          applyChrome();
+          return;
+        }
+        render();
+      }
+
+      loadExam();
     })();
   </script>
 </body>

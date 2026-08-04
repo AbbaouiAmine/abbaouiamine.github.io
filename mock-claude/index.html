@@ -442,10 +442,11 @@
     <p class="disclaimer" id="disclaimer"></p>
   </div>
 
-  <script src="questions-data.js"></script>
+  <script src="questions-data.js?v=20260804b"></script>
   <script>
     (function () {
       const LANG_KEY = "claudeMockLang";
+      const DATA_URL = "questions-all.json?v=20260804b";
       const UI = {
         fr: {
           subtitle_home: "Entraînement mock exam",
@@ -528,19 +529,23 @@
       }
 
       let lang = currentLang();
+      let data = null;
+      let cut = 72;
 
       function t(key) {
         const pack = UI[lang] || UI.fr;
         return pack[key];
       }
 
-      const data = window.MOCK_EXAM;
-      if (!data || !Array.isArray(data.sets)) {
-        document.getElementById("home").innerHTML = UI.fr.load_err;
-        return;
+      function normalizeExam(raw) {
+        if (!raw || !Array.isArray(raw.sets)) return null;
+        return {
+          source: raw.source || "",
+          cutLine: raw.cutLine || 72,
+          sets: raw.sets,
+        };
       }
 
-      const cut = data.cutLine || 72;
       const el = {
         home: document.getElementById("home"),
         quiz: document.getElementById("quiz"),
@@ -604,14 +609,18 @@
       }
 
       function localize(q) {
+        if (!q) return q;
         if (lang !== "fr") return q;
         const fr = q.translations && q.translations.fr;
-        if (!fr) return q;
+        if (!fr || typeof fr !== "object") return q;
         return {
           ...q,
           domain: fr.domain || q.domain,
           q: fr.q || q.q,
-          options: Array.isArray(fr.options) ? fr.options : q.options,
+          options:
+            Array.isArray(fr.options) && fr.options.length === (q.options || []).length
+              ? fr.options
+              : q.options,
           why: fr.why || q.why,
         };
       }
@@ -648,8 +657,12 @@
         document.querySelectorAll(".lang-switch button").forEach((btn) => {
           btn.classList.toggle("active", btn.dataset.lang === lang);
         });
+        const setCount = data && data.sets ? data.sets.length : "…";
         document.getElementById("home-eyebrow").textContent =
-          t("home_eyebrow") + " · " + data.sets.length + " practice sets";
+          t("home_eyebrow") +
+          " · " +
+          setCount +
+          (lang === "fr" ? " séries" : " practice sets");
         document.getElementById("home-lead").innerHTML = t("home_lead");
         document.getElementById("home-note").innerHTML = t("home_note");
         document.getElementById("btn-home").textContent = t("home");
@@ -666,18 +679,21 @@
         localStorage.setItem(LANG_KEY, lang);
         localStorage.setItem("claudeGlossaryLang", lang);
         applyChrome();
-        if (state.view === "home") renderHome();
-        else if (state.view === "quiz") {
+        if (!data) return;
+        if (state.view === "home") {
+          renderHome();
+          return;
+        }
+        if (state.view === "quiz") {
           if (state.set) {
             el.subtitle.textContent = `Foundations · ${state.set.label}`;
           }
-          if (state.checked) {
-            // re-render question + keep feedback
-            const savedSelected = state.selected.slice();
-            const savedChecked = true;
-            renderQuestion();
+          const savedSelected = state.selected.slice();
+          const savedChecked = state.checked;
+          renderQuestion();
+          if (savedChecked) {
             state.selected = savedSelected;
-            state.checked = savedChecked;
+            state.checked = true;
             paintOptions();
             const q = localize(current());
             const ok = arraysEqual(state.selected, current().correct);
@@ -691,10 +707,10 @@
               state.idx + 1 >= state.deck.length
                 ? t("see_results")
                 : t("next");
-          } else {
-            renderQuestion();
           }
-        } else if (state.view === "results") {
+          return;
+        }
+        if (state.view === "results") {
           renderResults();
         }
       }
@@ -936,21 +952,47 @@
       document.getElementById("btn-lang-fr").addEventListener("click", () => setLang("fr"));
       document.getElementById("btn-lang-en").addEventListener("click", () => setLang("en"));
 
-      applyChrome();
-
-      const params = new URLSearchParams(location.search);
-      const setParam = Number(params.get("set") || "");
-      const qParam = Number(params.get("q") || "");
-      const bootSet = data.sets.find((s) => s.id === setParam);
-      if (bootSet) {
-        const fromOverview = Number.isFinite(qParam) && qParam >= 1;
-        startSet(bootSet, {
-          shuffleQuestions: !fromOverview,
-          startIdx: fromOverview ? qParam - 1 : 0,
-        });
-      } else {
-        renderHome();
+      function boot() {
+        applyChrome();
+        const params = new URLSearchParams(location.search);
+        const setParam = Number(params.get("set") || "");
+        const qParam = Number(params.get("q") || "");
+        const bootSet = data.sets.find((s) => s.id === setParam);
+        if (bootSet) {
+          const fromOverview = Number.isFinite(qParam) && qParam >= 1;
+          startSet(bootSet, {
+            shuffleQuestions: !fromOverview,
+            startIdx: fromOverview ? qParam - 1 : 0,
+          });
+        } else {
+          renderHome();
+        }
       }
+
+      async function loadExam() {
+        if ("serviceWorker" in navigator) {
+          try {
+            const regs = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(regs.map((r) => r.unregister()));
+          } catch (_) {}
+        }
+        try {
+          const res = await fetch(DATA_URL, { cache: "no-cache" });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          data = normalizeExam(await res.json());
+        } catch (_) {
+          data = normalizeExam(window.MOCK_EXAM);
+        }
+        if (!data) {
+          document.getElementById("home").innerHTML = t("load_err");
+          applyChrome();
+          return;
+        }
+        cut = data.cutLine || 72;
+        boot();
+      }
+
+      loadExam();
     })();
   </script>
 </body>
