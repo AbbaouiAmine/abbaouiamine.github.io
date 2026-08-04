@@ -1,0 +1,488 @@
+[
+  {
+    "s": "A",
+    "domain": "LLM Fundamentals",
+    "pick": 1,
+    "q": "A CI check re-runs the same summariser twice and asserts the two outputs are byte-identical. It fails at random. Best fix?",
+    "options": [
+      "Assert on structure and key facts instead of an exact match, since generation is non-deterministic",
+      "Set temperature to 0 and keep the byte-identical assertion, treating the output as fully reproducible now",
+      "Loop the check until it passes",
+      "Run the check on the biggest model tier"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Outputs vary run to run, so grade on structure or key facts. Temperature 0 narrows but does not guarantee identical bytes, and looping or upsizing does not make an exact-match assertion valid."
+  },
+  {
+    "s": "A",
+    "domain": "API Mechanics",
+    "pick": 2,
+    "q": "As a chat session lengthens, which TWO things grow inside the context window? (Pick 2)",
+    "options": [
+      "Retained prior turns",
+      "Accumulated tool outputs",
+      "The model's weight count",
+      "The sampling seed"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Prior turns and tool outputs both accumulate and spend the fixed budget. Weight count and sampling seed are not content the window stores."
+  },
+  {
+    "s": "A",
+    "domain": "Model Selection",
+    "pick": 1,
+    "q": "A high-volume endpoint answers trivial FAQ-style questions and must feel snappy. Which reasoning setting fits?",
+    "options": [
+      "Leave extended thinking off, enabling it only where a reasoning pass would change the answer",
+      "Run maximum-effort extended thinking everywhere so even trivial answers are extra safe and you never regret it",
+      "Send every call to the largest model",
+      "Keep adaptive thinking pinned to its highest effort at all times"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Spend reasoning only where it changes the answer. Maxing thinking or the model tier on trivial, latency-sensitive traffic just adds cost and delay."
+  },
+  {
+    "s": "A",
+    "domain": "Cost & Tokens",
+    "pick": 1,
+    "q": "A coding agent resends the same large, unchanging repo-guidelines block on every turn. What cuts the repeated input cost?",
+    "options": [
+      "Cache checkpoints on the stable block",
+      "Trimming max_tokens each turn so replies get shorter and the per-turn input cost drops over the session",
+      "Moving the agent to batch mode",
+      "Adding a few more examples to the block"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Caching the unchanged block reuses it at reduced cost. max_tokens caps output not input, batch does not fit a live agent, and more examples add tokens."
+  },
+  {
+    "s": "B",
+    "domain": "Prompt Engineering",
+    "pick": 1,
+    "q": "Ten turns into a conversation, the assistant starts ignoring the JSON format you specified at the start. Which technique fixes this failure type?",
+    "options": [
+      "State the format rule durably in the system prompt and tighten what was underspecified",
+      "Attach three few-shot reasoning examples to every user turn so the model keeps re-anchoring on the format",
+      "Bump the temperature up",
+      "Swap to a different model mid-conversation"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Drift across turns traces to an underspecified system prompt, so fix it there. Reasoning examples in every turn are costly and off-target, and temperature or model changes do not address drift."
+  },
+  {
+    "s": "B",
+    "domain": "Prompt Engineering",
+    "pick": 2,
+    "q": "Support tickets are pasted verbatim into your prompt template and occasionally contain text that hijacks your instructions. Which TWO help at the prompt layer? (Pick 2)",
+    "options": [
+      "Wrap and label the ticket text clearly as data",
+      "Keep your trusted instructions in the system prompt, apart from the ticket content",
+      "Add a note asking users not to embed instructions",
+      "Cut every ticket to a short fixed length"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Delimiting the untrusted text as data and separating trusted instructions into the system prompt both reduce injection. A request is unenforceable, and truncation destroys legitimate content."
+  },
+  {
+    "s": "B",
+    "domain": "Prompt Engineering",
+    "pick": 1,
+    "q": "You keep restating the tone and safety rules inside each user message, and later turns still override them. Where should those rules live?",
+    "options": [
+      "In the system prompt",
+      "Restated in full inside every assistant reply so the model is reminded of them continuously through the chat",
+      "In the last user message before output",
+      "In a tool result"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Durable rules belong in the system prompt, the highest-priority, stable placement. Repeating them in assistant turns is fragile, and user or tool content sits lower in priority."
+  },
+  {
+    "s": "B",
+    "domain": "Output Handling",
+    "pick": 1,
+    "q": "You feed Claude's output into a typed API client that rejects anything but strict JSON, yet the model sometimes prepends a sentence. Most robust handling?",
+    "options": [
+      "Require JSON-only, validate against a schema, and repair or reject malformed output before the client sees it",
+      "Drop temperature to 0, which fully removes formatting variation so no sentence can ever slip in again",
+      "Feed the raw output to the client and let it parse",
+      "Raise max_tokens so the sentence has room"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Constrain and validate before the output reaches the client. Temperature 0 lowers but does not remove stray prose, passing raw output is what fails, and max_tokens is unrelated."
+  },
+  {
+    "s": "B",
+    "domain": "Tools & MCPs",
+    "pick": 1,
+    "q": "Claude keeps invoking lookup_user when a task actually needs search_orders, and the two descriptions read almost the same. Best first fix?",
+    "options": [
+      "Rewrite each description to state its distinct purpose and when not to use it",
+      "List search_orders before lookup_user, since the model tends to favour whichever tool comes first",
+      "Delete lookup_user",
+      "Turn the temperature up"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Overlapping descriptions cause the wrong pick, so make each distinct with an exclusion condition. Ordering is not the lever, deleting a tool loses a capability, and temperature does not help."
+  },
+  {
+    "s": "B",
+    "domain": "Agents & Workflows",
+    "pick": 1,
+    "q": "A nightly ETL always runs the same five steps in the same fixed order. Which architecture is right, and why?",
+    "options": [
+      "A workflow, since the path is fully known and coding it avoids an agent's cost and nondeterminism",
+      "An agent, since agents are more capable and future-proof and you can rein it in later if the added latency and cost hurt in production",
+      "One large prompt holding all five steps",
+      "Five independent calls with no ordering"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "A fixed, known path is a workflow: deterministic and cheaper. An agent adds nondeterminism you do not need, and a mega-prompt or unordered calls cannot reliably sequence the steps."
+  },
+  {
+    "s": "B",
+    "domain": "Agents & Workflows",
+    "pick": 1,
+    "q": "An agent can permanently delete customer records, and deletion cannot be undone. Correct design choice?",
+    "options": [
+      "A human approval gate before the delete runs, built in at design time",
+      "Thorough audit logging and alerts, so a wrong delete pages the on-call engineer within minutes to start recovery",
+      "A low temperature to keep it cautious",
+      "A firm system-prompt instruction to double-check before deleting"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Irreversible actions get a human gate before execution, designed in. Logging and alerts come after the record is gone, and temperature or a prompt line are not enforceable controls."
+  },
+  {
+    "s": "B",
+    "domain": "Agents & Workflows",
+    "pick": 1,
+    "q": "You must turn 60 PDFs into one brief that cites exact figures, but putting them all in one context ruins quality. Best approach?",
+    "options": [
+      "Use subagents to extract from each PDF in isolation, then synthesise from the compact extracts",
+      "Feed all 60 in at once and push max_tokens as high as the model permits so nothing is left out",
+      "Include only the PDFs that fit comfortably",
+      "Reduce the temperature"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Subagents keep each PDF in a clean context and hand synthesis compact extracts. Loading all 60 is the bloat that hurt quality, dropping PDFs loses data, and temperature is irrelevant."
+  },
+  {
+    "s": "B",
+    "domain": "API Mechanics",
+    "pick": 1,
+    "q": "A product photo is analysed once; a brand watermark image rides on every single request. How should each be supplied?",
+    "options": [
+      "Inline the one-off photo as base64, and serve the repeated watermark through the Files API so it isn't re-uploaded each call",
+      "Inline both as base64 on every call, since inlining is simplest and the repeated bytes are negligible at scale",
+      "Convert both to text descriptions",
+      "Send both through the Batches API regardless of latency"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Inline base64 suits a one-off; the Files API suits an asset reused across requests so it isn't re-sent. Re-inlining the watermark wastes tokens, and text or forced batching miss the point."
+  },
+  {
+    "s": "B",
+    "domain": "Model Selection",
+    "pick": 1,
+    "q": "You use extended thinking across several turns. What is required of the thinking blocks?",
+    "options": [
+      "They must be returned unchanged on the next turn",
+      "They should be condensed into a summary so a growing history won't overflow the budget, while the reasoning stays available",
+      "They should be stripped out before the next call",
+      "They should be moved into the system prompt"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Thinking blocks must go back unchanged or the next request fails. Condensing, stripping, or relocating them breaks the exchange."
+  },
+  {
+    "s": "C",
+    "domain": "Claude Code",
+    "pick": 1,
+    "q": "You open an inherited legacy repo you didn't write and don't fully trust. What permission posture fits the first pass?",
+    "options": [
+      "Read-only plan mode, to explore and propose before touching anything",
+      "bypassPermissions, so the exploration runs uninterrupted, on the logic that you'll review the whole diff before merging anyway",
+      "Manual approval on every file read",
+      "All tools disabled"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Match authority to risk: plan mode explores read-only before editing an untrusted repo. bypassPermissions grants far too much too early, approving each read is friction, and disabling tools blocks exploration."
+  },
+  {
+    "s": "C",
+    "domain": "Security & Safety",
+    "pick": 2,
+    "q": "You must guarantee an agent can neither run sudo commands nor read config/prod.key, whatever it is asked. Which TWO settings pieces enforce this? (Pick 2)",
+    "options": [
+      "deny [\"Bash(sudo:*)\"]",
+      "deny [\"Read(config/prod.key)\"]",
+      "defaultMode \"bypassPermissions\"",
+      "allow [\"Bash(*)\"]"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Settings-layer deny rules block the privileged command and the secret read regardless of the session. bypassPermissions strips guards, and an unrestricted Bash allow does the opposite."
+  },
+  {
+    "s": "C",
+    "domain": "Security & Safety",
+    "pick": 2,
+    "q": "A hook must stop the agent from deleting files outside /workspace. Which TWO are correct? (Pick 2)",
+    "options": [
+      "Use PreToolUse, because it fires before the delete executes",
+      "Exit code 2 with the reason on stderr signals the block",
+      "Use PostToolUse and undo the delete after it runs",
+      "Exit 0 and print the reason to stdout"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Only PreToolUse can block, and the block is signalled by exit code 2 with the reason on stderr. PostToolUse runs after the delete, and exit 0 permits the call."
+  },
+  {
+    "s": "C",
+    "domain": "Tools & MCPs",
+    "pick": 1,
+    "q": "A backend service calls the Messages API and wants a Skill to run as part of that request. What must be configured?",
+    "options": [
+      "Send the code-execution and skills beta headers, and author the skill so its steps need no local files or tools",
+      "Drop SKILL.md into .claude/skills and rely on the terminal to find it",
+      "Set settingSources explicitly, as the Agent SDK requires",
+      "Set the managed-agents beta header and list the skill on an agent resource"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "A Messages API request needs the code-execution and skills beta headers, with the skill free of local-file dependencies. The terminal placement, settingSources, and managed-agents header belong to other runtimes."
+  },
+  {
+    "s": "C",
+    "domain": "Tools & MCPs",
+    "pick": 1,
+    "q": "A team wants one Skill to run inside a long-running agent that Anthropic hosts, addressed by an agent ID across sessions. What's required?",
+    "options": [
+      "Define the agent as an API resource that lists the skill and set the managed-agents beta header, with the skill written to avoid local files since it runs in Anthropic's sandbox",
+      "Place SKILL.md in .claude/skills",
+      "Set settingSources explicitly",
+      "Send only the code-execution header"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "An Anthropic-hosted agent by ID is an API resource that lists the skill, with the managed-agents header, and the skill cannot depend on local files. The others are the terminal and SDK setups."
+  },
+  {
+    "s": "C",
+    "domain": "Configuration Management",
+    "pick": 1,
+    "q": "A plugin's SKILL.md hardcodes a script at /Users/sam/bin/format.sh and breaks for everyone who clones the repo. Best fix?",
+    "options": [
+      "Reference it from the project root via CLAUDE_PROJECT_DIR",
+      "Have every teammate mount a shared drive at that exact absolute path and document it in the README so setups match",
+      "Swap it for a home shortcut like ~/bin/format.sh",
+      "Remove the step so the skill stops calling the script"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "The machine-specific absolute path is the defect; CLAUDE_PROJECT_DIR resolves from the repo root anywhere. A shared mount or home shortcut just relocates the fragility, and removing the step drops the capability."
+  },
+  {
+    "s": "C",
+    "domain": "MCP Server Development",
+    "pick": 1,
+    "q": "A personal Markdown-notes query tool that only ever runs on your own laptop. Which transport and scope fit?",
+    "options": [
+      "stdio + Local",
+      "HTTP + Enterprise through managed settings, so it stays centrally governed and reliably available to you everywhere you might work",
+      "HTTP + Project (.mcp.json)",
+      "HTTP + Local"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "A personal, same-machine tool is stdio at local scope. Enterprise managed settings are for org-wide mandates and project scope shares with a team, neither of which this needs."
+  },
+  {
+    "s": "D",
+    "domain": "Eval & Debugging",
+    "pick": 2,
+    "q": "Which TWO of these are gradeable success criteria you could build an eval against? (Pick 2)",
+    "options": [
+      "Return a risk score from 0-100 with one of a fixed set of named reason codes",
+      "Label the email as spam or not_spam",
+      "Give a smart, helpful reply",
+      "Be accurate"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "A bounded score with a fixed reason code and a binary spam label are checkable. 'Smart, helpful' and 'accurate' are too vague to grade."
+  },
+  {
+    "s": "D",
+    "domain": "Eval & Debugging",
+    "pick": 1,
+    "q": "In the failure-handling section of a design doc, what must you decide for each error?",
+    "options": [
+      "Whether it's retriable or terminal, and what the user gets when it can't be recovered",
+      "The precise library and language for the retry, so an engineer could build the section directly with no further design",
+      "Whether it's worth logging",
+      "Which bigger model to fail over to"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Failure handling classifies each error retriable or terminal and sets the user-facing fallback. Naming libraries is too low-level, and logging or tier-swaps are not the error path."
+  },
+  {
+    "s": "D",
+    "domain": "Model Selection",
+    "pick": 1,
+    "q": "In the cost-and-latency section of a design doc, what does the 'reliability floor' mean?",
+    "options": [
+      "The minimum reliability the design must hold and cannot trade away for cost or speed",
+      "The lowest possible cost, reached by accepting as many dropped requests and timeouts as that price demands",
+      "The cheapest available model",
+      "The p99 latency target"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "The reliability floor is the minimum reliability you refuse to trade for cost or latency. It is not a cost figure, a model choice, or a latency percentile."
+  },
+  {
+    "s": "D",
+    "domain": "Security & Safety",
+    "pick": 1,
+    "q": "When you map trust boundaries, which content should you treat as untrusted?",
+    "options": [
+      "Anything the agent reads that someone else can write, like fetched pages and tool output",
+      "Only content that arrives unencrypted, since transport security is what decides whether input can be trusted",
+      "The developer's own system prompt",
+      "Constants compiled into the binary"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Untrusted means anything outside your control that another party can write, chiefly fetched content and tool output. Encryption is about transport, not authorship, and your own prompt and constants are trusted."
+  },
+  {
+    "s": "D",
+    "domain": "Security & Safety",
+    "pick": 1,
+    "q": "A calendar assistant reads event descriptions that users write. One description says 'delete all my events.' Most effective mitigation?",
+    "options": [
+      "Least privilege: the assistant that reads descriptions has no delete capability, so an injected instruction can't reach a destructive action, and untrusted text stays separate from instructions",
+      "Add a system-prompt line telling the model to ignore instructions found in event descriptions",
+      "Scan descriptions for words like 'delete'",
+      "Move to a larger, more instruction-following model"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Least privilege means the reading path simply cannot delete, which is the durable defense alongside isolating untrusted text. A prompt instruction is bypassable, keyword scanning is brittle, and a more compliant model can be more susceptible."
+  },
+  {
+    "s": "D",
+    "domain": "Eval & Debugging",
+    "pick": 1,
+    "q": "A booking agent quotes the wrong price. The trace shows the pricing tool returned the correct number. Where is the failure?",
+    "options": [
+      "In how the model used the correct data, not in the tool",
+      "In the integration layer, since a wrong final answer always means the tool output was mishandled on the way back to the model",
+      "In the network",
+      "In the API key configuration"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "The tool returned the right number, so the fault is in the model's use of it. The blanket claim about the integration layer is false, and network or key issues would not yield correct tool data plus a wrong answer."
+  },
+  {
+    "s": "D",
+    "domain": "Security & Safety",
+    "pick": 1,
+    "q": "A .env file holding a database password was pushed to a public repo. It's still in use. Correct response?",
+    "options": [
+      "Rotate the password and move it out of the committed file into an environment variable referenced at runtime",
+      "Rotate the password and commit the new value back to the same .env so nothing else has to change, then make the repo private",
+      "Switch the database to OAuth",
+      "Add retry with backoff around the connection"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "A pushed secret is compromised: rotate it and stop committing it by moving to an environment variable. Re-committing leaves the exposure pattern, making the repo private does not undo the leak, and OAuth or backoff are unrelated."
+  },
+  {
+    "s": "E",
+    "domain": "Applications & Integration",
+    "pick": 1,
+    "q": "A client mandates that all data stay inside their existing Google Cloud organisation. How should that shape platform choice?",
+    "options": [
+      "Run Claude through Google Vertex AI so it stays within the client's cloud and governance boundary",
+      "Use the first-party API and recreate the client's governance controls around it, since staying on the native platform is worth the migration wherever the data currently sits",
+      "Insist on self-hosting as the only compliant path",
+      "Choose whichever platform released the newest model"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "When data residency points to an existing cloud, run Claude through that cloud's platform, here Vertex AI. Rebuilding controls elsewhere, assuming only self-hosting is compliant, or chasing model recency all miss the constraint."
+  },
+  {
+    "s": "E",
+    "domain": "Configuration Management",
+    "pick": 2,
+    "q": "You're packaging a reusable accelerator that must keep working across model updates. Which TWO practices matter most? (Pick 2)",
+    "options": [
+      "Pin the model version and upgrade deliberately after running evals",
+      "Version the prompts so any change is attributable and reversible",
+      "Auto-adopt each new model the day it ships",
+      "Keep prompts inline and unversioned to stay lightweight"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Pinning the model and versioning prompts make change deliberate and reversible, which is what surviving updates needs. Auto-adopting and unversioned inline prompts remove that control."
+  }
+]

@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Glossaire · Claude Certified Developer Foundations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #CC785C;
+      --accent-dark: #B5654A;
+      --accent-soft: #f7f1ed;
+      --ink: #1a1a1a;
+      --paper: #FFFcf9;
+      --muted: #64748b;
+      --line: rgba(15, 23, 42, 0.1);
+      --shadow: 0 10px 32px -18px rgba(31, 31, 31, 0.35);
+      --radius: 14px;
+      --font: "DM Sans", system-ui, sans-serif;
+      --display: "Fraunces", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 90% -10%, rgba(204, 120, 92, 0.18), transparent 60%),
+        linear-gradient(165deg, #faf8f6 0%, #f5f0ed 45%, #f7f7f5 100%);
+      -webkit-font-smoothing: antialiased;
+    }
+    .bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 10px 18px;
+      background: rgba(255, 252, 249, 0.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .bar a {
+      color: var(--accent-dark);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+    .bar a:hover { text-decoration: underline; }
+    .lang-switch {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-left: auto;
+    }
+    .lang-switch button {
+      border: 0;
+      background: var(--paper);
+      padding: 6px 12px;
+      font: inherit;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .lang-switch button.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 16px 88px;
+    }
+    .head {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 24px;
+      margin-bottom: 16px;
+    }
+    .head h1 {
+      margin: 0 0 8px;
+      font-family: var(--display);
+      font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+      font-weight: 700;
+      color: var(--accent-dark);
+      line-height: 1.2;
+    }
+    .muted { color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
+    .filters {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px 18px;
+      margin-bottom: 16px;
+    }
+    .filters .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .filters label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      min-width: 70px;
+    }
+    .filters input,
+    .filters select,
+    .filters button {
+      font: inherit;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: #fff;
+      color: var(--ink);
+    }
+    .filters input,
+    .filters select { min-width: 200px; }
+    .filters input:focus,
+    .filters select:focus {
+      outline: 2px solid rgba(204, 120, 92, 0.35);
+      border-color: var(--accent);
+    }
+    .filters button {
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .filters button:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+    }
+    #annexResultCount {
+      font-size: 0.85rem;
+      color: var(--accent-dark);
+      font-weight: 700;
+    }
+    .annex-toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+    }
+    .annex-toc a {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .annex-toc a:hover { background: #eadfd7; }
+    .annex-section { margin: 0 0 28px; }
+    .annex-section.hidden { display: none; }
+    .annex-section h2 {
+      margin: 0 0 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--accent);
+    }
+    .annex-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .annex-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .annex-card.hidden { display: none; }
+    .annex-card h3 {
+      margin: 0;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--accent-dark);
+      font-family: var(--display);
+    }
+    .annex-card .def {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--ink);
+      flex: 1;
+    }
+    .annex-card .docs {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .annex-card .docs a {
+      color: var(--accent-dark);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .annex-card .docs a:hover { text-decoration: underline; }
+    .disclaimer {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 0.72rem;
+      color: #9a8f88;
+      line-height: 1.5;
+    }
+    .i18n { display: none; }
+    body.lang-fr .i18n.fr,
+    body.lang-en .i18n.en { display: inline; }
+    body.lang-fr .i18n-block.fr,
+    body.lang-en .i18n-block.en { display: block; }
+    body.lang-fr .i18n-block.en,
+    body.lang-en .i18n-block.fr { display: none; }
+    @media (max-width: 640px) {
+      .wrap { padding: 20px 12px 72px; }
+      .filters input,
+      .filters select { min-width: 100%; width: 100%; }
+    }
+  </style>
+</head>
+<body class="lang-fr">
+  <nav class="bar">
+    <a href="index.html"><span class="i18n fr">← Accueil mock / Quiz</span><span class="i18n en">← Mock home / Quiz</span></a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" onclick="setLang('fr')">FR</button>
+      <button type="button" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <header class="head">
+      <h1><span class="i18n fr">Glossaire — Claude Certified Developer Foundations</span><span class="i18n en">Glossary — Claude Certified Developer Foundations</span></h1>
+      <p class="muted">
+        <span class="i18n-block fr">Définitions pédagogiques pour réviser avec les mocks — vérifier les docs pour le détail API. Les termes techniques restent en anglais. Chaque entrée renvoie vers la documentation Anthropic quand elle existe.</span>
+        <span class="i18n-block en">Pedagogical definitions to revise alongside the mocks — check the docs for API detail. Technical terms stay in English. Each entry links to Anthropic docs when available.</span>
+      </p>
+    </header>
+
+    <div class="filters">
+      <div class="row">
+        <label for="annexSearch"><span class="i18n fr">Filtrer</span><span class="i18n en">Filter</span></label>
+        <input id="annexSearch" type="search" placeholder="token, MCP, Skill…" />
+        <label for="annexCategory"><span class="i18n fr">Catégorie</span><span class="i18n en">Category</span></label>
+        <select id="annexCategory">
+          <option value="" data-fr="Toutes les catégories" data-en="All categories">Toutes les catégories</option>
+          <option value="llm" data-fr="LLM &amp; tokens" data-en="LLM &amp; tokens">LLM &amp; tokens</option>
+          <option value="prompt" data-fr="Prompt &amp; context" data-en="Prompt &amp; context">Prompt &amp; context</option>
+          <option value="api" data-fr="API &amp; modèles" data-en="API &amp; models">API &amp; modèles</option>
+          <option value="agents" data-fr="Agents, tools &amp; MCP" data-en="Agents, tools &amp; MCP">Agents, tools &amp; MCP</option>
+          <option value="code" data-fr="Claude Code &amp; config" data-en="Claude Code &amp; config">Claude Code &amp; config</option>
+          <option value="evals" data-fr="Evals, prod &amp; sécurité" data-en="Evals, prod &amp; security">Evals, prod &amp; sécurité</option>
+          <option value="platform" data-fr="Plateformes &amp; packaging" data-en="Platforms &amp; packaging">Plateformes &amp; packaging</option>
+        </select>
+        <button type="button" onclick="resetAnnexFilters()"><span class="i18n fr">Réinitialiser</span><span class="i18n en">Reset</span></button>
+        <span id="annexResultCount"></span>
+      </div>
+    </div>
+
+    <nav class="annex-toc">
+      <a href="#cat-llm"><span class="i18n fr">LLM &amp; tokens</span><span class="i18n en">LLM &amp; tokens</span></a>
+      <a href="#cat-prompt"><span class="i18n fr">Prompt &amp; context</span><span class="i18n en">Prompt &amp; context</span></a>
+      <a href="#cat-api"><span class="i18n fr">API &amp; modèles</span><span class="i18n en">API &amp; models</span></a>
+      <a href="#cat-agents"><span class="i18n fr">Agents, tools &amp; MCP</span><span class="i18n en">Agents, tools &amp; MCP</span></a>
+      <a href="#cat-code"><span class="i18n fr">Claude Code &amp; config</span><span class="i18n en">Claude Code &amp; config</span></a>
+      <a href="#cat-evals"><span class="i18n fr">Evals, prod &amp; sécurité</span><span class="i18n en">Evals, prod &amp; security</span></a>
+      <a href="#cat-platform"><span class="i18n fr">Plateformes &amp; packaging</span><span class="i18n en">Platforms &amp; packaging</span></a>
+    </nav>
+
+    <!-- LLM & tokens -->
+    <section class="annex-section" id="cat-llm">
+      <h2><span class="i18n fr">LLM &amp; tokens</span><span class="i18n en">LLM &amp; tokens</span></h2>
+      <div class="annex-grid">
+        <article class="annex-card" data-category="llm" data-name="Token" data-name-fr="Token">
+          <h3>Token</h3>
+          <div class="def">
+            <span class="i18n-block fr">Unité de texte que le modèle lit et génère ; la facturation et la fenêtre de contexte se comptent en tokens.</span>
+            <span class="i18n-block en">Unit of text the model reads and generates; billing and the context window are measured in tokens.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/token-counting" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="llm" data-name="Context window" data-name-fr="Context window">
+          <h3>Context window</h3>
+          <div class="def">
+            <span class="i18n-block fr">Budget fixe de tokens pour prompts, historique, tool results et sortie. Un input trop grand est rejeté ; un dépassement en cours de génération tronque la sortie (stop reason de type context-window exceeded).</span>
+            <span class="i18n-block en">Fixed token budget for prompts, history, tool results, and output. Oversized input is rejected; overflowing mid-generation truncates output (a context-window-exceeded stop reason).</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/about-claude/models" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="llm" data-name="Temperature / sampling" data-name-fr="Temperature / sampling">
+          <h3>Temperature / sampling</h3>
+          <div class="def">
+            <span class="i18n-block fr">Contrôle le hasard du choix des tokens ; même à temperature 0, la sortie n’est pas garantie byte-identique.</span>
+            <span class="i18n-block en">Controls randomness in token selection; even at temperature 0, output is not guaranteed byte-identical.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/api/messages" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="llm" data-name="Non-determinism" data-name-fr="Non-déterminisme">
+          <h3>Non-determinism</h3>
+          <div class="def">
+            <span class="i18n-block fr">Deux appels identiques peuvent différer légèrement ; les tests doivent vérifier structure ou faits, pas une chaîne exacte.</span>
+            <span class="i18n-block en">Two identical calls can differ slightly; tests should assert structure or key facts, not an exact string.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/intro-to-claude" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="llm" data-name="Model tiers" data-name-fr="Model tiers">
+          <h3>Model tiers</h3>
+          <div class="def">
+            <span class="i18n-block fr">Gammes de modèles (capacité vs coût / latence) ; choisir le tier selon la difficulté de la tâche.</span>
+            <span class="i18n-block en">Model families trading capability vs cost/latency; match the tier to task difficulty.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/about-claude/models/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="llm" data-name="max_tokens" data-name-fr="max_tokens">
+          <h3>max_tokens</h3>
+          <div class="def">
+            <span class="i18n-block fr">Plafond de tokens de sortie pour un appel ; ne réduit pas le coût d’entrée ni la taille de l’historique.</span>
+            <span class="i18n-block en">Cap on output tokens for a call; it does not cut input cost or shrink conversation history.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/api/messages" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="llm" data-name="Visual tokens" data-name-fr="Visual tokens">
+          <h3>Visual tokens</h3>
+          <div class="def">
+            <span class="i18n-block fr">Coût des images en tokens, qui croît avec les dimensions ; le plafond dépend du tier de modèle.</span>
+            <span class="i18n-block en">Image cost in tokens that scales with dimensions; the ceiling varies by model tier.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/vision" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Prompt & context -->
+    <section class="annex-section" id="cat-prompt">
+      <h2><span class="i18n fr">Prompt &amp; context</span><span class="i18n en">Prompt &amp; context</span></h2>
+      <div class="annex-grid">
+        <article class="annex-card" data-category="prompt" data-name="System prompt" data-name-fr="System prompt">
+          <h3>System prompt</h3>
+          <div class="def">
+            <span class="i18n-block fr">Emplacement durable, conventionnellement le plus fiable, pour rôle, ton et règles stables face aux tours utilisateur suivants — sans garantie de priorité absolue.</span>
+            <span class="i18n-block en">Durable, conventionally most reliable home for role, tone, and stable rules against later user turns — not an absolute-priority guarantee.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/system-prompts" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="prompt" data-name="Zero-shot" data-name-fr="Zero-shot">
+          <h3>Zero-shot</h3>
+          <div class="def">
+            <span class="i18n-block fr">Tâche décrite sans exemple travaillé ; les instructions peuvent rester détaillées.</span>
+            <span class="i18n-block en">Task described with no worked examples; instructions can still be detailed.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="prompt" data-name="Single-shot" data-name-fr="Single-shot">
+          <h3>Single-shot</h3>
+          <div class="def">
+            <span class="i18n-block fr">Exactement un exemple travaillé dans le prompt pour ancrer le format ou le comportement attendu.</span>
+            <span class="i18n-block en">Exactly one worked example in the prompt to anchor the expected format or behaviour.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/multishot-prompting" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="prompt" data-name="Few-shot / multi-shot" data-name-fr="Few-shot / multi-shot">
+          <h3>Few-shot / multi-shot</h3>
+          <div class="def">
+            <span class="i18n-block fr">Plusieurs exemples dans le prompt pour guider le format ou le raisonnement sur cet appel (coût tokens) — sans fine-tuner le modèle.</span>
+            <span class="i18n-block en">Several examples in the prompt to shape format or reasoning on that call (at token cost) — does not fine-tune the model.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/multishot-prompting" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="prompt" data-name="Output constraint" data-name-fr="Output constraint">
+          <h3>Output constraint</h3>
+          <div class="def">
+            <span class="i18n-block fr">Règle explicite sur la forme de la sortie (JSON, longueur, pas de préambule) — distincte des exemples few-shot.</span>
+            <span class="i18n-block en">Explicit rule on output shape (JSON, length, no preamble) — distinct from few-shot examples.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="prompt" data-name="Prompt caching" data-name-fr="Prompt caching">
+          <h3>Prompt caching</h3>
+          <div class="def">
+            <span class="i18n-block fr">Réutilise un préfixe stable à coût réduit ; le cache expire et seul le préfixe inchangé en bénéficie.</span>
+            <span class="i18n-block en">Reuses a stable prefix at reduced cost; caches expire and only the unchanged prefix benefits.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="prompt" data-name="Cache breakpoint" data-name-fr="Cache breakpoint">
+          <h3>Cache breakpoint</h3>
+          <div class="def">
+            <span class="i18n-block fr">Point de cache sur un segment ; placez le contenu stable avant le dynamique pour maximiser les hits.</span>
+            <span class="i18n-block en">Cache mark on a segment; put stable content before dynamic content to maximize hits.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="prompt" data-name="Context engineering" data-name-fr="Context engineering">
+          <h3>Context engineering</h3>
+          <div class="def">
+            <span class="i18n-block fr">Concevoir quoi mettre dans la fenêtre : chunks, compaction, isolation des sous-contextes.</span>
+            <span class="i18n-block en">Designing what enters the window: chunking, compaction, and isolated sub-contexts.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/context-windows" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="prompt" data-name="RAG" data-name-fr="RAG">
+          <h3>RAG</h3>
+          <div class="def">
+            <span class="i18n-block fr">Retrieval-Augmented Generation : récupérer des passages puis générer en s’y appuyant, idéalement avec citations vérifiées.</span>
+            <span class="i18n-block en">Retrieval-Augmented Generation: fetch passages then generate grounded answers, ideally with validated citations.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="prompt" data-name="Chunking" data-name-fr="Chunking">
+          <h3>Chunking</h3>
+          <div class="def">
+            <span class="i18n-block fr">Découper les documents en passages cohérents pour un retrieval précis, plutôt qu’un document entier.</span>
+            <span class="i18n-block en">Splitting documents into coherent passages for precise retrieval instead of whole-document chunks.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/context-windows" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="prompt" data-name="Context compaction" data-name-fr="Context compaction">
+          <h3>Context compaction</h3>
+          <div class="def">
+            <span class="i18n-block fr">Libérer la fenêtre : prune/summarize applicatif de l’historique et des tool outputs obsolètes, et/ou compaction de contexte côté plateforme/API quand elle est disponible.</span>
+            <span class="i18n-block en">Reclaim window budget via app-side prune/summarize of stale history and tool outputs, and/or platform/API context compaction when available.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/context-windows" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- API & models -->
+    <section class="annex-section" id="cat-api">
+      <h2><span class="i18n fr">API &amp; modèles</span><span class="i18n en">API &amp; models</span></h2>
+      <div class="annex-grid">
+        <article class="annex-card" data-category="api" data-name="Messages API" data-name-fr="Messages API">
+          <h3>Messages API</h3>
+          <div class="def">
+            <span class="i18n-block fr">Endpoint principal pour envoyer des conversations (system, user, assistant, tools) à Claude.</span>
+            <span class="i18n-block en">Primary endpoint for sending conversations (system, user, assistant, tools) to Claude.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/api/messages" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="Streaming / message_stop" data-name-fr="Streaming / message_stop">
+          <h3>Streaming / message_stop</h3>
+          <div class="def">
+            <span class="i18n-block fr">Événements SSE pour la sortie progressive. La fin du flux HTTP n’égale pas un message complet : n’écrivez le tour en historique qu’après message_stop ; jetez les tours partiels si interruption.</span>
+            <span class="i18n-block en">SSE events for progressive output. HTTP stream end is not message completion: commit a turn to history only after message_stop; discard partial turns on interruption.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/streaming" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="Structured outputs" data-name-fr="Structured outputs">
+          <h3>Structured outputs / JSON schema</h3>
+          <div class="def">
+            <span class="i18n-block fr">Schéma JSON côté API pour contraindre la forme de la réponse. Distinct des tool schemas stricts, qui valident les arguments d’outils — les deux remplacent le formatage « prompt only ».</span>
+            <span class="i18n-block en">API-side JSON schema to constrain response shape. Distinct from strict tool schemas, which validate tool arguments — both beat prompt-only formatting.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/structured-outputs" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="Extended thinking" data-name-fr="Extended thinking">
+          <h3>Extended thinking</h3>
+          <div class="def">
+            <span class="i18n-block fr">Mode manuel de raisonnement interne avec budget_tokens. En multi-turn, renvoyez les thinking blocks inchangés. Sur les modèles récents, souvent remplacé / déprécié au profit d’adaptive thinking.</span>
+            <span class="i18n-block en">Manual internal-reasoning mode with budget_tokens. In multi-turn, return thinking blocks unchanged. On newer models, often superseded / deprecated in favor of adaptive thinking.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="Adaptive thinking" data-name-fr="Adaptive thinking">
+          <h3>Adaptive thinking</h3>
+          <div class="def">
+            <span class="i18n-block fr">thinking.type: "adaptive" — le modèle décide quand et combien raisonner ; la profondeur se pilote via effort (pas un budget_tokens fixe). Idéal pour mélanger appels triviaux et difficiles.</span>
+            <span class="i18n-block en">thinking.type: "adaptive" — the model decides when and how much to reason; depth is steered via effort (not a fixed budget_tokens). Fits mixed trivial and hard calls.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/thinking" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="effort" data-name-fr="effort">
+          <h3>effort</h3>
+          <div class="def">
+            <span class="i18n-block fr">Levier d’adaptive thinking (souvent via output_config) : low, medium, high, xhigh, max — équilibre qualité, latence et coût.</span>
+            <span class="i18n-block en">Adaptive-thinking lever (often via output_config): low, medium, high, xhigh, max — trades quality, latency, and cost.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/thinking" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="stop_reason" data-name-fr="stop_reason">
+          <h3>stop_reason</h3>
+          <div class="def">
+            <span class="i18n-block fr">Pourquoi la génération s’est arrêtée : end_turn, tool_use, max_tokens, model_context_window_exceeded, etc. — indispensable pour gérer troncatures et tool loops.</span>
+            <span class="i18n-block en">Why generation stopped: end_turn, tool_use, max_tokens, model_context_window_exceeded, etc. — essential for handling truncations and tool loops.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/api/messages" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="usage" data-name-fr="usage">
+          <h3>usage</h3>
+          <div class="def">
+            <span class="i18n-block fr">Champ de la réponse API avec input_tokens / output_tokens (et infos cache le cas échéant) — base du suivi de coût par feature.</span>
+            <span class="i18n-block en">Response field with input_tokens / output_tokens (and cache info when present) — the basis for per-feature cost tracking.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/api/messages" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="Batches API" data-name-fr="Batches API">
+          <h3>Batches API</h3>
+          <div class="def">
+            <span class="i18n-block fr">Traitement asynchrone de gros volumes (poll puis résultats) ; chaque item peut réussir ou échouer seul.</span>
+            <span class="i18n-block en">Async processing for large volumes (poll then fetch results); each item can succeed or fail independently.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/batch-processing" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="Files API" data-name-fr="Files API">
+          <h3>Files API</h3>
+          <div class="def">
+            <span class="i18n-block fr">Héberge des fichiers réutilisés (ex. logo) pour éviter de les renvoyer en base64 à chaque appel.</span>
+            <span class="i18n-block en">Hosts reused files (e.g. a logo) so you don’t re-upload base64 on every call.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/files" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="SDK vs REST" data-name-fr="SDK vs REST">
+          <h3>SDK vs REST</h3>
+          <div class="def">
+            <span class="i18n-block fr">Le SDK client encapsule la même API REST (types, retries, auth) ; le fil HTTP reste le même.</span>
+            <span class="i18n-block en">Client SDKs wrap the same REST API (typing, retries, auth); the underlying HTTP calls are identical.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/api/client-sdks" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="Rate limits 429 / 529" data-name-fr="Rate limits 429 / 529">
+          <h3>429 / 529 errors</h3>
+          <div class="def">
+            <span class="i18n-block fr">Limite de débit (429) ou surcharge (529) : retry avec backoff exponentiel + jitter, respectez retry-after, et mettez en file d’attente le travail non urgent.</span>
+            <span class="i18n-block en">Rate limit (429) or overload (529): retry with exponential backoff and jitter, honor retry-after, and queue non-urgent work.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/api/errors" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="api" data-name="Model pinning" data-name-fr="Model pinning">
+          <h3>Model pinning</h3>
+          <div class="def">
+            <span class="i18n-block fr">Fixer une version datée en prod ; les alias flottants peuvent changer le comportement sans déploiement.</span>
+            <span class="i18n-block en">Pin a dated model version in production; floating aliases can change behavior with no deploy on your side.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/about-claude/models/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Agents, tools & MCP -->
+    <section class="annex-section" id="cat-agents">
+      <h2><span class="i18n fr">Agents, tools &amp; MCP</span><span class="i18n en">Agents, tools &amp; MCP</span></h2>
+      <div class="annex-grid">
+        <article class="annex-card" data-category="agents" data-name="Tool use" data-name-fr="Tool use">
+          <h3>Tool use / tool schemas</h3>
+          <div class="def">
+            <span class="i18n-block fr">Le modèle invoque des actions via des schémas nommés ; des descriptions distinctes (et « when NOT to use ») limitent les mauvais appels.</span>
+            <span class="i18n-block en">The model invokes actions via named schemas; distinct descriptions (and when-not-to-use) cut wrong-tool calls.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="agents" data-name="Tool-use loop" data-name-fr="Tool-use loop">
+          <h3>Tool-use loop</h3>
+          <div class="def">
+            <span class="i18n-block fr">Boucle agent : appeler des outils, intégrer les résultats, répéter jusqu’à la réponse finale.</span>
+            <span class="i18n-block en">Agent loop: call tools, fold results back in, repeat until a final answer.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="agents" data-name="Workflow vs agent" data-name-fr="Workflow vs agent">
+          <h3>Workflow vs agent</h3>
+          <div class="def">
+            <span class="i18n-block fr">Workflow = chemin fixe codé ; agent = décisions runtime. Préférez workflow si la séquence est connue.</span>
+            <span class="i18n-block en">Workflow = fixed coded path; agent = runtime decisions. Prefer a workflow when the sequence is known.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/agents-and-tools/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="agents" data-name="Human-in-the-loop" data-name-fr="Human-in-the-loop">
+          <h3>Human-in-the-loop</h3>
+          <div class="def">
+            <span class="i18n-block fr">Porte humaine avant une action irréversible, conçue dès le design — pas après le premier write.</span>
+            <span class="i18n-block en">Human gate before an irreversible action, designed in up front — not after the first write.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/agents-and-tools/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="agents" data-name="Subagent" data-name-fr="Subagent">
+          <h3>Subagent</h3>
+          <div class="def">
+            <span class="i18n-block fr">Agent délégué avec son propre contexte ; isole le travail bruyant et renvoie un résultat compact.</span>
+            <span class="i18n-block en">Delegated agent with its own context; isolates noisy work and returns a compact result.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="agents" data-name="MCP" data-name-fr="MCP">
+          <h3>MCP</h3>
+          <div class="def">
+            <span class="i18n-block fr">Model Context Protocol : connecter outils, resources et prompts maintenus ; les définitions chargent dans le contexte.</span>
+            <span class="i18n-block en">Model Context Protocol: connect maintained tools, resources, and prompts; definitions load into context.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/agents-and-tools/mcp" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="agents" data-name="MCP transport stdio / HTTP" data-name-fr="MCP transport stdio / HTTP">
+          <h3>MCP transport (stdio / HTTP)</h3>
+          <div class="def">
+            <span class="i18n-block fr">stdio = sous-processus local ; HTTP = client distant. Le scope (Local / Project / Enterprise) décide qui reçoit le serveur.</span>
+            <span class="i18n-block en">stdio = local subprocess; HTTP = remote client. Scope (Local / Project / Enterprise) decides who gets the server.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/agents-and-tools/mcp" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="agents" data-name="MCP resource" data-name-fr="MCP resource">
+          <h3>MCP resource</h3>
+          <div class="def">
+            <span class="i18n-block fr">Primitive MCP pour données de référence lisibles (ex. glossaire), distincte d’un tool (action).</span>
+            <span class="i18n-block en">MCP primitive for readable reference data (e.g. a glossary), distinct from a tool (an action).</span>
+          </div>
+          <div class="docs"><a href="https://modelcontextprotocol.io/docs/concepts/resources" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="agents" data-name="MCP prompt" data-name-fr="MCP prompt">
+          <h3>MCP prompt</h3>
+          <div class="def">
+            <span class="i18n-block fr">Template nommé et paramétré, invoqué par l’utilisateur — pas une action modèle comme un tool.</span>
+            <span class="i18n-block en">Named, parameterized template the user invokes — not a model-invoked action like a tool.</span>
+          </div>
+          <div class="docs"><a href="https://modelcontextprotocol.io/docs/concepts/prompts" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="agents" data-name="Agent SDK" data-name-fr="Agent SDK">
+          <h3>Agent SDK</h3>
+          <div class="def">
+            <span class="i18n-block fr">Scaffolding pour boucle d’outils, contexte et patterns agents ; settingSources pour charger skills depuis le repo.</span>
+            <span class="i18n-block en">Scaffolding for the tool loop, context, and agent patterns; set settingSources to load skills from the repo.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/agents-and-tools/agent-sdk/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="agents" data-name="Client-side vs server-side tools" data-name-fr="Client-side vs server-side tools">
+          <h3>Client-side vs server-side tools</h3>
+          <div class="def">
+            <span class="i18n-block fr">L’exécution suit la donnée : état navigateur côté client ; base backend côté serveur.</span>
+            <span class="i18n-block en">Execution follows the data: browser state is client-side; backend databases are server-side.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Claude Code & config -->
+    <section class="annex-section" id="cat-code">
+      <h2><span class="i18n fr">Claude Code &amp; config</span><span class="i18n en">Claude Code &amp; config</span></h2>
+      <div class="annex-grid">
+        <article class="annex-card" data-category="code" data-name="CLAUDE.md" data-name-fr="CLAUDE.md">
+          <h3>CLAUDE.md</h3>
+          <div class="def">
+            <span class="i18n-block fr">Contexte projet versionné (et préférences user-level) chargé par Claude Code pour les conventions d’équipe.</span>
+            <span class="i18n-block en">Versioned project context (plus user-level prefs) Claude Code loads for team conventions.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/claude-code/memory" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="code" data-name="Skill / SKILL.md" data-name-fr="Skill / SKILL.md">
+          <h3>Skill / SKILL.md</h3>
+          <div class="def">
+            <span class="i18n-block fr">Instructions réutilisables chargées quand la description matche la demande ; pas un serveur d’API live.</span>
+            <span class="i18n-block en">Reusable instructions loaded when the description matches the request; not a live API server.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/claude-code/skills" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="code" data-name="CLAUDE_PROJECT_DIR" data-name-fr="CLAUDE_PROJECT_DIR">
+          <h3>CLAUDE_PROJECT_DIR</h3>
+          <div class="def">
+            <span class="i18n-block fr">Racine projet pour référencer scripts/chemins portables — évitez les chemins absolus machine-spécifiques.</span>
+            <span class="i18n-block en">Project root for portable script paths — avoid machine-specific absolute paths.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/claude-code/skills" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="code" data-name="Permissions allow / deny" data-name-fr="Permissions allow / deny">
+          <h3>Permissions (allow / deny)</h3>
+          <div class="def">
+            <span class="i18n-block fr">Règles settings qui autorisent ou bloquent outils/chemins (ex. Bash(rm:*), Read(.env)).</span>
+            <span class="i18n-block en">Settings rules that allow or block tools/paths (e.g. Bash(rm:*), Read(.env)).</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/claude-code/settings" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="code" data-name="Plan mode" data-name-fr="Plan mode">
+          <h3>Plan mode</h3>
+          <div class="def">
+            <span class="i18n-block fr">Exploration en lecture seule avant d’éditer — posture adaptée à un repo non fiable.</span>
+            <span class="i18n-block en">Read-only exploration before edits — the right posture for an untrusted repo.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="code" data-name="bypassPermissions" data-name-fr="bypassPermissions">
+          <h3>bypassPermissions</h3>
+          <div class="def">
+            <span class="i18n-block fr">Mode qui retire les gardes de permission ; à éviter sur code non fiable ou actions à haut risque.</span>
+            <span class="i18n-block en">Mode that removes permission guards; avoid on untrusted code or high-risk actions.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/claude-code/settings" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="code" data-name="PreToolUse hook" data-name-fr="PreToolUse hook">
+          <h3>PreToolUse hook</h3>
+          <div class="def">
+            <span class="i18n-block fr">Hook avant l’exécution d’un outil ; exit code 2 + message sur stderr bloque l’appel de façon déterministe.</span>
+            <span class="i18n-block en">Hook before a tool runs; exit code 2 plus stderr reason blocks the call deterministically.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/claude-code/hooks" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="code" data-name="Headless / print mode" data-name-fr="Headless / print mode">
+          <h3>Headless / print mode</h3>
+          <div class="def">
+            <span class="i18n-block fr">Invocation non interactive de Claude Code pour CI / jobs planifiés, sans opérateur humain.</span>
+            <span class="i18n-block en">Non-interactive Claude Code invocation for CI / scheduled jobs with no human attached.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/claude-code/cli-reference" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Evals, prod & security -->
+    <section class="annex-section" id="cat-evals">
+      <h2><span class="i18n fr">Evals, prod &amp; sécurité</span><span class="i18n en">Evals, prod &amp; security</span></h2>
+      <div class="annex-grid">
+        <article class="annex-card" data-category="evals" data-name="Eval suite" data-name-fr="Eval suite">
+          <h3>Eval suite</h3>
+          <div class="def">
+            <span class="i18n-block fr">Jeux de tests avec critères évaluables / vérifiables ; gate les changements de prompt comme du code.</span>
+            <span class="i18n-block en">Test sets with gradeable / checkable criteria; gate prompt changes like code.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/develop-tests" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="evals" data-name="LLM-as-judge" data-name-fr="LLM-as-judge">
+          <h3>LLM-as-judge</h3>
+          <div class="def">
+            <span class="i18n-block fr">Noter des sorties ouvertes via un LLM contre des critères explicites, calibré sur un échantillon humain.</span>
+            <span class="i18n-block en">Score open-ended outputs with an LLM against explicit criteria, calibrated on a human-labeled sample.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/eval-tool" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="evals" data-name="Trace" data-name-fr="Trace">
+          <h3>Trace</h3>
+          <div class="def">
+            <span class="i18n-block fr">Journal étape par étape d’un run agent pour isoler panne outil vs modèle vs orchestration.</span>
+            <span class="i18n-block en">Step-by-step log of an agent run to isolate tool vs model vs orchestration failure.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/develop-tests" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="evals" data-name="Reliability floor" data-name-fr="Reliability floor">
+          <h3>Reliability floor</h3>
+          <div class="def">
+            <span class="i18n-block fr">Seuil minimal de fiabilité que le design ne peut pas échanger contre coût ou latence — fixé avant l’architecture.</span>
+            <span class="i18n-block en">Minimum reliability the design must hold and cannot trade away for cost or speed — set before architecture.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/develop-tests" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="evals" data-name="Prompt injection" data-name-fr="Prompt injection">
+          <h3>Prompt injection</h3>
+          <div class="def">
+            <span class="i18n-block fr">Instructions malveillantes dans du contenu non fiable (pages, fichiers, tool output) ; mitiger par isolation et least privilege.</span>
+            <span class="i18n-block en">Malicious instructions in untrusted content (pages, files, tool output); mitigate with isolation and least privilege.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="evals" data-name="Jailbreak" data-name-fr="Jailbreak">
+          <h3>Jailbreak</h3>
+          <div class="def">
+            <span class="i18n-block fr">Tentative directe de l’utilisateur pour contourner la politique ; traité via refus et policy, pas comme l’injection.</span>
+            <span class="i18n-block en">Direct user attempt to bypass policy; handled via refusals and policy, unlike content injection.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="evals" data-name="Least privilege" data-name-fr="Least privilege">
+          <h3>Least privilege</h3>
+          <div class="def">
+            <span class="i18n-block fr">N’accorder que les outils/permissions nécessaires ; une instruction injectée ne peut pas déclencher une action absente.</span>
+            <span class="i18n-block en">Grant only needed tools/permissions; an injected instruction cannot trigger a capability that isn’t there.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="evals" data-name="Guardrail layering" data-name-fr="Guardrail layering">
+          <h3>Guardrail layering</h3>
+          <div class="def">
+            <span class="i18n-block fr">Plusieurs contrôles indépendants (prompt, filtre sortie, permissions outils) pour qu’un bypass d’une couche soit rattrapé.</span>
+            <span class="i18n-block en">Multiple independent controls (prompt, output filter, tool permissions) so one layer’s bypass is caught by another.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="evals" data-name="Trust boundary" data-name-fr="Trust boundary">
+          <h3>Trust boundary</h3>
+          <div class="def">
+            <span class="i18n-block fr">Frontière nommée entre contenu de confiance et non fiable (web, tool output) — base d’un hook enforceable.</span>
+            <span class="i18n-block en">Named boundary between trusted and untrusted content (web, tool output) — basis for an enforceable hook.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="evals" data-name="Data minimization" data-name-fr="Data minimization">
+          <h3>Data minimization</h3>
+          <div class="def">
+            <span class="i18n-block fr">N’envoyer à l’API que les champs nécessaires ; redact/tokenise les identifiants qui doivent passer.</span>
+            <span class="i18n-block en">Send only fields the task needs; redact or tokenize identifiers that must pass through.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Platforms & packaging -->
+    <section class="annex-section" id="cat-platform">
+      <h2><span class="i18n fr">Plateformes &amp; packaging</span><span class="i18n en">Platforms &amp; packaging</span></h2>
+      <div class="annex-grid">
+        <article class="annex-card" data-category="platform" data-name="Amazon Bedrock" data-name-fr="Amazon Bedrock">
+          <h3>Amazon Bedrock</h3>
+          <div class="def">
+            <span class="i18n-block fr">Exécuter Claude dans le compte AWS existant pour gouvernance et résidence des données.</span>
+            <span class="i18n-block en">Run Claude inside an existing AWS account for governance and data residency.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/api/claude-on-amazon-bedrock" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="platform" data-name="Google Vertex AI" data-name-fr="Google Vertex AI">
+          <h3>Google Vertex AI</h3>
+          <div class="def">
+            <span class="i18n-block fr">Exécuter Claude dans l’organisation Google Cloud du client pour la même contrainte de résidence.</span>
+            <span class="i18n-block en">Run Claude inside the client’s Google Cloud organization for the same residency constraint.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/api/claude-on-vertex-ai" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="platform" data-name="First-party API" data-name-fr="First-party API">
+          <h3>First-party API</h3>
+          <div class="def">
+            <span class="i18n-block fr">API Anthropic directe ; souvent premiers modèles et simplicité, hors cloud client si la résidence l’exige.</span>
+            <span class="i18n-block en">Anthropic’s direct API; often earliest models and simplicity, outside the client cloud when residency requires it.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/api/getting-started" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="platform" data-name="Prompt versioning" data-name-fr="Prompt versioning">
+          <h3>Prompt versioning</h3>
+          <div class="def">
+            <span class="i18n-block fr">Versionner les prompts pour attribuer, comparer et rollback comme du code.</span>
+            <span class="i18n-block en">Version prompts so changes are attributable, comparable, and reversible like code.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/develop-tests" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="platform" data-name="Managed agent" data-name-fr="Managed agent">
+          <h3>Managed / hosted agent</h3>
+          <div class="def">
+            <span class="i18n-block fr">Agent long-running hébergé par Anthropic, adressé par ID : resource API listant le skill + header beta managed-agents ; le skill ne doit pas dépendre de fichiers locaux (sandbox distant).</span>
+            <span class="i18n-block en">Anthropic-hosted long-running agent addressed by ID: API resource listing the skill + managed-agents beta header; the skill must not depend on local files (remote sandbox).</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/agents-and-tools/overview" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+        <article class="annex-card" data-category="platform" data-name="Accelerator packaging" data-name-fr="Accelerator packaging">
+          <h3>Accelerator packaging</h3>
+          <div class="def">
+            <span class="i18n-block fr">Build réutilisable : model pin, prompts versionnés, evals avant upgrade — pour survivre aux mises à jour modèle.</span>
+            <span class="i18n-block en">Reusable build: pin the model, version prompts, eval before upgrade — so the pack survives model updates.</span>
+          </div>
+          <div class="docs"><a href="https://docs.anthropic.com/en/docs/test-and-evaluate/develop-tests" target="_blank" rel="noopener"><span class="i18n fr">Documentation officielle</span><span class="i18n en">Official documentation</span> ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      <span class="i18n fr">Aide à la révision pour la certification Foundations. Non affilié à Anthropic ; définitions pédagogiques, pas un extrait d’examen officiel.</span>
+      <span class="i18n en">Study aid for the Foundations certification. Not affiliated with Anthropic; pedagogical definitions, not official exam content.</span>
+    </p>
+  </main>
+
+  <script>
+    const LANG_KEY = "claudeGlossaryLang";
+    const UI_I18N = {
+      en: { result_one: "entry", result_many: "entries" },
+      fr: { result_one: "entrée", result_many: "entrées" },
+    };
+
+    function currentLang() {
+      const stored = localStorage.getItem(LANG_KEY);
+      if (stored === "en" || stored === "fr") return stored;
+      return (navigator.language || "").toLowerCase().startsWith("fr") ? "fr" : "en";
+    }
+
+    function t(key) {
+      const lang = document.body.classList.contains("lang-en") ? "en" : "fr";
+      return (UI_I18N[lang] && UI_I18N[lang][key]) || (UI_I18N.fr && UI_I18N.fr[key]) || key;
+    }
+
+    function refreshSelectLabels(lang) {
+      document.querySelectorAll("select option[data-fr][data-en]").forEach((opt) => {
+        opt.textContent = opt.getAttribute("data-" + lang) || opt.textContent;
+      });
+    }
+
+    function setLang(lang) {
+      if (lang !== "en" && lang !== "fr") lang = "fr";
+      document.body.classList.remove("lang-fr", "lang-en");
+      document.body.classList.add("lang-" + lang);
+      document.documentElement.lang = lang;
+      localStorage.setItem(LANG_KEY, lang);
+      document.querySelectorAll(".lang-switch button").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+      refreshSelectLabels(lang);
+      applyAnnexFilters();
+    }
+
+    function applyAnnexFilters() {
+      const q = (document.getElementById("annexSearch") || {}).value || "";
+      const cat = (document.getElementById("annexCategory") || {}).value || "";
+      const needle = q.trim().toLowerCase();
+      let n = 0;
+      document.querySelectorAll(".annex-card").forEach((card) => {
+        const hay = (
+          (card.dataset.name || "") +
+          " " +
+          (card.dataset.nameFr || "") +
+          " " +
+          (card.dataset.category || "") +
+          " " +
+          (card.textContent || "")
+        ).toLowerCase();
+        const okQ = !needle || hay.includes(needle);
+        const okC = !cat || card.dataset.category === cat;
+        const show = okQ && okC;
+        card.classList.toggle("hidden", !show);
+        if (show) n++;
+      });
+      document.querySelectorAll(".annex-section").forEach((sec) => {
+        const visible = [...sec.querySelectorAll(".annex-card")].some(
+          (c) => !c.classList.contains("hidden"),
+        );
+        sec.classList.toggle("hidden", !visible);
+      });
+      const el = document.getElementById("annexResultCount");
+      if (el) el.textContent = n + " " + (n > 1 ? t("result_many") : t("result_one"));
+    }
+
+    function resetAnnexFilters() {
+      const s = document.getElementById("annexSearch");
+      const c = document.getElementById("annexCategory");
+      if (s) s.value = "";
+      if (c) c.value = "";
+      applyAnnexFilters();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setLang(currentLang());
+      const as = document.getElementById("annexSearch");
+      const ac = document.getElementById("annexCategory");
+      if (as) as.addEventListener("input", applyAnnexFilters);
+      if (ac) ac.addEventListener("change", applyAnnexFilters);
+      applyAnnexFilters();
+    });
+  </script>
+</body>
+</html>

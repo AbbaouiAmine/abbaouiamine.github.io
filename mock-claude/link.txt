@@ -1,0 +1,2 @@
+Source: https://claude.ai/public/artifacts/83eee27a-0509-45c1-be08-cc3e8b4cbfc8
+Description: Claude Certified Developer Foundations practice sets (independent study tool, not official Anthropic exam content)

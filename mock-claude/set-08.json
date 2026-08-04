@@ -1,0 +1,1001 @@
+[
+  {
+    "domain": "LLM Fundamentals",
+    "pick": 1,
+    "q": "What is a token in the Claude API?",
+    "options": [
+      "Unit of text the model reads and generates; billing and the context window are measured in tokens",
+      "A permanent cache key that expires after 24 hours",
+      "A named MCP resource for filesystem access",
+      "A permission rule that allows or denies Bash commands"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Tokens are the unit of text for input/output, billing, and context-window accounting."
+  },
+  {
+    "domain": "LLM Fundamentals",
+    "pick": 1,
+    "q": "Which definition matches context window?",
+    "options": [
+      "Fixed token budget for prompts, history, tool results, and output",
+      "Unlimited storage for every past conversation across customers",
+      "A UI setting that controls temperature only",
+      "The maximum number of tools a project may register"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "The context window is a fixed token budget covering prompts, history, tool results, and output."
+  },
+  {
+    "domain": "LLM Fundamentals",
+    "pick": 1,
+    "q": "What does temperature / sampling control?",
+    "options": [
+      "Randomness in token selection; even at temperature 0, output is not guaranteed byte-identical",
+      "Which cloud region hosts the model",
+      "Whether tool results are written to disk",
+      "The dated model ID pinned in production"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Temperature steers sampling randomness; temperature 0 still does not guarantee identical bytes."
+  },
+  {
+    "domain": "LLM Fundamentals",
+    "pick": 1,
+    "q": "What does non-determinism imply for testing Claude outputs?",
+    "options": [
+      "Identical calls can differ slightly; assert structure or key facts, not an exact string",
+      "Every call at temperature 0 must match byte-for-byte forever",
+      "Streaming must be disabled or results are invalid",
+      "Non-determinism only appears when using Batches API"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Slight variation is expected; grade structure/facts rather than exact strings."
+  },
+  {
+    "domain": "LLM Fundamentals",
+    "pick": 1,
+    "q": "What are model tiers?",
+    "options": [
+      "Model families trading capability vs cost/latency; match the tier to task difficulty",
+      "Permission levels inside Claude Code (allow / deny / ask)",
+      "MCP transport modes (stdio vs HTTP)",
+      "Eval grades: pass, fail, and flaky"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Tiers are capability/cost/latency families chosen to match task difficulty."
+  },
+  {
+    "domain": "LLM Fundamentals",
+    "pick": 1,
+    "q": "What does max_tokens control?",
+    "options": [
+      "A cap on output tokens for a call; it does not cut input cost or shrink conversation history",
+      "The size of the prompt cache prefix",
+      "How many files the Files API may host",
+      "The maximum concurrent Batches jobs"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "max_tokens caps generated output length; it does not reduce input tokens or history size."
+  },
+  {
+    "domain": "LLM Fundamentals",
+    "pick": 1,
+    "q": "What are visual tokens?",
+    "options": [
+      "Image cost in tokens that scales with dimensions; the ceiling varies by model tier",
+      "Tokens reserved exclusively for system prompts",
+      "Cache breakpoints marked on image URLs",
+      "Permission tokens for reading screenshots in Claude Code"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Images consume tokens based on size; limits depend on the model tier."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "What is a system prompt?",
+    "options": [
+      "Durable home for role, tone, and stable rules against later user turns — not absolute-proof against injection",
+      "A one-line user message that must be regenerated every turn",
+      "An MCP tool that returns project conventions",
+      "A floating model alias that always points to latest"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "System prompts hold stable role/rules; they are conventionally strongest but not injection-proof."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 2,
+    "q": "Which TWO statements about zero-shot are true? (Pick 2)",
+    "options": [
+      "The task is described with no worked examples",
+      "Instructions can still be detailed and explicit",
+      "It requires exactly one worked example",
+      "It permanently fine-tunes model weights"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Zero-shot has no examples but can still have rich instructions; it does not fine-tune."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "What is single-shot prompting?",
+    "options": [
+      "Exactly one worked example in the prompt to anchor expected format or behaviour",
+      "No examples at all, only a task description",
+      "Several examples that permanently fine-tune the weights",
+      "Streaming a single SSE event then closing the socket"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Single-shot means exactly one worked example in the prompt."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "What is few-shot / multi-shot prompting?",
+    "options": [
+      "Several examples in the prompt to shape format or reasoning on that call (at token cost) — does not fine-tune the model",
+      "Uploading a training set that permanently changes model weights",
+      "Using temperature above 1.0 exclusively",
+      "Pinning multiple dated model IDs in one request"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Few-shot adds several in-prompt examples for that call; it does not fine-tune the model."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "What is an output constraint?",
+    "options": [
+      "Explicit rule on output shape (JSON, length, no preamble) — distinct from few-shot examples",
+      "A limit on how many MCP servers a project may install",
+      "The Retry-After header on a 429 response",
+      "A Claude Code permission that blocks Write"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Output constraints specify shape/length/format rules, separate from few-shot examples."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 2,
+    "q": "Which TWO facts define prompt caching? (Pick 2)",
+    "options": [
+      "A stable prefix can be reused at reduced cost",
+      "Only the unchanged prefix benefits; caches expire",
+      "It fine-tunes the model when a prompt repeats",
+      "Dynamic per-turn content always remains fully cached forever"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Caching discounts a stable unchanged prefix and expires; it is not fine-tuning."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "What is a cache breakpoint?",
+    "options": [
+      "A cache mark on a segment; put stable content before dynamic content to maximize hits",
+      "The moment a context window overflows mid-generation",
+      "A stop_reason value meaning the model refused",
+      "An MCP transport that tunnels through HTTPS only"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Breakpoints mark cacheable segments; stable-before-dynamic ordering improves hit rate."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "What is context engineering?",
+    "options": [
+      "Designing what enters the window: chunking, compaction, and isolated sub-contexts",
+      "Choosing only the GPU SKU for inference",
+      "Writing CLAUDE.md with no other practices",
+      "Setting temperature and nothing else"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Context engineering is deliberately designing what enters the context window."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "What does RAG stand for and mean?",
+    "options": [
+      "Retrieval-Augmented Generation: fetch passages then generate grounded answers, ideally with validated citations",
+      "Random Adaptive Guarding: a Claude Code permission mode",
+      "REST API Gateway: the only way to call Claude",
+      "Resource Allocation Graph used by MCP transports"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "RAG retrieves passages then generates grounded answers, preferably with citations."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "What is chunking in a RAG pipeline?",
+    "options": [
+      "Splitting documents into coherent passages for precise retrieval instead of whole-document chunks",
+      "Merging all PDFs into one base64 blob per request",
+      "Cutting max_tokens in half every retry",
+      "Deleting CLAUDE.md when context overflows"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Chunking splits docs into coherent passages so retrieval can be precise."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "What is context compaction?",
+    "options": [
+      "Reclaiming window budget via prune/summarize of stale history and tool outputs (app-side and/or platform compaction)",
+      "Increasing the context window size by buying a higher tier",
+      "Disabling prompt caching to free tokens",
+      "Converting images to visual tokens exclusively"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Compaction reclaims budget by pruning or summarizing stale context."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is the Messages API?",
+    "options": [
+      "Primary endpoint for sending conversations (system, user, assistant, tools) to Claude",
+      "Claude Code's only headless print mode",
+      "An MCP resource for email threads",
+      "A Google Vertex exclusive transport"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Messages is the primary conversation endpoint for Claude."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "In streaming, when should an assistant turn be committed to history?",
+    "options": [
+      "Only after message_stop — HTTP stream end alone is not message completion",
+      "After the first SSE token arrives",
+      "When the TCP connection opens",
+      "Never; streaming responses must not be stored"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Commit turns after message_stop; socket close is not completion."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What are structured outputs / JSON schema in the API?",
+    "options": [
+      "API-side JSON schema constraining response shape — distinct from tool schemas that validate tool arguments",
+      "A Claude Code Skill that formats Markdown only",
+      "The same thing as few-shot examples",
+      "A Bedrock-only billing field"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Structured outputs constrain the model response shape via schema; tool schemas validate tool args."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is extended thinking?",
+    "options": [
+      "Manual internal-reasoning mode with budget_tokens; in multi-turn, return thinking blocks unchanged",
+      "Always-on adaptive thinking with no budget",
+      "A Claude Code plan-mode equivalent for the API",
+      "Caching thinking tokens across customers"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Extended thinking is manual reasoning with a token budget; preserve thinking blocks across turns."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is adaptive thinking?",
+    "options": [
+      "thinking.type: \"adaptive\" — the model decides when/how much to reason; depth steered via effort",
+      "A fixed budget_tokens value that never changes",
+      "Disabling all internal reasoning for FAQ workloads",
+      "An MCP prompt template for reasoning"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Adaptive thinking lets the model decide reasoning depth, steered by effort."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is the effort parameter used for?",
+    "options": [
+      "Adaptive-thinking lever (often via output_config): low…max — trades quality, latency, and cost",
+      "How hard Claude Code retries a failed Bash command",
+      "The number of few-shot examples required",
+      "MCP transport priority between stdio and HTTP"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "effort steers adaptive thinking depth vs latency/cost."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is stop_reason?",
+    "options": [
+      "Why generation stopped: end_turn, tool_use, max_tokens, model_context_window_exceeded, etc.",
+      "The HTTP status code of the Messages call",
+      "A Claude Code hook exit code only",
+      "Whether prompt caching hit or missed"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "stop_reason explains why generation ended and drives truncation/tool handling."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is the usage field on a response?",
+    "options": [
+      "input_tokens / output_tokens (and cache info when present) — basis for per-feature cost tracking",
+      "A list of users who may call the API",
+      "The CLAUDE.md contributors section",
+      "MCP server uptime percentage"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "usage reports token counts (and cache) for cost attribution."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is the Batches API for?",
+    "options": [
+      "Async processing for large volumes (poll then fetch); each item can succeed or fail independently",
+      "Realtime chat with sub-second SLAs only",
+      "Replacing the Messages API for all interactive apps",
+      "Hosting reusable logo files instead of base64"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Batches is async bulk processing with per-item success/failure."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What does the Files API provide?",
+    "options": [
+      "Hosts reused files (e.g. a logo) so you don’t re-upload base64 on every call",
+      "A substitute for the Messages conversation endpoint",
+      "Automatic fine-tuning from uploaded CSVs",
+      "Local stdio transport for MCP"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Files API hosts reusable assets to avoid repeated base64 uploads."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 2,
+    "q": "Which TWO statements about SDK vs REST are correct? (Pick 2)",
+    "options": [
+      "Client SDKs wrap the same REST API",
+      "Underlying HTTP calls remain the same Messages API",
+      "SDKs use a private binary protocol that bypasses REST",
+      "REST cannot stream while SDKs can"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "SDKs wrap the same REST Messages API with helpers; they do not replace the protocol."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What do 429 and 529 indicate for Claude clients?",
+    "options": [
+      "Rate limit (429) or overload (529): retry with exponential backoff and jitter; honor retry-after",
+      "Permanent model deprecation requiring a new API key",
+      "Successful cache hits that need no retry",
+      "Authentication success codes in Claude Code"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "429/529 are capacity signals handled with backoff, jitter, and Retry-After."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is model pinning?",
+    "options": [
+      "Pin a dated model version in production; floating aliases can change behavior with no deploy",
+      "Locking temperature to 0 forever",
+      "Storing prompts only in CLAUDE.md",
+      "Forcing all traffic through Batches"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Pinning dated IDs keeps production behavior stable vs floating aliases."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 1,
+    "q": "What is tool use?",
+    "options": [
+      "The model invokes actions via named schemas; clear descriptions (and when-not-to-use) cut wrong-tool calls",
+      "Uploading files via the Files API only",
+      "Reading MCP resources without any schema",
+      "Setting effort to max on every FAQ call"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Tool use = model-invoked actions through named schemas and descriptions."
+  },
+  {
+    "domain": "Tools and MCPs",
+    "pick": 1,
+    "q": "What is the tool-use loop?",
+    "options": [
+      "Agent loop: call tools, fold results back in, repeat until a final answer",
+      "A single tool call that must never repeat",
+      "Compacting context by deleting tool schemas",
+      "Polling Batches until every item fails"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "The loop repeatedly calls tools and feeds results back until a final answer."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 2,
+    "q": "Which TWO statements correctly distinguish workflow vs agent? (Pick 2)",
+    "options": [
+      "Workflow = fixed coded path",
+      "Agent = runtime decisions about what to do next",
+      "Workflow always requires human-in-the-loop; agents never do",
+      "Agents cannot use tools; workflows always can"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Workflows are predetermined paths; agents choose steps at runtime. HITL and tools apply to either."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 2,
+    "q": "Which TWO statements define human-in-the-loop well? (Pick 2)",
+    "options": [
+      "A human gate before an irreversible action",
+      "Designed into the workflow up front, not bolted on after the first write",
+      "The model approving its own destructive tools",
+      "Disabling all Claude Code permissions"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "HITL is a designed human approval gate before irreversible actions."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 1,
+    "q": "What is a subagent?",
+    "options": [
+      "Delegated agent with its own context; isolates noisy work and returns a compact result",
+      "A floating model alias for Haiku",
+      "An MCP resource containing the parent transcript",
+      "A PreToolUse hook exit code"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Subagents get isolated context and return a compact result to the parent."
+  },
+  {
+    "domain": "Tools and MCPs",
+    "pick": 1,
+    "q": "What is MCP?",
+    "options": [
+      "Model Context Protocol: connect maintained tools, resources, and prompts; definitions load into context",
+      "Managed Claude Packaging for Bedrock only",
+      "A stop_reason meaning max tokens",
+      "The Files API's internal checksum"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "MCP standardizes tools, resources, and prompts that load into model context."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 1,
+    "q": "How do MCP stdio and HTTP transports differ?",
+    "options": [
+      "stdio = local subprocess; HTTP = remote client — scope (Local/Project/Enterprise) decides who gets the server",
+      "stdio is cloud-only; HTTP is local-only",
+      "Both are identical aliases for Messages streaming",
+      "HTTP is deprecated; only stdio works with Claude Code"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "stdio runs locally as a subprocess; HTTP serves remote clients; scope controls distribution."
+  },
+  {
+    "domain": "Tools and MCPs",
+    "pick": 2,
+    "q": "Which TWO statements correctly describe an MCP resource? (Pick 2)",
+    "options": [
+      "It exposes readable reference data (e.g. a glossary)",
+      "It is distinct from a tool, which performs an action",
+      "It is a model-invoked side-effecting action",
+      "It replaces the Messages API for chat"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Resources are readable data; tools are actions. Resources are not chat endpoints or tool actions."
+  },
+  {
+    "domain": "Tools and MCPs",
+    "pick": 1,
+    "q": "What is an MCP prompt?",
+    "options": [
+      "Named, parameterized template the user invokes — not a model-invoked action like a tool",
+      "The same as a tool schema executed by the model",
+      "A Files API upload receipt",
+      "An adaptive-thinking effort level"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "MCP prompts are user-invoked templates; tools are model-invoked actions."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 1,
+    "q": "What does the Agent SDK provide?",
+    "options": [
+      "Scaffolding for the tool loop, context, and agent patterns; set settingSources to load skills from the repo",
+      "A replacement for the Messages REST endpoint",
+      "Only Bedrock authentication helpers",
+      "Automatic jailbreak of production policies"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Agent SDK scaffolds tool loops/context/patterns and can load repo skills via settingSources."
+  },
+  {
+    "domain": "Tools and MCPs",
+    "pick": 1,
+    "q": "How should client-side vs server-side tools be chosen?",
+    "options": [
+      "Execution follows the data: browser state is client-side; backend databases are server-side",
+      "All tools must run client-side for security",
+      "All tools must run server-side or MCP breaks",
+      "Location does not matter; tools are interchangeable"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Run tools where the data lives — client for browser state, server for backends."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 1,
+    "q": "What is CLAUDE.md?",
+    "options": [
+      "Versioned project context (plus user-level prefs) Claude Code loads for team conventions",
+      "An MCP HTTP transport configuration file",
+      "The production model-pinning registry at Anthropic",
+      "A Batches job manifest"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "CLAUDE.md is versioned project guidance Claude Code loads for conventions."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 1,
+    "q": "What is a Skill / SKILL.md?",
+    "options": [
+      "Reusable instructions loaded when the description matches the request; not a live API server",
+      "A remote MCP server that must stay running",
+      "A dated model ID alias",
+      "A Files API binary container"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Skills are reusable instruction packs matched by description — not live servers."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 1,
+    "q": "What is CLAUDE_PROJECT_DIR for?",
+    "options": [
+      "Project root for portable script paths — avoid machine-specific absolute paths",
+      "The Anthropic cloud region selector",
+      "A stop_reason for path traversal",
+      "The cache breakpoint marker string"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "CLAUDE_PROJECT_DIR anchors portable paths to the project root."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 1,
+    "q": "What are Claude Code allow / deny permissions?",
+    "options": [
+      "Settings rules that allow or block tools/paths (e.g. Bash(rm:*), Read(.env))",
+      "Messages API rate-limit quotas",
+      "MCP resource MIME types",
+      "Eval suite pass thresholds"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Allow/deny rules gate which tools and paths Claude Code may use."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 1,
+    "q": "What is Plan mode in Claude Code?",
+    "options": [
+      "Read-only exploration before edits — the right posture for an untrusted repo",
+      "A mode that auto-applies every suggested patch",
+      "bypassPermissions with extra logging",
+      "Headless print mode for CI only"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Plan mode explores read-only before editing — suited to untrusted repos."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 1,
+    "q": "What does bypassPermissions do?",
+    "options": [
+      "Removes permission guards; avoid on untrusted code or high-risk actions",
+      "Enables Plan mode automatically",
+      "Forces all MCP servers onto stdio",
+      "Pins the model ID to a dated release"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "bypassPermissions disables guards — unsafe for untrusted or high-risk work."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 1,
+    "q": "What is a PreToolUse hook?",
+    "options": [
+      "Hook before a tool runs; exit code 2 plus stderr reason blocks the call deterministically",
+      "A post-run logger that cannot block tools",
+      "An MCP resource refresh callback",
+      "A Messages API streaming event"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "PreToolUse can deterministically block a tool (e.g. exit 2 + stderr)."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 1,
+    "q": "What is headless / print mode?",
+    "options": [
+      "Non-interactive Claude Code invocation for CI / scheduled jobs with no human attached",
+      "Interactive REPL only",
+      "Plan mode with a GUI",
+      "Streaming Messages in the browser"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Headless/print runs Claude Code non-interactively for CI and automation."
+  },
+  {
+    "domain": "Eval, Testing, and Debugging",
+    "pick": 2,
+    "q": "Which TWO statements define an eval suite? (Pick 2)",
+    "options": [
+      "Test sets with gradeable / checkable success criteria",
+      "Should gate prompt changes the way tests gate code",
+      "A Claude Code permission allow-list",
+      "A floating model alias registry"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Eval suites are gradeable tests that should gate prompt changes like code."
+  },
+  {
+    "domain": "Eval, Testing, and Debugging",
+    "pick": 1,
+    "q": "What is LLM-as-judge?",
+    "options": [
+      "Score open-ended outputs with an LLM against explicit criteria, calibrated on a human-labeled sample",
+      "Replacing all unit tests with temperature 0 string equality",
+      "Letting users grade production traffic in real time only",
+      "A stop_reason when the model refuses"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "LLM-as-judge scores open-ended outputs against criteria, ideally human-calibrated."
+  },
+  {
+    "domain": "Eval, Testing, and Debugging",
+    "pick": 1,
+    "q": "What is a trace in agent debugging?",
+    "options": [
+      "Step-by-step log of an agent run to isolate tool vs model vs orchestration failure",
+      "A single max_tokens value",
+      "The MCP HTTP status page",
+      "A prompt-cache hit counter only"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Traces log agent steps so you can isolate tool, model, or orchestration faults."
+  },
+  {
+    "domain": "Eval, Testing, and Debugging",
+    "pick": 1,
+    "q": "What is a reliability floor?",
+    "options": [
+      "Minimum reliability the design must hold and cannot trade away for cost or speed — set before architecture",
+      "The lowest temperature allowed in production",
+      "A Claude Code deny-all default",
+      "The cheapest model tier available"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "The reliability floor is a non-negotiable quality bar set before cost/latency trades."
+  },
+  {
+    "domain": "Security and Safety",
+    "pick": 2,
+    "q": "Which TWO statements about prompt injection are correct? (Pick 2)",
+    "options": [
+      "Malicious instructions appear in untrusted content such as pages, files, or tool output",
+      "Mitigations include isolating untrusted content and applying least privilege to tools",
+      "It is identical to a jailbreak (direct user policy bypass in chat)",
+      "It is fixed solely by setting temperature to 0"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Injection embeds instructions in untrusted content; isolate and least-privilege. Jailbreak is a different attack path."
+  },
+  {
+    "domain": "Security and Safety",
+    "pick": 2,
+    "q": "Which TWO points correctly define a jailbreak? (Pick 2)",
+    "options": [
+      "A direct user attempt to bypass policy via the conversation",
+      "Handled primarily via refusals and policy controls",
+      "Malicious instructions hidden only inside retrieved documents",
+      "The same mechanism as exceeding the context window"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Jailbreaks are direct user bypass attempts handled by policy/refusals — not document injection or window overflow."
+  },
+  {
+    "domain": "Security and Safety",
+    "pick": 1,
+    "q": "What is least privilege for Claude tools?",
+    "options": [
+      "Grant only needed tools/permissions; an injected instruction cannot trigger a capability that isn’t there",
+      "Enable every tool so the agent never fails",
+      "Always use bypassPermissions in CI",
+      "Store API keys in the system prompt"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Least privilege limits available capabilities so injection cannot escalate."
+  },
+  {
+    "domain": "Security and Safety",
+    "pick": 1,
+    "q": "What is guardrail layering?",
+    "options": [
+      "Multiple independent controls (prompt, output filter, tool permissions) so one layer’s bypass is caught by another",
+      "Relying on the system prompt alone for all safety",
+      "Disabling logging to reduce attack surface",
+      "Using only temperature 0 as a security control"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Layered independent controls catch failures when one layer is bypassed."
+  },
+  {
+    "domain": "Security and Safety",
+    "pick": 1,
+    "q": "What is a trust boundary?",
+    "options": [
+      "Named boundary between trusted and untrusted content (web, tool output) — basis for an enforceable hook",
+      "The edge of the context window in tokens",
+      "A Bedrock VPC peering link",
+      "The difference between Haiku and Opus"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Trust boundaries name where untrusted content enters so hooks can enforce policy."
+  },
+  {
+    "domain": "Security and Safety",
+    "pick": 1,
+    "q": "What is data minimization when calling Claude?",
+    "options": [
+      "Send only fields the task needs; redact or tokenize identifiers that must pass through",
+      "Upload entire databases to maximize RAG recall",
+      "Disable usage logging forever",
+      "Cache every prompt across tenants"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Minimize what you send; redact or tokenize identifiers when they must appear."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is Amazon Bedrock used for with Claude?",
+    "options": [
+      "Run Claude inside an existing AWS account for governance and data residency",
+      "Replace CLAUDE.md with AWS SSM only",
+      "A Claude Code Plan mode synonym",
+      "Anthropic’s only first-party Messages endpoint"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Bedrock runs Claude in the customer’s AWS account for governance/residency."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is Google Vertex AI used for with Claude?",
+    "options": [
+      "Run Claude inside the client’s Google Cloud organization for residency constraints",
+      "The only way to use prompt caching",
+      "A local stdio MCP transport",
+      "Claude Code’s headless print binary"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Vertex hosts Claude in the customer’s GCP org for residency needs."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is the first-party Anthropic API?",
+    "options": [
+      "Anthropic’s direct API; often earliest models and simplicity, outside the client cloud when residency requires otherwise",
+      "Only available through Bedrock",
+      "Identical to Claude Code Plan mode",
+      "An MCP resource listing model cards"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "First-party is Anthropic’s direct API — simple and often earliest models."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is prompt versioning?",
+    "options": [
+      "Version prompts so changes are attributable, comparable, and reversible like code",
+      "Incrementing max_tokens on every deploy",
+      "Floating model aliases without pins",
+      "Storing prompts only in chat history"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Version prompts like code for attribution, comparison, and rollback."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is a managed / hosted agent?",
+    "options": [
+      "Anthropic-hosted long-running agent addressed by ID (skill + managed-agents beta) — the skill is not a live server you operate",
+      "Any local Claude Code session",
+      "An MCP stdio subprocess you must keep running",
+      "A Batches job that never completes"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Managed agents are Anthropic-hosted, ID-addressable long-running agents."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "What is accelerator packaging?",
+    "options": [
+      "Reusable build: pin the model, version prompts, eval before upgrade — so the pack survives model updates",
+      "Shipping only floating aliases with no evals",
+      "Bundling API keys into the frontend",
+      "Disabling structured outputs for speed"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Accelerator packs pin models, version prompts, and eval before upgrades."
+  }
+]

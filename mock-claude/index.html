@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Claude Certified Developer - Foundations · Mock practice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #CC785C;
+      --accent-dark: #B5654A;
+      --ink: #1a1a1a;
+      --paper: #FFFcf9;
+      --muted: #64748b;
+      --line: rgba(15, 23, 42, 0.1);
+      --ok: #2f7a3e;
+      --ok-bg: #e8f5ea;
+      --bad: #b42318;
+      --bad-bg: #fdeceb;
+      --soft: #f7f1ed;
+      --chip: #efe6e0;
+      --shadow: 0 18px 50px -24px rgba(31, 31, 31, 0.35);
+      --font: "DM Sans", system-ui, sans-serif;
+      --display: "Fraunces", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 90% -10%, rgba(204, 120, 92, 0.18), transparent 60%),
+        linear-gradient(165deg, #faf8f6 0%, #f5f0ed 45%, #f7f7f5 100%);
+      -webkit-font-smoothing: antialiased;
+    }
+    .shell {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(16px, 4vw, 40px);
+    }
+    .brand {
+      margin-bottom: 1.1rem;
+    }
+    .brand h1 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(1.35rem, 3.4vw, 1.85rem);
+      line-height: 1.15;
+      font-weight: 700;
+    }
+    .brand .sub {
+      margin-top: 0.25rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.25rem, 3.5vw, 2rem);
+    }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      margin-bottom: 0.65rem;
+    }
+    .lead {
+      color: #555;
+      line-height: 1.6;
+      font-size: 0.98rem;
+      margin: 0 0 1.4rem;
+      max-width: 36rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+      gap: 0.75rem;
+    }
+    .set-btn {
+      appearance: none;
+      border: 1.5px solid rgba(204, 120, 92, 0.35);
+      background: var(--soft);
+      color: var(--ink);
+      border-radius: 14px;
+      padding: 18px 12px 14px;
+      cursor: default;
+      font: inherit;
+      text-align: center;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .set-btn:hover {
+      background: #eadfd7;
+      border-color: var(--accent);
+    }
+    .set-btn .n {
+      display: block;
+      font-family: var(--display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--accent-dark);
+      line-height: 1;
+      margin-bottom: 0.15rem;
+      text-align: center;
+    }
+    .set-btn .l { display: block; font-size: 0.86rem; font-weight: 650; text-align: center; }
+    .set-btn .c { display: block; margin-top: 0.1rem; font-size: 0.75rem; color: var(--muted); text-align: center; }
+    .set-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+      margin-top: 8px;
+      min-width: 0;
+    }
+    .set-actions a {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1.25;
+      padding: 8px 10px;
+      border-radius: 9px;
+      text-align: center;
+      cursor: pointer;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    .set-actions .go {
+      background: var(--accent);
+      color: #fff;
+    }
+    .set-actions .go:hover { background: var(--accent-dark); }
+    .set-actions .ov {
+      background: #fff;
+      color: var(--accent-dark);
+      border: 1px solid rgba(204, 120, 92, 0.35);
+    }
+    .set-actions .ov:hover { background: var(--soft); }
+    .note {
+      margin: 1.15rem 0 0;
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.5;
+    }
+    .disclaimer {
+      margin-top: 1.15rem;
+      text-align: center;
+      font-size: 0.72rem;
+      color: #9a8f88;
+      line-height: 1.5;
+      max-width: 40rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .toprow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .linkish {
+      appearance: none;
+      border: 0;
+      background: none;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 0;
+    }
+    .linkish:hover { color: var(--accent-dark); }
+    .domain {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+    }
+    .progress-meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .bar {
+      height: 6px;
+      background: #ece7e3;
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 0.65rem 0 1.15rem;
+    }
+    .bar > i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), #2f7a3e);
+      border-radius: inherit;
+      transition: width 0.35s ease;
+    }
+    .q {
+      font-family: var(--display);
+      font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+      font-weight: 600;
+      line-height: 1.35;
+      margin: 0 0 0.35rem;
+      color: var(--ink);
+    }
+    .pick-hint {
+      font-size: 0.85rem;
+      font-weight: 650;
+      color: var(--ok);
+      margin-bottom: 0.9rem;
+    }
+    .options { display: flex; flex-direction: column; gap: 0.65rem; }
+    .opt {
+      appearance: none;
+      width: 100%;
+      text-align: left;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      border: 1.5px solid #e2ddd8;
+      background: #fff;
+      color: var(--ink);
+      border-radius: 13px;
+      padding: 0.85rem 0.95rem;
+      font: inherit;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .opt:hover:not(:disabled) { border-color: var(--accent); background: var(--soft); }
+    .opt:disabled { cursor: default; }
+    .opt.selected { border-color: var(--accent); background: var(--soft); }
+    .opt.right { border-color: var(--ok); background: var(--ok-bg); color: #1e5e16; }
+    .opt.wrong { border-color: var(--bad); background: var(--bad-bg); color: var(--bad); }
+    .mark {
+      flex-shrink: 0;
+      width: 1.55rem;
+      height: 1.55rem;
+      border-radius: 999px;
+      border: 1.5px solid #cfc7be;
+      display: grid;
+      place-items: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 0.1rem;
+    }
+    .opt.multi .mark { border-radius: 7px; }
+    .opt.selected .mark { background: var(--accent); border-color: var(--accent); }
+    .opt.right .mark { background: var(--ok); border-color: var(--ok); }
+    .opt.wrong .mark { background: var(--bad); border-color: var(--bad); }
+    .feedback {
+      margin-top: 1rem;
+      padding: 0.9rem 1rem;
+      border-radius: 13px;
+      border: 1.5px solid;
+      font-size: 0.93rem;
+      line-height: 1.55;
+    }
+    .feedback.ok { background: var(--ok-bg); border-color: var(--ok); }
+    .feedback.bad { background: var(--bad-bg); border-color: var(--bad); }
+    .feedback strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+    }
+    .feedback.ok strong { color: #1e5e16; }
+    .feedback.bad strong { color: var(--bad); }
+    .actions { margin-top: 1.25rem; }
+    .btn {
+      appearance: none;
+      width: 100%;
+      border: 0;
+      border-radius: 13px;
+      padding: 0.9rem 1.15rem;
+      font: inherit;
+      font-size: 0.98rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s, background 0.15s;
+    }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover:not(:disabled) { background: var(--accent-dark); }
+    .btn-next { background: var(--ok); color: #fff; }
+    .btn-next:hover { background: #256332; }
+    .btn-ghost {
+      background: var(--soft);
+      color: var(--ink);
+      border: 1.5px solid rgba(204, 120, 92, 0.3);
+    }
+    .btn-row { display: flex; gap: 0.65rem; }
+    .btn-row .btn { flex: 1; }
+    .score-big {
+      font-family: var(--display);
+      font-size: clamp(3rem, 12vw, 4.6rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--accent-dark);
+      margin: 0.35rem 0 0.2rem;
+    }
+    .score-big span { color: #c4b4aa; font-size: 0.45em; }
+    .pass-line { font-weight: 650; margin-bottom: 0.35rem; }
+    .pass-line.ok { color: var(--ok); }
+    .pass-line.bad { color: var(--bad); }
+    .domain-row { margin-bottom: 0.85rem; }
+    .domain-row header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      font-weight: 650;
+      margin-bottom: 0.35rem;
+    }
+    .domain-row .mini {
+      height: 8px;
+      background: #eee;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .domain-row .mini > i {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+    }
+    .hidden { display: none !important; }
+    @media (max-width: 520px) {
+      .btn-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="brand">
+      <h1>Claude Certified Developer <span style="font-family:var(--font);font-weight:500;font-size:0.55em;color:var(--muted)">· Foundations</span></h1>
+      <div class="sub" id="subtitle">Mock exam practice</div>
+    </div>
+
+    <section id="home" class="card">
+      <div class="eyebrow">Entraînement · 6 practice sets</div>
+      <p class="lead">
+        Questions scenario-based, format proche de l’examen (single ou pick 2).
+        Feedback immédiat avec explication. Seuil indicatif&nbsp;: <strong>72&nbsp;%</strong>.
+        · <a href="glossary.html" style="color:var(--accent-dark);font-weight:700;text-decoration:none">Glossaire des termes</a>
+      </p>
+      <div class="grid" id="set-grid"></div>
+      <p class="note">
+        Progression <strong>non sauvegardée</strong> — un refresh repart de zéro.
+        Questions en anglais (comme le matériau source).
+      </p>
+    </section>
+
+    <section id="quiz" class="card hidden">
+      <div class="toprow">
+        <button type="button" class="linkish" id="btn-home">← Accueil</button>
+        <span class="domain" id="q-domain"></span>
+        <span class="progress-meta" id="q-progress"></span>
+      </div>
+      <div style="margin:-2px 0 10px;display:flex;justify-content:flex-end">
+        <a class="linkish" id="btn-overview" href="overview.html" style="text-decoration:none">Vue d’ensemble</a>
+      </div>
+      <div class="bar"><i id="q-bar"></i></div>
+      <h2 class="q" id="q-text"></h2>
+      <div class="pick-hint" id="q-pick"></div>
+      <div class="options" id="q-options"></div>
+      <div id="q-feedback" class="feedback hidden"></div>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="btn-check" disabled>Vérifier</button>
+        <button type="button" class="btn btn-next hidden" id="btn-next">Question suivante →</button>
+      </div>
+    </section>
+
+    <section id="results" class="card hidden" style="text-align:center">
+      <div class="eyebrow" id="res-label">Set terminé</div>
+      <div class="score-big" id="res-score"></div>
+      <div class="pass-line" id="res-pass"></div>
+      <p class="lead" id="res-msg" style="margin-left:auto;margin-right:auto"></p>
+      <div id="res-domains" style="text-align:left;margin:0 0 1.4rem"></div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-primary" id="btn-retake">Refaire ce set</button>
+        <button type="button" class="btn btn-ghost" id="btn-other">← Autre set</button>
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      Outil d’étude indépendant. Non affilié à Anthropic, non issu du contenu officiel d’examen.
+      Contenu généré / non vérifié.
+    </p>
+  </div>
+
+  <script src="questions-data.js"></script>
+  <script>
+    (function () {
+      const data = window.MOCK_EXAM;
+      if (!data || !Array.isArray(data.sets)) {
+        document.getElementById("home").innerHTML =
+          "<p class='lead'>Impossible de charger <code>questions-data.js</code>.</p>";
+        return;
+      }
+
+      const cut = data.cutLine || 72;
+      const el = {
+        home: document.getElementById("home"),
+        quiz: document.getElementById("quiz"),
+        results: document.getElementById("results"),
+        subtitle: document.getElementById("subtitle"),
+        grid: document.getElementById("set-grid"),
+        domain: document.getElementById("q-domain"),
+        progress: document.getElementById("q-progress"),
+        bar: document.getElementById("q-bar"),
+        text: document.getElementById("q-text"),
+        pick: document.getElementById("q-pick"),
+        options: document.getElementById("q-options"),
+        feedback: document.getElementById("q-feedback"),
+        check: document.getElementById("btn-check"),
+        next: document.getElementById("btn-next"),
+        resLabel: document.getElementById("res-label"),
+        resScore: document.getElementById("res-score"),
+        resPass: document.getElementById("res-pass"),
+        resMsg: document.getElementById("res-msg"),
+        resDomains: document.getElementById("res-domains"),
+      };
+
+      let state = {
+        set: null,
+        deck: [],
+        idx: 0,
+        selected: [],
+        checked: false,
+        results: [],
+      };
+
+      function shuffle(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      function shuffleOptions(q) {
+        const order = shuffle(q.options.map((_, i) => i));
+        return {
+          ...q,
+          options: order.map((i) => q.options[i]),
+          correct: q.correct.map((c) => order.indexOf(c)),
+        };
+      }
+
+      function buildDeck(questions, { shuffleQuestions = true } = {}) {
+        const list = shuffleQuestions ? shuffle(questions) : questions.slice();
+        return list.map(shuffleOptions);
+      }
+
+      function arraysEqual(a, b) {
+        if (a.length !== b.length) return false;
+        const sa = a.slice().sort();
+        const sb = b.slice().sort();
+        return sa.every((v, i) => v === sb[i]);
+      }
+
+      function show(view) {
+        el.home.classList.toggle("hidden", view !== "home");
+        el.quiz.classList.toggle("hidden", view !== "quiz");
+        el.results.classList.toggle("hidden", view !== "results");
+      }
+
+      function clearQuery() {
+        if (location.search) {
+          history.replaceState(null, "", location.pathname + location.hash);
+        }
+      }
+
+      function renderHome() {
+        el.subtitle.textContent = "Mock exam practice";
+        el.grid.innerHTML = "";
+        data.sets.forEach((s) => {
+          const card = document.createElement("div");
+          card.className = "set-btn";
+          card.innerHTML =
+            `<span class="n">${s.id}</span>` +
+            `<span class="l">${s.label}</span>` +
+            `<span class="c">${s.questions.length} questions</span>` +
+            `<div class="set-actions">` +
+            `<a class="go" href="index.html?set=${s.id}">Démarrer</a>` +
+            `<a class="ov" href="overview.html?set=${s.id}">Vue d’ensemble</a>` +
+            `</div>`;
+          card.querySelector(".go").addEventListener("click", (e) => {
+            e.preventDefault();
+            startSet(s, { shuffleQuestions: true, startIdx: 0 });
+            history.replaceState(null, "", `?set=${s.id}`);
+          });
+          el.grid.appendChild(card);
+        });
+        show("home");
+      }
+
+      function startSet(set, { shuffleQuestions = true, startIdx = 0 } = {}) {
+        const deck = buildDeck(set.questions, { shuffleQuestions });
+        const idx = Math.max(0, Math.min(startIdx, deck.length - 1));
+        const prior = deck.slice(0, idx).map((q) => ({
+          correct: false,
+          domain: q.domain,
+          skipped: true,
+        }));
+        state = {
+          set,
+          deck,
+          idx,
+          selected: [],
+          checked: false,
+          results: prior,
+        };
+        el.subtitle.textContent = `Foundations · ${set.label}`;
+        const ov = document.getElementById("btn-overview");
+        if (ov) ov.href = `overview.html?set=${set.id}`;
+        renderQuestion();
+        show("quiz");
+      }
+
+      function current() {
+        return state.deck[state.idx];
+      }
+
+      function renderQuestion() {
+        const q = current();
+        const total = state.deck.length;
+        el.domain.textContent = q.domain;
+        el.progress.textContent = `${state.idx + 1} / ${total}`;
+        el.bar.style.width = `${((state.idx + (state.checked ? 1 : 0)) / total) * 100}%`;
+        el.text.textContent = q.q;
+        if (q.pick > 1) {
+          el.pick.textContent = `Sélectionnez ${q.pick} · choisi${state.selected.length > 1 ? "s" : ""} ${state.selected.length}`;
+          el.pick.style.minHeight = "";
+        } else {
+          el.pick.textContent = "";
+          el.pick.style.minHeight = "0.9rem";
+        }
+
+        el.options.innerHTML = "";
+        q.options.forEach((opt, i) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "opt" + (q.pick > 1 ? " multi" : "");
+          btn.dataset.index = String(i);
+          const mark = document.createElement("span");
+          mark.className = "mark";
+          const text = document.createElement("span");
+          text.textContent = opt;
+          btn.appendChild(mark);
+          btn.appendChild(text);
+          btn.addEventListener("click", () => toggle(i));
+          el.options.appendChild(btn);
+        });
+
+        el.feedback.className = "feedback hidden";
+        el.feedback.innerHTML = "";
+        el.check.classList.remove("hidden");
+        el.next.classList.add("hidden");
+        el.check.disabled = state.selected.length !== q.pick;
+        paintOptions();
+      }
+
+      function paintOptions() {
+        const q = current();
+        [...el.options.children].forEach((btn) => {
+          const i = Number(btn.dataset.index);
+          const mark = btn.querySelector(".mark");
+          btn.classList.remove("selected", "right", "wrong");
+          mark.textContent = "";
+          const isSel = state.selected.includes(i);
+          if (!state.checked && isSel) {
+            btn.classList.add("selected");
+            mark.textContent = "•";
+          }
+          if (state.checked) {
+            const isRight = q.correct.includes(i);
+            if (isRight) {
+              btn.classList.add("right");
+              mark.textContent = "✓";
+            } else if (isSel) {
+              btn.classList.add("wrong");
+              mark.textContent = "✗";
+            }
+            btn.disabled = true;
+          } else {
+            btn.disabled = false;
+          }
+        });
+        el.check.disabled = state.selected.length !== q.pick;
+        if (q.pick > 1 && !state.checked) {
+          el.pick.textContent = `Sélectionnez ${q.pick} · choisi${state.selected.length > 1 ? "s" : ""} ${state.selected.length}`;
+        }
+      }
+
+      function toggle(i) {
+        if (state.checked) return;
+        const q = current();
+        if (q.pick === 1) {
+          state.selected = [i];
+        } else {
+          if (state.selected.includes(i)) {
+            state.selected = state.selected.filter((x) => x !== i);
+          } else if (state.selected.length < q.pick) {
+            state.selected = [...state.selected, i];
+          }
+        }
+        paintOptions();
+      }
+
+      function checkAnswer() {
+        const q = current();
+        if (state.selected.length !== q.pick) return;
+        state.checked = true;
+        const ok = arraysEqual(state.selected, q.correct);
+        state.results.push({ correct: ok, domain: q.domain });
+        el.feedback.className = "feedback " + (ok ? "ok" : "bad");
+        el.feedback.innerHTML =
+          `<strong>${ok ? "Correct" : "Pas tout à fait"}</strong>` +
+          `<div>${escapeHtml(q.why)}</div>`;
+        el.check.classList.add("hidden");
+        el.next.classList.remove("hidden");
+        el.next.textContent =
+          state.idx + 1 >= state.deck.length ? "Voir les résultats" : "Question suivante →";
+        paintOptions();
+        el.bar.style.width = `${((state.idx + 1) / state.deck.length) * 100}%`;
+      }
+
+      function next() {
+        if (state.idx + 1 >= state.deck.length) {
+          renderResults();
+          return;
+        }
+        state.idx += 1;
+        state.selected = [];
+        state.checked = false;
+        renderQuestion();
+      }
+
+      function renderResults() {
+        const total = state.deck.length;
+        const graded = state.results.filter((r) => !r.skipped);
+        const score = graded.filter((r) => r.correct).length;
+        const gradedTotal = graded.length || total;
+        const pct = Math.round((score / gradedTotal) * 100);
+        const pass = pct >= cut;
+        const skipped = state.results.filter((r) => r.skipped).length;
+        el.resLabel.textContent = `${state.set.label} · terminé`;
+        el.resScore.innerHTML = `${score}<span>/${gradedTotal}</span>`;
+        el.resPass.className = "pass-line " + (pass ? "ok" : "bad");
+        el.resPass.textContent = `${pct}% ${pass ? "· au-dessus" : "· en dessous"} du seuil ${cut}%`;
+        el.resMsg.textContent = pass
+          ? "Bon niveau. Relisez les domaines en rouge si besoin."
+          : "Sous le seuil indicatif — concentrez-vous sur les domaines en rouge.";
+        if (skipped) {
+          el.resMsg.textContent +=
+            ` (${skipped} question${skipped > 1 ? "s" : ""} non jouée${skipped > 1 ? "s" : ""} via deep-link).`;
+        }
+
+        const byDomain = {};
+        graded.forEach((r) => {
+          if (!byDomain[r.domain]) byDomain[r.domain] = { c: 0, t: 0 };
+          byDomain[r.domain].t += 1;
+          if (r.correct) byDomain[r.domain].c += 1;
+        });
+
+        el.resDomains.innerHTML = "";
+        Object.entries(byDomain).forEach(([d, v]) => {
+          const p = Math.round((v.c / v.t) * 100);
+          const row = document.createElement("div");
+          row.className = "domain-row";
+          row.innerHTML =
+            `<header><span>${escapeHtml(d)}</span>` +
+            `<span style="color:${p >= cut ? "var(--ok)" : "var(--bad)"}">${v.c}/${v.t}</span></header>` +
+            `<div class="mini"><i style="width:${p}%;background:${p >= cut ? "var(--ok)" : "var(--bad)"}"></i></div>`;
+          el.resDomains.appendChild(row);
+        });
+
+        show("results");
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      document.getElementById("btn-home").addEventListener("click", () => {
+        clearQuery();
+        renderHome();
+      });
+      document.getElementById("btn-other").addEventListener("click", () => {
+        clearQuery();
+        renderHome();
+      });
+      document.getElementById("btn-retake").addEventListener("click", () => {
+        startSet(state.set, { shuffleQuestions: true, startIdx: 0 });
+        history.replaceState(null, "", `?set=${state.set.id}`);
+      });
+      el.check.addEventListener("click", checkAnswer);
+      el.next.addEventListener("click", next);
+
+      const params = new URLSearchParams(location.search);
+      const setParam = Number(params.get("set") || "");
+      const qParam = Number(params.get("q") || "");
+      const bootSet = data.sets.find((s) => s.id === setParam);
+      if (bootSet) {
+        const fromOverview = Number.isFinite(qParam) && qParam >= 1;
+        startSet(bootSet, {
+          shuffleQuestions: !fromOverview,
+          startIdx: fromOverview ? qParam - 1 : 0,
+        });
+      } else {
+        renderHome();
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,837 @@
+[
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "A stakeholder asks for a 'smarter bot' without naming intents, fields, or success criteria. Correct next step before architecture?",
+    "options": [
+      "Translate the request into concrete functional requirements: which intents, which fields, and what counts as a correct outcome",
+      "Start coding against the largest model so capability covers whatever 'smarter' turns out to mean",
+      "Write the system prompt first and reverse-engineer requirements from its behaviour",
+      "Skip requirements and jump to MCP server selection"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Vague business language must become checkable functional requirements before design. Oversizing the model or prompting first skips the step that makes the system testable."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "Which activity belongs to operate-and-maintain, not design or build?",
+    "options": [
+      "Monitoring production quality and cost, and triaging regressions as usage or models shift",
+      "Writing the initial functional requirements",
+      "Selecting the prototype model tier",
+      "Designing the first-release eval suite"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Operate-and-maintain is post-launch monitoring and response to drift. Requirements, tier choice, and initial eval design happen earlier."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 2,
+    "q": "Which TWO statements about the Messages API are accurate? (Pick 2)",
+    "options": [
+      "It is the primary conversational request surface for system, user, assistant, and tool turns",
+      "Client SDKs wrap the same REST Messages API rather than replacing it with a proprietary protocol",
+      "Streaming responses cannot include tool calls",
+      "max_tokens caps input history size, not output"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Messages API is the main chat/tool surface; SDKs wrap the same REST API. Tool calls do stream, and max_tokens caps output not history."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 2,
+    "q": "Under burst load you see both 429 and 529 responses. Which TWO client behaviours are appropriate? (Pick 2)",
+    "options": [
+      "Backoff and retry with jitter on both, treating them as transient capacity signals",
+      "Treat 429 as 'never retry' and 529 as a permanent model failure",
+      "Cap concurrent in-flight requests and respect Retry-After when present",
+      "Disable authentication so rate limits no longer apply"
+    ],
+    "correct": [
+      0,
+      2
+    ],
+    "why": "429 and 529 are capacity/overload signals: retry with backoff/jitter, limit concurrency, and honour Retry-After. They are not permanent failures, and removing auth does not fix rate limits."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "You need live moderation under 1s SLA and a monthly archive re-score with no user waiting. How should API modes split?",
+    "options": [
+      "Synchronous Messages calls for live moderation; Message Batches for the monthly archive job",
+      "Batches for both to keep one code path",
+      "Synchronous for both to avoid maintaining two paths",
+      "Streaming for the monthly job because streaming is always cheapest"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Match SLA: realtime needs sync; latency-tolerant bulk belongs on Batches. Forcing one path sacrifices latency or cost."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 2,
+    "q": "Which TWO describe Message Batches results correctly? (Pick 2)",
+    "options": [
+      "You poll for completion then retrieve results within the processing window",
+      "Individual items can succeed or fail independently",
+      "Results stream live over a held-open connection as each item finishes",
+      "One failed item rolls back and refunds the entire batch"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Batches are async poll-then-fetch; per-item success/failure. There is no live held-open result stream, and one failure does not roll back the batch."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "A large stable system prompt is followed by a daily-changing user profile then the question. How maximise cache hits without caching stale profile data forever as one blob?",
+    "options": [
+      "Place cache breakpoints so the stable system prompt is cached separately from the profile segment",
+      "Cache the entire assembled prompt as one block and accept full misses whenever the profile changes",
+      "Disable caching because any dynamic field invalidates the mechanism entirely",
+      "Move the profile after the question so order no longer matters for caching"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Multiple breakpoints let stable prefixes stay cached while dynamic segments invalidate independently. One mega-block or disabling caching wastes the stable win."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "When should a streamed assistant turn be committed to conversation history?",
+    "options": [
+      "Only after message_stop confirms completion; discard partial turns on interruption",
+      "As soon as the first content_block_start arrives",
+      "When the HTTP socket closes for any reason",
+      "After the first text delta token"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Socket close or early events are not completion. Commit only after message_stop so history never stores half-built turns."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "An inspector app sends four photos and asks Claude to compare them. Correct request structure?",
+    "options": [
+      "All four as image blocks in one message with the text instruction so the model sees them together",
+      "Four separate conversations then a fifth merge call, because a message may hold only one image",
+      "Paste image URLs as plain text only",
+      "Convert all four to a single PDF first; raw multi-image is unsupported"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "A single message can carry multiple image blocks plus text for direct comparison. Splitting or URL-as-text loses the multimodal comparison."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "A one-off product photo is analysed once; a brand watermark is reused on thousands of requests. How should each be supplied?",
+    "options": [
+      "Inline the one-off as base64; serve the reused watermark via the Files API so it is not re-uploaded every call",
+      "Inline both as base64 every time because the repeated bytes are negligible at scale",
+      "Describe both in text to avoid image tokens always",
+      "Force both through Batches regardless of latency"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Files API fits reused assets; inline base64 fits one-offs. Re-inlining a watermark wastes tokens every call."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "A support tool reuses one long-running Claude conversation for all customers 'to preserve context.' What is wrong?",
+    "options": [
+      "Cross-customer leakage: each user or case needs its own conversation with only its own context",
+      "Nothing, if the context window is large enough",
+      "Only latency suffers; privacy is unaffected",
+      "It only breaks prompt caching"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Shared conversations bleed one customer's data into another's answers. Window size does not fix session hygiene."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "The same feature must work in claude.ai, via the API, and in Claude Code. A teammate assumes one prompt behaves identically everywhere. Flaw?",
+    "options": [
+      "Each surface wraps prompts with different default context and instruction handling, so identical wording can still diverge",
+      "There is no flaw; behaviour is guaranteed identical across interfaces",
+      "Only the API supports system prompts",
+      "Claude Code ignores system prompts entirely"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Surfaces layer different defaults around the same words. System prompts exist across surfaces; identical behaviour is not guaranteed."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "Plugin A requires plugin B at 2.x but the project pins B at 1.x. What kind of problem is this?",
+    "options": [
+      "A plugin dependency conflict that must be resolved by aligning versions or isolating plugins before production trust",
+      "Harmless duplication because plugin versions are cosmetic",
+      "A pure load-time performance issue",
+      "Something the model silently arbitrates at runtime"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Conflicting version requirements are dependency conflicts needing explicit resolution, like any software graph."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "You invoke Claude through a cloud vendor's hosted endpoint rather than first-party Anthropic. What stays true?",
+    "options": [
+      "Messages API shape is generally consistent, but auth, headers, and some access patterns can differ by vendor",
+      "Vendors run an unrelated model that only shares the marketing name",
+      "Streaming is first-party only",
+      "Tool use is unavailable on vendor endpoints"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Vendor hosting usually preserves Messages API shape while differing in platform auth/details. Streaming and tools are not first-party exclusives."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "A 2,000-line prompt-handling function is unreadable and every change risks regressions. Appropriate response?",
+    "options": [
+      "Refactor incrementally into smaller tested functions with clear responsibilities rather than a blank-file rewrite",
+      "Leave it; prompt code cannot be structured",
+      "Rewrite from scratch in one sitting with no tests",
+      "Add a long comment and keep extending the monolith"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Incremental, tested refactoring is the standard fix for SRP violations. Untested rewrites and comments do not restore structure."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "Two engineers merge Claude-calling features into the same file in one sprint with no review. Missing SDLC practice?",
+    "options": [
+      "Code review in the merge process to catch conflicting assumptions before production",
+      "A larger context window so each engineer sees the other's edits automatically",
+      "A bigger model to resolve merge conflicts",
+      "Prompt caching to prevent git conflicts"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Code review is the human gate that catches colliding assumptions. Model size and caching do not replace review."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 2,
+    "q": "Production pins a dated model ID. A new dated release documents a breaking change for your prompts. Which TWO actions fit a controlled upgrade? (Pick 2)",
+    "options": [
+      "Run evals and canaries on the new ID before switching the pin",
+      "Update the pinned ID only after comparing outputs and costs against the reliability floor",
+      "Switch the floating alias in production first so customers get the new model immediately",
+      "Delete all regression tests because model upgrades never change behaviour"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Pinned IDs enable deliberate upgrades: validate with evals/canaries and check quality/cost before changing the pin. Jumping floating aliases in prod and dropping tests defeat control."
+  },
+  {
+    "domain": "Applications and Integration",
+    "pick": 1,
+    "q": "A teammate says using the Anthropic SDK means you are no longer calling the REST API. Accurate statement?",
+    "options": [
+      "The SDK wraps the same REST API with typing, retries, and auth helpers; wire calls remain HTTP",
+      "The SDK uses a proprietary binary protocol that bypasses HTTP",
+      "The SDK runs the model locally",
+      "Raw REST is unsupported once an SDK exists"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "SDKs are ergonomic clients over the same REST surface. Raw HTTP remains valid."
+  },
+  {
+    "domain": "Model Selection and Optimization",
+    "pick": 1,
+    "q": "A workload mixes trivial FAQ calls with occasional hard multi-constraint planning. One config should spend reasoning only where warranted. Best fit?",
+    "options": [
+      "Adaptive thinking so effort scales with the task",
+      "Maximum extended thinking on every call",
+      "Fast mode on every call",
+      "Human routing between two deployments for each request"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Adaptive thinking scales effort per task. Always-max overpays; always-fast underserves hard cases."
+  },
+  {
+    "domain": "Model Selection and Optimization",
+    "pick": 1,
+    "q": "A latency-sensitive FAQ endpoint does not need step-by-step reasoning. Correct thinking posture?",
+    "options": [
+      "Leave extended/adaptive deep reasoning off unless a reasoning pass would change the answer",
+      "Pin maximum effort on every call for safety",
+      "Always route to the largest model tier",
+      "Enable thinking but delete thinking blocks before the next turn"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Spend reasoning only where it changes outcomes. Max effort or largest tier on trivial traffic wastes cost and latency."
+  },
+  {
+    "domain": "Model Selection and Optimization",
+    "pick": 1,
+    "q": "Across multi-turn extended thinking, what must happen to thinking blocks?",
+    "options": [
+      "Return them unchanged on subsequent turns or the exchange breaks",
+      "Summarise them to save context while keeping the gist",
+      "Delete them before the next call",
+      "Move them into the system prompt"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Thinking blocks must be echoed unchanged. Summarising, deleting, or relocating them breaks multi-turn thinking."
+  },
+  {
+    "domain": "Model Selection and Optimization",
+    "pick": 1,
+    "q": "Production behaviour changed overnight with no deploy. Config uses a floating model alias. Likely cause and fix?",
+    "options": [
+      "The alias moved to a newer release; pin a dated version and promote upgrades after evals",
+      "The API silently retrained on your traffic; opt out in the console",
+      "Temperature drifted upward automatically",
+      "Prompt cache served another customer's completions"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Floating aliases follow new releases. Pin dated versions for deliberate upgrades."
+  },
+  {
+    "domain": "Model Selection and Optimization",
+    "pick": 1,
+    "q": "Finance needs per-feature Claude spend and you have no numbers yet. First practical step?",
+    "options": [
+      "Log the usage fields (input/output tokens) from each API response per feature",
+      "Estimate from character counts alone",
+      "Split the monthly invoice evenly across features",
+      "Enable extended thinking to get richer billing detail"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Responses report token usage; per-feature logging yields real numbers. Even splits and char guesses hide drivers."
+  },
+  {
+    "domain": "Model Selection and Optimization",
+    "pick": 1,
+    "q": "Prompt caching hit rate is near zero. Prompt order is [today's date] + [profile] + [20k policy manual] + [question]. Why?",
+    "options": [
+      "Dynamic date and profile precede the stable manual, so the prefix never matches; put stable content first",
+      "Caching requires Batches and cannot work synchronously",
+      "20k tokens exceeds any cacheable size",
+      "Caching only applies to output tokens"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Cache keys on identical prefixes. Leading dynamic content breaks hits; stable-first ordering fixes it."
+  },
+  {
+    "domain": "Model Selection and Optimization",
+    "pick": 1,
+    "q": "Legal nuance summarisation vs fast internal wiki lookup. How should model tiers differ?",
+    "options": [
+      "Higher-capability tier for nuanced legal work; faster cheaper tier for simple retrieval",
+      "Same highest tier for both for consistency",
+      "Cheapest tier for both to control cost uniformly",
+      "Tier choice does not matter if prompts are identical"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Match tier to difficulty: nuance justifies capability; simple retrieval does not need it."
+  },
+  {
+    "domain": "Model Selection and Optimization",
+    "pick": 1,
+    "q": "What is the 'reliability floor' in a cost-and-latency design section?",
+    "options": [
+      "The minimum reliability you refuse to trade away for cost or speed",
+      "The lowest cost if you accept arbitrary dropped requests",
+      "The cheapest model SKU",
+      "The p99 latency target alone"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Reliability floor is the non-negotiable reliability bound, not a cost or latency number."
+  },
+  {
+    "domain": "Model Selection and Optimization",
+    "pick": 1,
+    "q": "When should hard cost and latency budgets be set?",
+    "options": [
+      "Before architecture is locked so designs can be checked against them",
+      "Only after production profiling under real traffic",
+      "Only after the first cost overrun",
+      "At the first incident review"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Budgets must shape architecture before build. Waiting until after means they never constrained design."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 1,
+    "q": "A nightly ETL always runs the same five steps in fixed order. Right architecture and why?",
+    "options": [
+      "A workflow: the path is known, so coding it avoids agent cost and nondeterminism",
+      "An agent for future-proofing even though the path never branches",
+      "One mega-prompt listing all steps unordered",
+      "Five independent unordered calls"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Known fixed sequences are workflows. Agents add nondeterminism you do not need."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 1,
+    "q": "A hard-coded invoice workflow breaks on unpredictable new supplier formats. Architectural signal?",
+    "options": [
+      "The variable portion now warrants a bounded agentic decision; pure branching races new formats forever",
+      "Add a new hard-coded branch for every new supplier forever",
+      "The model tier is simply too small",
+      "Replace everything with one large prompt"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "When inputs leave the codeable path, agent territory appears for the variable part—not endless branches."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 1,
+    "q": "In a manager/supervisor hierarchy, what is the manager's job?",
+    "options": [
+      "Decompose the goal, delegate to specialised subagents, and integrate results",
+      "Execute every subtask while subagents only observe",
+      "Enforce API rate limits only",
+      "Cache subagent prompts only"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Managers decompose, delegate, and integrate. They are not the sole executors nor mere infra helpers."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 1,
+    "q": "An agent can permanently delete customer records. Correct design-time control?",
+    "options": [
+      "A human approval gate before the delete executes",
+      "Logging and alerts after deletes so on-call can recover",
+      "Lower temperature only",
+      "A system-prompt reminder to be careful"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Irreversible actions need a pre-execution human gate. Logs after the fact are too late."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 1,
+    "q": "A research agent must synthesise 40 documents but one shared context degrades quality. Best approach?",
+    "options": [
+      "Subagents extract per document in isolation, then synthesise from compact extracts",
+      "Load all 40 and raise max_tokens as high as possible",
+      "Drop documents that do not fit",
+      "Lower temperature only"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Isolated subagent contexts keep extracts clean. Cramming all documents is the bloat that hurt quality."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 1,
+    "q": "You are choosing self-hosted agent infrastructure versus an Anthropic-hosted managed agent. Core tradeoff?",
+    "options": [
+      "Self-hosting maximises infra/data-flow control at operating cost; managed reduces ops burden with less infra control",
+      "There is no meaningful difference",
+      "Self-hosting is always cheaper regardless of team capacity",
+      "Managed hosting is only for non-agentic chat"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "The tradeoff is control and operational burden versus convenience—not identical options."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 2,
+    "q": "Which TWO are established agent patterns for multi-step work? (Pick 2)",
+    "options": [
+      "A tool-use loop that calls tools and folds results until done",
+      "Delegating a bounded subtask to a subagent that returns a compact result",
+      "Hard-coding every possible input branch so no runtime decision exists",
+      "Disabling all tools to force pure parametric knowledge"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Tool-use loops and subagent delegation are core patterns. Exhaustive hard branches and disabling tools are not."
+  },
+  {
+    "domain": "Agents and Workflows",
+    "pick": 1,
+    "q": "Hand-rolling state, retries, and branching across eight agent steps has become spaghetti. What are LangGraph/Strands/PydanticAI for?",
+    "options": [
+      "Orchestration: graph or typed control flow, explicit state, and retries so you stop hand-rolling plumbing",
+      "Fine-tuning the model to internalise the eight steps with no code",
+      "Replacing the need for tool schemas",
+      "Acting as vector databases"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "These frameworks structure multi-step control flow and recovery. They do not fine-tune models or replace tool schemas."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "Over a long chat the JSON format specified early starts being ignored. Which technique addresses this failure type?",
+    "options": [
+      "State and tighten the format rule durably in the system prompt",
+      "Attach reasoning few-shots to every user turn",
+      "Raise temperature",
+      "Swap models mid-conversation only"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Cross-turn drift points to underspecified system instructions. Fix durability there, not with per-turn few-shot spam."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 2,
+    "q": "User text is concatenated into a prompt template and sometimes overrides instructions. Which TWO help at the prompt layer? (Pick 2)",
+    "options": [
+      "Delimit and label user text clearly as data",
+      "Keep trusted instructions in the system prompt, separate from user content",
+      "Ask users politely not to include instructions",
+      "Truncate all user input to 20 characters"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Delimiting untrusted text and separating trusted system instructions blunt injection. Politeness and blunt truncation are weak or harmful."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 2,
+    "q": "Free-text user input flows into a prompt that also holds instructions. Beyond default model refusals, which TWO defences belong in the application layer? (Pick 2)",
+    "options": [
+      "Separate untrusted user content structurally (e.g. tagged blocks / role boundaries) from system instructions",
+      "Validate and constrain model output before privileged side effects run",
+      "Concatenate user text into the system prompt so the model 'owns' both equally",
+      "Disable all logging so injection attempts cannot be investigated"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Treat user text as untrusted and keep it separated from instructions; gate tools/actions on validated outputs. Merging into the system prompt and disabling logs worsen exposure."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "RAG embeds entire 30-page docs as single chunks; answers are vague and context fills instantly. Fix?",
+    "options": [
+      "Chunk into smaller semantically coherent passages so retrieval returns focused pieces",
+      "Keep whole-doc chunks but retrieve more of them",
+      "Only switch to a larger embedding model",
+      "Ask the model to ignore irrelevant parts while still paying for them"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Whole-document chunks blunt precision and blow the budget. Smaller coherent passages fix granularity."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "Parser breaks on valid JSON that includes a prose preamble. Most robust production handling?",
+    "options": [
+      "Constrain to JSON-only with schema validation, and repair or reject before downstream use",
+      "Set temperature to 0 and trust formatting forever",
+      "Parse raw output without validation",
+      "Increase max_tokens so preambles have room"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "API/schema constraints plus defensive validation beat prompt-only hope. Temperature 0 does not enforce structure."
+  },
+  {
+    "domain": "Prompt and Context Engineering",
+    "pick": 1,
+    "q": "A critical instruction is buried mid six paragraphs of background and keeps being missed. Most direct fix?",
+    "options": [
+      "Move the critical instruction to the start or end and trim unnecessary background",
+      "Duplicate the six background paragraphs",
+      "Lower temperature so the model 'reads more carefully'",
+      "Add another mid-document copy of the same buried line"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Models attend more reliably at edges of long prompts; bury-less and trim noise."
+  },
+  {
+    "domain": "Tools and MCPs",
+    "pick": 1,
+    "q": "Two tools both 'retrieve information' and Claude often picks the wrong one. Best single fix?",
+    "options": [
+      "Add clear when-NOT-to-use guidance in each description",
+      "Rely on more distinctive parameter names alone while descriptions stay overlapping",
+      "Delete one tool immediately",
+      "Increase model tier only"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Tool choice follows descriptions; exclusion conditions resolve overlap better than schema cosmetics."
+  },
+  {
+    "domain": "Tools and MCPs",
+    "pick": 1,
+    "q": "A tool named handle_request does lookup, validation, and notification in one call; the agent is confused about results. Fix?",
+    "options": [
+      "Split into focused single-responsibility tools with matching descriptions",
+      "Rename it to a more exciting name",
+      "Add a fourth responsibility",
+      "Only add a longer system-prompt example"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Overloaded tools create ambiguity; split by responsibility."
+  },
+  {
+    "domain": "Tools and MCPs",
+    "pick": 1,
+    "q": "An MCP server should expose a named parameterised 'weekly-report' template users invoke on demand. Which MCP primitive?",
+    "options": [
+      "A prompt",
+      "A tool, because anything named is always a tool",
+      "A resource",
+      "A transport"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Named user-invoked templates are MCP prompts. Tools are model-invoked actions; resources are readable data."
+  },
+  {
+    "domain": "Tools and MCPs",
+    "pick": 1,
+    "q": "You connect three MCP servers. What must you manage?",
+    "options": [
+      "Each server's tool definitions load into context whether used or not, adding cost",
+      "Connected servers forbid any custom tools in the same app",
+      "All three must use stdio",
+      "The context window permanently expands with no cost impact"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Connected servers inject definitions into context regardless of use—connect deliberately."
+  },
+  {
+    "domain": "Tools and MCPs",
+    "pick": 1,
+    "q": "A capability must call authenticated internal REST APIs and be reused across five apps, maintained by a platform team. Best approach?",
+    "options": [
+      "An MCP server maintained centrally and connected by each app",
+      "A Skill duplicated into each repo",
+      "Five hand-synced custom tools",
+      "A pasted system-prompt block that cannot call APIs"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Centralised live authenticated capability reuse is the MCP server case; Skills are instructional, not live API gateways."
+  },
+  {
+    "domain": "Security and Safety",
+    "pick": 1,
+    "q": "A fetched page hides text telling the agent to email a file externally. Most effective mitigation?",
+    "options": [
+      "Least privilege so the summariser has no email capability, plus isolating untrusted content from instructions",
+      "Only a system-prompt line to ignore embedded instructions",
+      "Keyword-scan for 'ignore'",
+      "Switch to a larger more compliant model"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Durable defense is capability removal and isolation. Prompt-only and keyword scans are bypassable."
+  },
+  {
+    "domain": "Security and Safety",
+    "pick": 2,
+    "q": "A triage assistant receives full customer records but only needs message text and product name. Which TWO practices apply? (Pick 2)",
+    "options": [
+      "Send only needed fields, stripping the rest before the API call",
+      "Redact or tokenise identifiers that must pass through",
+      "Send the full record but tell the model not to read sensitive fields",
+      "Encrypt the API key more strongly instead of minimising prompt data"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Data minimisation and redaction keep unneeded PII out. Instructing the model to ignore fields still transmits them."
+  },
+  {
+    "domain": "Security and Safety",
+    "pick": 1,
+    "q": "User jailbreak attempt vs malicious instructions hidden in a fetched page. How do they differ?",
+    "options": [
+      "Jailbreak is direct user policy bypass; injection arrives via untrusted third-party content—mitigations differ",
+      "They are identical attacks with one identical fix",
+      "Authenticated users make jailbreaks harmless",
+      "HTTPS makes page-borne injection impossible"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Direct jailbreaks vs content injection need different layers (policy/refusal vs isolation/least privilege)."
+  },
+  {
+    "domain": "Security and Safety",
+    "pick": 1,
+    "q": "Content policy lives only as one system-prompt line. Secure-by-design improvement?",
+    "options": [
+      "Layer independent controls: prompt guidance plus output filtering plus scoped tool permissions",
+      "Make the prompt line longer and stop there",
+      "Remove the prompt line as useless",
+      "Rely on users to self-police"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Layered guardrails avoid a single probabilistic point of failure."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 1,
+    "q": "First pass on an untrusted third-party repo. Correct permission posture?",
+    "options": [
+      "Read-only plan mode to explore and propose before edits",
+      "bypassPermissions for uninterrupted speed",
+      "Manual approval of every file read",
+      "Disable all tools"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Match authority to risk: plan mode explores without writing. bypassPermissions grants too much too early."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 2,
+    "q": "A PreToolUse hook must block a disallowed read. Which TWO are true? (Pick 2)",
+    "options": [
+      "PreToolUse fires before the tool executes, so it can block",
+      "Exit code 2 with a reason on stderr signals the block",
+      "PostToolUse can also prevent the read by undoing it",
+      "Exit 0 with a reason on stdout blocks the call"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Only PreToolUse can block; exit 2 + stderr is the block signal. PostToolUse is too late; exit 0 allows."
+  },
+  {
+    "domain": "Eval, Testing, and Debugging",
+    "pick": 1,
+    "q": "An agent quotes the wrong price. The trace shows the pricing tool returned the correct number. Where is the failure?",
+    "options": [
+      "In how the model used the correct tool data, not in the tool itself",
+      "Always in the integration layer whenever a final answer is wrong",
+      "In the network",
+      "In API key configuration"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Correct tool data plus wrong final answer isolates model reasoning/use of the data."
+  },
+  {
+    "domain": "Tools and MCPs",
+    "pick": 1,
+    "q": "A client-side tool reads the user's current form field; a server-side tool queries a production database. A refactor swaps their execution locations. What breaks first?",
+    "options": [
+      "The client-state tool can no longer see browser state once forced server-side",
+      "Nothing; tools are interchangeable regardless of execution location",
+      "Only latency changes; both still function identically",
+      "The database tool becomes faster and more secure on the client"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Execution follows where data lives: live browser state is invisible to the server. Swapping locations breaks access, not merely latency."
+  },
+  {
+    "domain": "Eval, Testing, and Debugging",
+    "pick": 2,
+    "q": "Which TWO success criteria are specific enough to build an eval against? (Pick 2)",
+    "options": [
+      "Return valid JSON with sentiment in {positive, negative, neutral} and confidence in [0,1]",
+      "Classify the ticket into exactly one of five named categories",
+      "Produce a genuinely useful triage",
+      "Handle the ticket well"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Constrained JSON and a closed category set are checkable. 'Useful' and 'handle well' are too vague to grade."
+  }
+]

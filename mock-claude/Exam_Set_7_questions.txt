@@ -1,0 +1,495 @@
+=== Q1 | domain: Applications and Integration | pick: 1 ===
+A stakeholder asks for a 'smarter bot' without naming intents, fields, or success criteria. Correct next step before architecture?
+A) Translate the request into concrete functional requirements: which intents, which fields, and what counts as a correct outcome
+B) Start coding against the largest model so capability covers whatever 'smarter' turns out to mean
+C) Write the system prompt first and reverse-engineer requirements from its behaviour
+D) Skip requirements and jump to MCP server selection
+Correct: A
+Why: Vague business language must become checkable functional requirements before design. Oversizing the model or prompting first skips the step that makes the system testable.
+
+=== Q2 | domain: Applications and Integration | pick: 1 ===
+Which activity belongs to operate-and-maintain, not design or build?
+A) Monitoring production quality and cost, and triaging regressions as usage or models shift
+B) Writing the initial functional requirements
+C) Selecting the prototype model tier
+D) Designing the first-release eval suite
+Correct: A
+Why: Operate-and-maintain is post-launch monitoring and response to drift. Requirements, tier choice, and initial eval design happen earlier.
+
+=== Q3 | domain: Applications and Integration | pick: 2 ===
+Which TWO statements about the Messages API are accurate? (Pick 2)
+A) It is the primary conversational request surface for system, user, assistant, and tool turns
+B) Client SDKs wrap the same REST Messages API rather than replacing it with a proprietary protocol
+C) Streaming responses cannot include tool calls
+D) max_tokens caps input history size, not output
+Correct: A, B
+Why: Messages API is the main chat/tool surface; SDKs wrap the same REST API. Tool calls do stream, and max_tokens caps output not history.
+
+=== Q4 | domain: Applications and Integration | pick: 2 ===
+Under burst load you see both 429 and 529 responses. Which TWO client behaviours are appropriate? (Pick 2)
+A) Backoff and retry with jitter on both, treating them as transient capacity signals
+B) Treat 429 as 'never retry' and 529 as a permanent model failure
+C) Cap concurrent in-flight requests and respect Retry-After when present
+D) Disable authentication so rate limits no longer apply
+Correct: A, C
+Why: 429 and 529 are capacity/overload signals: retry with backoff/jitter, limit concurrency, and honour Retry-After. They are not permanent failures, and removing auth does not fix rate limits.
+
+=== Q5 | domain: Applications and Integration | pick: 1 ===
+You need live moderation under 1s SLA and a monthly archive re-score with no user waiting. How should API modes split?
+A) Synchronous Messages calls for live moderation; Message Batches for the monthly archive job
+B) Batches for both to keep one code path
+C) Synchronous for both to avoid maintaining two paths
+D) Streaming for the monthly job because streaming is always cheapest
+Correct: A
+Why: Match SLA: realtime needs sync; latency-tolerant bulk belongs on Batches. Forcing one path sacrifices latency or cost.
+
+=== Q6 | domain: Applications and Integration | pick: 2 ===
+Which TWO describe Message Batches results correctly? (Pick 2)
+A) You poll for completion then retrieve results within the processing window
+B) Individual items can succeed or fail independently
+C) Results stream live over a held-open connection as each item finishes
+D) One failed item rolls back and refunds the entire batch
+Correct: A, B
+Why: Batches are async poll-then-fetch; per-item success/failure. There is no live held-open result stream, and one failure does not roll back the batch.
+
+=== Q7 | domain: Applications and Integration | pick: 1 ===
+A large stable system prompt is followed by a daily-changing user profile then the question. How maximise cache hits without caching stale profile data forever as one blob?
+A) Place cache breakpoints so the stable system prompt is cached separately from the profile segment
+B) Cache the entire assembled prompt as one block and accept full misses whenever the profile changes
+C) Disable caching because any dynamic field invalidates the mechanism entirely
+D) Move the profile after the question so order no longer matters for caching
+Correct: A
+Why: Multiple breakpoints let stable prefixes stay cached while dynamic segments invalidate independently. One mega-block or disabling caching wastes the stable win.
+
+=== Q8 | domain: Applications and Integration | pick: 1 ===
+When should a streamed assistant turn be committed to conversation history?
+A) Only after message_stop confirms completion; discard partial turns on interruption
+B) As soon as the first content_block_start arrives
+C) When the HTTP socket closes for any reason
+D) After the first text delta token
+Correct: A
+Why: Socket close or early events are not completion. Commit only after message_stop so history never stores half-built turns.
+
+=== Q9 | domain: Applications and Integration | pick: 1 ===
+An inspector app sends four photos and asks Claude to compare them. Correct request structure?
+A) All four as image blocks in one message with the text instruction so the model sees them together
+B) Four separate conversations then a fifth merge call, because a message may hold only one image
+C) Paste image URLs as plain text only
+D) Convert all four to a single PDF first; raw multi-image is unsupported
+Correct: A
+Why: A single message can carry multiple image blocks plus text for direct comparison. Splitting or URL-as-text loses the multimodal comparison.
+
+=== Q10 | domain: Applications and Integration | pick: 1 ===
+A one-off product photo is analysed once; a brand watermark is reused on thousands of requests. How should each be supplied?
+A) Inline the one-off as base64; serve the reused watermark via the Files API so it is not re-uploaded every call
+B) Inline both as base64 every time because the repeated bytes are negligible at scale
+C) Describe both in text to avoid image tokens always
+D) Force both through Batches regardless of latency
+Correct: A
+Why: Files API fits reused assets; inline base64 fits one-offs. Re-inlining a watermark wastes tokens every call.
+
+=== Q11 | domain: Applications and Integration | pick: 1 ===
+A support tool reuses one long-running Claude conversation for all customers 'to preserve context.' What is wrong?
+A) Cross-customer leakage: each user or case needs its own conversation with only its own context
+B) Nothing, if the context window is large enough
+C) Only latency suffers; privacy is unaffected
+D) It only breaks prompt caching
+Correct: A
+Why: Shared conversations bleed one customer's data into another's answers. Window size does not fix session hygiene.
+
+=== Q12 | domain: Applications and Integration | pick: 1 ===
+The same feature must work in claude.ai, via the API, and in Claude Code. A teammate assumes one prompt behaves identically everywhere. Flaw?
+A) Each surface wraps prompts with different default context and instruction handling, so identical wording can still diverge
+B) There is no flaw; behaviour is guaranteed identical across interfaces
+C) Only the API supports system prompts
+D) Claude Code ignores system prompts entirely
+Correct: A
+Why: Surfaces layer different defaults around the same words. System prompts exist across surfaces; identical behaviour is not guaranteed.
+
+=== Q13 | domain: Applications and Integration | pick: 1 ===
+Plugin A requires plugin B at 2.x but the project pins B at 1.x. What kind of problem is this?
+A) A plugin dependency conflict that must be resolved by aligning versions or isolating plugins before production trust
+B) Harmless duplication because plugin versions are cosmetic
+C) A pure load-time performance issue
+D) Something the model silently arbitrates at runtime
+Correct: A
+Why: Conflicting version requirements are dependency conflicts needing explicit resolution, like any software graph.
+
+=== Q14 | domain: Applications and Integration | pick: 1 ===
+You invoke Claude through a cloud vendor's hosted endpoint rather than first-party Anthropic. What stays true?
+A) Messages API shape is generally consistent, but auth, headers, and some access patterns can differ by vendor
+B) Vendors run an unrelated model that only shares the marketing name
+C) Streaming is first-party only
+D) Tool use is unavailable on vendor endpoints
+Correct: A
+Why: Vendor hosting usually preserves Messages API shape while differing in platform auth/details. Streaming and tools are not first-party exclusives.
+
+=== Q15 | domain: Applications and Integration | pick: 1 ===
+A 2,000-line prompt-handling function is unreadable and every change risks regressions. Appropriate response?
+A) Refactor incrementally into smaller tested functions with clear responsibilities rather than a blank-file rewrite
+B) Leave it; prompt code cannot be structured
+C) Rewrite from scratch in one sitting with no tests
+D) Add a long comment and keep extending the monolith
+Correct: A
+Why: Incremental, tested refactoring is the standard fix for SRP violations. Untested rewrites and comments do not restore structure.
+
+=== Q16 | domain: Applications and Integration | pick: 1 ===
+Two engineers merge Claude-calling features into the same file in one sprint with no review. Missing SDLC practice?
+A) Code review in the merge process to catch conflicting assumptions before production
+B) A larger context window so each engineer sees the other's edits automatically
+C) A bigger model to resolve merge conflicts
+D) Prompt caching to prevent git conflicts
+Correct: A
+Why: Code review is the human gate that catches colliding assumptions. Model size and caching do not replace review.
+
+=== Q17 | domain: Applications and Integration | pick: 2 ===
+Production pins a dated model ID. A new dated release documents a breaking change for your prompts. Which TWO actions fit a controlled upgrade? (Pick 2)
+A) Run evals and canaries on the new ID before switching the pin
+B) Update the pinned ID only after comparing outputs and costs against the reliability floor
+C) Switch the floating alias in production first so customers get the new model immediately
+D) Delete all regression tests because model upgrades never change behaviour
+Correct: A, B
+Why: Pinned IDs enable deliberate upgrades: validate with evals/canaries and check quality/cost before changing the pin. Jumping floating aliases in prod and dropping tests defeat control.
+
+=== Q18 | domain: Applications and Integration | pick: 1 ===
+A teammate says using the Anthropic SDK means you are no longer calling the REST API. Accurate statement?
+A) The SDK wraps the same REST API with typing, retries, and auth helpers; wire calls remain HTTP
+B) The SDK uses a proprietary binary protocol that bypasses HTTP
+C) The SDK runs the model locally
+D) Raw REST is unsupported once an SDK exists
+Correct: A
+Why: SDKs are ergonomic clients over the same REST surface. Raw HTTP remains valid.
+
+=== Q19 | domain: Model Selection and Optimization | pick: 1 ===
+A workload mixes trivial FAQ calls with occasional hard multi-constraint planning. One config should spend reasoning only where warranted. Best fit?
+A) Adaptive thinking so effort scales with the task
+B) Maximum extended thinking on every call
+C) Fast mode on every call
+D) Human routing between two deployments for each request
+Correct: A
+Why: Adaptive thinking scales effort per task. Always-max overpays; always-fast underserves hard cases.
+
+=== Q20 | domain: Model Selection and Optimization | pick: 1 ===
+A latency-sensitive FAQ endpoint does not need step-by-step reasoning. Correct thinking posture?
+A) Leave extended/adaptive deep reasoning off unless a reasoning pass would change the answer
+B) Pin maximum effort on every call for safety
+C) Always route to the largest model tier
+D) Enable thinking but delete thinking blocks before the next turn
+Correct: A
+Why: Spend reasoning only where it changes outcomes. Max effort or largest tier on trivial traffic wastes cost and latency.
+
+=== Q21 | domain: Model Selection and Optimization | pick: 1 ===
+Across multi-turn extended thinking, what must happen to thinking blocks?
+A) Return them unchanged on subsequent turns or the exchange breaks
+B) Summarise them to save context while keeping the gist
+C) Delete them before the next call
+D) Move them into the system prompt
+Correct: A
+Why: Thinking blocks must be echoed unchanged. Summarising, deleting, or relocating them breaks multi-turn thinking.
+
+=== Q22 | domain: Model Selection and Optimization | pick: 1 ===
+Production behaviour changed overnight with no deploy. Config uses a floating model alias. Likely cause and fix?
+A) The alias moved to a newer release; pin a dated version and promote upgrades after evals
+B) The API silently retrained on your traffic; opt out in the console
+C) Temperature drifted upward automatically
+D) Prompt cache served another customer's completions
+Correct: A
+Why: Floating aliases follow new releases. Pin dated versions for deliberate upgrades.
+
+=== Q23 | domain: Model Selection and Optimization | pick: 1 ===
+Finance needs per-feature Claude spend and you have no numbers yet. First practical step?
+A) Log the usage fields (input/output tokens) from each API response per feature
+B) Estimate from character counts alone
+C) Split the monthly invoice evenly across features
+D) Enable extended thinking to get richer billing detail
+Correct: A
+Why: Responses report token usage; per-feature logging yields real numbers. Even splits and char guesses hide drivers.
+
+=== Q24 | domain: Model Selection and Optimization | pick: 1 ===
+Prompt caching hit rate is near zero. Prompt order is [today's date] + [profile] + [20k policy manual] + [question]. Why?
+A) Dynamic date and profile precede the stable manual, so the prefix never matches; put stable content first
+B) Caching requires Batches and cannot work synchronously
+C) 20k tokens exceeds any cacheable size
+D) Caching only applies to output tokens
+Correct: A
+Why: Cache keys on identical prefixes. Leading dynamic content breaks hits; stable-first ordering fixes it.
+
+=== Q25 | domain: Model Selection and Optimization | pick: 1 ===
+Legal nuance summarisation vs fast internal wiki lookup. How should model tiers differ?
+A) Higher-capability tier for nuanced legal work; faster cheaper tier for simple retrieval
+B) Same highest tier for both for consistency
+C) Cheapest tier for both to control cost uniformly
+D) Tier choice does not matter if prompts are identical
+Correct: A
+Why: Match tier to difficulty: nuance justifies capability; simple retrieval does not need it.
+
+=== Q26 | domain: Model Selection and Optimization | pick: 1 ===
+What is the 'reliability floor' in a cost-and-latency design section?
+A) The minimum reliability you refuse to trade away for cost or speed
+B) The lowest cost if you accept arbitrary dropped requests
+C) The cheapest model SKU
+D) The p99 latency target alone
+Correct: A
+Why: Reliability floor is the non-negotiable reliability bound, not a cost or latency number.
+
+=== Q27 | domain: Model Selection and Optimization | pick: 1 ===
+When should hard cost and latency budgets be set?
+A) Before architecture is locked so designs can be checked against them
+B) Only after production profiling under real traffic
+C) Only after the first cost overrun
+D) At the first incident review
+Correct: A
+Why: Budgets must shape architecture before build. Waiting until after means they never constrained design.
+
+=== Q28 | domain: Agents and Workflows | pick: 1 ===
+A nightly ETL always runs the same five steps in fixed order. Right architecture and why?
+A) A workflow: the path is known, so coding it avoids agent cost and nondeterminism
+B) An agent for future-proofing even though the path never branches
+C) One mega-prompt listing all steps unordered
+D) Five independent unordered calls
+Correct: A
+Why: Known fixed sequences are workflows. Agents add nondeterminism you do not need.
+
+=== Q29 | domain: Agents and Workflows | pick: 1 ===
+A hard-coded invoice workflow breaks on unpredictable new supplier formats. Architectural signal?
+A) The variable portion now warrants a bounded agentic decision; pure branching races new formats forever
+B) Add a new hard-coded branch for every new supplier forever
+C) The model tier is simply too small
+D) Replace everything with one large prompt
+Correct: A
+Why: When inputs leave the codeable path, agent territory appears for the variable part—not endless branches.
+
+=== Q30 | domain: Agents and Workflows | pick: 1 ===
+In a manager/supervisor hierarchy, what is the manager's job?
+A) Decompose the goal, delegate to specialised subagents, and integrate results
+B) Execute every subtask while subagents only observe
+C) Enforce API rate limits only
+D) Cache subagent prompts only
+Correct: A
+Why: Managers decompose, delegate, and integrate. They are not the sole executors nor mere infra helpers.
+
+=== Q31 | domain: Agents and Workflows | pick: 1 ===
+An agent can permanently delete customer records. Correct design-time control?
+A) A human approval gate before the delete executes
+B) Logging and alerts after deletes so on-call can recover
+C) Lower temperature only
+D) A system-prompt reminder to be careful
+Correct: A
+Why: Irreversible actions need a pre-execution human gate. Logs after the fact are too late.
+
+=== Q32 | domain: Agents and Workflows | pick: 1 ===
+A research agent must synthesise 40 documents but one shared context degrades quality. Best approach?
+A) Subagents extract per document in isolation, then synthesise from compact extracts
+B) Load all 40 and raise max_tokens as high as possible
+C) Drop documents that do not fit
+D) Lower temperature only
+Correct: A
+Why: Isolated subagent contexts keep extracts clean. Cramming all documents is the bloat that hurt quality.
+
+=== Q33 | domain: Agents and Workflows | pick: 1 ===
+You are choosing self-hosted agent infrastructure versus an Anthropic-hosted managed agent. Core tradeoff?
+A) Self-hosting maximises infra/data-flow control at operating cost; managed reduces ops burden with less infra control
+B) There is no meaningful difference
+C) Self-hosting is always cheaper regardless of team capacity
+D) Managed hosting is only for non-agentic chat
+Correct: A
+Why: The tradeoff is control and operational burden versus convenience—not identical options.
+
+=== Q34 | domain: Agents and Workflows | pick: 2 ===
+Which TWO are established agent patterns for multi-step work? (Pick 2)
+A) A tool-use loop that calls tools and folds results until done
+B) Delegating a bounded subtask to a subagent that returns a compact result
+C) Hard-coding every possible input branch so no runtime decision exists
+D) Disabling all tools to force pure parametric knowledge
+Correct: A, B
+Why: Tool-use loops and subagent delegation are core patterns. Exhaustive hard branches and disabling tools are not.
+
+=== Q35 | domain: Agents and Workflows | pick: 1 ===
+Hand-rolling state, retries, and branching across eight agent steps has become spaghetti. What are LangGraph/Strands/PydanticAI for?
+A) Orchestration: graph or typed control flow, explicit state, and retries so you stop hand-rolling plumbing
+B) Fine-tuning the model to internalise the eight steps with no code
+C) Replacing the need for tool schemas
+D) Acting as vector databases
+Correct: A
+Why: These frameworks structure multi-step control flow and recovery. They do not fine-tune models or replace tool schemas.
+
+=== Q36 | domain: Prompt and Context Engineering | pick: 1 ===
+Over a long chat the JSON format specified early starts being ignored. Which technique addresses this failure type?
+A) State and tighten the format rule durably in the system prompt
+B) Attach reasoning few-shots to every user turn
+C) Raise temperature
+D) Swap models mid-conversation only
+Correct: A
+Why: Cross-turn drift points to underspecified system instructions. Fix durability there, not with per-turn few-shot spam.
+
+=== Q37 | domain: Prompt and Context Engineering | pick: 2 ===
+User text is concatenated into a prompt template and sometimes overrides instructions. Which TWO help at the prompt layer? (Pick 2)
+A) Delimit and label user text clearly as data
+B) Keep trusted instructions in the system prompt, separate from user content
+C) Ask users politely not to include instructions
+D) Truncate all user input to 20 characters
+Correct: A, B
+Why: Delimiting untrusted text and separating trusted system instructions blunt injection. Politeness and blunt truncation are weak or harmful.
+
+=== Q38 | domain: Prompt and Context Engineering | pick: 2 ===
+Free-text user input flows into a prompt that also holds instructions. Beyond default model refusals, which TWO defences belong in the application layer? (Pick 2)
+A) Separate untrusted user content structurally (e.g. tagged blocks / role boundaries) from system instructions
+B) Validate and constrain model output before privileged side effects run
+C) Concatenate user text into the system prompt so the model 'owns' both equally
+D) Disable all logging so injection attempts cannot be investigated
+Correct: A, B
+Why: Treat user text as untrusted and keep it separated from instructions; gate tools/actions on validated outputs. Merging into the system prompt and disabling logs worsen exposure.
+
+=== Q39 | domain: Prompt and Context Engineering | pick: 1 ===
+RAG embeds entire 30-page docs as single chunks; answers are vague and context fills instantly. Fix?
+A) Chunk into smaller semantically coherent passages so retrieval returns focused pieces
+B) Keep whole-doc chunks but retrieve more of them
+C) Only switch to a larger embedding model
+D) Ask the model to ignore irrelevant parts while still paying for them
+Correct: A
+Why: Whole-document chunks blunt precision and blow the budget. Smaller coherent passages fix granularity.
+
+=== Q40 | domain: Prompt and Context Engineering | pick: 1 ===
+Parser breaks on valid JSON that includes a prose preamble. Most robust production handling?
+A) Constrain to JSON-only with schema validation, and repair or reject before downstream use
+B) Set temperature to 0 and trust formatting forever
+C) Parse raw output without validation
+D) Increase max_tokens so preambles have room
+Correct: A
+Why: API/schema constraints plus defensive validation beat prompt-only hope. Temperature 0 does not enforce structure.
+
+=== Q41 | domain: Prompt and Context Engineering | pick: 1 ===
+A critical instruction is buried mid six paragraphs of background and keeps being missed. Most direct fix?
+A) Move the critical instruction to the start or end and trim unnecessary background
+B) Duplicate the six background paragraphs
+C) Lower temperature so the model 'reads more carefully'
+D) Add another mid-document copy of the same buried line
+Correct: A
+Why: Models attend more reliably at edges of long prompts; bury-less and trim noise.
+
+=== Q42 | domain: Tools and MCPs | pick: 1 ===
+Two tools both 'retrieve information' and Claude often picks the wrong one. Best single fix?
+A) Add clear when-NOT-to-use guidance in each description
+B) Rely on more distinctive parameter names alone while descriptions stay overlapping
+C) Delete one tool immediately
+D) Increase model tier only
+Correct: A
+Why: Tool choice follows descriptions; exclusion conditions resolve overlap better than schema cosmetics.
+
+=== Q43 | domain: Tools and MCPs | pick: 1 ===
+A tool named handle_request does lookup, validation, and notification in one call; the agent is confused about results. Fix?
+A) Split into focused single-responsibility tools with matching descriptions
+B) Rename it to a more exciting name
+C) Add a fourth responsibility
+D) Only add a longer system-prompt example
+Correct: A
+Why: Overloaded tools create ambiguity; split by responsibility.
+
+=== Q44 | domain: Tools and MCPs | pick: 1 ===
+An MCP server should expose a named parameterised 'weekly-report' template users invoke on demand. Which MCP primitive?
+A) A prompt
+B) A tool, because anything named is always a tool
+C) A resource
+D) A transport
+Correct: A
+Why: Named user-invoked templates are MCP prompts. Tools are model-invoked actions; resources are readable data.
+
+=== Q45 | domain: Tools and MCPs | pick: 1 ===
+You connect three MCP servers. What must you manage?
+A) Each server's tool definitions load into context whether used or not, adding cost
+B) Connected servers forbid any custom tools in the same app
+C) All three must use stdio
+D) The context window permanently expands with no cost impact
+Correct: A
+Why: Connected servers inject definitions into context regardless of use—connect deliberately.
+
+=== Q46 | domain: Tools and MCPs | pick: 1 ===
+A capability must call authenticated internal REST APIs and be reused across five apps, maintained by a platform team. Best approach?
+A) An MCP server maintained centrally and connected by each app
+B) A Skill duplicated into each repo
+C) Five hand-synced custom tools
+D) A pasted system-prompt block that cannot call APIs
+Correct: A
+Why: Centralised live authenticated capability reuse is the MCP server case; Skills are instructional, not live API gateways.
+
+=== Q47 | domain: Security and Safety | pick: 1 ===
+A fetched page hides text telling the agent to email a file externally. Most effective mitigation?
+A) Least privilege so the summariser has no email capability, plus isolating untrusted content from instructions
+B) Only a system-prompt line to ignore embedded instructions
+C) Keyword-scan for 'ignore'
+D) Switch to a larger more compliant model
+Correct: A
+Why: Durable defense is capability removal and isolation. Prompt-only and keyword scans are bypassable.
+
+=== Q48 | domain: Security and Safety | pick: 2 ===
+A triage assistant receives full customer records but only needs message text and product name. Which TWO practices apply? (Pick 2)
+A) Send only needed fields, stripping the rest before the API call
+B) Redact or tokenise identifiers that must pass through
+C) Send the full record but tell the model not to read sensitive fields
+D) Encrypt the API key more strongly instead of minimising prompt data
+Correct: A, B
+Why: Data minimisation and redaction keep unneeded PII out. Instructing the model to ignore fields still transmits them.
+
+=== Q49 | domain: Security and Safety | pick: 1 ===
+User jailbreak attempt vs malicious instructions hidden in a fetched page. How do they differ?
+A) Jailbreak is direct user policy bypass; injection arrives via untrusted third-party content—mitigations differ
+B) They are identical attacks with one identical fix
+C) Authenticated users make jailbreaks harmless
+D) HTTPS makes page-borne injection impossible
+Correct: A
+Why: Direct jailbreaks vs content injection need different layers (policy/refusal vs isolation/least privilege).
+
+=== Q50 | domain: Security and Safety | pick: 1 ===
+Content policy lives only as one system-prompt line. Secure-by-design improvement?
+A) Layer independent controls: prompt guidance plus output filtering plus scoped tool permissions
+B) Make the prompt line longer and stop there
+C) Remove the prompt line as useless
+D) Rely on users to self-police
+Correct: A
+Why: Layered guardrails avoid a single probabilistic point of failure.
+
+=== Q51 | domain: Claude Code | pick: 1 ===
+First pass on an untrusted third-party repo. Correct permission posture?
+A) Read-only plan mode to explore and propose before edits
+B) bypassPermissions for uninterrupted speed
+C) Manual approval of every file read
+D) Disable all tools
+Correct: A
+Why: Match authority to risk: plan mode explores without writing. bypassPermissions grants too much too early.
+
+=== Q52 | domain: Claude Code | pick: 2 ===
+A PreToolUse hook must block a disallowed read. Which TWO are true? (Pick 2)
+A) PreToolUse fires before the tool executes, so it can block
+B) Exit code 2 with a reason on stderr signals the block
+C) PostToolUse can also prevent the read by undoing it
+D) Exit 0 with a reason on stdout blocks the call
+Correct: A, B
+Why: Only PreToolUse can block; exit 2 + stderr is the block signal. PostToolUse is too late; exit 0 allows.
+
+=== Q53 | domain: Eval, Testing, and Debugging | pick: 1 ===
+An agent quotes the wrong price. The trace shows the pricing tool returned the correct number. Where is the failure?
+A) In how the model used the correct tool data, not in the tool itself
+B) Always in the integration layer whenever a final answer is wrong
+C) In the network
+D) In API key configuration
+Correct: A
+Why: Correct tool data plus wrong final answer isolates model reasoning/use of the data.
+
+=== Q54 | domain: Tools and MCPs | pick: 1 ===
+A client-side tool reads the user's current form field; a server-side tool queries a production database. A refactor swaps their execution locations. What breaks first?
+A) The client-state tool can no longer see browser state once forced server-side
+B) Nothing; tools are interchangeable regardless of execution location
+C) Only latency changes; both still function identically
+D) The database tool becomes faster and more secure on the client
+Correct: A
+Why: Execution follows where data lives: live browser state is invisible to the server. Swapping locations breaks access, not merely latency.
+
+=== Q55 | domain: Eval, Testing, and Debugging | pick: 2 ===
+Which TWO success criteria are specific enough to build an eval against? (Pick 2)
+A) Return valid JSON with sentiment in {positive, negative, neutral} and confidence in [0,1]
+B) Classify the ticket into exactly one of five named categories
+C) Produce a genuinely useful triage
+D) Handle the ticket well
+Correct: A, B
+Why: Constrained JSON and a closed category set are checkable. 'Useful' and 'handle well' are too vague to grade.
+

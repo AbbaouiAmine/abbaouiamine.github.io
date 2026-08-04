@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vue d’ensemble · Claude Certified Developer Foundations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #CC785C;
+      --accent-dark: #B5654A;
+      --accent-soft: #f7f1ed;
+      --ink: #1a1a1a;
+      --paper: #FFFcf9;
+      --muted: #64748b;
+      --line: rgba(15, 23, 42, 0.1);
+      --ok: #2f7a3e;
+      --shadow: 0 10px 32px -18px rgba(31, 31, 31, 0.35);
+      --radius: 14px;
+      --font: "DM Sans", system-ui, sans-serif;
+      --display: "Fraunces", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 90% -10%, rgba(204, 120, 92, 0.18), transparent 60%),
+        linear-gradient(165deg, #faf8f6 0%, #f5f0ed 45%, #f7f7f5 100%);
+      -webkit-font-smoothing: antialiased;
+    }
+    .bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 10px 18px;
+      background: rgba(255, 252, 249, 0.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .bar a {
+      color: var(--accent-dark);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+    .bar a:hover { text-decoration: underline; }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 16px 88px;
+    }
+    .head, .filters, .domain-progress {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .head { padding: 22px 24px; }
+    .head h1 {
+      margin: 0 0 8px;
+      font-family: var(--display);
+      font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+      font-weight: 700;
+      color: var(--accent-dark);
+      line-height: 1.2;
+    }
+    .muted { color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
+    .filters { padding: 16px 18px; }
+    .filters .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .filters label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      min-width: 70px;
+    }
+    .filters select, .filters button {
+      font: inherit;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: #fff;
+      color: var(--ink);
+    }
+    .filters select { min-width: 220px; }
+    .filters select:focus {
+      outline: 2px solid rgba(204, 120, 92, 0.35);
+      border-color: var(--accent);
+    }
+    .filters button {
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .filters button:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+    }
+    #resultCount {
+      font-size: 0.85rem;
+      color: var(--accent-dark);
+      font-weight: 700;
+    }
+    .domain-progress { padding: 18px 20px; }
+    .domain-progress h2 {
+      font-size: 1.02rem;
+      margin: 0 0 14px;
+      font-weight: 700;
+    }
+    .progress-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 1.4fr) 1fr 64px;
+      gap: 10px;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .progress-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .progress-track {
+      height: 10px;
+      background: #ece7e3;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--ok));
+      border-radius: inherit;
+    }
+    .progress-value {
+      text-align: right;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .overview-card {
+      display: flex;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      min-height: 118px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .overview-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 14px 36px -18px rgba(181, 101, 74, 0.45);
+    }
+    .overview-card.hidden { display: none; }
+    .overview-card .n {
+      flex: 0 0 auto;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .labels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .badge.domain { background: var(--accent-soft); color: var(--accent-dark); }
+    .badge.pick { background: #e8f5ea; color: var(--ok); }
+    .badge.pick.multi { background: #fdeceb; color: #b42318; }
+    .badge.section { background: #efeae4; color: #5c534c; }
+    .summary {
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+    .set-picker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 16px;
+    }
+    .set-picker a {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .set-picker a.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .set-picker a:hover:not(.active) { background: #eadfd7; }
+    .err {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      color: var(--muted);
+    }
+    .disclaimer {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 0.72rem;
+      color: #9a8f88;
+      line-height: 1.5;
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 20px 12px 72px; }
+      .filters select { min-width: 100%; width: 100%; }
+      .progress-row { grid-template-columns: 1fr; gap: 4px; }
+      .progress-value { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="bar">
+    <a href="index.html">← Accueil mock</a>
+    <a href="glossary.html">Glossaire</a>
+    <a id="open-quiz" href="index.html">Ouvrir le quiz</a>
+  </nav>
+
+  <main class="wrap">
+    <div class="set-picker" id="set-picker"></div>
+
+    <header class="head">
+      <h1 id="title">Vue d’ensemble</h1>
+      <p class="muted" id="lead">
+        Répartition par domaine et liste des questions. Cliquez une carte pour l’ouvrir dans le quiz (ordre source, non mélangé).
+      </p>
+    </header>
+
+    <div id="content"></div>
+
+    <p class="disclaimer">
+      Outil d’étude indépendant. Non affilié à Anthropic — contenu généré / non vérifié.
+    </p>
+  </main>
+
+  <script src="questions-data.js"></script>
+  <script>
+    (function () {
+      const data = window.MOCK_EXAM;
+      const params = new URLSearchParams(location.search);
+      const setId = Number(params.get("set") || "1");
+      const content = document.getElementById("content");
+      const picker = document.getElementById("set-picker");
+      const openQuiz = document.getElementById("open-quiz");
+
+      if (!data || !Array.isArray(data.sets)) {
+        content.innerHTML = "<div class='err'>Impossible de charger <code>questions-data.js</code>.</div>";
+        return;
+      }
+
+      data.sets.forEach((s) => {
+        const a = document.createElement("a");
+        a.href = "overview.html?set=" + s.id;
+        a.textContent = "Set " + s.id;
+        if (s.id === setId) a.classList.add("active");
+        picker.appendChild(a);
+      });
+
+      const set = data.sets.find((s) => s.id === setId);
+      if (!set) {
+        document.getElementById("title").textContent = "Set introuvable";
+        content.innerHTML =
+          "<div class='err'>Utilisez <code>overview.html?set=1</code> … <code>set=8</code>.</div>";
+        return;
+      }
+
+      document.title = "Vue d’ensemble · " + set.label;
+      document.getElementById("title").textContent =
+        "Vue d’ensemble — " + set.label;
+      document.getElementById("lead").textContent =
+        set.questions.length +
+        " questions · cliquez une carte pour l’ouvrir dans le quiz (ordre source).";
+      openQuiz.href = "index.html?set=" + set.id;
+
+      const byDomain = {};
+      set.questions.forEach((q) => {
+        byDomain[q.domain] = (byDomain[q.domain] || 0) + 1;
+      });
+      const domains = Object.keys(byDomain).sort((a, b) =>
+        a.localeCompare(b),
+      );
+      const total = set.questions.length;
+
+      const progress = document.createElement("section");
+      progress.className = "domain-progress";
+      progress.innerHTML = "<h2>Répartition par domaine</h2>";
+      domains.forEach((d) => {
+        const n = byDomain[d];
+        const pct = Math.round((n / total) * 100);
+        const row = document.createElement("div");
+        row.className = "progress-row";
+        row.innerHTML =
+          '<div class="progress-label"></div>' +
+          '<div class="progress-track"><div class="progress-fill" style="width:' +
+          pct +
+          '%"></div></div>' +
+          '<div class="progress-value">' +
+          n +
+          "/" +
+          total +
+          "</div>";
+        row.querySelector(".progress-label").textContent = d;
+        progress.appendChild(row);
+      });
+
+      const filters = document.createElement("div");
+      filters.className = "filters";
+      filters.innerHTML =
+        '<div class="row">' +
+        '<label for="filterDomain">Domaine</label>' +
+        '<select id="filterDomain"><option value="">Tous les domaines</option></select>' +
+        '<button type="button" id="resetFilters">Réinitialiser</button>' +
+        '<span id="resultCount"></span>' +
+        "</div>";
+      const sel = filters.querySelector("#filterDomain");
+      domains.forEach((d) => {
+        const opt = document.createElement("option");
+        opt.value = d;
+        opt.textContent = d;
+        sel.appendChild(opt);
+      });
+
+      const grid = document.createElement("div");
+      grid.className = "overview-grid";
+
+      function truncate(text, max) {
+        const t = String(text || "").trim();
+        if (t.length <= max) return t;
+        return t.slice(0, max - 1).trimEnd() + "…";
+      }
+
+      set.questions.forEach((q, i) => {
+        const num = i + 1;
+        const card = document.createElement("a");
+        card.className = "overview-card";
+        card.href = "index.html?set=" + set.id + "&q=" + num;
+        card.dataset.domain = q.domain;
+
+        const badges = [];
+        badges.push(
+          '<span class="badge domain">' + escapeHtml(shortDomain(q.domain)) + "</span>",
+        );
+        badges.push(
+          '<span class="badge pick' +
+            (q.pick > 1 ? " multi" : "") +
+            '">pick ' +
+            q.pick +
+            "</span>",
+        );
+        if (q.s) {
+          badges.push('<span class="badge section">§ ' + escapeHtml(q.s) + "</span>");
+        }
+
+        card.innerHTML =
+          '<div class="n">' +
+          num +
+          "</div>" +
+          "<div>" +
+          '<div class="labels">' +
+          badges.join("") +
+          "</div>" +
+          '<div class="summary"></div>' +
+          "</div>";
+        card.querySelector(".summary").textContent = truncate(q.q, 140);
+        grid.appendChild(card);
+      });
+
+      function applyFilters() {
+        const dv = sel.value;
+        let n = 0;
+        grid.querySelectorAll(".overview-card").forEach((card) => {
+          const show = !dv || card.dataset.domain === dv;
+          card.classList.toggle("hidden", !show);
+          if (show) n++;
+        });
+        document.getElementById("resultCount").textContent =
+          n + " question" + (n > 1 ? "s" : "");
+      }
+
+      content.appendChild(progress);
+      content.appendChild(filters);
+      content.appendChild(grid);
+
+      sel.addEventListener("change", applyFilters);
+      document.getElementById("resetFilters").addEventListener("click", () => {
+        sel.value = "";
+        applyFilters();
+      });
+      applyFilters();
+
+      function shortDomain(d) {
+        if (d.length <= 28) return d;
+        return d.slice(0, 26).trimEnd() + "…";
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+    })();
+  </script>
+</body>
+</html>

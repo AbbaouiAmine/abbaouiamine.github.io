@@ -1,0 +1,472 @@
+[
+  {
+    "domain": "Configuration Management",
+    "pick": 1,
+    "q": "A production assistant's behaviour changed overnight with no deploy. The config references the model by a floating alias rather than a dated version string. What happened, and what is the fix?",
+    "options": [
+      "The alias moved to a newer model release; pin a dated version and promote upgrades deliberately after evals",
+      "The API silently retrained the model on your traffic; opt out of training in the console",
+      "A cache served stale completions; clear the prompt cache",
+      "Temperature drifted upward over time; reset it to the configured value"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Floating aliases follow new releases, so behaviour can change without any deploy on your side. Pinning a dated version makes upgrades deliberate. The API does not retrain into your endpoint, caches return your own prefix not stale answers, and temperature does not drift."
+  },
+  {
+    "domain": "Cost & Tokens",
+    "pick": 1,
+    "q": "Finance asks for per-feature Claude spend, but you currently have no numbers at all. What is the first practical step?",
+    "options": [
+      "Read the usage field returned on each API response and record input/output tokens per feature",
+      "Estimate from character counts, since tokens are roughly four characters each and the approximation is close enough for accounting",
+      "Divide the monthly invoice evenly across features",
+      "Enable extended thinking to get more detailed billing"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Every response reports its token usage; logging that per feature gives real numbers. Character-count estimates drift by content type, an even split hides the actual drivers, and thinking has nothing to do with billing detail."
+  },
+  {
+    "domain": "Cost & Tokens",
+    "pick": 1,
+    "q": "You enabled prompt caching but the hit rate is near zero. The prompt is assembled as: [today's date] + [user profile] + [20k-token policy manual] + [question]. Why?",
+    "options": [
+      "The dynamic date and profile sit before the manual, so the prefix is never identical between calls; move stable content first and dynamic content after it",
+      "Caching needs the Batches API and cannot work on synchronous calls",
+      "20k tokens exceeds the maximum cacheable prefix size",
+      "Caching only applies to output tokens, so input assembly is irrelevant"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "A cache matches on an identical prefix; leading dynamic content breaks the match every call. Put the stable manual first and dynamic values after. Caching works on synchronous calls, 20k is well within cacheable size, and caching is an input-side mechanism."
+  },
+  {
+    "domain": "Model Selection",
+    "pick": 1,
+    "q": "One endpoint serves both trivial lookups and occasional gnarly multi-constraint planning. You want one configuration that spends reasoning only where warranted. Which option?",
+    "options": [
+      "Adaptive thinking, letting effort scale with the task",
+      "Extended thinking locked to the maximum effort level, so the hard cases are always covered and the easy ones simply finish a little slower",
+      "Fast mode on all calls",
+      "Two separate deployments with a human routing between them"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Adaptive thinking scales effort per task, which is exactly the mixed-load fit. Max-effort everywhere pays thinking cost on trivial lookups, fast mode underserves the hard cases, and human routing does not scale."
+  },
+  {
+    "domain": "API Mechanics",
+    "pick": 1,
+    "q": "Under burst load some calls return 429 rate-limit errors and some return 529 overloaded errors. Correct client behaviour?",
+    "options": [
+      "Retry with exponential backoff and jitter, respecting any retry-after guidance, and shed or queue non-urgent work",
+      "Retry 429s in a tight loop since the limit resets quickly, and treat 529s as permanent failures to surface to users at once",
+      "Immediately fail over every call to a different model tier",
+      "Raise max_tokens so each call does more and you need fewer of them"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Both are transient: back off with jitter and queue what can wait. Tight-looping worsens the burst, 529s are not permanent, blanket tier failover changes behaviour without fixing load, and max_tokens does not reduce request rate meaningfully."
+  },
+  {
+    "domain": "API Mechanics",
+    "pick": 2,
+    "q": "You are assembling a streamed response that includes a tool call. Which TWO statements are correct? (Pick 2)",
+    "options": [
+      "A tool call's JSON arguments arrive incrementally across delta events and must be accumulated before parsing",
+      "The end of the HTTP stream is not itself confirmation of a complete message; completion is signalled by the stop event",
+      "Each delta event is a complete, independently parseable JSON argument object",
+      "Tool calls are never included in streamed responses"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Streaming delivers tool arguments in partial deltas that you accumulate, and completion is signalled by the stop event rather than the socket closing. Deltas are fragments, not standalone JSON, and tool calls absolutely stream."
+  },
+  {
+    "domain": "API Mechanics",
+    "pick": 2,
+    "q": "You submitted 80,000 requests to the Message Batches API. Which TWO describe how results work? (Pick 2)",
+    "options": [
+      "You poll the batch for completion and then retrieve results within the processing window",
+      "Individual requests can succeed or fail independently, so results must be checked per item",
+      "Results stream back to you live over a held-open connection as each item completes",
+      "If any single request errors, the whole batch is rolled back and refunded"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Batches are asynchronous: you poll, then fetch results, and each item carries its own success or error. There is no held-open live stream, and one failed item does not roll back the batch."
+  },
+  {
+    "domain": "API Mechanics",
+    "pick": 1,
+    "q": "An inspector app sends four photos of the same site and asks Claude to compare them. How is this structured?",
+    "options": [
+      "All four as image blocks in one message alongside the text instruction, so the model sees them together",
+      "Four separate conversations, one per image, then a fifth call to merge the four answers, since a message can hold at most one image",
+      "As URLs pasted into the prompt text",
+      "Only as a PDF, since multiple raw images are unsupported"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "A single message can carry multiple image blocks with text, letting the model compare them directly. Splitting into per-image calls loses the comparison, pasted URLs are not image input, and raw multiple images are fully supported."
+  },
+  {
+    "domain": "Applications & Integration",
+    "pick": 1,
+    "q": "A support tool reuses one long-running Claude conversation for all customers to 'preserve context.' What is wrong with this design?",
+    "options": [
+      "One customer's details leak into another's answers; each user or case needs its own conversation with only its own context",
+      "Nothing, provided the context window is large enough to hold all the customers' histories at once",
+      "It is only a problem for latency, since a long conversation responds slower",
+      "It breaks prompt caching"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Session hygiene: sharing one conversation across customers bleeds one user's data into another's responses, a privacy and correctness failure. A big window does not fix cross-customer leakage, and latency or caching are not the core issue."
+  },
+  {
+    "domain": "Applications & Integration",
+    "pick": 1,
+    "q": "A RAG assistant answers confidently but users can't tell which retrieved document supports which claim. Best improvement?",
+    "options": [
+      "Instruct the model to ground each claim in the supplied passages and cite which passage supports it, and validate that cited passages actually exist",
+      "Raise the retrieval count from 5 to 50 passages so more supporting material is always present somewhere in the context",
+      "Lower the temperature so answers sound less confident",
+      "Move the passages into the system prompt"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Grounded, citable answers come from instructing citation against the supplied passages and validating the citations. Fifty passages add noise and cost, temperature does not create attribution, and relocation changes nothing about citing."
+  },
+  {
+    "domain": "Software Engineering",
+    "pick": 1,
+    "q": "Your Python service uses the Anthropic SDK. A teammate says using the SDK means you're no longer calling the REST API. What is accurate?",
+    "options": [
+      "The SDK wraps the same REST API, adding typed helpers, retries, and auth handling; the underlying HTTP calls are identical",
+      "The SDK speaks a proprietary binary protocol that bypasses HTTP entirely, which is why it is faster than raw REST calls",
+      "The SDK runs the model locally",
+      "The SDK is required; raw REST calls are not supported"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Client SDKs wrap the REST API with ergonomics like typing, retries, and auth; the wire calls are the same HTTP. There is no proprietary bypass, nothing runs locally, and raw REST remains fully supported."
+  },
+  {
+    "domain": "Prompt Engineering",
+    "pick": 1,
+    "q": "Free-text user input flows into a prompt that also contains your instructions. Beyond delimiting, what is the input-sanitization step?",
+    "options": [
+      "Strip or neutralise control-like content in the user text, such as markup that mimics your delimiters or role labels, before it enters the prompt",
+      "Spell-check and grammar-correct the user text so the model reads it more accurately and is less likely to misinterpret the request",
+      "Convert the text to uppercase so instructions stand out",
+      "Hash the user text and include only the hash"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Sanitization neutralises content that could impersonate your prompt structure, like fake delimiters or role labels. Spell-checking is cosmetic, uppercase changes nothing about injection, and hashing destroys the content the model needs."
+  },
+  {
+    "domain": "Context Engineering",
+    "pick": 1,
+    "q": "Your RAG pipeline embeds entire 30-page documents as single chunks. Retrieval 'works' but answers are vague and the context fills instantly. What is the fix?",
+    "options": [
+      "Chunk documents into smaller, semantically coherent passages so retrieval returns focused, relevant pieces instead of whole documents",
+      "Keep whole-document chunks but raise the retrieval count so the model has even more full documents to draw from on each question",
+      "Switch the embedding model to a larger one",
+      "Ask the model to ignore irrelevant parts"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Whole-document chunks blunt retrieval precision and blow the budget; smaller coherent passages return exactly the relevant material. More whole documents worsens both problems, a bigger embedder does not fix granularity, and 'ignore the rest' still pays for the rest."
+  },
+  {
+    "domain": "Context Engineering",
+    "pick": 1,
+    "q": "A day-long agent session must continue, but history has grown near the window limit and old tool outputs are mostly stale. Which lever fits?",
+    "options": [
+      "Compact the history: summarise or prune stale turns and tool outputs while preserving decisions and open state",
+      "Start deleting the system prompt and tool definitions first, since they are the largest single blocks in the window",
+      "Raise max_tokens",
+      "Increase the temperature to make replies shorter"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Compaction summarises or prunes stale history while keeping what still matters. The system prompt and tool definitions are load-bearing, max_tokens governs output not history, and temperature does not manage the window."
+  },
+  {
+    "domain": "Agents & Workflows",
+    "pick": 1,
+    "q": "A hard-coded five-step workflow handles invoices, but a new supplier's invoices arrive in unpredictable formats and the workflow breaks on them. What does this signal architecturally?",
+    "options": [
+      "Inputs now fall outside the codeable path, so the variable part warrants an agent that can decide steps at runtime",
+      "The workflow needs more steps: enumerate every supplier format as its own branch and add a branch each time a new one appears",
+      "The model tier is too small",
+      "The workflow should be replaced by a single large prompt"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Workflows fit paths you can write down; when inputs fall off the path, the variable portion is agent territory. Enumerating every format is a losing race, tier is not the issue, and a mega-prompt is neither."
+  },
+  {
+    "domain": "Agents & Workflows",
+    "pick": 1,
+    "q": "In a manager/supervisor hierarchy, what is the manager's job?",
+    "options": [
+      "Decompose the goal, delegate subtasks to specialised subagents, and integrate their results",
+      "Execute every subtask itself while the subagents observe and provide feedback on its work at each step",
+      "Enforce the API rate limits across the team of agents",
+      "Cache the subagents' prompts"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "The manager decomposes, delegates to specialists, and integrates. It does not do all the work with subagents as reviewers, and rate limiting or caching are infrastructure concerns, not the hierarchy's role."
+  },
+  {
+    "domain": "Agents & Workflows",
+    "pick": 1,
+    "q": "Your team is hand-rolling state passing, retries, and branching between eight agent steps, and it's becoming spaghetti. What are frameworks like LangGraph, Strands, or PydanticAI for?",
+    "options": [
+      "They provide the orchestration layer: graph or typed control flow, explicit state, and retries, so you stop hand-rolling the plumbing",
+      "They fine-tune the model so it internalises the eight steps and no orchestration code is needed at all afterwards",
+      "They replace the need for tool schemas",
+      "They are vector databases for retrieval"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Agentic abstraction frameworks structure multi-step control flow, state, and recovery. They do not fine-tune models, tools still need schemas, and they are not vector stores."
+  },
+  {
+    "domain": "Agents & Workflows",
+    "pick": 1,
+    "q": "During a Claude Code session, a side-quest (auditing a dependency tree) threatens to flood the main conversation with output. What is the idiomatic move?",
+    "options": [
+      "Hand the audit to a subagent, which works in its own context and returns just the findings to the main thread",
+      "Run the audit in the main thread but ask for terse output, keeping everything in one place so nothing is lost between contexts",
+      "Abort the audit and do it manually later",
+      "Open a second terminal and paste results across"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Subagents isolate noisy side-work in their own context and return a compact result, keeping the main thread clean. Terse-but-inline still spends the main window, and aborting or manual pasting throws away the tooling."
+  },
+  {
+    "domain": "Tools & MCPs",
+    "pick": 1,
+    "q": "One tool queries your internal database from the backend; another reads the highlighted text in the user's browser tab. What distinguishes them?",
+    "options": [
+      "The database tool is server-side, executed by your backend; the highlight reader must be client-side, executed where the user's state lives",
+      "Both must be server-side, since tools always execute on the server that hosts the agent and the browser state is fetched over an API",
+      "Both are built-in tools",
+      "The difference is only their schema format"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Execution location follows where the data lives: backend data is server-side; live browser state can only be read client-side. A server cannot see the user's in-page selection, and this is an execution distinction, not a schema one."
+  },
+  {
+    "domain": "Tools & MCPs",
+    "pick": 1,
+    "q": "In an agent harness, a wire-transfer tool must never run on the model's say-so alone. Which tool-usage pattern applies?",
+    "options": [
+      "An approval pattern: the harness intercepts the call and requires explicit confirmation before dispatching it",
+      "Prompt-level guidance: a firm system-prompt paragraph explaining the gravity of transfers so the model self-restricts reliably",
+      "Naming the tool something less inviting",
+      "Lowering the temperature on calls that mention money"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "The harness-level approval pattern gates dispatch outside the model's discretion. Prompt guidance is probabilistic, naming is irrelevant, and temperature does not gate execution."
+  },
+  {
+    "domain": "Tools & MCPs",
+    "pick": 1,
+    "q": "An MCP server should offer users a named, parameterised 'weekly-report' template they can invoke on demand. Which MCP primitive is this?",
+    "options": [
+      "A prompt",
+      "A tool, since anything the user triggers by name is by definition an action the server performs on their behalf",
+      "A resource",
+      "A transport"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Named, parameterised, user-invoked templates are MCP prompts. Tools are model-invoked actions, resources are readable data, and a transport is the communication channel."
+  },
+  {
+    "domain": "Tools & MCPs",
+    "pick": 1,
+    "q": "You wrote a formatting Skill but Claude rarely loads it, even on obviously relevant tasks. First thing to check?",
+    "options": [
+      "The skill's description, since Claude loads a skill by matching the description against the task",
+      "The skill's file size, since larger SKILL.md files rank higher in the loader and small ones are skipped",
+      "Whether the skill is written in YAML rather than markdown",
+      "The model's temperature"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Skills load on demand by description match, so a vague description means it never triggers. Size does not rank skills, SKILL.md is markdown, and temperature is unrelated."
+  },
+  {
+    "domain": "Tools & MCPs",
+    "pick": 1,
+    "q": "You need current exchange rates inside Claude answers. The capability already exists as a maintained internal MCP server other teams use. Build a custom tool anyway?",
+    "options": [
+      "No; connect the maintained server and spend your effort elsewhere, accepting its tool definitions in your context",
+      "Yes; a hand-written custom tool is always preferable to a shared server because you control the schema end to end and avoid a network dependency",
+      "No; paste today's rates into the system prompt each morning",
+      "Yes, but only as a Skill"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "A maintained, shared MCP server is exactly the reuse case: connect it rather than duplicating. 'Custom is always better' ignores maintenance cost, pasted rates go stale immediately, and a Skill is instructions, not a live data feed."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 2,
+    "q": "CLAUDE.md files exist at both the user level (~/.claude) and in the project repo. Which TWO are true? (Pick 2)",
+    "options": [
+      "Both are loaded, with personal preferences at user level and shared project conventions in the repo",
+      "The project-level file is the one teammates receive via version control",
+      "Only one file can be active at a time, and the user-level file always wins",
+      "The user-level file is committed to the repo automatically"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "The CLAUDE.md hierarchy layers user-level personal context with version-controlled project conventions, and it is the repo file that teammates share. They are not mutually exclusive, and nothing commits your user file for you."
+  },
+  {
+    "domain": "Claude Code",
+    "pick": 1,
+    "q": "A CI pipeline must run Claude Code on every pull request with no human attached. Which invocation fits?",
+    "options": [
+      "Headless print mode with the prompt passed non-interactively",
+      "Interactive mode with an expect-script that answers the confirmation prompts the way a human operator would",
+      "The desktop app on a virtual display",
+      "Streaming mode in an attached terminal session"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Headless print mode is the non-interactive invocation designed for CI. Scripting fake keystrokes into interactive mode is fragile, and a desktop app or attached terminal is not how pipelines run."
+  },
+  {
+    "domain": "Security & Safety",
+    "pick": 2,
+    "q": "A triage assistant receives full customer records but only needs the message text and product name. Which TWO practices apply? (Pick 2)",
+    "options": [
+      "Send only the fields the task needs, stripping the rest before the API call",
+      "Redact or tokenise identifiers that must pass through, so raw PII isn't in the prompt",
+      "Send the full record but instruct the model not to read the sensitive fields",
+      "Encrypt the API key more strongly"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Data minimisation means unneeded PII never leaves your system, and pass-through identifiers get redacted or tokenised. Telling the model to ignore fields still transmits them, and key encryption is unrelated to prompt contents."
+  },
+  {
+    "domain": "Security & Safety",
+    "pick": 1,
+    "q": "One incident: a user typed instructions to make the assistant produce disallowed content. Another: a fetched webpage carried hidden text redirecting the agent. How do these differ?",
+    "options": [
+      "The first is a jailbreak attempt via direct user input; the second is prompt injection via untrusted third-party content, and each is mitigated at a different layer",
+      "They are the same attack, since in both cases text changed the model's behaviour, so one mitigation covers both identically",
+      "The first is harmless because the user is authenticated",
+      "The second is impossible if the page loaded over HTTPS"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Jailbreaks come from the user directly; injection rides in through untrusted content the system fetches, and the defenses differ (policy and refusals vs isolation and least privilege). They are not one attack, authentication does not make abuse harmless, and HTTPS says nothing about page content."
+  },
+  {
+    "domain": "Security & Safety",
+    "pick": 2,
+    "q": "One API key is shared across dev, staging, and production, held in a team password note. Which TWO changes matter most? (Pick 2)",
+    "options": [
+      "Separate keys per environment so a leaked dev key cannot touch production",
+      "Move keys into a secrets manager with access control and rotation, out of shared notes",
+      "Rename the key so its environment is obvious",
+      "Base64-encode the key inside the note"
+    ],
+    "correct": [
+      0,
+      1
+    ],
+    "why": "Per-environment keys contain blast radius, and a secrets manager adds access control and rotation that a shared note cannot. Renaming is cosmetic and base64 is encoding, not protection."
+  },
+  {
+    "domain": "Security & Safety",
+    "pick": 1,
+    "q": "Your safety review asks why you have a content policy in the system prompt AND output filtering AND tool-level least privilege. What principle are you applying?",
+    "options": [
+      "Guardrail layering: no single control is relied on, so a bypass of one layer is caught by another",
+      "Redundancy for its own sake, which the review should flag as waste since the strongest single control makes the other two unnecessary",
+      "Defense by obscurity",
+      "Compliance theatre required by the auditor"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Layered guardrails assume any single control can fail and back it with independent ones. Removing layers because one seems strongest recreates a single point of failure, and neither obscurity nor theatre describes overlapping enforceable controls."
+  },
+  {
+    "domain": "Eval & Debugging",
+    "pick": 1,
+    "q": "A teammate 'slightly improves' the extraction prompt and ships it directly; accuracy quietly drops for a week. What process change prevents this?",
+    "options": [
+      "Run the eval suite on every prompt change and gate the deploy on the results, treating prompts like code",
+      "Restrict prompt edits to senior engineers, whose judgement makes regressions unlikely enough that a formal gate adds little",
+      "Freeze the prompt permanently",
+      "Have the model self-assess whether the new prompt is better"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "Prompts are behaviour: version them and gate changes on the eval suite, exactly like code. Seniority does not catch silent regressions, freezing blocks improvement, and self-assessment is not measurement."
+  },
+  {
+    "domain": "Eval & Debugging",
+    "pick": 1,
+    "q": "A weather agent reports the wrong city. The trace shows the model called get_weather with city='Paris, Texas' while the user asked about Paris, France; the tool returned correct data for what it was asked. Where is the fault?",
+    "options": [
+      "In the model's argument construction, an output-layer failure, not in the tool or the integration",
+      "In the integration layer, since the harness should have corrected the city argument before dispatching the call to the tool",
+      "In the tool, which should have guessed the intended city",
+      "In the network between harness and tool"
+    ],
+    "correct": [
+      0
+    ],
+    "why": "The trace isolates it: the model built the wrong argument, so the failure is model output. The tool honestly answered what it was asked, harnesses do not silently rewrite arguments, and the network delivered everything correctly."
+  }
+]

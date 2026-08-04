@@ -1,0 +1,270 @@
+=== Q1 | domain: LLM Fundamentals | pick: 1 | section: A ===
+Two runs of the same prompt at temperature 0 return slightly different wording. Which explanation is correct?
+A) Sampling can still introduce variation; temperature 0 favours the likeliest tokens but does not hard-guarantee identical output
+B) This is impossible at temperature 0, so one of the two calls must have silently used a different model version or returned a cached response from an earlier request
+C) Streaming was left on for one of the calls
+D) The two calls used different context windows
+Correct: A
+Why: Even at temperature 0, determinism is not guaranteed. The long option asserts a false impossibility; streaming and window size do not explain wording variation.
+
+=== Q2 | domain: Prompt Engineering | pick: 2 | section: A ===
+Which TWO statements about prompting modes are accurate? (Pick 2)
+A) Single-shot includes exactly one worked example
+B) Multi-shot examples guide the output on that call, at extra token cost
+C) Zero-shot always outperforms few-shot once the task is well-specified
+D) Multi-shot permanently fine-tunes the model on the examples
+Correct: A, B
+Why: Single-shot is one example; multi-shot adds several to shape output per call at token cost. Examples do not fine-tune the model, and zero-shot is not universally superior once specified.
+
+=== Q3 | domain: API Mechanics | pick: 1 | section: A ===
+A multi-turn session grows until a request exceeds the window mid-generation. What happens?
+A) The output is truncated and the response carries a context-window-exceeded stop reason
+B) The request is silently accepted and the model drops whichever earlier turns it judges least relevant to make room for the rest
+C) The window auto-expands for that call
+D) The call returns a 200 with empty content
+Correct: A
+Why: Overflowing mid-generation yields truncated output with a model_context_window_exceeded stop reason. The window is fixed: it neither silently drops turns nor expands.
+
+=== Q4 | domain: Model Selection | pick: 1 | section: A ===
+You have many trivial calls and occasional hard ones, and want to pay for deep reasoning only when it helps. Which fits?
+A) Adaptive thinking, with effort scaled to the task
+B) Extended thinking pinned to maximum effort on every call, so quality is never at risk on the genuinely hard ones
+C) Fast mode on every call
+D) A larger model tier for all calls
+Correct: A
+Why: Adaptive thinking spends reasoning effort only where it changes the answer. Always-max overpays on trivial calls, fast-mode-everywhere underserves the hard ones, and a bigger tier does not target the mix.
+
+=== Q5 | domain: Cost & Tokens | pick: 1 | section: A ===
+A large, stable system prompt is sent on every call in a high-volume app. What does prompt caching do, and what is its limit?
+A) It reuses the stable prefix at reduced cost, but the cache expires and must be refreshed, and only the unchanged prefix benefits
+B) It makes all later calls free regardless of what changes in the prompt
+C) It reduces output-token cost specifically
+D) It only works in batch mode
+Correct: A
+Why: Caching cuts the cost of re-sending an unchanged prefix, but caches expire and only the stable portion is cached. It does not make calls free, target output tokens, or require batch.
+
+=== Q6 | domain: Prompt Engineering | pick: 2 | section: B ===
+Match each prompt failure to the missing technique. Which TWO pairings are correct? (Pick 2)
+A) Output in the wrong shape → add an output constraint
+B) Drift across turns → tighten and complete the system prompt
+C) Hallucinated structure → raise the temperature
+D) Wrong shape → add more few-shot examples of reasoning
+Correct: A, B
+Why: Wrong shape signals a missing output constraint; drift signals an underspecified system prompt. A hallucinated structure needs few-shot examples (not temperature), and shape is not fixed by reasoning examples.
+
+=== Q7 | domain: Output Handling | pick: 1 | section: B ===
+Prompt-only formatting keeps failing on untested inputs that break your parser. Best next step?
+A) Constrain output in the API: JSON schema for the response and strict tool use for arguments
+B) Expand the prompt with an exhaustive set of formatting rules and several reminders, then retry any input whose output fails to parse until it eventually conforms to the schema
+C) Lower temperature to 0 and trust the output
+D) Switch to a bigger model
+Correct: A
+Why: Move control into the API with structured outputs and strict tool use. The long option is more of the prompt-only approach that already failed; temperature and model size do not enforce structure.
+
+=== Q8 | domain: API Mechanics | pick: 1 | section: B ===
+When should a streamed turn be written into conversation history?
+A) Only after message_stop
+B) Once the first content_block_start event arrives, so the stored history stays current with the model in real time
+C) After the first token
+D) Whenever the socket closes for any reason
+Correct: A
+Why: A stream ending is not a message completing: commit only after message_stop, discarding partial turns on interruption. Committing early risks storing a half-built turn.
+
+=== Q9 | domain: Tools & MCPs | pick: 1 | section: B ===
+Two tools are both described as retrieving information and Claude often calls the wrong one. Best single fix?
+A) Add to each description a clear statement of when NOT to use it
+B) Give each tool a richer, strongly-typed input schema with distinctive parameter names so the model has more signal to tell them apart
+C) Delete one of the tools
+D) Increase the model tier
+Correct: A
+Why: Claude matches on the description, so an exclusion condition resolves most wrong-tool bugs. The long option is the trap: differing input schemas do not help when descriptions overlap.
+
+=== Q10 | domain: Agents & Workflows | pick: 1 | section: B ===
+You're wiring an agent whose tool can irreversibly modify a customer system. Where does the human checkpoint belong?
+A) In the design, gating the irreversible action before the loop is built
+B) After the first production write, added once you have watched the agent behave on real traffic and can place the gate precisely
+C) Only in the retry handler
+D) It can be skipped if tests passed
+Correct: A
+Why: For irreversible actions the gate goes into the design before the loop is wired. Waiting until after the first write, or only on retry, lets the irreversible action through first.
+
+=== Q11 | domain: Agents & Workflows | pick: 1 | section: B ===
+Production sessions turn out short and numerous, unlike the long dev sessions, and in-context memory now fails early. Which model most likely fits?
+A) External storage that persists state across the many short sessions
+B) Keep in-context memory but raise max_tokens each session so history has more room to accumulate before it fails
+C) Stateless for every session
+D) Summarised in-context memory
+Correct: A
+Why: State must survive across many short sessions, which external storage provides. Raising max_tokens does not survive session boundaries, stateless drops needed continuity, and summarised memory is still in-context.
+
+=== Q12 | domain: API Mechanics | pick: 1 | section: B ===
+Before writing multimodal ingestion, you estimate image cost. Which statement is accurate?
+A) Visual tokens scale with image dimensions and the per-image ceiling varies by model tier, so a high-resolution original can cost many times a thumbnail
+B) All images cost a flat token amount regardless of size or model
+C) Images are billed only on output tokens
+D) Describing images in text is always cheaper than sending them
+Correct: A
+Why: Image cost grows with dimensions and the ceiling differs by tier, so resolution matters a lot. Flat pricing and output-only billing are wrong, and text description is not universally cheaper.
+
+=== Q13 | domain: Tools & MCPs | pick: 1 | section: B ===
+You connect three MCP servers to reuse maintained tools. What must you manage?
+A) Each server's tool definitions load into context whether or not they are used, adding cost
+B) Once connected, the servers take over tool routing and your hand-written custom tools can no longer be registered in the same application
+C) All three must use stdio
+D) The context window permanently grows
+Correct: A
+Why: Connected servers load their definitions into context regardless of use, so connect deliberately. The long option invents a restriction that does not exist.
+
+=== Q14 | domain: Model Selection | pick: 1 | section: B ===
+Across a multi-turn exchange using extended thinking, what must happen to thinking blocks?
+A) They must be returned unchanged
+B) They should be summarised and re-sent so history stays compact while preserving the reasoning for later turns
+C) They should be deleted before the next call
+D) They belong in the system prompt
+Correct: A
+Why: Thinking blocks must be returned unchanged or the next request fails. Summarising, deleting, or relocating them breaks the exchange.
+
+=== Q15 | domain: Claude Code | pick: 2 | section: C ===
+Configuring Claude Code for a trusted refactor that must auto-approve edits, block destructive shell commands, and never read .env.production. Which TWO settings pieces are correct? (Pick 2)
+A) allow ["Bash(npm run:*)"], deny ["Bash(rm:*)", "Bash(git push:*)"]
+B) deny ["Read(.env.production)"]
+C) defaultMode "bypassPermissions"
+D) allow ["Bash(*)", "Edit(*)"] with no destructive-command gate
+Correct: A, B
+Why: Allowing safe commands while denying destructive ones gates shell execution, and denying Read(.env.production) enforces the path restriction at the settings layer. bypassPermissions removes the guard, and an unrestricted allow is the opposite of the requirement.
+
+=== Q16 | domain: Security & Safety | pick: 1 | section: C ===
+Your settings auto-approve edits. Mid-refactor the agent proposes editing a deployment-config file that several production services read. Where should a human gate sit for this one action?
+A) A human reviews and approves this specific change before the write executes, because a wrong value is hard to undo and reaches systems beyond the file
+B) Nowhere; the settings already auto-approve edits
+C) Add bypassPermissions so the agent never pauses
+D) Review it after the write, in the next pull request
+Correct: A
+Why: Auto-approving edits is fine as a default, but the worst-case high-cost action still warrants a human gate before the write. Reviewing after the fact is too late for a change that reaches production services.
+
+=== Q17 | domain: Security & Safety | pick: 2 | section: C ===
+A PreToolUse hook must block a disallowed read. Which TWO are true? (Pick 2)
+A) It must use PreToolUse, because that fires before the tool executes
+B) Exiting with code 2 blocks the call, and text written to stderr becomes the message Claude sees
+C) PostToolUse could also block, by inspecting the result and undoing the read
+D) Exiting 0 with the reason on stdout is what signals the block
+Correct: A, B
+Why: Only PreToolUse can block, and the hook signals a block with exit code 2 plus a reason on stderr. PostToolUse runs after the tool, so it cannot prevent the read, and exit 0 allows the call.
+
+=== Q18 | domain: Tools & MCPs | pick: 1 | section: C ===
+A developer wants a review-checklist Skill to load when they ask for a review in the Claude Code terminal. What must be configured?
+A) Place SKILL.md in .claude/skills with a description that matches review requests
+B) Define the agent as an API resource that lists the skill and set the managed-agents beta header on the calls, writing the skill so its steps do not depend on any local files
+C) Send the code-execution and skills beta headers on every request
+D) Set settingSources explicitly for the Agent SDK
+Correct: A
+Why: In the Claude Code terminal, a Skill loads from .claude/skills when its description matches the request. The long option is the Anthropic-hosted-agent setup; the others belong to the Messages API and Agent SDK runtimes.
+
+=== Q19 | domain: Tools & MCPs | pick: 1 | section: C ===
+A scheduled headless job uses the Agent SDK and expects the Skill to load from the repo. What must be configured?
+A) Enable filesystem sources by setting settingSources explicitly so the agent loads skills from the project, rather than relying on a default, and confirm the current default against the Agent SDK reference
+B) Place SKILL.md in .claude/skills and rely on the terminal default
+C) Set the managed-agents beta header
+D) Send the code-execution and skills beta headers
+Correct: A
+Why: For an Agent SDK job that must load skills from the repo, set settingSources explicitly rather than trusting a default. The terminal placement, managed-agents header, and code-execution headers belong to other runtimes.
+
+=== Q20 | domain: Configuration Management | pick: 1 | section: C ===
+A SKILL.md runs on the author's machine but breaks when a teammate clones the repo, because step 1 calls /Users/alexmorgan/projects/deploy-utils/validate.sh. Correct fix?
+A) Reference the script from the project root via CLAUDE_PROJECT_DIR so it resolves wherever the repo is cloned
+B) Replace it with another absolute path that points to a shared network drive everyone can reach
+C) Use a home-directory shortcut like ~/projects/deploy-utils/validate.sh
+D) Remove the step so the skill no longer calls an external script
+Correct: A
+Why: The defect is the absolute path to the author's home directory; referencing from CLAUDE_PROJECT_DIR resolves from the repo root anywhere. Another absolute path or a home shortcut just moves the same problem, and removing the step drops the capability.
+
+=== Q21 | domain: MCP Server Development | pick: 1 | section: C ===
+A security-scanning MCP server must be deployed to every developer's Claude Code installation across the org. Which transport and scope fit?
+A) HTTP + Enterprise (managed settings)
+B) stdio + Local, installed once on each machine and shared informally so each developer keeps control of their own copy
+C) HTTP + Project (.mcp.json)
+D) stdio or HTTP + Local
+Correct: A
+Why: An org-wide mandate for every install is an enterprise-scope, HTTP-transport deployment through managed settings. Local scopes are per-developer, and project scope covers one team's repo, not the whole organisation.
+
+=== Q22 | domain: Eval & Debugging | pick: 2 | section: D ===
+Which TWO success criteria are specific enough to build an eval against? (Pick 2)
+A) A two-sentence summary that lists every action item and its owner
+B) A refund decision of exactly 'approve' or 'deny' with a one-line reason
+C) A helpful, high-quality summary of the thread
+D) A response that satisfies the user
+Correct: A, B
+Why: Gradeable criteria state a checkable output. 'Every action item and its owner' and a constrained 'approve/deny plus reason' can be graded; 'helpful' and 'satisfies the user' are too vague to check.
+
+=== Q23 | domain: Eval & Debugging | pick: 1 | section: D ===
+In the failure-handling section of a design doc, what is the core task?
+A) Enumerate the errors production will throw, mark each retriable or terminal, and define the user-facing outcome when recovery fails
+B) Wrap every external call in an automatic retry loop that keeps trying until it succeeds, since most production failures are transient and clear on their own within a few attempts
+C) Raise the request timeout
+D) Switch to a larger model for resilience
+Correct: A
+Why: Failure handling means naming each error, classifying it retriable or terminal, and stating the fallback for the user. Blind retry loops, longer timeouts, and bigger models are not an error path.
+
+=== Q24 | domain: Model Selection | pick: 1 | section: D ===
+When should hard cost and latency budgets be set?
+A) Before the architecture is decided
+B) After the system is built and profiled under real traffic, when you finally have accurate numbers to base the ceilings on
+C) Only once costs exceed forecast
+D) At the first incident review
+Correct: A
+Why: Set hard budgets before architecture so you can check the design against them before writing code. Waiting until after the build, an overrun, or an incident means the budget never shaped the design.
+
+=== Q25 | domain: Security & Safety | pick: 1 | section: D ===
+Naming the trust boundary on paper turns least privilege into something you can…?
+A) Enforce with a hook, rather than a setting you remember to add later
+B) Guarantee automatically, because documenting the boundary is itself what applies the restriction at runtime across every tool the agent can reach
+C) Skip, if the model is well-behaved
+D) Defer entirely to the security team
+Correct: A
+Why: A named boundary becomes an enforceable design decision, implemented with a hook. Documentation alone enforces nothing at runtime, and least privilege cannot be skipped or wholly delegated away.
+
+=== Q26 | domain: Eval & Debugging | pick: 1 | section: D ===
+You must grade thousands of open-ended summaries where exact-match won't work. Sound approach?
+A) An LLM-as-judge scoring against explicit criteria, validated against a human-labelled sample
+B) Trust each summary's own stated confidence and grade on that, since the model has the most context on whether it succeeded
+C) Exact-string match to a reference
+D) Eyeball a handful and extrapolate
+Correct: A
+Why: Open-ended grading at scale uses an LLM judge against explicit criteria, calibrated to human labels. Self-reported confidence is unreliable, exact-match fails on free text, and a handful of samples does not generalise.
+
+=== Q27 | domain: Eval & Debugging | pick: 1 | section: D ===
+An agent returns a wrong answer. What most directly isolates whether the tool, the model, or the orchestration failed?
+A) A trace of the run
+B) Re-reading the final answer closely to infer from its wording where the reasoning must have gone wrong
+C) Rerunning it a few times
+D) Swapping in a bigger model
+Correct: A
+Why: A step-by-step trace shows where the run diverged, isolating tool versus model versus orchestration. Re-reading, rerunning, and model swaps are guesses that do not localise the fault.
+
+=== Q28 | domain: Security & Safety | pick: 1 | section: D ===
+An MCP connection trace shows 401 on both the first attempt and the retry, with the credential read as a plaintext value from a file at a known path. Correct fix?
+A) Rotate the rejected key so the connection can authenticate, and move the credential out of the file into a runtime environment variable so it is never stored in plaintext again
+B) Rotate the key and write the new value back into the same credentials file, since a fresh key is what the service will accept
+C) Switch this service from API-key auth to OAuth
+D) Add a retry with backoff so a third attempt can succeed
+Correct: A
+Why: Two problems are stacked: a rejected key and an insecurely stored one, so both must be fixed. Rotating back into the same file leaves the storage defect, OAuth does not match a service-account identity, and backoff does not fix a rejected key.
+
+=== Q29 | domain: Applications & Integration | pick: 1 | section: E ===
+A regulated client requires that data never leave their existing cloud. How should this drive platform choice?
+A) Run on the provider (Bedrock or Vertex) that keeps data inside the client's cloud and compliance boundary
+B) Default to the first-party API, since it is always cheapest and gets new models first, then layer network controls on top to satisfy the auditors
+C) Only local self-hosting can ever be compliant
+D) Pick whichever platform has the newest model
+Correct: A
+Why: When data residency governs, choose the platform that keeps data in the client's cloud and compliance boundary. Cost, model recency, and an assumption that only local hosting is compliant all miss the constraint.
+
+=== Q30 | domain: Configuration Management | pick: 2 | section: E ===
+Preparing a build for reuse and safe deployment. Which TWO practices matter most? (Pick 2)
+A) Pin the model version in production
+B) Version your prompts so a change can be attributed and rolled back
+C) Always deploy on the newest model automatically to stay current
+D) Keep prompts inline and unversioned to reduce overhead
+Correct: A, B
+Why: Pinning the model and versioning prompts make changes deliberate, attributable, and reversible. Auto-upgrading and unversioned inline prompts remove exactly the control that reuse and rollback depend on.
+
