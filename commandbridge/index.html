@@ -195,6 +195,21 @@
       padding: .45rem .75rem; border-radius: 999px;
       background: #f7f7f8; border: 1px solid var(--line); color: var(--ink);
     }
+    .dl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .dl-card { display: flex; flex-direction: column; }
+    .dl-card.pro { border-color: rgba(103, 80, 164, .28); }
+    .dl-kicker {
+      font-family: var(--mono); font-size: .68rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--gold-deep);
+      margin: 0 0 8px;
+    }
+    .dl-meta { color: var(--muted); font-size: .88rem; margin: 0 0 18px; }
+    .dl-card .btn { width: 100%; margin-top: auto; }
+    .btn-purple {
+      color: #fff !important;
+      background: var(--cb-purple);
+      box-shadow: 0 8px 24px rgba(103, 80, 164, .28);
+    }
     pre, .snippet {
       margin: 0; overflow: auto;
       background: var(--terminal); color: var(--terminal-text);
@@ -250,7 +265,7 @@
     .desk-hist ul { margin: 4px 0 0; padding-left: 16px; color: #202536; }
 
     @media (max-width: 900px) {
-      .hero-grid, .cols, .steps, .arch, .features, .sec-list, .role { grid-template-columns: 1fr; }
+      .hero-grid, .cols, .steps, .arch, .features, .sec-list, .role, .dl-grid { grid-template-columns: 1fr; }
       .bar nav { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -269,6 +284,7 @@
     <nav aria-label="Sections">
       <a href="#probleme" data-i18n="nav.problem">Problème</a>
       <a href="#marche" data-i18n="nav.how">Parcours</a>
+      <a href="#download" data-i18n="nav.dl">Télécharger</a>
       <a href="#arch" data-i18n="nav.arch">Architecture</a>
       <a href="#securite" data-i18n="nav.sec">Sécurité</a>
       <a href="#stack" data-i18n="nav.stack">Stack</a>
@@ -282,7 +298,7 @@
   <header class="hero">
     <div class="hero-grid">
       <div>
-        <p class="eyebrow" data-i18n="hero.eyebrow">Case study · AppWave Solutions</p>
+        <p class="eyebrow" data-i18n="hero.eyebrow">Case study</p>
         <h1>Command Bridge</h1>
         <p class="lead" data-i18n="hero.lead">Envoyez une commande CLI du téléphone vers le PC — en local, sans cloud. Le desktop l’affiche et la copie. Il ne l’exécute jamais.</p>
         <div class="badges">
@@ -291,7 +307,8 @@
           <span class="badge" data-i18n="badge.copy">Copie, jamais d’exécution</span>
         </div>
         <div class="ctas">
-          <a class="btn btn-gold" href="https://github.com/appwavesolutions/commandbridge-" rel="noopener noreferrer">GitHub</a>
+          <a class="btn btn-gold" href="#download" data-i18n="cta.dl">Télécharger</a>
+          <a class="btn btn-ghost" href="https://github.com/appwavesolutions/commandbridge-" rel="noopener noreferrer">GitHub</a>
           <a class="btn btn-ghost" href="/#portfolio" data-i18n="cta.back">Retour aux projets</a>
         </div>
       </div>
@@ -344,6 +361,27 @@
         <article class="card step"><span class="n">02</span><h3 data-i18n="how.2t">Scanner</h3><p data-i18n="how.2">Le QR encode cmdbridge://pair?host&amp;port&amp;token. Le client Flutter stocke le pairing.</p></article>
         <article class="card step"><span class="n">03</span><h3 data-i18n="how.3t">Envoyer</h3><p data-i18n="how.3">Dans l’app cheat-sheet, on choisit une commande. sendCommand() part en WebSocket.</p></article>
         <article class="card step"><span class="n">04</span><h3 data-i18n="how.4t">Copier</h3><p data-i18n="how.4">Le desktop l’affiche. Copy, ou double-clic dans l’historique (200 entrées, filtrable).</p></article>
+      </div>
+    </section>
+
+    <section class="block" id="download">
+      <h2 data-i18n="dl.title">Télécharger</h2>
+      <p class="sub" data-i18n="dl.sub">ZIP Windows portable, runtime Java inclus. Pas d’installation Java, pas de droits administrateur. Dézippez, puis lancez CommandBridgeDesktop.</p>
+      <div class="dl-grid">
+        <article class="card dl-card">
+          <p class="dl-kicker" data-i18n="dl.classic.kicker">Classique</p>
+          <h3 data-i18n="dl.classic.title">Version normale</h3>
+          <p data-i18n="dl.classic.body">Le desktop écoute sur le port 17321. Scannez le QR depuis l’app mobile sur le même réseau local.</p>
+          <p class="dl-meta">Windows · ~41 Mo</p>
+          <a class="btn btn-gold" href="downloads/CommandBridgeDesktop-windows.zip" download data-i18n="dl.classic.cta">Télécharger Classic</a>
+        </article>
+        <article class="card dl-card pro">
+          <p class="dl-kicker" data-i18n="dl.pro.kicker">Pro</p>
+          <h3 data-i18n="dl.pro.title">Version Pro</h3>
+          <p data-i18n="dl.pro.body">Pour les réseaux d’entreprise : le téléphone écoute, le PC se connecte en sortie. Aucun port entrant n’est ouvert sur le desktop. Collez le lien reverse et cliquez Connect outbound.</p>
+          <p class="dl-meta">Windows · ~41 Mo</p>
+          <a class="btn btn-purple" href="downloads/CommandBridgeDesktop-windows-pro.zip" download data-i18n="dl.pro.cta">Télécharger Pro</a>
+        </article>
       </div>
     </section>
 
@@ -415,7 +453,7 @@
 
   <footer class="page-foot">
     <div class="inner">
-      <span>Command Bridge · AppWave Solutions</span>
+      <span>Command Bridge</span>
       <span><a href="/">amineabbaoui.tech</a> · <a href="mailto:contact@amineabbaoui.tech">contact@amineabbaoui.tech</a></span>
     </div>
   </footer>
@@ -423,12 +461,12 @@
   <script>
     const I18N = {
       fr: {
-        "nav.problem": "Problème", "nav.how": "Parcours", "nav.arch": "Architecture",
+        "nav.problem": "Problème", "nav.how": "Parcours", "nav.dl": "Télécharger", "nav.arch": "Architecture",
         "nav.sec": "Sécurité", "nav.stack": "Stack",
-        "hero.eyebrow": "Case study · AppWave Solutions",
+        "hero.eyebrow": "Case study",
         "hero.lead": "Envoyez une commande CLI du téléphone vers le PC — en local, sans cloud. Le desktop l’affiche et la copie. Il ne l’exécute jamais.",
         "badge.lan": "Réseau local uniquement", "badge.qr": "Pairing QR", "badge.copy": "Copie, jamais d’exécution",
-        "cta.back": "Retour aux projets",
+        "cta.dl": "Télécharger", "cta.back": "Retour aux projets",
         "prob.title": "Le problème",
         "prob.sub": "Les cheat-sheets Docker, Git, Kubernetes, Terraform ou GCP tiennent dans la poche. La commande, elle, doit encore atterrir dans un terminal.",
         "prob.leftTitle": "Sans pont",
@@ -440,6 +478,16 @@
         "how.2t": "Scanner", "how.2": "Le QR encode cmdbridge://pair?host&port&token. Le client Flutter stocke le pairing.",
         "how.3t": "Envoyer", "how.3": "Dans l’app cheat-sheet, on choisit une commande. sendCommand() part en WebSocket.",
         "how.4t": "Copier", "how.4": "Le desktop l’affiche. Copy, ou double-clic dans l’historique (200 entrées, filtrable).",
+        "dl.title": "Télécharger",
+        "dl.sub": "ZIP Windows portable, runtime Java inclus. Pas d’installation Java, pas de droits administrateur. Dézippez, puis lancez CommandBridgeDesktop.",
+        "dl.classic.kicker": "Classique",
+        "dl.classic.title": "Version normale",
+        "dl.classic.body": "Le desktop écoute sur le port 17321. Scannez le QR depuis l’app mobile sur le même réseau local.",
+        "dl.classic.cta": "Télécharger Classic",
+        "dl.pro.kicker": "Pro",
+        "dl.pro.title": "Version Pro",
+        "dl.pro.body": "Pour les réseaux d’entreprise : le téléphone écoute, le PC se connecte en sortie. Aucun port entrant n’est ouvert sur le desktop. Collez le lien reverse et cliquez Connect outbound.",
+        "dl.pro.cta": "Télécharger Pro",
         "arch.title": "Architecture",
         "arch.sub": "Trois modules, un protocole JSON versionné. Pas de backend cloud.",
         "arch.desk": "Java 21 + JavaFX. Serveur WebSocket :17321, QR ZXing, presse-papiers, historique JSON dans ~/.commandbridge/history.json.",
@@ -464,12 +512,12 @@
         "role.mvp": "Statut : MVP v1 fonctionnel. Case study — pas une landing commerciale."
       },
       en: {
-        "nav.problem": "Problem", "nav.how": "Flow", "nav.arch": "Architecture",
+        "nav.problem": "Problem", "nav.how": "Flow", "nav.dl": "Download", "nav.arch": "Architecture",
         "nav.sec": "Security", "nav.stack": "Stack",
-        "hero.eyebrow": "Case study · AppWave Solutions",
+        "hero.eyebrow": "Case study",
         "hero.lead": "Send a CLI command from your phone to your PC — locally, no cloud. The desktop displays and copies it. It never executes it.",
         "badge.lan": "Local network only", "badge.qr": "QR pairing", "badge.copy": "Copy, never execute",
-        "cta.back": "Back to projects",
+        "cta.dl": "Download", "cta.back": "Back to projects",
         "prob.title": "The problem",
         "prob.sub": "Docker, Git, Kubernetes, Terraform and GCP cheat-sheets live on the phone. The command still has to reach a terminal.",
         "prob.leftTitle": "Without a bridge",
@@ -481,6 +529,16 @@
         "how.2t": "Scan", "how.2": "The QR encodes cmdbridge://pair?host&port&token. The Flutter client stores pairing.",
         "how.3t": "Send", "how.3": "Pick a command in the cheat-sheet app. sendCommand() goes over WebSocket.",
         "how.4t": "Copy", "how.4": "The desktop shows it. Copy, or double-click history (200 entries, filterable).",
+        "dl.title": "Download",
+        "dl.sub": "Portable Windows ZIP with a Java runtime included. No Java install, no admin rights. Unzip, then run CommandBridgeDesktop.",
+        "dl.classic.kicker": "Classic",
+        "dl.classic.title": "Normal version",
+        "dl.classic.body": "The desktop listens on port 17321. Scan the QR from the mobile app on the same local network.",
+        "dl.classic.cta": "Download Classic",
+        "dl.pro.kicker": "Pro",
+        "dl.pro.title": "Pro version",
+        "dl.pro.body": "For corporate networks: the phone listens, the PC connects outbound. No inbound port is opened on the desktop. Paste the reverse link and click Connect outbound.",
+        "dl.pro.cta": "Download Pro",
         "arch.title": "Architecture",
         "arch.sub": "Three modules, one versioned JSON protocol. No cloud backend.",
         "arch.desk": "Java 21 + JavaFX. WebSocket server on :17321, ZXing QR, clipboard, JSON history in ~/.commandbridge/history.json.",
