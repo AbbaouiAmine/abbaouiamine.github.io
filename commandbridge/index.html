@@ -366,21 +366,14 @@
 
     <section class="block" id="download">
       <h2 data-i18n="dl.title">Télécharger</h2>
-      <p class="sub" data-i18n="dl.sub">ZIP Windows portable, runtime Java inclus. Pas d’installation Java, pas de droits administrateur. Dézippez, puis lancez CommandBridgeDesktop.</p>
+      <p class="sub" data-i18n="dl.sub">Une seule appli Windows portable, runtime Java inclus. Deux modes de connexion : le téléphone scanne le QR du PC, ou le PC se connecte au QR du téléphone. Dézippez, puis lancez CommandBridgeDesktop\bin\CommandBridgeDesktop.bat.</p>
       <div class="dl-grid">
         <article class="card dl-card">
-          <p class="dl-kicker" data-i18n="dl.classic.kicker">Classique</p>
-          <h3 data-i18n="dl.classic.title">Version normale</h3>
-          <p data-i18n="dl.classic.body">Le desktop écoute sur le port 17321. Scannez le QR depuis l’app mobile sur le même réseau local. Dézippez, puis lancez CommandBridgeDesktop\bin\CommandBridgeDesktop.bat.</p>
-          <p class="dl-meta">Windows · 41 Mo · v1.0.0</p>
-          <a class="btn btn-gold" href="downloads/CommandBridgeDesktop-windows.zip" download data-i18n="dl.classic.cta">Télécharger Classic</a>
-        </article>
-        <article class="card dl-card pro">
-          <p class="dl-kicker" data-i18n="dl.pro.kicker">Pro</p>
-          <h3 data-i18n="dl.pro.title">Version Pro</h3>
-          <p data-i18n="dl.pro.body">Pour les réseaux d’entreprise : le téléphone écoute, le PC se connecte en sortie. Aucun port entrant n’est ouvert sur le desktop. Collez le lien reverse et cliquez Connect outbound.</p>
-          <p class="dl-meta">Windows · ~41 Mo</p>
-          <a class="btn btn-purple" href="downloads/CommandBridgeDesktop-windows-pro.zip" download data-i18n="dl.pro.cta">Télécharger Pro</a>
+          <p class="dl-kicker" data-i18n="dl.classic.kicker">Windows</p>
+          <h3 data-i18n="dl.classic.title">Command Bridge Desktop</h3>
+          <p data-i18n="dl.classic.body">Pairing QR dans les deux sens. Même Wi‑Fi. Rien n’est exécuté. Dézippez, puis lancez CommandBridgeDesktop\bin\CommandBridgeDesktop.bat.</p>
+          <p class="dl-meta">Windows · 41 Mo · v1.1.0</p>
+          <a class="btn btn-gold" href="downloads/CommandBridgeDesktop-windows.zip" download data-i18n="dl.classic.cta">Télécharger</a>
         </article>
       </div>
     </section>
@@ -389,7 +382,7 @@
       <h2 data-i18n="arch.title">Architecture</h2>
       <p class="sub" data-i18n="arch.sub">Trois modules, un protocole JSON versionné. Pas de backend cloud.</p>
       <div class="arch">
-        <article class="card"><h3>Desktop</h3><p data-i18n="arch.desk">Java 21 + JavaFX. Serveur WebSocket :17321, QR ZXing, presse-papiers, historique JSON dans ~/.commandbridge/history.json.</p></article>
+        <article class="card"><h3>Desktop</h3><p data-i18n="arch.desk">Java 21 + JavaFX. Une appli, deux pairings : le téléphone scanne le QR du PC, ou le PC se connecte en sortie au téléphone. Historique JSON dans ~/.commandbridge/.</p></article>
         <article class="card"><h3>Flutter client</h3><p data-i18n="arch.flut">Package réutilisable : scan QR + sendCommand() pour Docker, Git, GCP, Kubernetes, Terraform.</p></article>
         <article class="card"><h3>Protocol v1</h3><p data-i18n="arch.proto">hello → hello_ack → command | error. UTF-8 JSON. Le texte de commande est une donnée, pas un script à lancer.</p></article>
       </div>
@@ -479,18 +472,14 @@
         "how.3t": "Envoyer", "how.3": "Dans l’app cheat-sheet, on choisit une commande. sendCommand() part en WebSocket.",
         "how.4t": "Copier", "how.4": "Le desktop l’affiche. Copy, ou double-clic dans l’historique (200 entrées, filtrable).",
         "dl.title": "Télécharger",
-        "dl.sub": "ZIP Windows portable, runtime Java inclus. Pas d’installation Java, pas de droits administrateur. Dézippez, puis lancez CommandBridgeDesktop.",
-        "dl.classic.kicker": "Classique",
-        "dl.classic.title": "Version normale",
-        "dl.classic.body": "Le desktop écoute sur le port 17321. Scannez le QR depuis l’app mobile sur le même réseau local. Dézippez, puis lancez CommandBridgeDesktop\\bin\\CommandBridgeDesktop.bat.",
-        "dl.classic.cta": "Télécharger Classic",
-        "dl.pro.kicker": "Pro",
-        "dl.pro.title": "Version Pro",
-        "dl.pro.body": "Pour les réseaux d’entreprise : le téléphone écoute, le PC se connecte en sortie. Aucun port entrant n’est ouvert sur le desktop. Collez le lien reverse et cliquez Connect outbound.",
-        "dl.pro.cta": "Télécharger Pro",
+        "dl.sub": "Une seule appli Windows portable, runtime Java inclus. Deux modes : le téléphone scanne le QR du PC, ou le PC se connecte au QR du téléphone. Dézippez, puis lancez CommandBridgeDesktop\\bin\\CommandBridgeDesktop.bat.",
+        "dl.classic.kicker": "Windows",
+        "dl.classic.title": "Command Bridge Desktop",
+        "dl.classic.body": "Pairing QR dans les deux sens. Même Wi‑Fi. Rien n’est exécuté. Dézippez, puis lancez CommandBridgeDesktop\\bin\\CommandBridgeDesktop.bat.",
+        "dl.classic.cta": "Télécharger",
         "arch.title": "Architecture",
         "arch.sub": "Trois modules, un protocole JSON versionné. Pas de backend cloud.",
-        "arch.desk": "Java 21 + JavaFX. Serveur WebSocket :17321, QR ZXing, presse-papiers, historique JSON dans ~/.commandbridge/history.json.",
+        "arch.desk": "Java 21 + JavaFX. Une appli, deux pairings : le téléphone scanne le QR du PC, ou le PC se connecte en sortie au téléphone. Historique JSON dans ~/.commandbridge/.",
         "arch.flut": "Package réutilisable : scan QR + sendCommand() pour Docker, Git, GCP, Kubernetes, Terraform.",
         "arch.proto": "hello → hello_ack → command | error. UTF-8 JSON. Le texte de commande est une donnée, pas un script à lancer.",
         "feat.title": "Fonctions",
@@ -530,18 +519,14 @@
         "how.3t": "Send", "how.3": "Pick a command in the cheat-sheet app. sendCommand() goes over WebSocket.",
         "how.4t": "Copy", "how.4": "The desktop shows it. Copy, or double-click history (200 entries, filterable).",
         "dl.title": "Download",
-        "dl.sub": "Portable Windows ZIP with a Java runtime included. No Java install, no admin rights. Unzip, then run CommandBridgeDesktop.",
-        "dl.classic.kicker": "Classic",
-        "dl.classic.title": "Normal version",
-        "dl.classic.body": "The desktop listens on port 17321. Scan the QR from the mobile app on the same local network. Unzip, then run CommandBridgeDesktop\\bin\\CommandBridgeDesktop.bat.",
-        "dl.classic.cta": "Download Classic",
-        "dl.pro.kicker": "Pro",
-        "dl.pro.title": "Pro version",
-        "dl.pro.body": "For corporate networks: the phone listens, the PC connects outbound. No inbound port is opened on the desktop. Paste the reverse link and click Connect outbound.",
-        "dl.pro.cta": "Download Pro",
+        "dl.sub": "One portable Windows app with a Java runtime included. Two pairing modes: the phone scans the PC QR, or the PC connects to the phone QR. Unzip, then run CommandBridgeDesktop\\bin\\CommandBridgeDesktop.bat.",
+        "dl.classic.kicker": "Windows",
+        "dl.classic.title": "Command Bridge Desktop",
+        "dl.classic.body": "QR pairing both ways. Same Wi‑Fi. Nothing is executed. Unzip, then run CommandBridgeDesktop\\bin\\CommandBridgeDesktop.bat.",
+        "dl.classic.cta": "Download",
         "arch.title": "Architecture",
         "arch.sub": "Three modules, one versioned JSON protocol. No cloud backend.",
-        "arch.desk": "Java 21 + JavaFX. WebSocket server on :17321, ZXing QR, clipboard, JSON history in ~/.commandbridge/history.json.",
+        "arch.desk": "Java 21 + JavaFX. One app, two pairings: the phone scans the PC QR, or the PC connects outbound to the phone. JSON history in ~/.commandbridge/.",
         "arch.flut": "Reusable package: QR scan + sendCommand() for Docker, Git, GCP, Kubernetes, Terraform.",
         "arch.proto": "hello → hello_ack → command | error. UTF-8 JSON. Command text is data, never a script to run.",
         "feat.title": "Features",
