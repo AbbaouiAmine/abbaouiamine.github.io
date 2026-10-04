@@ -8,7 +8,7 @@
       '<a href="/commandbridge" style="display:block;text-decoration:none;color:#2a2520;background:#fff;border:1px solid rgba(26,18,8,.08);border-radius:24px;box-shadow:0 18px 48px rgba(0,0,0,.06);padding:22px 26px;">' +
       '<p style="margin:0 0 6px;font-family:Roboto Mono,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#e09500;">Case study</p>' +
       '<h3 style="margin:0 0 8px;font-family:Roboto Mono,monospace;letter-spacing:.06em;text-transform:uppercase;font-size:20px;">Command Bridge</h3>' +
-      '<p style="margin:0;color:#555;font-family:Inter,Open Sans,sans-serif;">Pont local mobile ↔ desktop : deux modes de pairing QR, copie uniquement, jamais d’exécution.</p>' +
+      '<p style="margin:0;color:#555;font-family:Inter,Open Sans,sans-serif;">v1.2 — pont local mobile ↔ desktop, cartes Gradle / GCP / K8s / Git / Spring Boot / Angular, copie uniquement, jamais d’exécution.</p>' +
       "</a>";
     return wrap;
   }

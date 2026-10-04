@@ -182,7 +182,7 @@
     .arch {
       display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
     }
-    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .features, .whatsnew { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .sec-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .sec-item { display: flex; gap: 12px; align-items: flex-start; }
     .dot {
@@ -265,7 +265,7 @@
     .desk-hist ul { margin: 4px 0 0; padding-left: 16px; color: #202536; }
 
     @media (max-width: 900px) {
-      .hero-grid, .cols, .steps, .arch, .features, .sec-list, .role, .dl-grid { grid-template-columns: 1fr; }
+      .hero-grid, .cols, .steps, .arch, .features, .whatsnew, .sec-list, .role, .dl-grid { grid-template-columns: 1fr; }
       .bar nav { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -282,6 +282,7 @@
       <span>Amine Abbaoui</span>
     </a>
     <nav aria-label="Sections">
+      <a href="#nouveautes" data-i18n="nav.new">Nouveautés</a>
       <a href="#probleme" data-i18n="nav.problem">Problème</a>
       <a href="#marche" data-i18n="nav.how">Parcours</a>
       <a href="#download" data-i18n="nav.dl">Télécharger</a>
@@ -298,13 +299,14 @@
   <header class="hero">
     <div class="hero-grid">
       <div>
-        <p class="eyebrow" data-i18n="hero.eyebrow">Case study</p>
+        <p class="eyebrow" data-i18n="hero.eyebrow">Case study · v1.2</p>
         <h1>Command Bridge</h1>
         <p class="lead" data-i18n="hero.lead">Envoyez une commande CLI du téléphone vers le PC — en local, sans cloud. Le desktop l’affiche et la copie. Il ne l’exécute jamais.</p>
         <div class="badges">
           <span class="badge" data-i18n="badge.lan">Réseau local uniquement</span>
           <span class="badge" data-i18n="badge.qr">Pairing QR</span>
           <span class="badge" data-i18n="badge.copy">Copie, jamais d’exécution</span>
+          <span class="badge" data-i18n="badge.maps">Cartes d’architecture</span>
         </div>
         <div class="ctas">
           <a class="btn btn-gold" href="#download" data-i18n="cta.dl">Télécharger</a>
@@ -339,6 +341,19 @@
   </header>
 
   <main class="wrap" id="contenu">
+    <section class="block" id="nouveautes">
+      <h2 data-i18n="new.title">Nouveautés v1.2</h2>
+      <p class="sub" data-i18n="new.sub">Même protocole, même contrainte : rien n’est exécuté. Le desktop et Dev CheatSheet gagnent des cartes d’architecture et une bibliothèque plus claire.</p>
+      <div class="whatsnew">
+        <article class="card"><h3 data-i18n="new.1t">Cartes d’architecture</h3><p data-i18n="new.1">Gradle, GCP, Kubernetes, Git, Spring Boot et Angular : composants cliquables, commandes de vérification, FR et EN.</p></article>
+        <article class="card"><h3 data-i18n="new.2t">Diagrammes zoomables</h3><p data-i18n="new.2">Bouton Architecture : popup Mermaid (molette ou pinch). Pas de WebView, image native.</p></article>
+        <article class="card"><h3 data-i18n="new.3t">Écran Commandes</h3><p data-i18n="new.3">Filtre par catégorie, pagination, sélection et export. Copie par icône. Rien n’est lancé.</p></article>
+        <article class="card"><h3 data-i18n="new.4t">Téléphone unifié</h3><p data-i18n="new.4">Pairing et inbox sur un seul écran Phone. Menu gauche groupé par catégorie.</p></article>
+        <article class="card"><h3 data-i18n="new.5t">FR / EN</h3><p data-i18n="new.5">Interface bureau bilingue, locale persistée. Dev CheatSheet aussi.</p></article>
+        <article class="card"><h3 data-i18n="new.6t">Catalogues par défaut</h3><p data-i18n="new.6">Les commandes des cartes sont fusionnées dans la bibliothèque, sans doublon de texte.</p></article>
+      </div>
+    </section>
+
     <section class="block" id="probleme">
       <h2 data-i18n="prob.title">Le problème</h2>
       <p class="sub" data-i18n="prob.sub">Les cheat-sheets Docker, Git, Kubernetes, Terraform ou GCP tiennent dans la poche. La commande, elle, doit encore atterrir dans un terminal.</p>
@@ -372,7 +387,7 @@
           <p class="dl-kicker" data-i18n="dl.classic.kicker">Windows</p>
           <h3 data-i18n="dl.classic.title">Command Bridge Desktop</h3>
           <p data-i18n="dl.classic.body">Pairing QR dans les deux sens. Même Wi‑Fi. Rien n’est exécuté. Dézippez, puis lancez CommandBridgeDesktop\bin\CommandBridgeDesktop.bat.</p>
-          <p class="dl-meta">Windows · 41 Mo · v1.1.0</p>
+          <p class="dl-meta">Windows · 41 Mo · v1.2.0</p>
           <a class="btn btn-gold" href="downloads/CommandBridgeDesktop-windows.zip" download data-i18n="dl.classic.cta">Télécharger</a>
         </article>
       </div>
@@ -454,11 +469,21 @@
   <script>
     const I18N = {
       fr: {
+        "nav.new": "Nouveautés",
         "nav.problem": "Problème", "nav.how": "Parcours", "nav.dl": "Télécharger", "nav.arch": "Architecture",
         "nav.sec": "Sécurité", "nav.stack": "Stack",
-        "hero.eyebrow": "Case study",
+        "hero.eyebrow": "Case study · v1.2",
         "hero.lead": "Envoyez une commande CLI du téléphone vers le PC — en local, sans cloud. Le desktop l’affiche et la copie. Il ne l’exécute jamais.",
         "badge.lan": "Réseau local uniquement", "badge.qr": "Pairing QR", "badge.copy": "Copie, jamais d’exécution",
+        "badge.maps": "Cartes d’architecture",
+        "new.title": "Nouveautés v1.2",
+        "new.sub": "Même protocole, même contrainte : rien n’est exécuté. Le desktop et Dev CheatSheet gagnent des cartes d’architecture et une bibliothèque plus claire.",
+        "new.1t": "Cartes d’architecture", "new.1": "Gradle, GCP, Kubernetes, Git, Spring Boot et Angular : composants cliquables, commandes de vérification, FR et EN.",
+        "new.2t": "Diagrammes zoomables", "new.2": "Bouton Architecture : popup Mermaid (molette ou pinch). Pas de WebView, image native.",
+        "new.3t": "Écran Commandes", "new.3": "Filtre par catégorie, pagination, sélection et export. Copie par icône. Rien n’est lancé.",
+        "new.4t": "Téléphone unifié", "new.4": "Pairing et inbox sur un seul écran Phone. Menu gauche groupé par catégorie.",
+        "new.5t": "FR / EN", "new.5": "Interface bureau bilingue, locale persistée. Dev CheatSheet aussi.",
+        "new.6t": "Catalogues par défaut", "new.6": "Les commandes des cartes sont fusionnées dans la bibliothèque, sans doublon de texte.",
         "cta.dl": "Télécharger", "cta.back": "Retour aux projets",
         "prob.title": "Le problème",
         "prob.sub": "Les cheat-sheets Docker, Git, Kubernetes, Terraform ou GCP tiennent dans la poche. La commande, elle, doit encore atterrir dans un terminal.",
@@ -480,7 +505,7 @@
         "arch.title": "Architecture",
         "arch.sub": "Trois modules, un protocole JSON versionné. Pas de backend cloud.",
         "arch.desk": "Java 21 + JavaFX. Une appli, deux pairings : le téléphone scanne le QR du PC, ou le PC se connecte en sortie au téléphone. Historique JSON dans ~/.commandbridge/.",
-        "arch.flut": "Package réutilisable : scan QR + sendCommand() pour Docker, Git, GCP, Kubernetes, Terraform.",
+        "arch.flut": "Package réutilisable + Dev CheatSheet : scan QR, bibliothèque, et cartes Gradle, GCP, Kubernetes, Git, Spring Boot, Angular.",
         "arch.proto": "hello → hello_ack → command | error. UTF-8 JSON. Le texte de commande est une donnée, pas un script à lancer.",
         "feat.title": "Fonctions",
         "feat.1t": "Pairing QR", "feat.1": "Token aléatoire 32 bytes. Régénérer le token invalide les nouveaux handshakes.",
@@ -498,14 +523,24 @@
         "stack.title": "Stack",
         "role.title": "Rôle",
         "role.body": "Conception du protocole v1, receiver desktop JavaFX, client Flutter réutilisable, CI du ZIP portable Windows, et la contrainte explicite : pas d’exécution distante.",
-        "role.mvp": "Statut : MVP v1 fonctionnel. Case study — pas une landing commerciale."
+        "role.mvp": "Statut : v1.2 fonctionnel. Case study — pas une landing commerciale."
       },
       en: {
+        "nav.new": "What's new",
         "nav.problem": "Problem", "nav.how": "Flow", "nav.dl": "Download", "nav.arch": "Architecture",
         "nav.sec": "Security", "nav.stack": "Stack",
-        "hero.eyebrow": "Case study",
+        "hero.eyebrow": "Case study · v1.2",
         "hero.lead": "Send a CLI command from your phone to your PC — locally, no cloud. The desktop displays and copies it. It never executes it.",
         "badge.lan": "Local network only", "badge.qr": "QR pairing", "badge.copy": "Copy, never execute",
+        "badge.maps": "Architecture maps",
+        "new.title": "What's new in v1.2",
+        "new.sub": "Same protocol, same rule: nothing is executed. Desktop and Dev CheatSheet now ship architecture maps and a clearer library.",
+        "new.1t": "Architecture maps", "new.1": "Gradle, GCP, Kubernetes, Git, Spring Boot, and Angular: tappable components, verify commands, FR and EN.",
+        "new.2t": "Zoomable diagrams", "new.2": "Architecture button: Mermaid popup (wheel or pinch). Native image, no WebView.",
+        "new.3t": "Commands screen", "new.3": "Category filter, pagination, selection and export. Icon copy. Nothing is launched.",
+        "new.4t": "Unified Phone", "new.4": "Pairing and inbox on one Phone screen. Sidebar grouped by category.",
+        "new.5t": "FR / EN", "new.5": "Bilingual desktop UI, persisted locale. Dev CheatSheet too.",
+        "new.6t": "Default catalogs", "new.6": "Guide commands merge into the library without duplicate command text.",
         "cta.dl": "Download", "cta.back": "Back to projects",
         "prob.title": "The problem",
         "prob.sub": "Docker, Git, Kubernetes, Terraform and GCP cheat-sheets live on the phone. The command still has to reach a terminal.",
@@ -527,7 +562,7 @@
         "arch.title": "Architecture",
         "arch.sub": "Three modules, one versioned JSON protocol. No cloud backend.",
         "arch.desk": "Java 21 + JavaFX. One app, two pairings: the phone scans the PC QR, or the PC connects outbound to the phone. JSON history in ~/.commandbridge/.",
-        "arch.flut": "Reusable package: QR scan + sendCommand() for Docker, Git, GCP, Kubernetes, Terraform.",
+        "arch.flut": "Reusable package plus Dev CheatSheet: QR scan, library, and Gradle, GCP, Kubernetes, Git, Spring Boot, Angular maps.",
         "arch.proto": "hello → hello_ack → command | error. UTF-8 JSON. Command text is data, never a script to run.",
         "feat.title": "Features",
         "feat.1t": "QR pairing", "feat.1": "Random 32-byte token. Regenerating it invalidates new handshakes.",
@@ -545,7 +580,7 @@
         "stack.title": "Stack",
         "role.title": "Role",
         "role.body": "Protocol v1, JavaFX desktop receiver, reusable Flutter client, portable Windows CI, and the explicit constraint: no remote execution.",
-        "role.mvp": "Status: working MVP v1. A case study — not a commercial landing page."
+        "role.mvp": "Status: working v1.2. A case study — not a commercial landing page."
       }
     };
 
